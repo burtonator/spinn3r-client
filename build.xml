@@ -7,7 +7,7 @@
     <property file="build.properties"/>
 
     <property name="project" value="spinn3r-client"/>
-    <property name="javadocdir" value="compile/javadoc"/>
+    <property name="javadocdir" value="javadoc"/>
     <property name="version" value="2.1-beta1"/>
 
     <target name="compile">
