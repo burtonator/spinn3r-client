@@ -27,23 +27,24 @@ public abstract class BaseItem {
 
     private List tags = null;
 
-    private String title = null;
-    private String link = null;
-    private String guid = null;
-    private String lang = null;
+    private String title        = null;
+    private String link         = null;
+    private String description  = null;
+    private String guid         = null;
+    private String lang         = null;
 
-    private String source = null;
+    private String source       = null;
 
-    private String weblogTitle = null;
+    private String weblogTitle  = null;
     private String weblogDescription = null;
 
     private int weblogTier = -1;
 
-    private Date pubDate = null;
+    private Date pubDate        = null;
 
-    private String authorName = null;
-    private String authorEmail = null;
-    private String authorLink = null;
+    private String authorName   = null;
+    private String authorEmail  = null;
+    private String authorLink   = null;
 
     /**
      * 
@@ -277,6 +278,24 @@ public abstract class BaseItem {
      */
     public String getTitle() { 
         return this.title;
+    }
+
+    /**
+     * 
+     * Set the value of <code>description</code>.
+     *
+     */
+    public void setDescription( String description ) { 
+        this.description = description;
+    }
+
+    /**
+     * 
+     * Get the value of <code>description</code>.
+     *
+     */
+    public String getDescription() { 
+        return this.description;
     }
 
     public String toString() {

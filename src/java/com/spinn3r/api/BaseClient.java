@@ -282,6 +282,7 @@ public abstract class BaseClient {
 
         //base elements.
         item.setTitle( getElementCDATAByTagName( current, "title" ) );
+        item.setDescription( getElementCDATAByTagName( current, "description" ) );
         item.setLink(  getElementCDATAByTagName( current, "link" )  );
         item.setGuid(  getElementCDATAByTagName( current, "guid" )  );
 

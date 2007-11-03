@@ -36,7 +36,7 @@ public class Main {
             System.exit( 1 );
         }
 
-        String vendor = args[1];
+        String vendor = args[0];
         
         //First. Determine which API you'd like to use.  
         
@@ -96,6 +96,10 @@ public class Main {
                 System.out.println( "author name:    " + item.getAuthorName() );
                 System.out.println( "author email:   " + item.getAuthorEmail() );
                 System.out.println( "author link:    " + item.getAuthorLink() );
+
+                System.out.println( "-----" );
+                System.out.println( item.getDescription() );
+                System.out.println( "-----" );
 
                 last = item.getPubDate();
                 
