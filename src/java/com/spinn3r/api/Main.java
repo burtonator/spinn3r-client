@@ -17,6 +17,7 @@
 package com.spinn3r.api;
 
 import java.util.*;
+import java.io.*;
 
 /**
  * Command line debug client for testing the API.  Also shows example usage.
@@ -27,7 +28,128 @@ import java.util.*;
  */
 public class Main {
 
+    /**
+     * How far behind should be start by default?
+     */
     public static long INTERVAL = 10L * 60L * 1000L;
+
+    /**
+     * The date of the last item we found.
+     */
+    private Date last = null;
+
+    private long fetch_before = -1;
+    private long fetch_after = -1;
+
+    /**
+     * Keeps track of the client that the user wants to use from the command
+     * line.
+     */
+    private Client client = null;
+
+    /**
+     * Results from the last call.
+     */
+    private List<BaseItem> results = null;
+    
+    public Main( Client client ) {
+        this.client = client;
+    }
+    
+    /**
+     * Process results, handling them as necessary.
+     */
+    void process( List<BaseItem> results ) throws Exception {
+
+        for( BaseItem item : results ) {
+
+            System.out.println( "----" );
+            System.out.println( "title:          " + item.getTitle() );
+            System.out.println( "link:           " + item.getLink() );
+            System.out.println( "guid:           " + item.getGuid() );
+            System.out.println( "source:         " + item.getSource() );
+            System.out.println( "pubDate:        " + item.getPubDate() );
+            
+            System.out.println( "weblog title:   " + item.getWeblogTitle() );
+            System.out.println( "weblog tier:    " + item.getWeblogTier() );
+            
+            System.out.println( "author name:    " + item.getAuthorName() );
+            System.out.println( "author email:   " + item.getAuthorEmail() );
+            System.out.println( "author link:    " + item.getAuthorLink() );
+
+            //update the state internally so we have a copy of the last item
+            //found.
+            last = item.getPubDate();
+            
+        }
+        
+    }
+
+    /**
+     * Print status of the API calls.
+     */
+    void progress() {
+
+        System.out.println( "-------------------------------------------" );
+
+        long fetch_duration = fetch_after - fetch_before;
+        
+        System.out.println( "API fetch duration (including sleep, download, and parse): " +
+                            fetch_duration );
+        
+        System.out.println( "API call duration:        " + client.getCallDuration() );
+        System.out.println( "API sleep duration:       " + client.getSleepDuration() );
+        
+        System.out.println( "Number items returned:    " + results.size() );
+        System.out.println( "Last request URL:         " + client.getLastRequestURL() );
+        System.out.println( "Next request URL:         " + client.getNextRequestURL() );
+        
+        if ( last == null )
+            return;
+            
+        long diff = System.currentTimeMillis() - last.getTime();
+        
+        System.out.println( "Seconds behind present:   " + ( diff / 1000 ) );
+
+    }
+
+    public void exec() throws Exception {
+
+        try {
+
+            while( true ) {
+
+                //fetch the most recent results.  This will block if necessary.
+
+                long fetch_before = System.currentTimeMillis();
+
+                client.fetch();
+
+                long fetch_after  = System.currentTimeMillis();
+
+                //get the results found from the last fetch.
+                results = client.getResults();
+
+                System.out.println( "Found N results: " + results.size() );
+
+                Date last = null;
+                
+                process( results );
+
+                progress();
+                
+            } 
+
+        } finally {
+
+            // persist call pointer settings by recording the offset and 'after'
+            // parameters in the config used the by the client.  Note that since
+            // this is in a finally block it will be called even when a
+            // Throwable or IOException is called. 
+            
+        }
+            
+    }
     
     public static void main( String[] args ) throws Exception {
 
@@ -66,68 +188,8 @@ public class Main {
         
         client.setConfig( config );
 
-        while( true ) {
-
-            //fetch the most recent results.  This will block if necessary.
-
-            long fetch_before = System.currentTimeMillis();
-            client.fetch();
-            long fetch_after  = System.currentTimeMillis();
-
-            //get the results found from the last fetch.
-            List<BaseItem> results = client.getResults();
-
-            System.out.println( "Found N results: " + results.size() );
-
-            Date last = null;
-            
-            for( BaseItem item : results ) {
-
-                System.out.println( "----" );
-                System.out.println( "title:          " + item.getTitle() );
-                System.out.println( "link:           " + item.getLink() );
-                System.out.println( "guid:           " + item.getGuid() );
-                System.out.println( "source:         " + item.getSource() );
-                System.out.println( "pubDate:        " + item.getPubDate() );
-
-                System.out.println( "weblog title:   " + item.getWeblogTitle() );
-                System.out.println( "weblog tier:    " + item.getWeblogTier() );
-
-                System.out.println( "author name:    " + item.getAuthorName() );
-                System.out.println( "author email:   " + item.getAuthorEmail() );
-                System.out.println( "author link:    " + item.getAuthorLink() );
-
-                System.out.println( "-----" );
-                System.out.println( item.getDescription() );
-                System.out.println( "-----" );
-
-                last = item.getPubDate();
-                
-            }
-
-            System.out.println( "-------------------------------------------" );
-
-            long fetch_duration = fetch_after - fetch_before;
-            
-            System.out.println( "API fetch duration (including sleep, download, and parse): " +
-                                fetch_duration );
-            
-            System.out.println( "API call duration:        " + client.getCallDuration() );
-            System.out.println( "API sleep duration:       " + client.getSleepDuration() );
-            
-            System.out.println( "Number items returned:    " + results.size() );
-            System.out.println( "Last request URL:         " + client.getLastRequestURL() );
-            System.out.println( "Next request URL:         " + client.getNextRequestURL() );
-            
-            if ( last == null )
-                continue;
-                
-            long diff = System.currentTimeMillis() - last.getTime();
-            
-            System.out.println( "Seconds behind present:   " + ( diff / 1000 ) );
-            
-        } 
-
+        new Main( client ).exec();
+        
     }
     
 }
