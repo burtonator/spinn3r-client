@@ -96,14 +96,18 @@ public class Main {
         
         System.out.println( "API fetch duration (including sleep, download, and parse): " +
                             fetch_duration );
+
+        System.out.println( "--" );
         
         System.out.println( "API call duration:        " + client.getCallDuration() );
         System.out.println( "API sleep duration:       " + client.getSleepDuration() );
-        
+
+        System.out.println( "--" );
+
         System.out.println( "Number items returned:    " + results.size() );
         System.out.println( "Last request URL:         " + client.getLastRequestURL() );
         System.out.println( "Next request URL:         " + client.getNextRequestURL() );
-        
+
         if ( last == null )
             return;
             
@@ -143,31 +147,92 @@ public class Main {
         } finally {
 
             // persist call pointer settings by recording the offset and 'after'
-            // parameters in the config used the by the client.  Note that since
-            // this is in a finally block it will be called even when a
-            // Throwable or IOException is called. 
+            // parameters in the config used the by the client by storing the
+            // last requested URL.  Note that since this is in a finally block
+            // it will be called even when a Throwable or IOException is called.
+
+            //get the config object that the client is using.
+
+            String lastRequestURL = client.getLastRequestURL();            
             
         }
             
     }
-    
+
+    private static String getOpt( String v ) {
+
+        int start = v.indexOf( "=" );
+        if ( start == -1 )
+            return null;
+
+        ++start;
+        
+        return v.substring( start, v.length() );
+                           
+    }
+
+    private static void syntax() {
+
+        System.out.println( "Usage: " + Main.class.getName() + " [OPTION]" );
+        System.out.println( "" );
+        System.out.println( "Required params:" );
+        System.out.println( "    --vendor=VENDOR   specify the vendor name for provisioning." );
+        System.out.println( "Optional params:" );
+        System.out.println( "    --api=API         Specify the name of the API (feed or permalink)." );
+        
+    }
+
     public static void main( String[] args ) throws Exception {
 
-        if ( args.length == 0 ) {
-            System.out.println( Main.class.getName() + " [vendor_name]" );
+        //parse out propeties.
+        
+        String vendor  = null;
+        String api     = null;
+
+        for( int i = 0; i < args.length; ++i ) {
+
+            String v = args[i];
+
+            if ( v.startsWith( "--vendor" ) )
+                vendor = getOpt( v );
+
+            if ( v.startsWith( "--api" ) )
+                api = getOpt( v );
+
+        }
+
+        //assert that we have all required options.
+
+        if ( vendor == null ) {
+            syntax();
             System.exit( 1 );
         }
 
-        String vendor = args[0];
-        
+        //use defaults
+
+        if ( api == null )
+            api = "feed";
+
         //First. Determine which API you'd like to use.  
+
+        Config config = null;
+        Client client = null;
+
+        if ( api.equals( "feed" ) ) {
         
-        Config config = new FeedConfig();
-        Client client = new FeedClient();
+            config = new FeedConfig();
+            client = new FeedClient();
+                
+        } else {
 
-//         Config config = new PermalinkConfig();
-//         Client client = new PermalinkClient();
+            config = new PermalinkConfig();
+            client = new PermalinkClient();
 
+        }
+
+        System.out.println( "Using vendor: " + vendor );
+        System.out.println( "Using api:    " + api );
+        
         // set your vendor.  This is required.  Don't use the default.
         
         config.setVendor( vendor );
@@ -176,7 +241,7 @@ public class Main {
         config.setLang( "en" );
 
         //just 10 items.  this is just a test after all.
-        config.setLimit( 100 );
+        config.setLimit( 10 );
 
         // Fetch for the last 5 minutes and then try to get up to date.  In
         // production you'd want to call setFirstRequestURL from the

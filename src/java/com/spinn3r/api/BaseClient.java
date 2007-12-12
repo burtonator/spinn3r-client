@@ -473,6 +473,9 @@ public abstract class BaseClient {
                              Object value,
                              boolean optional ) {
 
+        if ( optional && value == null )
+            return;             
+        
         if ( buff.length() > 0 )
             buff.append( "&" );
         

@@ -37,6 +37,8 @@ public interface Client {
     public List getResults();
 
     public void setConfig( Config config );
+
+    public Config getConfig();
     
     public String getNextRequestURL();
 

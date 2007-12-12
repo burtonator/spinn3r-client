@@ -28,7 +28,7 @@ public abstract class Config {
      * Default number of results to fetch.
      *
      */
-    public static int      DEFAULT_LIMIT       = 100;
+    public static int      DEFAULT_LIMIT       = 10;
 
     /**
      * When fetching the API this specifies the default version to return.
