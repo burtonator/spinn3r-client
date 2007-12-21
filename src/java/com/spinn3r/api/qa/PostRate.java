@@ -33,7 +33,7 @@ public class PostRate {
     /**
      * How far behind should be start by default?
      */
-    public static long INTERVAL = 60L * 60L * 1000L;
+    public static long INTERVAL = 24L * 60L * 60L * 1000L;
 
     /**
      * The date of the last item we found.
@@ -54,9 +54,9 @@ public class PostRate {
      */
     private List<BaseItem> results = null;
 
-    private int total = 0;
-
     private static long start = -1;
+
+    private HashMap<Long,Integer> countRegistry = new HashMap();
     
     public PostRate( Client client ) {
         this.client = client;
@@ -67,6 +67,7 @@ public class PostRate {
      */
     void process( List<BaseItem> results ) throws Exception {
 
+        int total = 0;
         for( BaseItem item : results ) {
             ++total;
 
@@ -75,9 +76,47 @@ public class PostRate {
             last = item.getPubDate();
             
         }
+
+        //update the number of values for this item interval
+        long interval = 60L * 60L * 1000L;
+
+        long hour = (last.getTime() / interval) * interval;
+
+        if ( ! countRegistry.containsKey( hour ) )
+            countRegistry.put( hour, 0 );
+        
+        int current_total = countRegistry.get( hour );
+        
+        current_total += total;
+        
+        countRegistry.put( hour, current_total );
+
+        long diff = (start + INTERVAL) - last.getTime();
+        
+        System.out.println( "---" );
+        System.out.println( "Seconds behind:   " + ( diff / 1000 ) );
+        System.out.println( "Minutes behind:   " + ( diff / (60*1000) ) );
+        System.out.println( "Current total :   " + current_total );
+
+        if ( current_total % 1000 == 0 && current_total != 0 ) {
+            printStats();
+        }
         
     }
 
+    private void printStats() {
+
+        System.out.println( "------" );
+        System.out.println( "Current stats: " );
+        
+        for( long hour : countRegistry.keySet() ) {
+
+            System.out.println( new Date( hour ) + ": " + countRegistry.get( hour ) );
+            
+        }
+        
+    }
+    
     public void exec() throws Exception {
 
         while( true ) {
@@ -97,10 +136,10 @@ public class PostRate {
 
             process( results );
 
-            System.out.println( "total: " + total );
-            
-            if ( last.getTime() > start + INTERVAL )
+            if ( last.getTime() > start + INTERVAL ) {
+                printStats();
                 break;
+            }
 
         }
         

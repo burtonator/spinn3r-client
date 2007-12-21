@@ -77,6 +77,19 @@ public class Main {
             System.out.println( "author email:   " + item.getAuthorEmail() );
             System.out.println( "author link:    " + item.getAuthorLink() );
 
+            System.out.println( "lang:           " + item.getLang() );
+            System.out.println( "tags:           " + item.getTags() );
+
+            System.out.println( "description: " );
+            System.out.println( "-" );
+            System.out.println( item.getDescription() );
+            System.out.println( "-" );
+
+            System.out.println( "content extract: " );
+            System.out.println( "-" );
+            System.out.println( item.getContentExtract() );
+            System.out.println( "-" );
+
             //update the state internally so we have a copy of the last item
             //found.
             last = item.getPubDate();
@@ -176,10 +189,11 @@ public class Main {
         System.out.println( "Usage: " + Main.class.getName() + " [OPTION]" );
         System.out.println( "" );
         System.out.println( "Required params:" );
-        System.out.println( "    --vendor=VENDOR   specify the vendor name for provisioning." );
+        System.out.println( "    --vendor=VENDOR   Specify the vendor name for provisioning." );
+        System.out.println( "" );
         System.out.println( "Optional params:" );
         System.out.println( "    --api=API         Specify the name of the API (feed or permalink)." );
-        
+        System.out.println( "                      Default: feed" );        
     }
 
     public static void main( String[] args ) throws Exception {

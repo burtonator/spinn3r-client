@@ -47,7 +47,44 @@ public abstract class BaseItem {
     private String authorLink           = null;
 
     private String contentExtract       = null;
-    
+    private String commentExtract       = null;
+
+    /**
+     * 
+     * Get the value of <code>commentExtract</code>.
+     *
+     */
+    public String getCommentExtract() { 
+        return this.commentExtract;
+    }
+
+    /**
+     * 
+     * Set the value of <code>commentExtract</code>.
+     *
+     */
+    public void setCommentExtract( String commentExtract ) { 
+        this.commentExtract = commentExtract;
+    }
+
+    /**
+     * 
+     * Get the value of <code>contentExtract</code>.
+     *
+     */
+    public String getContentExtract() { 
+        return this.contentExtract;
+    }
+
+    /**
+     * 
+     * Set the value of <code>contentExtract</code>.
+     *
+     */
+    public void setContentExtract( String contentExtract ) { 
+        this.contentExtract = contentExtract;
+    }
+
     /**
      * 
      * Get the value of <code>authorLink</code>.

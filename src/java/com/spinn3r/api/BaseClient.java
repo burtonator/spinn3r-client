@@ -141,6 +141,8 @@ public abstract class BaseClient {
 
             //namespaces won't work at ALL if this isn't enabled.
             docBuildFactory.setNamespaceAware( true );
+
+            //FIXME: ok ... don't I need to ADD the namespaces?
             
             DocumentBuilder parser =
                 docBuildFactory.newDocumentBuilder();
@@ -282,7 +284,10 @@ public abstract class BaseClient {
 
         //base elements.
         item.setTitle( getElementCDATAByTagName( current, "title" ) );
-        item.setDescription( getElementCDATAByTagName( current, "description" ) );
+
+        item.setDescription( getElementCDATAByTagName( current,
+                                                       "description" ) );
+
         item.setLink(  getElementCDATAByTagName( current, "link" )  );
         item.setGuid(  getElementCDATAByTagName( current, "guid" )  );
 
@@ -334,6 +339,16 @@ public abstract class BaseClient {
                                                            NS_ATOM ) );
 
         }
+
+        // Spinn3r 2.1 post content.
+
+        item.setContentExtract(  getElementCDATAByTagName( current,
+                                                           "content_extract",
+                                                           NS_POST ) );
+
+        item.setCommentExtract(  getElementCDATAByTagName( current,
+                                                           "comment_extract",
+                                                           NS_POST ) );
 
         return item;
         

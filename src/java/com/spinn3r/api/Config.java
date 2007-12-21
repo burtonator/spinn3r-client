@@ -33,7 +33,7 @@ public abstract class Config {
     /**
      * When fetching the API this specifies the default version to return.
      */
-    public static double   DEFAULT_VERSION     = 0.5;
+    public static double   DEFAULT_VERSION     = 2.1;
     
     private int            limit               = DEFAULT_LIMIT;
     private String         lang                = null;
