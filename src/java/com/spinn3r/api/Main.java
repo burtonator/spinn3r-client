@@ -31,7 +31,8 @@ public class Main {
     /**
      * How far behind should be start by default?
      */
-    public static long INTERVAL = 10L * 60L * 1000L;
+    //public static long INTERVAL = 15L * 24L * 60L * 60L * 1000L;
+    public static long INTERVAL = 60L * 60L * 1000L;
 
     /**
      * The date of the last item we found.
@@ -51,6 +52,8 @@ public class Main {
      * Results from the last call.
      */
     private List<BaseItem> results = null;
+
+    private static boolean show_results = true;
     
     public Main( Client client ) {
         this.client = client;
@@ -63,33 +66,37 @@ public class Main {
 
         for( BaseItem item : results ) {
 
-            System.out.println( "----" );
-            System.out.println( "title:          " + item.getTitle() );
-            System.out.println( "link:           " + item.getLink() );
-            System.out.println( "guid:           " + item.getGuid() );
-            System.out.println( "source:         " + item.getSource() );
-            System.out.println( "pubDate:        " + item.getPubDate() );
+            if ( show_results ) {
             
-            System.out.println( "weblog title:   " + item.getWeblogTitle() );
-            System.out.println( "weblog tier:    " + item.getWeblogTier() );
-            
-            System.out.println( "author name:    " + item.getAuthorName() );
-            System.out.println( "author email:   " + item.getAuthorEmail() );
-            System.out.println( "author link:    " + item.getAuthorLink() );
+                System.out.println( "----" );
+                System.out.println( "title:          " + item.getTitle() );
+                System.out.println( "link:           " + item.getLink() );
+                System.out.println( "guid:           " + item.getGuid() );
+                System.out.println( "source:         " + item.getSource() );
+                System.out.println( "pubDate:        " + item.getPubDate() );
+                
+                System.out.println( "weblog title:   " + item.getWeblogTitle() );
+                System.out.println( "weblog tier:    " + item.getWeblogTier() );
+                
+                System.out.println( "author name:    " + item.getAuthorName() );
+                System.out.println( "author email:   " + item.getAuthorEmail() );
+                System.out.println( "author link:    " + item.getAuthorLink() );
 
-            System.out.println( "lang:           " + item.getLang() );
-            System.out.println( "tags:           " + item.getTags() );
+                System.out.println( "lang:           " + item.getLang() );
+                System.out.println( "tags:           " + item.getTags() );
 
-            System.out.println( "description: " );
-            System.out.println( "-" );
-            System.out.println( item.getDescription() );
-            System.out.println( "-" );
+                System.out.println( "description: " );
+                System.out.println( "-" );
+                System.out.println( item.getDescription() );
+                System.out.println( "-" );
 
-            System.out.println( "content extract: " );
-            System.out.println( "-" );
-            System.out.println( item.getContentExtract() );
-            System.out.println( "-" );
+                System.out.println( "content extract: " );
+                System.out.println( "-" );
+                System.out.println( item.getContentExtract() );
+                System.out.println( "-" );
 
+            }
+                
             //update the state internally so we have a copy of the last item
             //found.
             last = item.getPubDate();
@@ -213,6 +220,8 @@ public class Main {
             if ( v.startsWith( "--api" ) )
                 api = getOpt( v );
 
+            if ( v.startsWith( "--show_results" ) )
+                show_results = Boolean.parseBoolean( getOpt( v ) );
         }
 
         //assert that we have all required options.

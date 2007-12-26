@@ -342,13 +342,13 @@ public abstract class BaseClient {
 
         // Spinn3r 2.1 post content.
 
-        item.setContentExtract(  getElementCDATAByTagName( current,
-                                                           "content_extract",
-                                                           NS_POST ) );
+        item.setContentExtract( getElementCDATAByTagName( current,
+                                                          "content_extract",
+                                                          NS_POST ) );
 
-        item.setCommentExtract(  getElementCDATAByTagName( current,
-                                                           "comment_extract",
-                                                           NS_POST ) );
+        item.setCommentExtract( getElementCDATAByTagName( current,
+                                                          "comment_extract",
+                                                          NS_POST ) );
 
         return item;
         
