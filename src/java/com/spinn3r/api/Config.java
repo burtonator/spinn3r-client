@@ -43,7 +43,6 @@ public abstract class Config {
     private int            tier_end            = -1;
     private Date           after               = new Date(); /* use epoch as default */
     private String         firstRequestURL     = null;
-
     
     /**
      * 

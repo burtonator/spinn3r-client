@@ -32,9 +32,10 @@ public abstract class BaseClient {
 
     /**
      * When we've ran out of results (because the client is up to date) then we
-     * should spin for a few seconds.
+     * should spin for a few seconds.  If the sleep interval is -1 then we sleep
+     * for a random amount of time between 0 and 30 seconds.
      */
-    public static final long SLEEP_INTERVAL = 30L * 1000L;
+    public static final long DEFAULT_SLEEP_INTERVAL = 30L * 1000L;
 
     public static final String NS_API     = "http://tailrank.com/ns/#api";
     public static final String NS_DC      = "http://purl.org/dc/elements/1.1/" ;
@@ -52,10 +53,21 @@ public abstract class BaseClient {
     private String lastRequestURL = null;
     private String nextRequestURL = null;
 
+    /**
+     * Total time we took calling a method.
+     */
     private long callDuration = -1;
 
+    /**
+     * How long actually we slept (duration) while performing the last API call.
+     */
     private long sleepDuration = -1;
 
+    /**
+     * How long we should sleep if an API call doesn't return enough values.
+     */
+    private long sleepInterval = DEFAULT_SLEEP_INTERVAL;
+    
     private List results = null;
 
     protected Config config = null;
@@ -95,9 +107,11 @@ public abstract class BaseClient {
 
         } else if ( results.size() < requestLimit ) {
 
+            long sleepInterval = getSleepInterval();
+            
             //we've fetched before so determine if we need to spin.
-            Thread.sleep( SLEEP_INTERVAL );
-            setSleepDuration( SLEEP_INTERVAL );
+            Thread.sleep( sleepInterval );
+            setSleepDuration( sleepInterval );
             
         } 
 
@@ -610,4 +624,19 @@ public abstract class BaseClient {
         this.sleepDuration = sleepDuration;
     }
 
+    public long getSleepInterval() {
+
+        long result = sleepInterval;
+        
+        if ( result == -1 ) {
+            //use a random number generator to compute the
+            float f = new Random().nextFloat();
+            
+            result = (long)(f * 30L);
+
+        }
+        
+        return result;
+    }
+    
 }

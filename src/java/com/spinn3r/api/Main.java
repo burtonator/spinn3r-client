@@ -18,6 +18,7 @@ package com.spinn3r.api;
 
 import java.util.*;
 import java.io.*;
+import java.util.regex.*;
 
 /**
  * Command line debug client for testing the API.  Also shows example usage.
@@ -29,9 +30,18 @@ import java.io.*;
 public class Main {
 
     /**
+     * Default for show_results
+     */
+    public static int DEFAULT_SHOW_RESULTS = 0;
+    
+    /**
+     * Maximum amount of time we should index the API.
+     */
+    public static int DEFAULT_RANGE = -1;
+    
+    /**
      * How far behind should be start by default?
      */
-    //public static long INTERVAL = 15L * 24L * 60L * 60L * 1000L;
     public static long INTERVAL = 60L * 60L * 1000L;
 
     /**
@@ -39,6 +49,9 @@ public class Main {
      */
     private Date last = null;
 
+    /**
+     * Timings for each fetch.
+     */
     private long fetch_before = -1;
     private long fetch_after = -1;
 
@@ -53,7 +66,20 @@ public class Main {
      */
     private List<BaseItem> results = null;
 
-    private static boolean show_results = true;
+    /**
+     * When true, filter results for each pass.
+     */
+    private static int show_results = DEFAULT_SHOW_RESULTS;
+
+    /**
+     * When true, filter results for each pass.
+     */
+    private static boolean show_progress = true;
+
+    /**
+     * When we have a value. Only print results that match a certain pattern.
+     */
+    private static String filter = null;
     
     public Main( Client client ) {
         this.client = client;
@@ -66,11 +92,29 @@ public class Main {
 
         for( BaseItem item : results ) {
 
-            if ( show_results ) {
+            //update the state internally so we have a copy of the last item
+            //found.
+            last = item.getPubDate();
+
+            if ( filter != null ) {
+
+                Pattern p = Pattern.compile( filter );
+                Matcher m = p.matcher( item.getGuid() );
+
+                if ( ! m.find() )
+                    continue;
+
+            }
+            
+            if ( show_results == 0 || show_results >= 1 ) {
             
                 System.out.println( "----" );
-                System.out.println( "title:          " + item.getTitle() );
                 System.out.println( "link:           " + item.getLink() );
+            }
+
+            if ( show_results == 0 || show_results >= 2 ) {
+
+                System.out.println( "title:          " + item.getTitle() );
                 System.out.println( "guid:           " + item.getGuid() );
                 System.out.println( "source:         " + item.getSource() );
                 System.out.println( "pubDate:        " + item.getPubDate() );
@@ -96,11 +140,7 @@ public class Main {
                 System.out.println( "-" );
 
             }
-                
-            //update the state internally so we have a copy of the last item
-            //found.
-            last = item.getPubDate();
-            
+
         }
         
     }
@@ -141,6 +181,8 @@ public class Main {
 
         try {
 
+            Config config = client.getConfig();
+            
             while( true ) {
 
                 //fetch the most recent results.  This will block if necessary.
@@ -156,12 +198,15 @@ public class Main {
 
                 System.out.println( "Found N results: " + results.size() );
 
-                Date last = null;
-                
                 process( results );
 
                 progress();
-                
+
+                long range = DEFAULT_RANGE;
+
+                if ( range > 0 && last.getTime() > config.getAfter().getTime() + range )
+                    break;
+
             } 
 
         } finally {
@@ -196,19 +241,41 @@ public class Main {
         System.out.println( "Usage: " + Main.class.getName() + " [OPTION]" );
         System.out.println( "" );
         System.out.println( "Required params:" );
-        System.out.println( "    --vendor=VENDOR   Specify the vendor name for provisioning." );
-        System.out.println( "" );
+        System.out.println();
+        System.out.println( "    --vendor=VENDOR       Specify the vendor name for provisioning." );
+        System.out.println();
         System.out.println( "Optional params:" );
-        System.out.println( "    --api=API         Specify the name of the API (feed or permalink)." );
-        System.out.println( "                      Default: feed" );        
+        System.out.println();
+        System.out.println( "    --api=API             Specify the name of the API (feed or permalink)." );
+        System.out.println( "                          Default: feed" );        
+        System.out.println();
+        System.out.println( "    --after=NNN           Unix time in millis for when we should start indexing." );
+        System.out.println( "                          Default: last 60 minutes" );        
+        System.out.println();
+        System.out.println( "    --show_results=NN     Show each result returned by the API." );
+        System.out.println( "                             0 - show all fields" );        
+        System.out.println( "                             1 - show only the link" );        
+        System.out.println( "                             2 - show title/description" );        
+        System.out.println( "                          Default: 0" );        
+        System.out.println();
+        System.out.println( "    --filter=http://      URL filter.  Only print URLs that match the regex." );
+        System.out.println( "                          Default: none" );        
+        System.out.println();
+        System.out.println( "    --after=NNNN          Unix time (in millis) to start the API." );
+        System.out.println( "                          Default: none" );        
+        System.out.println();
+        System.out.println( "    --range=NNNN          Unix time duration (in millis) to terminate the API." );
+        System.out.println( "                          Default: none" );        
+        System.out.println();
     }
 
     public static void main( String[] args ) throws Exception {
 
         //parse out propeties.
         
-        String vendor  = null;
-        String api     = null;
+        String  vendor  = null;
+        String  api     = null;
+        long    after   = -1;
 
         for( int i = 0; i < args.length; ++i ) {
 
@@ -220,8 +287,15 @@ public class Main {
             if ( v.startsWith( "--api" ) )
                 api = getOpt( v );
 
+           if ( v.startsWith( "--filter" ) )
+                filter = getOpt( v );
+
             if ( v.startsWith( "--show_results" ) )
-                show_results = Boolean.parseBoolean( getOpt( v ) );
+                show_results = Integer.parseInt( getOpt( v ) );
+
+            if ( v.startsWith( "--after" ) )
+                after = Long.parseLong( getOpt( v ) );
+
         }
 
         //assert that we have all required options.
@@ -270,8 +344,11 @@ public class Main {
         // production you'd want to call setFirstRequestURL from the
         // getLastRequestURL returned from fetch() below
         
-        long after = System.currentTimeMillis();
-        after = after - INTERVAL;
+        if ( after == -1 ) {
+            after = System.currentTimeMillis();
+            after = after - INTERVAL;
+        }
+
         config.setAfter( new Date( after ) );
         
         client.setConfig( config );
