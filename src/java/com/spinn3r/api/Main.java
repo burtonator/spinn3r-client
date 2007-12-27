@@ -115,12 +115,13 @@ public class Main {
             
                 System.out.println( "----" );
                 System.out.println( "link:           " + item.getLink() );
+                System.out.println( "guid:           " + item.getGuid() );
+
             }
 
             if ( show_results == 0 || show_results >= 2 ) {
 
                 System.out.println( "title:          " + item.getTitle() );
-                System.out.println( "guid:           " + item.getGuid() );
                 System.out.println( "source:         " + item.getSource() );
                 System.out.println( "pubDate:        " + item.getPubDate() );
                 
@@ -228,10 +229,14 @@ public class Main {
     }
 
     private static String getOpt( String v ) {
+        return getOpt( v, null );
+    }
+    
+    private static String getOpt( String v, String _default ) {
 
         int start = v.indexOf( "=" );
         if ( start == -1 )
-            return null;
+            return _default;
 
         ++start;
         
@@ -279,10 +284,41 @@ public class Main {
 
     public static void main( String[] args ) throws Exception {
 
-        //parse out propeties.
+        //NOTE this could be cleaned up to pass the values into the config
+        //object directly.
         
-        String  vendor  = null;
-        String  api     = null;
+        //parse out propeties.
+
+        String api = null;
+
+        for( int i = 0; i < args.length; ++i ) {
+            String v = args[i];
+
+            if ( v.startsWith( "--api" ) )
+                api = getOpt( v );
+
+        }
+
+        if ( api == null )
+            api = "feed";
+
+        //First. Determine which API you'd like to use.  
+
+        Config config = null;
+        Client client = null;
+
+        if ( api.equals( "feed" ) ) {
+        
+            config = new FeedConfig();
+            client = new FeedClient();
+                
+        } else {
+
+            config = new PermalinkConfig();
+            client = new PermalinkClient();
+
+        }
+        
         long    after   = -1;
 
         for( int i = 0; i < args.length; ++i ) {
@@ -290,10 +326,10 @@ public class Main {
             String v = args[i];
 
             if ( v.startsWith( "--vendor" ) )
-                vendor = getOpt( v );
+                config.setVendor( getOpt( v ) );
 
-            if ( v.startsWith( "--api" ) )
-                api = getOpt( v );
+            if ( v.startsWith( "--lang" ) )
+                config.setLang( getOpt( v, "en" ) );
 
            if ( v.startsWith( "--filter" ) )
                 filter = getOpt( v );
@@ -315,47 +351,23 @@ public class Main {
             if ( v.startsWith( "--range" ) ) 
                 range = Long.parseLong( getOpt( v ) );
 
+            if ( v.startsWith( "--sleep_interval" ) ) 
+                config.setSleepInterval( Long.parseLong( getOpt( v ) ) );
+
         }
 
         //assert that we have all required options.
 
-        if ( vendor == null ) {
+        if ( config.getVendor() == null ) {
             syntax();
             System.exit( 1 );
         }
 
         //use defaults
 
-        if ( api == null )
-            api = "feed";
-
-        //First. Determine which API you'd like to use.  
-
-        Config config = null;
-        Client client = null;
-
-        if ( api.equals( "feed" ) ) {
-        
-            config = new FeedConfig();
-            client = new FeedClient();
-                
-        } else {
-
-            config = new PermalinkConfig();
-            client = new PermalinkClient();
-
-        }
-
-        System.out.println( "Using vendor: " + vendor );
+        System.out.println( "Using vendor: " + config.getVendor() );
         System.out.println( "Using api:    " + api );
         
-        // set your vendor.  This is required.  Don't use the default.
-        
-        config.setVendor( vendor );
-
-        // just english for right now
-        config.setLang( "en" );
-
         //just 10 items.  this is just a test after all.
         config.setLimit( 10 );
 

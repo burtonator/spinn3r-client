@@ -25,6 +25,13 @@ import java.util.*;
 public abstract class Config {
 
     /**
+     * When we've ran out of results (because the client is up to date) then we
+     * should spin for a few seconds.  If the sleep interval is -1 then we sleep
+     * for a random amount of time between 0 and 30 seconds.
+     */
+    public static final long DEFAULT_SLEEP_INTERVAL = 30L * 1000L;
+
+    /**
      * Default number of results to fetch.
      *
      */
@@ -43,7 +50,12 @@ public abstract class Config {
     private int            tier_end            = -1;
     private Date           after               = new Date(); /* use epoch as default */
     private String         firstRequestURL     = null;
-    
+
+    /**
+     * How long we should sleep if an API call doesn't return enough values.
+     */
+    private long sleepInterval = DEFAULT_SLEEP_INTERVAL;
+
     /**
      * 
      * Set the value of <code>firstRequestURL</code>.
@@ -169,4 +181,23 @@ public abstract class Config {
         return tier_end;
     }
 
+    public long getSleepInterval() {
+
+        long result = sleepInterval;
+        
+        if ( result == -1 ) {
+            //use a random number generator to compute the
+            float f = new Random().nextFloat();
+            
+            result = (long)(f * 30L);
+
+        }
+        
+        return result;
+    }
+
+    public void setSleepInterval( long v ) {
+        this.sleepInterval = v;
+    }
+    
 }

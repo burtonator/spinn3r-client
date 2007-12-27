@@ -30,13 +30,6 @@ import org.w3c.dom.*;
  */
 public abstract class BaseClient {
 
-    /**
-     * When we've ran out of results (because the client is up to date) then we
-     * should spin for a few seconds.  If the sleep interval is -1 then we sleep
-     * for a random amount of time between 0 and 30 seconds.
-     */
-    public static final long DEFAULT_SLEEP_INTERVAL = 30L * 1000L;
-
     public static final String NS_API     = "http://tailrank.com/ns/#api";
     public static final String NS_DC      = "http://purl.org/dc/elements/1.1/" ;
     public static final String NS_ATOM    = "http://www.w3.org/2005/Atom" ;
@@ -62,11 +55,6 @@ public abstract class BaseClient {
      * How long actually we slept (duration) while performing the last API call.
      */
     private long sleepDuration = -1;
-
-    /**
-     * How long we should sleep if an API call doesn't return enough values.
-     */
-    private long sleepInterval = DEFAULT_SLEEP_INTERVAL;
     
     private List results = null;
 
@@ -107,7 +95,7 @@ public abstract class BaseClient {
 
         } else if ( results.size() < requestLimit ) {
 
-            long sleepInterval = getSleepInterval();
+            long sleepInterval = config.getSleepInterval();
             
             //we've fetched before so determine if we need to spin.
             Thread.sleep( sleepInterval );
@@ -622,21 +610,6 @@ public abstract class BaseClient {
      */
     public void setSleepDuration( long sleepDuration ) { 
         this.sleepDuration = sleepDuration;
-    }
-
-    public long getSleepInterval() {
-
-        long result = sleepInterval;
-        
-        if ( result == -1 ) {
-            //use a random number generator to compute the
-            float f = new Random().nextFloat();
-            
-            result = (long)(f * 30L);
-
-        }
-        
-        return result;
     }
     
 }
