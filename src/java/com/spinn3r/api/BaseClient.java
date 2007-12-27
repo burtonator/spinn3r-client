@@ -305,13 +305,9 @@ public abstract class BaseClient {
                                                         "title",
                                                         NS_WEBLOG ) );
 
-        item.setWeblogDescription( getElementCDATAByTagName( current,
-                                                             "description",
-                                                             NS_WEBLOG ) );
+        item.setWeblogDescription( getElementCDATAByTagName( current, "description", NS_WEBLOG ) );
 
-        String str_tier = getElementCDATAByTagName( current,
-                                                    "tier",
-                                                    NS_WEBLOG );
+        String str_tier = getElementCDATAByTagName( current, "tier", NS_WEBLOG );
         
         if ( str_tier != null )
             item.setWeblogTier( Integer.parseInt( str_tier ) );
@@ -325,20 +321,12 @@ public abstract class BaseClient {
         item.setTags( parseTags( current ) );
 
         Element author = getElementByTagName( current, "author", NS_ATOM );
-
+        
         if ( author != null ) {
 
-            item.setAuthorName(  getElementCDATAByTagName( author,
-                                                           "author_name",
-                                                           NS_ATOM ) );
-
-            item.setAuthorEmail(  getElementCDATAByTagName( author,
-                                                            "author_email",
-                                                            NS_ATOM ) );
-            
-            item.setAuthorLink(  getElementCDATAByTagName( author,
-                                                           "author_link",
-                                                           NS_ATOM ) );
+            item.setAuthorName(  getElementCDATAByTagName( author, "name",  NS_ATOM ) );
+            item.setAuthorEmail( getElementCDATAByTagName( author, "email", NS_ATOM ) );
+            item.setAuthorLink(  getElementCDATAByTagName( author, "link",  NS_ATOM ) );
 
         }
 
