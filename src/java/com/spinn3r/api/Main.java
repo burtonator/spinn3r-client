@@ -207,8 +207,6 @@ public class Main {
 
                 progress();
 
-                long range = DEFAULT_RANGE;
-
                 if ( range > 0 && last.getTime() > config.getAfter().getTime() + range )
                     break;
 
@@ -255,6 +253,10 @@ public class Main {
         System.out.println( "                          Default: feed" );        
         System.out.println();
         System.out.println( "    --after=NNN           Unix time in millis for when we should start indexing." );
+        System.out.println( "                          This can also be an ISO 8601 time stamp.  " );
+        System.out.println();
+        System.out.println( "                            Example: 2007-12-23T00:00:00Z" );
+        System.out.println();
         System.out.println( "                          Default: last 60 minutes" );        
         System.out.println();
         System.out.println( "    --show_results=NN     Show each result returned by the API." );
@@ -272,6 +274,7 @@ public class Main {
         System.out.println( "    --range=NNNN          Unix time duration (in millis) to terminate the API." );
         System.out.println( "                          Default: none" );        
         System.out.println();
+
     }
 
     public static void main( String[] args ) throws Exception {
@@ -298,10 +301,18 @@ public class Main {
             if ( v.startsWith( "--show_results" ) )
                 show_results = Integer.parseInt( getOpt( v ) );
 
-            if ( v.startsWith( "--after" ) )
-                after = Long.parseLong( getOpt( v ) );
+            if ( v.startsWith( "--after" ) ) {
 
-            if ( v.startsWith( "--range" ) )
+                String opt = getOpt( v );
+
+                after = ISO8601DateParser.parseInt( opt );
+
+                if ( after == -1 )
+                    after = ISO8601DateParser.parse( opt ).getTime();
+                
+            }
+
+            if ( v.startsWith( "--range" ) ) 
                 range = Long.parseLong( getOpt( v ) );
 
         }
