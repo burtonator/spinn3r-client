@@ -80,6 +80,11 @@ public class Main {
      * When we have a value. Only print results that match a certain pattern.
      */
     private static String filter = null;
+
+    /**
+     * When to end processing the API.
+     */
+    private static long range = DEFAULT_RANGE;
     
     public Main( Client client ) {
         this.client = client;
@@ -295,6 +300,9 @@ public class Main {
 
             if ( v.startsWith( "--after" ) )
                 after = Long.parseLong( getOpt( v ) );
+
+            if ( v.startsWith( "--range" ) )
+                range = Long.parseLong( getOpt( v ) );
 
         }
 
