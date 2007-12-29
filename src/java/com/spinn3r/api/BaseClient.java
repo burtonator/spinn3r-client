@@ -12,6 +12,12 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
  * License for the specific language governing permissions and limitations under
  * the License.
+ *
+ * For more information see:
+ * 
+ * <a href="http://tailrank.com">http://tailrank.com</a>
+ * <a href="http://spinn3r.com">http://spinn3r.com</a>
+ * <a href="http://feedblog.org">http://feedblog.org</a>
  */
 
 package com.spinn3r.api;

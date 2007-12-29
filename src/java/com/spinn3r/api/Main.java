@@ -85,6 +85,11 @@ public class Main {
      * When to end processing the API.
      */
     private static long range = DEFAULT_RANGE;
+
+    /**
+     * Only return results before this date.
+     */
+    private static long before = -1;
     
     public Main( Client client ) {
         this.client = client;
@@ -211,6 +216,9 @@ public class Main {
                 if ( range > 0 && last.getTime() > config.getAfter().getTime() + range )
                     break;
 
+                if ( before > 0 && last.getTime() > before )
+                    break;
+
             } 
 
         } finally {
@@ -263,6 +271,12 @@ public class Main {
         System.out.println( "                            Example: 2007-12-23T00:00:00Z" );
         System.out.println();
         System.out.println( "                          Default: last 60 minutes" );        
+        System.out.println();
+        System.out.println( "    --before=DATE         ISO date.  All results need to occur before this date." );
+        System.out.println();
+        System.out.println( "                            Example: 2007-12-23T00:00:00Z" );
+        System.out.println();
+        System.out.println( "                          Default: none" );        
         System.out.println();
         System.out.println( "    --show_results=NN     Show each result returned by the API." );
         System.out.println( "                             0 - show all fields" );        
@@ -348,7 +362,12 @@ public class Main {
                 
             }
 
-            if ( v.startsWith( "--range" ) ) 
+            if ( v.startsWith( "--before" ) ) {
+                String opt = getOpt( v );
+                before = ISO8601DateParser.parse( opt ).getTime();
+            }
+            
+            if ( v.startsWith( "--range" ) )
                 range = Long.parseLong( getOpt( v ) );
 
             if ( v.startsWith( "--sleep_interval" ) ) 
