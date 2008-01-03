@@ -261,14 +261,16 @@ public class Main {
     private static long getOptAsTimeInMillis( String v ) {
 
         String opt = getOpt( v );
-        
-        long val = ISO8601DateParser.parseInt( opt );
-        
-        if ( val == -1 )
-            val = ISO8601DateParser.parse( opt ).getTime();
 
-        return val;
+        if ( opt == null )
+            return -1;
         
+        try {
+            return Long.parseLong( opt );
+        } catch ( Throwable t ) {
+            return ISO8601DateParser.parse( opt ).getTime();
+        }
+
     }
 
     private static void syntax() {
@@ -284,14 +286,15 @@ public class Main {
         System.out.println( "    --api=API             Specify the name of the API (feed or permalink)." );
         System.out.println( "                          Default: feed" );        
         System.out.println();
-        System.out.println( "    --after=NNN           Unix time in millis for when we should start indexing." );
+        System.out.println( "    --after=NNN           Time in millis for when we should start indexing." );
         System.out.println( "                          This can also be an ISO 8601 time stamp.  " );
         System.out.println();
         System.out.println( "                            Example: 2007-12-23T00:00:00Z" );
         System.out.println();
         System.out.println( "                          Default: last 60 minutes" );        
         System.out.println();
-        System.out.println( "    --before=DATE         ISO date.  All results need to occur before this date." );
+        System.out.println( "    --before=DATE         ISO date (or millis)  All results need to occur" );
+        System.out.println( "                          before this date." );
         System.out.println();
         System.out.println( "                            Example: 2007-12-23T00:00:00Z" );
         System.out.println();
@@ -401,7 +404,13 @@ public class Main {
 
         System.out.println( "Using vendor: " + config.getVendor() );
         System.out.println( "Using api:    " + api );
-        
+
+        if ( after > -1 ) 
+            System.out.println( "After: " + new Date( after ) );
+
+        if ( before > -1 ) 
+            System.out.println( "Before: " + new Date( before ) );
+
         // Fetch for the last 5 minutes and then try to get up to date.  In
         // production you'd want to call setFirstRequestURL from the
         // getLastRequestURL returned from fetch() below

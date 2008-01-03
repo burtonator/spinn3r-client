@@ -66,8 +66,37 @@ public abstract class BaseClient {
 
     protected Config config = null;
 
+    /**
+     * True if the last API call was compressed.
+     */
+    boolean isCompressed = false;
+
+    /**
+     * Get the last localInputStream we're using.  This is a
+     * ByteArrayInputStream based InputStream.
+     */
+    InputStream localInputStream = null;
+    
     // **** fetching support ****************************************************
 
+    /**
+     * Get the InputStream for dealing with the XML of the API directly.  This
+     * is a LOCAL input stream so once fetch() has been called you can call this
+     * API multiple times and you're reading from a local buffer.
+     */
+    public InputStream getInputStream() throws IOException {
+
+        InputStream is = localInputStream;
+        
+        //wrap the downloaded input stream with a gzip input stream when
+        //necessary.
+        if ( isCompressed )
+            is = new GZIPInputStream( is );
+
+        return is;
+
+    }
+    
     /**
      * Fetch the API with the given FeedConfig
      * 
@@ -129,12 +158,13 @@ public abstract class BaseClient {
         //NOTE: because this is XML we don't need to use the Content-Type
         //returned by the HTTP server as the XML encoding declaration should be
         //used.
-        InputStream is = getLocalInputStream( conn.getInputStream() );
 
-        //wrap the downloaded input stream with a gzip input stream when
-        //necessary.
+        localInputStream = getLocalInputStream( conn.getInputStream() );
+
         if ( GZIP_ENCODING.equals( conn.getContentEncoding() ) )
-            is = new GZIPInputStream( is );
+            isCompressed = true;
+
+        InputStream is = getInputStream();
         
         long call_after = System.currentTimeMillis();
 
