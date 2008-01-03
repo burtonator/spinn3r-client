@@ -106,6 +106,9 @@ public class Main {
             //found.
             last = item.getPubDate();
 
+            if ( before > 0 && last.getTime() > before )
+                break;
+
             if ( filter != null ) {
 
                 Pattern p = Pattern.compile( filter );
@@ -213,6 +216,9 @@ public class Main {
 
                 progress();
 
+                if ( last == null )
+                    continue;
+                
                 if ( range > 0 && last.getTime() > config.getAfter().getTime() + range )
                     break;
 
@@ -252,6 +258,19 @@ public class Main {
                            
     }
 
+    private static long getOptAsTimeInMillis( String v ) {
+
+        String opt = getOpt( v );
+        
+        long val = ISO8601DateParser.parseInt( opt );
+        
+        if ( val == -1 )
+            val = ISO8601DateParser.parse( opt ).getTime();
+
+        return val;
+        
+    }
+
     private static void syntax() {
 
         System.out.println( "Usage: " + Main.class.getName() + " [OPTION]" );
@@ -287,11 +306,14 @@ public class Main {
         System.out.println( "    --filter=http://      URL filter.  Only print URLs that match the regex." );
         System.out.println( "                          Default: none" );        
         System.out.println();
-        System.out.println( "    --after=NNNN          Unix time (in millis) to start the API." );
-        System.out.println( "                          Default: none" );        
-        System.out.println();
         System.out.println( "    --range=NNNN          Unix time duration (in millis) to terminate the API." );
         System.out.println( "                          Default: none" );        
+        System.out.println();
+        System.out.println( "    --lang=xx             Two letter language code to use" );
+        System.out.println( "                          Default: none" );        
+        System.out.println();
+        System.out.println( "    --limit=xx            Number of items to return per iteration." );
+        System.out.println( "                          Default: 10" );        
         System.out.println();
 
     }
@@ -351,24 +373,17 @@ public class Main {
             if ( v.startsWith( "--show_results" ) )
                 show_results = Integer.parseInt( getOpt( v ) );
 
-            if ( v.startsWith( "--after" ) ) {
+            if ( v.startsWith( "--after" ) ) 
+                after = getOptAsTimeInMillis( v );
 
-                String opt = getOpt( v );
+            if ( v.startsWith( "--before" ) ) 
+                before = getOptAsTimeInMillis( v );
 
-                after = ISO8601DateParser.parseInt( opt );
-
-                if ( after == -1 )
-                    after = ISO8601DateParser.parse( opt ).getTime();
-                
-            }
-
-            if ( v.startsWith( "--before" ) ) {
-                String opt = getOpt( v );
-                before = ISO8601DateParser.parse( opt ).getTime();
-            }
-            
             if ( v.startsWith( "--range" ) )
                 range = Long.parseLong( getOpt( v ) );
+
+            if ( v.startsWith( "--limit" ) )
+                config.setLimit( Integer.parseInt( getOpt( v ) ) );
 
             if ( v.startsWith( "--sleep_interval" ) ) 
                 config.setSleepInterval( Long.parseLong( getOpt( v ) ) );
@@ -387,9 +402,6 @@ public class Main {
         System.out.println( "Using vendor: " + config.getVendor() );
         System.out.println( "Using api:    " + api );
         
-        //just 10 items.  this is just a test after all.
-        config.setLimit( 10 );
-
         // Fetch for the last 5 minutes and then try to get up to date.  In
         // production you'd want to call setFirstRequestURL from the
         // getLastRequestURL returned from fetch() below
