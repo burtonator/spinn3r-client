@@ -414,8 +414,8 @@ public class Main {
             if ( v.startsWith( "--limit" ) )
                 config.setLimit( Integer.parseInt( getOpt( v ) ) );
 
-            if ( v.startsWith( "--sleep_interval" ) ) 
-                config.setSleepInterval( Long.parseLong( getOpt( v ) ) );
+            if ( v.startsWith( "--sleep_duration" ) ) 
+                client.setSleepDuration( Long.parseLong( getOpt( v ) ) );
 
             if ( v.startsWith( "--save" ) ) 
                 save = "true".equals( getOpt( v ) );

@@ -196,8 +196,4 @@ public abstract class Config {
         return result;
     }
 
-    public void setSleepInterval( long v ) {
-        this.sleepInterval = v;
-    }
-    
 }

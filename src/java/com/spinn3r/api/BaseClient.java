@@ -32,10 +32,28 @@ import javax.xml.parsers.*;
 import org.w3c.dom.*;
 
 /**
- * Generic methods which need to be in all clients.
+ * Generic client support used which need to be in all APIs.
+ *
+ * See Main.java for usage example.
+ * 
+ * All implementations need to catch and handle Exceptions.
+ *
+ * <h2>Restarting</h2>
+ *
+ * When stopping/starting the API you need to persist an 'after' point where to
+ * start the URL from again.  This is just the timestamp of the most recent URL
+ * you found minus a buffer.
+ *
+ * 
+ * 
  */
 public abstract class BaseClient {
 
+    /**
+     * Go back in time to make sure we recrawl everything.
+     */
+    public static final int RESTART_BUFFER = 30 * 1000;
+    
     public static final String NS_API     = "http://tailrank.com/ns/#api";
     public static final String NS_DC      = "http://purl.org/dc/elements/1.1/" ;
     public static final String NS_ATOM    = "http://www.w3.org/2005/Atom" ;
@@ -113,7 +131,7 @@ public abstract class BaseClient {
      */
     private long sleepDuration = -1;
     
-    private List results = null;
+    private List<BaseItem> results = null;
 
     protected Config config = null;
 
@@ -689,6 +707,22 @@ public abstract class BaseClient {
      */
     public void setSleepDuration( long sleepDuration ) { 
         this.sleepDuration = sleepDuration;
+    }
+
+   /**
+     * When the API needs to shutdown you need to call this method FIRST and
+     * persist it.  Then when the API starts you need to call config.setAfter()
+     * with this value.
+     */
+    public Date getRestartPoint() {
+
+        if ( results == null || results.size() == 0 )
+            return null;
+
+        BaseItem item = results.get( results.size() - 1 );
+
+        return new Date( item.getPubDate().getTime() - RESTART_BUFFER );
+        
     }
 
     /**
