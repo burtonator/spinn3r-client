@@ -90,6 +90,8 @@ public class Main {
      * Only return results before this date.
      */
     private static long before = -1;
+
+    private static boolean save = false;
     
     public Main( Client client ) {
         this.client = client;
@@ -207,6 +209,27 @@ public class Main {
 
                 long fetch_after  = System.currentTimeMillis();
 
+                if ( save ) {
+
+                    //save the results to disk if necessary.
+
+                    InputStream is = client.getInputStream();
+                    FileOutputStream os =
+                        new FileOutputStream( System.currentTimeMillis() + ".xml" );
+
+                    byte[] data = new byte[ 2048 ];
+
+                    int readCount = 0;
+                    
+                    while( ( readCount = is.read( data )) > 0 ) {
+                        os.write( data, 0, readCount );
+                    }
+                    
+                    is.close();
+                    os.close();
+
+                }
+                
                 //get the results found from the last fetch.
                 results = client.getResults();
 
@@ -318,6 +341,9 @@ public class Main {
         System.out.println( "    --limit=xx            Number of items to return per iteration." );
         System.out.println( "                          Default: 10" );        
         System.out.println();
+        System.out.println( "    --save=true|false     Save result XML to disk." );
+        System.out.println( "                          Default: false" );        
+        System.out.println();
 
     }
 
@@ -391,6 +417,9 @@ public class Main {
             if ( v.startsWith( "--sleep_interval" ) ) 
                 config.setSleepInterval( Long.parseLong( getOpt( v ) ) );
 
+            if ( v.startsWith( "--save" ) ) 
+                save = "true".equals( getOpt( v ) );
+
         }
 
         //assert that we have all required options.
@@ -411,6 +440,8 @@ public class Main {
         if ( before > -1 ) 
             System.out.println( "Before: " + new Date( before ) );
 
+        System.out.println( "Saving results to disk: " + save );
+        
         // Fetch for the last 5 minutes and then try to get up to date.  In
         // production you'd want to call setFirstRequestURL from the
         // getLastRequestURL returned from fetch() below

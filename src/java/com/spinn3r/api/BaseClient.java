@@ -80,7 +80,7 @@ public abstract class BaseClient {
      * when reading from input stream when a connection is established to a
      * resource.
      */
-    public static int DEFAULT_CONNECT_TIMEOUT = 1 * 60 * 1000;
+    public static int DEFAULT_CONNECT_TIMEOUT = 5 * 60 * 1000;
 
     public static int DEFAULT_READ_TIMEOUT = DEFAULT_CONNECT_TIMEOUT;
 
@@ -138,6 +138,10 @@ public abstract class BaseClient {
     public InputStream getInputStream() throws IOException {
 
         InputStream is = localInputStream;
+
+        //the first item we don't need this but we do need it for additional
+        //calls.
+        is.reset();
         
         //wrap the downloaded input stream with a gzip input stream when
         //necessary.

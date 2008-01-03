@@ -48,4 +48,6 @@ public interface Client {
 
     public long getSleepDuration();
 
+    public InputStream getInputStream() throws IOException;
+    
 }
