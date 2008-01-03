@@ -49,6 +49,57 @@ public abstract class BaseClient {
 
     public static String USER_AGENT = "Spinn3r API Reference Client (Java)";
 
+    /**
+     * Specified in java.security to indicate the caching policy for successful
+     * name lookups from the name service.. The value is specified as as integer
+     * to indicate the number of seconds to cache the successful lookup.
+     * 
+     *
+     * sun.net.inetaddr.ttl:
+     * 
+     * This is a sun private system property which corresponds to
+     * networkaddress.cache.ttl. It takes the same value and has the same meaning,
+     * but can be set as a command-line option. However, the preferred way is to
+     * use the security property mentioned above.
+     * 
+     * A value of -1 indicates "cache forever".
+     */
+    public static int NETWORKADDRESS_CACHE_TTL = 5 * 60;
+
+    /**
+     * These properties specify the default connect and read timeout (resp.) for
+     * the protocol handler used by java.net.URLConnection.
+     * 
+     * sun.net.client.defaultConnectTimeout specifies the timeout (in
+     * milliseconds) to establish the connection to the host. For example for
+     * http connections it is the timeout when establishing the connection to
+     * the http server. For ftp connection it is the timeout when establishing
+     * the connection to ftp servers.
+     * 
+     * sun.net.client.defaultReadTimeout specifies the timeout (in milliseconds)
+     * when reading from input stream when a connection is established to a
+     * resource.
+     */
+    public static int DEFAULT_CONNECT_TIMEOUT = 1 * 60 * 1000;
+
+    public static int DEFAULT_READ_TIMEOUT = DEFAULT_CONNECT_TIMEOUT;
+
+    /**
+     * Specify the maximum number of redirects to use.
+     */
+    public static int DEFAULT_MAX_REDIRECTS = 5;
+
+    /**
+     * Whether we should use HTTP Keep Alive in java.net.URL.  We default to
+     * false here because MOST of our TCP connections won't ever be re-used and
+     * we're just wasting file handles on the robot and keeping a connection
+     * open to the remote host which uses one of their threads.  I also think
+     * this yields a bug in Tailrank's robot where numerous threads continually
+     * access thousands of hosts and then we start to run out of available file
+     * handles.  
+     */
+    public static boolean DEFAULT_HTTP_KEEPALIVE = false;
+
     private String lastRequestURL = null;
     private String nextRequestURL = null;
 
@@ -634,6 +685,40 @@ public abstract class BaseClient {
      */
     public void setSleepDuration( long sleepDuration ) { 
         this.sleepDuration = sleepDuration;
+    }
+
+    /**
+     * Set reasonable HTTP timeouts and DNS caching settings via a static
+     * constructor BEFORE any HTTP calls are used.
+     */
+    static {
+
+        // A full list of properties is available here:
+
+        // http://java.sun.com/j2se/1.4.2/docs/guide/net/properties.html
+
+        //NOTE: Thu Aug 10 2006 05:17 PM (burton@tailrank.com): its not a good
+        //idea to set these values since they modify the defaults for ALL IO
+        //applications. It woould be BETTER to select more realistic values
+        //instead of infinity though.
+        
+        System.setProperty( "sun.net.inetaddr.ttl",
+                            Integer.toString( NETWORKADDRESS_CACHE_TTL ) );
+
+        System.setProperty( "networkaddress.cache.ttl",
+                            Integer.toString( NETWORKADDRESS_CACHE_TTL ) );
+
+        System.setProperty( "sun.net.client.defaultReadTimeout",
+                            Integer.toString( DEFAULT_READ_TIMEOUT ) );
+
+        System.setProperty( "sun.net.client.defaultConnectTimeout",
+                            Integer.toString( DEFAULT_CONNECT_TIMEOUT ) );
+
+        System.setProperty( "http.maxRedirects",
+                            Integer.toString( DEFAULT_MAX_REDIRECTS ) );
+
+        System.setProperty( "http.keepAlive", Boolean.toString( DEFAULT_HTTP_KEEPALIVE ) );
+
     }
     
 }
