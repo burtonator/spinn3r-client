@@ -92,6 +92,8 @@ public class Main {
     private static long before = -1;
 
     private static boolean save = false;
+
+    private static boolean timing = true;
     
     public Main( Client client ) {
         this.client = client;
@@ -169,15 +171,20 @@ public class Main {
         System.out.println( "-------------------------------------------" );
 
         long fetch_duration = fetch_after - fetch_before;
-        
-        System.out.println( "API fetch duration (including sleep, download, and parse): " +
-                            fetch_duration );
 
-        System.out.println( "--" );
-        
-        System.out.println( "API call duration:        " + client.getCallDuration() );
-        System.out.println( "API sleep duration:       " + client.getSleepDuration() );
 
+        if ( timing ) {
+
+            System.out.println( "API fetch duration (including sleep, download, and parse): " +
+                                fetch_duration );
+            
+            System.out.println( "--" );
+            
+            System.out.println( "API call duration:        " + client.getCallDuration() );
+            System.out.println( "API sleep duration:       " + client.getSleepDuration() );
+
+        }
+            
         System.out.println( "--" );
 
         System.out.println( "Number items returned:    " + results.size() );
@@ -188,8 +195,9 @@ public class Main {
             return;
             
         long diff = System.currentTimeMillis() - last.getTime();
-        
-        System.out.println( "Seconds behind present:   " + ( diff / 1000 ) );
+
+        if ( timing )
+            System.out.println( "Seconds behind present:   " + ( diff / 1000 ) );
 
     }
 
@@ -419,6 +427,9 @@ public class Main {
 
             if ( v.startsWith( "--save" ) ) 
                 save = "true".equals( getOpt( v ) );
+
+            if ( v.startsWith( "--timing" ) ) 
+                timing = "true".equals( getOpt( v ) );
 
         }
 
