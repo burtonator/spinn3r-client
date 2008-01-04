@@ -51,5 +51,7 @@ public interface Client {
     public void setSleepDuration( long v );
 
     public InputStream getInputStream() throws IOException;
-    
+
+    public Date getRestartPoint();
+
 }
