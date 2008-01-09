@@ -54,4 +54,16 @@ public interface Client {
 
     public Date getRestartPoint();
 
+    public void setHost( String v );
+
+    /**
+     * Get the host name for API calls.
+     */
+    public String getHost();
+
+    /**
+     * Get the router URL for API calls.
+     */
+    public String getRouter();
+    
 }

@@ -32,7 +32,7 @@ public class Main {
     /**
      * Default for show_results
      */
-    public static int DEFAULT_SHOW_RESULTS = 0;
+    public static int DEFAULT_SHOW_RESULTS = 10;
     
     /**
      * Maximum amount of time we should index the API.
@@ -91,10 +91,10 @@ public class Main {
      */
     private static long before = -1;
 
-    private static boolean save = false;
+    private static String save = null;
 
     private static boolean timing = true;
-    
+
     public Main( Client client ) {
         this.client = client;
     }
@@ -123,7 +123,7 @@ public class Main {
 
             }
             
-            if ( show_results == 0 || show_results >= 1 ) {
+            if ( show_results >= 1 ) {
             
                 System.out.println( "----" );
                 System.out.println( "link:           " + item.getLink() );
@@ -131,7 +131,7 @@ public class Main {
 
             }
 
-            if ( show_results == 0 || show_results >= 2 ) {
+            if ( show_results >= 2 ) {
 
                 System.out.println( "title:          " + item.getTitle() );
                 System.out.println( "source:         " + item.getSource() );
@@ -171,7 +171,6 @@ public class Main {
         System.out.println( "-------------------------------------------" );
 
         long fetch_duration = fetch_after - fetch_before;
-
 
         if ( timing ) {
 
@@ -217,13 +216,19 @@ public class Main {
 
                 long fetch_after  = System.currentTimeMillis();
 
-                if ( save ) {
+                if ( save != null ) {
 
                     //save the results to disk if necessary.
 
+                    File root = new File( save );
+                    root.mkdirs();
+
+                    File file = new File( root,
+                                          System.currentTimeMillis() + ".xml" );
+                    
                     InputStream is = client.getInputStream();
                     FileOutputStream os =
-                        new FileOutputStream( System.currentTimeMillis() + ".xml" );
+                        new FileOutputStream( file );
 
                     byte[] data = new byte[ 2048 ];
 
@@ -267,8 +272,8 @@ public class Main {
 
             //get the config object that the client is using.
 
-            String lastRequestURL = client.getLastRequestURL();            
-            
+            Date restartPoint = client.getRestartPoint();
+
         }
             
     }
@@ -332,10 +337,10 @@ public class Main {
         System.out.println( "                          Default: none" );        
         System.out.println();
         System.out.println( "    --show_results=NN     Show each result returned by the API." );
-        System.out.println( "                             0 - show all fields" );        
+        System.out.println( "                             0 - show no fields" );        
         System.out.println( "                             1 - show only the link" );        
         System.out.println( "                             2 - show title/description" );        
-        System.out.println( "                          Default: 0" );        
+        System.out.println( "                          Default: 10" );        
         System.out.println();
         System.out.println( "    --filter=http://      URL filter.  Only print URLs that match the regex." );
         System.out.println( "                          Default: none" );        
@@ -349,8 +354,11 @@ public class Main {
         System.out.println( "    --limit=xx            Number of items to return per iteration." );
         System.out.println( "                          Default: 10" );        
         System.out.println();
-        System.out.println( "    --save=true|false     Save result XML to disk." );
-        System.out.println( "                          Default: false" );        
+        System.out.println( "    --save=DIRECTORY      Save result XML to disk in the specified directory." );
+        System.out.println( "                          Default: none" );        
+        System.out.println();
+        System.out.println( "    --host=hostname       Custom hostname for making calls against. Dev use only." );
+        System.out.println( "                          Default: api.spinn3r.com" );        
         System.out.println();
 
     }
@@ -426,10 +434,13 @@ public class Main {
                 client.setSleepDuration( Long.parseLong( getOpt( v ) ) );
 
             if ( v.startsWith( "--save" ) ) 
-                save = "true".equals( getOpt( v ) );
+                save = getOpt( v );
 
             if ( v.startsWith( "--timing" ) ) 
                 timing = "true".equals( getOpt( v ) );
+
+            if ( v.startsWith( "--host" ) ) 
+                client.setHost( getOpt( v ) );
 
         }
 

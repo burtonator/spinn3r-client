@@ -68,6 +68,12 @@ public abstract class BaseClient {
     public static String USER_AGENT = "Spinn3r API Reference Client (Java)";
 
     /**
+     * Default hostname for building the router URL.  This can be changed to
+     * use an additional dedicated host if necessary.
+     */
+    public static String DEFAULT_HOST = "api.spinn3r.com";
+    
+    /**
      * Specified in java.security to indicate the caching policy for successful
      * name lookups from the name service.. The value is specified as as integer
      * to indicate the number of seconds to cache the successful lookup.
@@ -145,6 +151,11 @@ public abstract class BaseClient {
      * ByteArrayInputStream based InputStream.
      */
     InputStream localInputStream = null;
+
+    /**
+     * The host for calling API methods.
+     */
+    String host = DEFAULT_HOST;
     
     // **** fetching support ****************************************************
 
@@ -709,7 +720,18 @@ public abstract class BaseClient {
         this.sleepDuration = sleepDuration;
     }
 
-   /**
+    /**
+     * Set the host for API alls.
+     */
+    public void setHost( String v ) {
+        this.host = v;
+    }
+
+    public String getHost() {
+        return host;
+    }
+    
+    /**
      * When the API needs to shutdown you need to call this method FIRST and
      * persist it.  Then when the API starts you need to call config.setAfter()
      * with this value.

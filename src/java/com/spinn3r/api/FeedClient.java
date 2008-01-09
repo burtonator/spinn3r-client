@@ -59,7 +59,7 @@ public class FeedClient extends BaseClient implements Client {
     }
 
     public String getRouter() {
-        return ROUTER;
+        return "http://" + getHost() + "/rss/feed.getDelta?";
     }
     
 }

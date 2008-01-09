@@ -38,11 +38,6 @@ public class PermalinkClient extends BaseClient implements Client {
      */
     public static int MAX_LIMIT = 10;
 
-    /**
-     * Base router request URL.
-     */
-    public static String ROUTER = "http://api.spinn3r.com/rss/permalink.getDelta?";
-
     public void fetch() throws IOException,
                                ParseException,
                                InterruptedException {
@@ -62,7 +57,7 @@ public class PermalinkClient extends BaseClient implements Client {
     }
 
     public String getRouter() {
-        return ROUTER;
+        return "http://" + getHost() + "/rss/permalink.getDelta?";
     }
 
 }
