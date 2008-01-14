@@ -360,6 +360,12 @@ public class Main {
         System.out.println( "    --host=hostname       Custom hostname for making calls against. Dev use only." );
         System.out.println( "                          Default: api.spinn3r.com" );        
         System.out.println();
+        System.out.println( "    --host=hostname       Custom hostname for making calls against. Dev use only." );
+        System.out.println( "                          Default: api.spinn3r.com" );        
+        System.out.println();
+        System.out.println( "    --tier=start:end      Narrow results to a specific ranking by tier." );
+        System.out.println( "                          Default: none" );        
+        System.out.println();
 
     }
 
@@ -441,6 +447,16 @@ public class Main {
 
             if ( v.startsWith( "--host" ) ) 
                 client.setHost( getOpt( v ) );
+
+            if ( v.startsWith( "--tier" ) ) {
+
+                String[] split = getOpt( v ).split( ":" );
+
+                int start = Integer.parseInt( split[ 0 ] );
+                int end = Integer.parseInt( split[ 1 ] );
+                
+                config.setTier( start, end );
+            }
 
         }
 
