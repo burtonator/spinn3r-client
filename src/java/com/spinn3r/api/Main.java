@@ -126,26 +126,27 @@ public class Main {
             if ( show_results >= 1 ) {
             
                 System.out.println( "----" );
-                System.out.println( "link:           " + item.getLink() );
-                System.out.println( "guid:           " + item.getGuid() );
+                System.out.println( "link:                   " + item.getLink() );
+                System.out.println( "guid:                   " + item.getGuid() );
 
             }
 
             if ( show_results >= 2 ) {
 
-                System.out.println( "title:          " + item.getTitle() );
-                System.out.println( "source:         " + item.getSource() );
-                System.out.println( "pubDate:        " + item.getPubDate() );
+                System.out.println( "title:                  " + item.getTitle() );
+                System.out.println( "source:                 " + item.getSource() );
+                System.out.println( "pubDate:                " + item.getPubDate() );
                 
-                System.out.println( "weblog title:   " + item.getWeblogTitle() );
-                System.out.println( "weblog tier:    " + item.getWeblogTier() );
+                System.out.println( "weblog title:           " + item.getWeblogTitle() );
+                System.out.println( "weblog tier:            " + item.getWeblogTier() );
+                System.out.println( "weblog publisher type:  " + item.getWeblogPublisherType() );
                 
-                System.out.println( "author name:    " + item.getAuthorName() );
-                System.out.println( "author email:   " + item.getAuthorEmail() );
-                System.out.println( "author link:    " + item.getAuthorLink() );
+                System.out.println( "author name:            " + item.getAuthorName() );
+                System.out.println( "author email:           " + item.getAuthorEmail() );
+                System.out.println( "author link:            " + item.getAuthorLink() );
 
-                System.out.println( "lang:           " + item.getLang() );
-                System.out.println( "tags:           " + item.getTags() );
+                System.out.println( "lang:                   " + item.getLang() );
+                System.out.println( "tags:                   " + item.getTags() );
 
                 System.out.println( "description: " );
                 System.out.println( "-" );

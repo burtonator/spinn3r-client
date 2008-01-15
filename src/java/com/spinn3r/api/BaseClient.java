@@ -65,7 +65,7 @@ public abstract class BaseClient {
 
     public static final String GZIP_ENCODING = "gzip";
 
-    public static String USER_AGENT = "Spinn3r API Reference Client (Java)";
+    public static String USER_AGENT = "Spinn3r API Reference Client " + Config.DEFAULT_VERSION + " (Java)";
 
     /**
      * Default hostname for building the router URL.  This can be changed to
@@ -410,20 +410,18 @@ public abstract class BaseClient {
         item.setDescription( getElementCDATAByTagName( current,
                                                        "description" ) );
 
-        item.setLink(  getElementCDATAByTagName( current, "link" )  );
-        item.setGuid(  getElementCDATAByTagName( current, "guid" )  );
+        item.setLink( getElementCDATAByTagName( current, "link" )  );
+        item.setGuid( getElementCDATAByTagName( current, "guid" )  );
 
         // dc:lang
-        item.setLang(  getElementCDATAByTagName( current, "lang", NS_DC ) );
+        item.setLang( getElementCDATAByTagName( current, "lang", NS_DC ) );
 
         // dc:source
-        item.setSource(  getElementCDATAByTagName( current, "source", NS_DC ) );
+        item.setSource( getElementCDATAByTagName( current, "source", NS_DC ) );
 
         // weblog:title
         // weblog:description
-        item.setWeblogTitle(  getElementCDATAByTagName( current,
-                                                        "title",
-                                                        NS_WEBLOG ) );
+        item.setWeblogTitle( getElementCDATAByTagName( current, "title", NS_WEBLOG ) );
 
         item.setWeblogDescription( getElementCDATAByTagName( current, "description", NS_WEBLOG ) );
 
@@ -437,7 +435,13 @@ public abstract class BaseClient {
         
         //FIXME: weblog:indegree
         //FIXME: weblog:iranking
+
+        String publisher_type = getElementCDATAByTagName( current, "publisher_type", NS_WEBLOG );
+        if ( publisher_type != null )
+            publisher_type = publisher_type.trim();
         
+        item.setWeblogPublisherType( publisher_type );
+
         item.setTags( parseTags( current ) );
 
         Element author = getElementByTagName( current, "author", NS_ATOM );

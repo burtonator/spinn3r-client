@@ -40,11 +40,11 @@ public abstract class Config {
     /**
      * When fetching the API this specifies the default version to return.
      */
-    public static double   DEFAULT_VERSION     = 2.1;
+    public static String   DEFAULT_VERSION     = "2.1.1";
     
     private int            limit               = DEFAULT_LIMIT;
     private String         lang                = null;
-    private double         version             = DEFAULT_VERSION;
+    private String         version             = DEFAULT_VERSION;
     private String         vendor              = null;
     private int            tier_start          = -1;
     private int            tier_end            = -1;
@@ -116,7 +116,7 @@ public abstract class Config {
      * Get the value of <code>version</code>.
      *
      */
-    public double getVersion() { 
+    public String getVersion() { 
         return this.version;
     }
 
@@ -125,7 +125,7 @@ public abstract class Config {
      * Set the value of <code>version</code>.
      *
      */
-    public void setVersion( double version ) { 
+    public void setVersion( String version ) { 
         this.version = version;
     }
 

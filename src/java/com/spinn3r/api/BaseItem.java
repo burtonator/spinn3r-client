@@ -24,6 +24,7 @@ import java.net.*;
  * Represents a single item returned from the API.
  */
 public abstract class BaseItem {
+    
 
     private List tags                   = null;
 
@@ -37,6 +38,7 @@ public abstract class BaseItem {
 
     private String weblogTitle          = null;
     private String weblogDescription    = null;
+    private String weblogPublisherType  = null;
 
     private int weblogTier              = -1;
 
@@ -48,6 +50,24 @@ public abstract class BaseItem {
 
     private String contentExtract       = null;
     private String commentExtract       = null;
+
+    /**
+     * 
+     * Get the value of <code>weblogPublisherType</code>.
+     *
+     */
+    public String getWeblogPublisherType() { 
+        return this.weblogPublisherType;
+    }
+
+    /**
+     * 
+     * Set the value of <code>weblogPublisherType</code>.
+     *
+     */
+    public void setWeblogPublisherType( String weblogPublisherType ) { 
+        this.weblogPublisherType = weblogPublisherType;
+    }
 
     /**
      * 
