@@ -29,6 +29,8 @@ import java.util.regex.*;
  */
 public class Main {
 
+    public static long RETRY_INTERVAL = 10L * 1000L;
+
     /**
      * Default for show_results
      */
@@ -140,6 +142,7 @@ public class Main {
                 System.out.println( "weblog title:           " + item.getWeblogTitle() );
                 System.out.println( "weblog tier:            " + item.getWeblogTier() );
                 System.out.println( "weblog publisher type:  " + item.getWeblogPublisherType() );
+                System.out.println( "weblog indegree:        " + item.getWeblogIndegree() );
                 
                 System.out.println( "author name:            " + item.getAuthorName() );
                 System.out.println( "author email:           " + item.getAuthorEmail() );
@@ -203,12 +206,12 @@ public class Main {
 
     public void exec() throws Exception {
 
-        try {
+        Config config = client.getConfig();
+        
+        while( true ) {
 
-            Config config = client.getConfig();
+            try {
             
-            while( true ) {
-
                 //fetch the most recent results.  This will block if necessary.
 
                 long fetch_before = System.currentTimeMillis();
@@ -262,21 +265,17 @@ public class Main {
                 if ( before > 0 && last.getTime() > before )
                     break;
 
-            } 
+            } catch ( Exception e ) {
 
-        } finally {
+                System.out.println( "Caught exception while processing API:  " );
+                System.out.println( e.getMessage() );
+                System.out.println( "Retrying in " + RETRY_INTERVAL + "ms" );
+                Thread.sleep( RETRY_INTERVAL );
+                
+            }
+                
+        } 
 
-            // persist call pointer settings by recording the offset and 'after'
-            // parameters in the config used the by the client by storing the
-            // last requested URL.  Note that since this is in a finally block
-            // it will be called even when a Throwable or IOException is called.
-
-            //get the config object that the client is using.
-
-            Date restartPoint = client.getRestartPoint();
-
-        }
-            
     }
 
     private static String getOpt( String v ) {

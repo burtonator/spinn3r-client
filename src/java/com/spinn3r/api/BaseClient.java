@@ -433,9 +433,12 @@ public abstract class BaseClient {
         String pubDate = getElementCDATAByTagName( current, "pubDate" );
         item.setPubDate( RFC822DateParser.parse( pubDate ) );
         
-        //FIXME: weblog:indegree
         //FIXME: weblog:iranking
 
+        String weblog_indegree = getElementCDATAByTagName( current, "indegree", NS_WEBLOG );
+        if ( weblog_indegree != null )
+            item.setWeblogIndegree( Integer.parseInt( weblog_indegree ) );
+        
         String publisher_type = getElementCDATAByTagName( current, "publisher_type", NS_WEBLOG );
         if ( publisher_type != null )
             publisher_type = publisher_type.trim();

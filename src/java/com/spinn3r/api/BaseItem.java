@@ -24,7 +24,6 @@ import java.net.*;
  * Represents a single item returned from the API.
  */
 public abstract class BaseItem {
-    
 
     private List tags                   = null;
 
@@ -41,6 +40,7 @@ public abstract class BaseItem {
     private String weblogPublisherType  = null;
 
     private int weblogTier              = -1;
+    private int weblogIndegree          = -1;
 
     private Date pubDate                = null;
 
@@ -50,6 +50,24 @@ public abstract class BaseItem {
 
     private String contentExtract       = null;
     private String commentExtract       = null;
+
+    /**
+     * 
+     * Set the value of <code>weblogIndegree</code>.
+     *
+     */
+    public void setWeblogIndegree( int weblogIndegree ) { 
+        this.weblogIndegree = weblogIndegree;
+    }
+
+    /**
+     * 
+     * Get the value of <code>weblogIndegree</code>.
+     *
+     */
+    public int getWeblogIndegree() { 
+        return this.weblogIndegree;
+    }
 
     /**
      * 
