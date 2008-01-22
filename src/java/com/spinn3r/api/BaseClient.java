@@ -174,8 +174,23 @@ public abstract class BaseClient {
         
         //wrap the downloaded input stream with a gzip input stream when
         //necessary.
-        if ( isCompressed )
-            is = new GZIPInputStream( is );
+        if ( isCompressed ) {
+
+            //NOTE: this is a bug fix for Apache2.  If mod_compress is disabled
+            //during LIVE http connections the result won't be compressed
+            //content.  The GZIPInputStream class will first attempt to read the
+            //gzip magic number in its constructor.  If the magic number is
+            //incorrect then it will throw an exception.
+            try {
+                InputStream gz = new GZIPInputStream( is );
+                is = gz;
+            } catch ( IOException e ) {
+                log.warn( "Detected invalid gzip stream.  Using uncompressed stream.", e );
+                //reset since GZIPInputStream might have read some content
+                is.reset();
+            }
+            
+        }
 
         return is;
 
@@ -432,6 +447,10 @@ public abstract class BaseClient {
 
         String pubDate = getElementCDATAByTagName( current, "pubDate" );
         item.setPubDate( RFC822DateParser.parse( pubDate ) );
+
+        String atom_published = getElementCDATAByTagName( current, "published", NS_ATOM );
+        if ( atom_published != null && ! atom_published.equals( "" ) )
+            item.setPublished( ISO8601DateParser.parse( atom_published ) );
         
         //FIXME: weblog:iranking
 

@@ -44,7 +44,7 @@ public class Main {
     /**
      * How far behind should be start by default?
      */
-    public static long INTERVAL = 60L * 60L * 1000L;
+    public static long INTERVAL = 20L * 60L * 1000L;
 
     /**
      * The date of the last item we found.
@@ -126,7 +126,7 @@ public class Main {
             }
             
             if ( show_results >= 1 ) {
-            
+
                 System.out.println( "----" );
                 System.out.println( "link:                   " + item.getLink() );
                 System.out.println( "guid:                   " + item.getGuid() );
@@ -138,6 +138,7 @@ public class Main {
                 System.out.println( "title:                  " + item.getTitle() );
                 System.out.println( "source:                 " + item.getSource() );
                 System.out.println( "pubDate:                " + item.getPubDate() );
+                System.out.println( "published:              " + item.getPublished() );
                 
                 System.out.println( "weblog title:           " + item.getWeblogTitle() );
                 System.out.println( "weblog tier:            " + item.getWeblogTier() );
@@ -151,6 +152,10 @@ public class Main {
                 System.out.println( "lang:                   " + item.getLang() );
                 System.out.println( "tags:                   " + item.getTags() );
 
+            }
+                
+            if ( show_results >= 3 ) {
+                
                 System.out.println( "description: " );
                 System.out.println( "-" );
                 System.out.println( item.getDescription() );
@@ -270,6 +275,9 @@ public class Main {
                 System.out.println( "Caught exception while processing API:  " );
                 System.out.println( e.getMessage() );
                 System.out.println( "Retrying in " + RETRY_INTERVAL + "ms" );
+
+                e.printStackTrace();
+                
                 Thread.sleep( RETRY_INTERVAL );
                 
             }

@@ -43,7 +43,8 @@ public abstract class BaseItem {
     private int weblogIndegree          = -1;
 
     private Date pubDate                = null;
-
+    private Date published              = null;
+    
     private String authorName           = null;
     private String authorEmail          = null;
     private String authorLink           = null;
@@ -373,6 +374,24 @@ public abstract class BaseItem {
      */
     public String getDescription() { 
         return this.description;
+    }
+
+    /**
+     * 
+     * Get the value of <code>published</code>.
+     *
+     */
+    public Date getPublished() { 
+        return this.published;
+    }
+
+    /**
+     * 
+     * Set the value of <code>published</code>.
+     *
+     */
+    public void setPublished( Date published ) { 
+        this.published = published;
     }
 
     public String toString() {
