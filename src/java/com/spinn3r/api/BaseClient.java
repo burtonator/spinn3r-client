@@ -185,9 +185,12 @@ public abstract class BaseClient {
                 InputStream gz = new GZIPInputStream( is );
                 is = gz;
             } catch ( IOException e ) {
-                log.warn( "Detected invalid gzip stream.  Using uncompressed stream.", e );
+
+                //TODO: are we going to add log4j support?
+                //log.warn( "Detected invalid gzip stream.  Using uncompressed stream.", e );
                 //reset since GZIPInputStream might have read some content
                 is.reset();
+                
             }
             
         }
