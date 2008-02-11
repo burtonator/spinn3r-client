@@ -130,6 +130,7 @@ public class Main {
                 System.out.println( "----" );
                 System.out.println( "link:                   " + item.getLink() );
                 System.out.println( "guid:                   " + item.getGuid() );
+                System.out.println( "feed URL:               " + item.getFeedURL() );
 
             }
 

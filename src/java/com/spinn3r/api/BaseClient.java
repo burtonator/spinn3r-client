@@ -59,6 +59,7 @@ public abstract class BaseClient {
     public static final String NS_ATOM    = "http://www.w3.org/2005/Atom" ;
     public static final String NS_WEBLOG  = "http://tailrank.com/ns/#weblog" ;
     public static final String NS_POST    = "http://tailrank.com/ns/#post" ;
+    public static final String NS_FEED    = "http://tailrank.com/ns/#feed" ;
 
     public static final String USER_AGENT_HEADER = "User-Agent";
     public static final String ACCEPT_ENCODING_HEADER = "Accept-Encoding";
@@ -488,6 +489,8 @@ public abstract class BaseClient {
         item.setCommentExtract( getElementCDATAByTagName( current,
                                                           "comment_extract",
                                                           NS_POST ) );
+
+        item.setFeedURL( getElementCDATAByTagName( current, "url", NS_FEED ) );
 
         return item;
         

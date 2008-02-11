@@ -24,7 +24,7 @@ import java.net.*;
  * Represents a single item returned from the API.
  */
 public abstract class BaseItem {
-
+    
     private List tags                   = null;
 
     private String title                = null;
@@ -51,6 +51,8 @@ public abstract class BaseItem {
 
     private String contentExtract       = null;
     private String commentExtract       = null;
+
+    private String feedURL              = null;
 
     /**
      * 
@@ -392,6 +394,24 @@ public abstract class BaseItem {
      */
     public void setPublished( Date published ) { 
         this.published = published;
+    }
+
+    /**
+     * 
+     * Get the value of <code>feedURL</code>.
+     *
+     */
+    public String getFeedURL() { 
+        return this.feedURL;
+    }
+
+    /**
+     * 
+     * Set the value of <code>feedURL</code>.
+     *
+     */
+    public void setFeedURL( String feedURL ) { 
+        this.feedURL = feedURL;
     }
 
     public String toString() {
