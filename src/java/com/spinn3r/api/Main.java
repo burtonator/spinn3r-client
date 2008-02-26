@@ -25,6 +25,8 @@ import java.util.regex.*;
  * 
  * This class will fetch the current API results as of INTERVAL minutes and then
  * keep fetching until it's up to date.
+ *
+ * @author Kevin Burton
  * 
  */
 public class Main {
