@@ -31,6 +31,14 @@ import java.util.regex.*;
  */
 public class Main {
 
+    /**
+     * Maximum number of retries.
+     */
+    public static long RETRY_MAX = 1;
+    
+    /**
+     * Determines how long we should wait between retries.
+     */
     public static long RETRY_INTERVAL = 10L * 1000L;
 
     /**
@@ -63,7 +71,7 @@ public class Main {
      * Keeps track of the client that the user wants to use from the command
      * line.
      */
-    private Client client = null;
+    private BaseClient client = null;
 
     /**
      * Results from the last call.
@@ -99,7 +107,7 @@ public class Main {
 
     private static boolean timing = true;
 
-    public Main( Client client ) {
+    public Main( BaseClient client ) {
         this.client = client;
     }
     
@@ -214,49 +222,20 @@ public class Main {
 
     public void exec() throws Exception {
 
-        Config config = client.getConfig();
+        Config  config       = client.getConfig();
+        int     retry_ctr    = 0;
         
         while( true ) {
 
             try {
-            
-                //fetch the most recent results.  This will block if necessary.
 
-                long fetch_before = System.currentTimeMillis();
-
-                client.fetch();
-
-                long fetch_after  = System.currentTimeMillis();
-
-                if ( save != null ) {
-
-                    //save the results to disk if necessary.
-
-                    File root = new File( save );
-                    root.mkdirs();
-
-                    File file = new File( root,
-                                          System.currentTimeMillis() + ".xml" );
-                    
-                    InputStream is = client.getInputStream();
-                    FileOutputStream os =
-                        new FileOutputStream( file );
-
-                    byte[] data = new byte[ 2048 ];
-
-                    int readCount = 0;
-                    
-                    while( ( readCount = is.read( data )) > 0 ) {
-                        os.write( data, 0, readCount );
-                    }
-                    
-                    is.close();
-                    os.close();
-
-                }
+                // set the optimial limit if necessary
+                if ( retry_ctr == 0 )
+                    config.setLimit( client.getOptimalLimit() );
+                else
+                    config.setLimit( client.getConservativeLimit() );
                 
-                //get the results found from the last fetch.
-                results = client.getResults();
+                results = doFetch();
 
                 System.out.println( "Found N results: " + results.size() );
 
@@ -273,8 +252,19 @@ public class Main {
                 if ( before > 0 && last.getTime() > before )
                     break;
 
+                //fetch was successful... 
+                retry_ctr = 0;
+                
             } catch ( Exception e ) {
 
+                //revert limit to conservative values.
+                if ( retry_ctr < RETRY_MAX ) {
+                    System.out.println( "Caught exception... retrying with conservative limit values." );
+                    ++retry_ctr;
+                    continue;
+                    
+                }
+                
                 System.out.println( "Caught exception while processing API:  " );
                 System.out.println( e.getMessage() );
                 System.out.println( "Retrying in " + RETRY_INTERVAL + "ms" );
@@ -289,6 +279,53 @@ public class Main {
 
     }
 
+    /**
+     * Perform a fetch of the next API call.  
+     */
+    private List<BaseItem> doFetch() throws Exception {
+
+        Config config = client.getConfig();
+
+        //fetch the most recent results.  This will block if necessary.
+
+        long fetch_before = System.currentTimeMillis();
+
+        client.fetch();
+
+        long fetch_after  = System.currentTimeMillis();
+
+        if ( save != null ) {
+
+            //save the results to disk if necessary.
+
+            File root = new File( save );
+            root.mkdirs();
+
+            File file = new File( root,
+                                  System.currentTimeMillis() + ".xml" );
+            
+            InputStream is = client.getInputStream();
+            FileOutputStream os =
+                new FileOutputStream( file );
+
+            byte[] data = new byte[ 2048 ];
+
+            int readCount = 0;
+            
+            while( ( readCount = is.read( data )) > 0 ) {
+                os.write( data, 0, readCount );
+            }
+            
+            is.close();
+            os.close();
+
+        }
+        
+        //get the results found from the last fetch.
+        return client.getResults();
+
+    }
+    
     private static String getOpt( String v ) {
         return getOpt( v, null );
     }
@@ -402,8 +439,8 @@ public class Main {
 
         //First. Determine which API you'd like to use.  
 
-        Config config = null;
-        Client client = null;
+        Config       config   = null;
+        BaseClient   client   = null;
 
         if ( api.equals( "feed" ) ) {
         

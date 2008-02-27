@@ -34,6 +34,10 @@ import org.w3c.dom.*;
 public class FeedClient extends BaseClient implements Client {
 
     public static int MAX_LIMIT = 100;
+
+    public static int OPTIMAL_LIMIT = 100;
+
+    public static int CONSERVATIVE_LIMIT = 10;
     
     /**
      * Base router request URL.
@@ -56,6 +60,14 @@ public class FeedClient extends BaseClient implements Client {
 
     protected int getMaxLimit() {
         return MAX_LIMIT;
+    }
+
+    protected int getOptimalLimit() {
+        return OPTIMAL_LIMIT;
+    }
+
+    protected int getConservativeLimit() {
+        return CONSERVATIVE_LIMIT;
     }
 
     public String getRouter() {

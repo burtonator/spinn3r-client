@@ -47,7 +47,7 @@ import org.w3c.dom.*;
  * 
  * 
  */
-public abstract class BaseClient {
+public abstract class BaseClient implements Client {
 
     /**
      * Go back in time to make sure we recrawl everything.
@@ -219,6 +219,7 @@ public abstract class BaseClient {
 
         int requestLimit = config.getLimit();
 
+        //enforce max limit so that we don't generate runtime exceptions.
         if ( requestLimit > getMaxLimit() )
             requestLimit = getMaxLimit();
         
@@ -240,6 +241,13 @@ public abstract class BaseClient {
             setSleepDuration( sleepInterval );
             
         } 
+
+        //apply the requestLimit to the current URL.  This needs to be done so
+        //that we can change the limit at runtime.  When I originally designed
+        //the client I didn't want to support introspecting and mutating the URL
+        //on the client but with the optimial limit performance optimization
+        //this is impossible.
+        resource = setParam( resource, "limit", requestLimit );
 
         // store the last requested URL so we can expose this to the caller for
         // debug purposes.
@@ -404,6 +412,19 @@ public abstract class BaseClient {
     protected abstract int getMaxLimit();
 
     /**
+     * Return the optimal limit for fetches. This is used to boost performance
+     * in some situations.  We have to resort to the conservative limit if the
+     * HTTP server can't handle the result set size.
+     */
+    protected abstract int getOptimalLimit();
+    
+    /**
+     * Conservative limit for items which should work in all situations (but
+     * might be slower)
+     */
+    protected abstract int getConservativeLimit();
+    
+    /**
      * Return the router for this client.  Right now this is either:
      * 
      * http://api.spinn3r.com/rss/feed.getDelta?
@@ -413,7 +434,7 @@ public abstract class BaseClient {
      * http://api.spinn3r.com/rss/permalink.getDelta?
      * 
      */
-    protected abstract String getRouter();
+    public abstract String getRouter();
     
     /**
      * Parse an individual item which might be specific to this client.
@@ -640,6 +661,32 @@ public abstract class BaseClient {
         buff.append( "=" );
         buff.append( value );
 
+    }
+
+    /**
+     * Set a parameter in the HTTP URL.
+     *
+     */
+    protected String setParam( String v,
+                               String key,
+                               Object value ) {
+
+        int start = v.indexOf( String.format( "%s=", key ) );
+
+        if ( start != -1 ) {
+            int end = v.indexOf( "&", start );
+
+            if ( end == -1 )
+                end = v.length();
+
+            StringBuffer buff = new StringBuffer( v );
+
+            buff.replace( start, end, String.format( "%s=%s", key, value ) );
+            return buff.toString();
+        }
+        
+        return v;
+        
     }
 
     // **** Getter and setters **************************************************

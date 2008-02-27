@@ -38,6 +38,10 @@ public class PermalinkClient extends BaseClient implements Client {
      */
     public static int MAX_LIMIT = 10;
 
+    public static int OPTIMAL_LIMIT = 10;
+
+    public static int CONSERVATIVE_LIMIT = 10;
+
     public void fetch() throws IOException,
                                ParseException,
                                InterruptedException {
@@ -54,6 +58,14 @@ public class PermalinkClient extends BaseClient implements Client {
 
     protected int getMaxLimit() {
         return MAX_LIMIT;
+    }
+
+     protected int getOptimalLimit() {
+        return OPTIMAL_LIMIT;
+    }
+
+    protected int getConservativeLimit() {
+        return CONSERVATIVE_LIMIT;
     }
 
     public String getRouter() {
