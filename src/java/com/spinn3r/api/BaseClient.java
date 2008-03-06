@@ -50,6 +50,11 @@ import org.w3c.dom.*;
 public abstract class BaseClient implements Client {
 
     /**
+     * Maximum number of retries.
+     */
+    public static long RETRY_MAX = 1;
+
+    /**
      * Go back in time to make sure we recrawl everything.
      */
     public static final int RESTART_BUFFER = 30 * 1000;
@@ -199,6 +204,53 @@ public abstract class BaseClient implements Client {
         return is;
 
     }
+
+    public void fetch( Config config ) throws IOException,
+                                              ParseException,
+                                              InterruptedException {
+
+        int retry_ctr = 0;
+
+        while( true ) {
+
+            try {
+            
+                // set the optimial limit if necessary
+                if ( retry_ctr == 0 )
+                    config.setLimit( getOptimalLimit() );
+                else
+                    config.setLimit( getConservativeLimit() );
+                
+                doFetch( config );
+                break;
+                
+            } catch ( Exception e ) {
+                
+                //revert limit to conservative values.
+                if ( retry_ctr < RETRY_MAX ) {
+                    ++retry_ctr;
+                    continue;
+                }
+
+                //this is slightly ugly but prevents nested exceptions.
+                if ( e instanceof IOException )
+                    throw (IOException)e;
+
+                if ( e instanceof ParseException )
+                    throw (ParseException)e;
+
+                if ( e instanceof InterruptedException )
+                    throw (InterruptedException)e;
+
+                IOException ioe = new IOException();
+                ioe.initCause( e );
+                throw ioe;
+
+            }
+            
+        }
+        
+    }
     
     /**
      * Fetch the API with the given FeedConfig
@@ -206,9 +258,9 @@ public abstract class BaseClient implements Client {
      * @throws IOException if there's an error with network transport.
      * @throws ParserException if there's a problem parsing the resulting XML.
      */
-    public void fetch( Config config ) throws IOException,
-                                              ParseException,
-                                              InterruptedException {
+    private void doFetch( Config config ) throws IOException,
+                                                 ParseException,
+                                                 InterruptedException {
 
         if ( config.getVendor() == null )
             throw new RuntimeException( "Vendor not specified" );

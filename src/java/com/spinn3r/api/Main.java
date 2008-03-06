@@ -32,11 +32,6 @@ import java.util.regex.*;
 public class Main {
 
     /**
-     * Maximum number of retries.
-     */
-    public static long RETRY_MAX = 1;
-    
-    /**
      * Determines how long we should wait between retries.
      */
     public static long RETRY_INTERVAL = 10L * 1000L;
@@ -223,18 +218,11 @@ public class Main {
     public void exec() throws Exception {
 
         Config  config       = client.getConfig();
-        int     retry_ctr    = 0;
         
         while( true ) {
 
             try {
 
-                // set the optimial limit if necessary
-                if ( retry_ctr == 0 )
-                    config.setLimit( client.getOptimalLimit() );
-                else
-                    config.setLimit( client.getConservativeLimit() );
-                
                 results = doFetch();
 
                 System.out.println( "Found N results: " + results.size() );
@@ -251,20 +239,9 @@ public class Main {
 
                 if ( before > 0 && last.getTime() > before )
                     break;
-
-                //fetch was successful... 
-                retry_ctr = 0;
                 
             } catch ( Exception e ) {
 
-                //revert limit to conservative values.
-                if ( retry_ctr < RETRY_MAX ) {
-                    System.out.println( "Caught exception... retrying with conservative limit values." );
-                    ++retry_ctr;
-                    continue;
-                    
-                }
-                
                 System.out.println( "Caught exception while processing API:  " );
                 System.out.println( e.getMessage() );
                 System.out.println( "Retrying in " + RETRY_INTERVAL + "ms" );
@@ -294,7 +271,9 @@ public class Main {
 
         long fetch_after  = System.currentTimeMillis();
 
-        if ( save != null ) {
+        List<BaseItem> results = client.getResults();
+
+        if ( save != null && results.size() != 0 ) {
 
             //save the results to disk if necessary.
 
@@ -322,8 +301,8 @@ public class Main {
         }
         
         //get the results found from the last fetch.
-        return client.getResults();
-
+        return results;
+        
     }
     
     private static String getOpt( String v ) {
@@ -460,41 +439,65 @@ public class Main {
 
             String v = args[i];
 
-            if ( v.startsWith( "--vendor" ) )
+            if ( v.startsWith( "--vendor" ) ) {
                 config.setVendor( getOpt( v ) );
+                continue;
+            }
 
-            if ( v.startsWith( "--lang" ) )
+            if ( v.startsWith( "--lang" ) ) {
                 config.setLang( getOpt( v, "en" ) );
+                continue;
+            }
 
-           if ( v.startsWith( "--filter" ) )
+            if ( v.startsWith( "--filter" ) ) {
                 filter = getOpt( v );
+                continue;
+            }
 
-            if ( v.startsWith( "--show_results" ) )
+            if ( v.startsWith( "--show_results" ) ) {
                 show_results = Integer.parseInt( getOpt( v ) );
+                continue;
+            }
 
-            if ( v.startsWith( "--after" ) ) 
+            if ( v.startsWith( "--after" ) ) {
                 after = getOptAsTimeInMillis( v );
+                continue;
+            }
 
-            if ( v.startsWith( "--before" ) ) 
+            if ( v.startsWith( "--before" ) ) {
                 before = getOptAsTimeInMillis( v );
+                continue;
+            }
 
-            if ( v.startsWith( "--range" ) )
+            if ( v.startsWith( "--range" ) ) {
                 range = Long.parseLong( getOpt( v ) );
+                continue;
+            }
 
-            if ( v.startsWith( "--limit" ) )
+            if ( v.startsWith( "--limit" ) ) {
                 config.setLimit( Integer.parseInt( getOpt( v ) ) );
+                continue;
+            }
 
-            if ( v.startsWith( "--sleep_duration" ) ) 
+            if ( v.startsWith( "--sleep_duration" ) ) {
                 client.setSleepDuration( Long.parseLong( getOpt( v ) ) );
+                continue;
+            }
 
-            if ( v.startsWith( "--save" ) ) 
+            if ( v.startsWith( "--save" ) ) {
                 save = getOpt( v );
+                continue;
+            }
 
-            if ( v.startsWith( "--timing" ) ) 
+            if ( v.startsWith( "--timing" ) ) {
                 timing = "true".equals( getOpt( v ) );
+                continue;
+            }
 
-            if ( v.startsWith( "--host" ) ) 
+            if ( v.startsWith( "--host" ) ) {
                 client.setHost( getOpt( v ) );
+                continue;
+            }
 
             if ( v.startsWith( "--tier" ) ) {
 
@@ -504,8 +507,17 @@ public class Main {
                 int end = Integer.parseInt( split[ 1 ] );
                 
                 config.setTier( start, end );
+                continue;
             }
 
+            if ( v.startsWith( "com.spinn3r" ) )
+                continue;
+            
+            // That's an unknown command line option.  Exit.  
+            System.err.printf( "Unknown command line option: %s\n", v );
+            syntax();
+            System.exit( 1 );
+            
         }
 
         //assert that we have all required options.
