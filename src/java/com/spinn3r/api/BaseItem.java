@@ -33,6 +33,8 @@ public abstract class BaseItem {
     private String guid                 = null;
     private String lang                 = null;
 
+    private String resourceGUID         = null;
+
     private String source               = null;
 
     private String weblogTitle          = null;
@@ -414,6 +416,26 @@ public abstract class BaseItem {
         this.feedURL = feedURL;
     }
 
+
+    /**
+     * 
+     * Get the value of <code>resourceGUID</code>.
+     *
+     */
+    public String getResourceGUID() { 
+        return this.resourceGUID;
+    }
+
+    /**
+     * 
+     * Set the value of <code>resourceGUID</code>.
+     *
+     */
+    public void setResourceGUID( String resourceGUID ) { 
+        this.resourceGUID = resourceGUID;
+    }
+
+    
     public String toString() {
         return link;
     }

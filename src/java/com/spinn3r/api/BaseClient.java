@@ -565,6 +565,8 @@ public abstract class BaseClient implements Client {
 
         item.setFeedURL( getElementCDATAByTagName( current, "url", NS_FEED ) );
 
+        item.setResourceGUID( getElementCDATAByTagName( current, "resource_guid", NS_POST ) );
+
         return item;
         
     }
