@@ -22,7 +22,7 @@ import java.util.*;
  * Used to startup the API and specify defaults for limits, where to start
  * indexing, tiers, language, etc.
  */
-public abstract class Config {
+public class Config {
 
     /**
      * When we've ran out of results (because the client is up to date) then we

@@ -305,7 +305,20 @@ public abstract class BaseClient implements Client {
         // debug purposes.
 
         setLastRequestURL( resource );
-        
+
+        try {
+            parse( doFetch( resource ) );
+        } catch ( Exception e ) {
+            throw new ParseException( e );
+        }
+
+            
+    }
+
+    public Document doFetch( String resource ) throws IOException,
+                                                      ParseException,
+                                                      InterruptedException {
+
         // create the HTTP connection.
         URL request = new URL( resource );
         URLConnection conn = request.openConnection();
@@ -354,16 +367,13 @@ public abstract class BaseClient implements Client {
             //
             // Another advantage to DOM is that it's very portable.
             
-            Document doc = parser.parse( is );
-
-            parse( doc );
+            return parser.parse( is );
 
         } catch ( Exception e ) {
             throw new ParseException( e );
         }
-    
     }
-
+    
     /**
      * Get a local copy of the input stream so we can benchmark the download
      * time.
@@ -378,7 +388,7 @@ public abstract class BaseClient implements Client {
     private byte[] getInputStreamAsByteArray( InputStream is ) throws IOException {
 
         //include length of content from the original site with contentLength
-        ByteArrayOutputStream bos = new ByteArrayOutputStream( 500000 );
+        ByteArrayOutputStream bos = new ByteArrayOutputStream( 500000 ); /* reasonable sized buffer */
       
         //now process the Reader...
         byte data[] = new byte[2048];
@@ -461,20 +471,26 @@ public abstract class BaseClient implements Client {
      * content this might cause an error on our end if the limit is more than 10
      * or so.
      */
-    protected abstract int getMaxLimit();
+    protected int getMaxLimit() {
+        return 10;
+    }
 
     /**
      * Return the optimal limit for fetches. This is used to boost performance
      * in some situations.  We have to resort to the conservative limit if the
      * HTTP server can't handle the result set size.
      */
-    protected abstract int getOptimalLimit();
+    protected int getOptimalLimit() {
+        return 10;
+    }
     
     /**
      * Conservative limit for items which should work in all situations (but
      * might be slower)
      */
-    protected abstract int getConservativeLimit();
+    protected int getConservativeLimit() {
+        return 10;
+    }
     
     /**
      * Return the router for this client.  Right now this is either:
@@ -491,7 +507,9 @@ public abstract class BaseClient implements Client {
     /**
      * Parse an individual item which might be specific to this client.
      */
-    protected abstract BaseItem parseItem( Element current ) throws Exception;
+    protected BaseItem parseItem( Element current ) throws Exception {
+        throw new Exception( "Not implemented" );
+    }
 
     protected BaseItem parseItem( Element current,
                                   BaseItem item ) throws Exception {
