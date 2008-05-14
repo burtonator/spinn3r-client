@@ -53,8 +53,6 @@ public class Source extends BaseItem {
 
         setTitle( getElementCDATAByTagName( element, "title" ) );
         setLink( getElementCDATAByTagName( element, "link" ) );
-
-        System.out.printf( "DUMP: %s\n", getLink() );
         
         setDescription( getElementCDATAByTagName( element, "description" ) );
         setGuid( getElementCDATAByTagName( element, "guid", NS_WEBLOG ) );

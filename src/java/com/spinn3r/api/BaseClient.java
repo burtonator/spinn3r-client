@@ -307,8 +307,6 @@ public abstract class BaseClient implements Client {
         setLastRequestURL( resource );
 
         try {
-
-            System.out.printf( "DUMP: %s\n", resource );
             parse( doFetch( resource ) );
         } catch ( Exception e ) {
             throw new ParseException( e );
