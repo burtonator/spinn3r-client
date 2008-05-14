@@ -25,7 +25,7 @@ import javax.xml.parsers.*;
 import org.w3c.dom.*;
 
 /**
- *
+ * API client that implements Spinn3r's source registration API.
  */
 public class SourceClient extends BaseClient implements Client {
 
@@ -37,30 +37,62 @@ public class SourceClient extends BaseClient implements Client {
 
     }
 
-    public Source status( String link ) throws Exception {
+    /**
+     * Register a new weblog within Spinn3r.
+     */
+    public void register( String link ) throws Exception {
 
         StringBuffer params = new StringBuffer();
 
         addParam( params, "link", link );
         addParam( params, "vendor",  config.getVendor() );
         addParam( params, "version", config.getVersion() );
+
+        String resource = String.format( "http://%s/rss/source.register?%s", getHost(), params );
         
-        Document doc = doFetch( getRouter() + params );
+        Document doc = doFetch( resource );
 
-        Source source = new Source();
+    }
 
-        Element root = (Element)doc.getFirstChild();
+    /**
+     * Check on the status of a weblog within Spinn3r.
+     */
+    public Source status( String link ) throws Exception {
 
-        Element channel = getElementByTagName( root, "channel" );
+        try {
 
-        //determine the next_request_url so that we can fetch the second page of
-        //results.
-        source.setTitle( getElementCDATAByTagName( channel, "title" ) );
-        source.setLink( getElementCDATAByTagName( channel, "link" ) );
-        source.setDescription( getElementCDATAByTagName( channel, "description" ) );
-        source.setGuid( getElementCDATAByTagName( channel, "guid", NS_WEBLOG ) );
+            StringBuffer params = new StringBuffer();
 
-        return source;
+            addParam( params, "link", link );
+            addParam( params, "vendor",  config.getVendor() );
+            addParam( params, "version", config.getVersion() );
+
+            String resource = String.format( "http://%s/rss/source.status?%s", getHost(), params );
+
+            Document doc = doFetch( resource );
+
+            Source source = new Source();
+
+            Element root = (Element)doc.getFirstChild();
+
+            Element channel = getElementByTagName( root, "channel" );
+
+            //determine the next_request_url so that we can fetch the second page of
+            //results.
+            source.setTitle( getElementCDATAByTagName( channel, "title" ) );
+            source.setLink( getElementCDATAByTagName( channel, "link" ) );
+            source.setDescription( getElementCDATAByTagName( channel, "description" ) );
+            source.setGuid( getElementCDATAByTagName( channel, "guid", NS_WEBLOG ) );
+            source.setDateFound( ISO8601DateParser.parse( getElementCDATAByTagName( channel, "date_found", NS_WEBLOG ) ) );
+            source.setIndegree( Integer.parseInt( getElementCDATAByTagName( channel, "indegree", NS_WEBLOG ) ) );
+            
+            //FIXME: feed info
+            
+            return source;
+
+        } catch ( FileNotFoundException e ) {
+            return null;
+        }
         
     }
 
@@ -76,19 +108,35 @@ public class SourceClient extends BaseClient implements Client {
         config.setVendor( "test" );
         
         client.setConfig( config );
-        client.setHost( "dev.api.spinn3r.com" );
 
-        String resource = args[0];
+        client.setHost( "api.spinn3r.com" );
 
-        System.out.printf( "Fetching status for: %s\n", resource );
-        
-        Source source = client.status( resource );
+        String method     = args[0];
+        String resource   = args[1];
 
-        System.out.printf( "         title: %s\n", source.getTitle() );
-        System.out.printf( "          link: %s\n", source.getLink() );
-        System.out.printf( "   description: %s\n", source.getDescription() );
-        System.out.printf( "          guid: %s\n", source.getGuid() );
-        
+        System.out.printf( "%s for %s\n", method, resource );
+
+        if ( method.equals( "register" ) ) {
+
+            client.register( resource );
+
+        } else if ( method.equals( "status" ) ) {
+
+            Source source = client.status( resource );
+
+            if ( source == null ) {
+                System.out.printf( "Not found\n" );
+                return;
+            }
+
+            System.out.printf( "         title: %s\n", source.getTitle() );
+            System.out.printf( "          link: %s\n", source.getLink() );
+            System.out.printf( "   description: %s\n", source.getDescription() );
+            System.out.printf( "    date_found: %s\n", source.getDateFound() );
+            System.out.printf( "      indegree: %s\n", source.getIndegree() );
+
+        }
+            
     }
     
 }

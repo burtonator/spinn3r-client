@@ -100,6 +100,8 @@ public class Main {
 
     private static String save = null;
 
+    private static String save_method = "flat";
+
     private static boolean timing = true;
 
     public Main( BaseClient client ) {
@@ -280,8 +282,30 @@ public class Main {
             File root = new File( save );
             root.mkdirs();
 
-            File file = new File( root,
-                                  System.currentTimeMillis() + ".xml" );
+            long now = System.currentTimeMillis();
+            
+            File file = null;
+
+            if ( "hierarchical".equals( save_method ) ) {
+
+                TimeZone tz = TimeZone.getTimeZone( "UTC" );
+                Calendar c = Calendar.getInstance( tz );
+                c.setTime( new Date( now ) );
+
+                String path = String.format( "%s/%s/%s/%s/%s.xml",
+                                             config.getApi(),
+                                             c.get( c.YEAR ),
+                                             c.get( c.MONTH ),
+                                             c.get( c.DAY_OF_MONTH ),
+                                             now );
+
+                file = new File( root, path );
+
+                new File( file.getParent() ).mkdirs();
+                
+            } else {
+                file = new File( root, now + ".xml" );
+            }
             
             InputStream is = client.getInputStream();
             FileOutputStream os =
@@ -384,14 +408,18 @@ public class Main {
         System.out.println( "    --save=DIRECTORY      Save result XML to disk in the specified directory." );
         System.out.println( "                          Default: none" );        
         System.out.println();
-        System.out.println( "    --host=hostname       Custom hostname for making calls against. Dev use only." );
-        System.out.println( "                          Default: api.spinn3r.com" );        
+        System.out.println( "    --save_method=        If 'hierarchical' we use a year/month/day hierarchy to save content." );
+        System.out.println( "                          Default: flat" );        
         System.out.println();
         System.out.println( "    --host=hostname       Custom hostname for making calls against. Dev use only." );
         System.out.println( "                          Default: api.spinn3r.com" );        
         System.out.println();
         System.out.println( "    --tier=start:end      Narrow results to a specific ranking by tier." );
         System.out.println( "                          Default: none" );        
+        System.out.println();
+        System.out.println( "    --skip_description    When true do NOT return the RSS description from the server.  This can" );
+        System.out.println( "                          save bandwidth for users who only need metadata." );        
+        System.out.println( "                          Default: false" );        
         System.out.println();
 
     }
@@ -408,8 +436,9 @@ public class Main {
         for( int i = 0; i < args.length; ++i ) {
             String v = args[i];
 
-            if ( v.startsWith( "--api" ) )
+            if ( v.startsWith( "--api" ) ) {
                 api = getOpt( v );
+            }
 
         }
 
@@ -432,6 +461,8 @@ public class Main {
             client = new PermalinkClient();
 
         }
+
+        config.setApi( api );
         
         long    after   = -1;
 
@@ -484,8 +515,18 @@ public class Main {
                 continue;
             }
 
-            if ( v.startsWith( "--save" ) ) {
+            if ( v.startsWith( "--save=" ) ) {
                 save = getOpt( v );
+                continue;
+            }
+
+            if ( v.startsWith( "--save_method=" ) ) {
+                save_method = getOpt( v );
+                continue;
+            }
+
+           if ( v.startsWith( "--skip_description=" ) ) {
+               config.setSkipDescription( Boolean.parseBoolean( getOpt( v ) ) );
                 continue;
             }
 
@@ -511,6 +552,9 @@ public class Main {
             }
 
             if ( v.startsWith( "com.spinn3r" ) )
+                continue;
+
+            if ( v.startsWith( "--api" ) )
                 continue;
             
             // That's an unknown command line option.  Exit.  

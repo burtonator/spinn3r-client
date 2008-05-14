@@ -50,6 +50,8 @@ public class Config {
     private int            tier_end            = -1;
     private Date           after               = new Date(); /* use epoch as default */
     private String         firstRequestURL     = null;
+    private boolean        skipDescription     = false;
+    private String         api                 = null;
 
     /**
      * How long we should sleep if an API call doesn't return enough values.
@@ -152,7 +154,11 @@ public class Config {
      * Set the value of <code>limit</code>.
      *
      */
-    public void setLimit( int limit ) { 
+    public void setLimit( int limit ) {
+
+        if ( limit < 10 )
+            throw new IllegalArgumentException( "Minimum limit is 10." );
+        
         this.limit = limit;
     }
 
@@ -194,6 +200,42 @@ public class Config {
         }
         
         return result;
+    }
+
+    /**
+     * 
+     * Get the value of <code>skipDescription</code>.
+     *
+     */
+    public boolean getSkipDescription() { 
+        return this.skipDescription;
+    }
+
+    /**
+     * 
+     * Set the value of <code>skipDescription</code>.
+     *
+     */
+    public void setSkipDescription( boolean skipDescription ) { 
+        this.skipDescription = skipDescription;
+    }
+
+    /**
+     * 
+     * Get the value of <code>api</code>.
+     *
+     */
+    public String getApi() { 
+        return this.api;
+    }
+
+    /**
+     * 
+     * Set the value of <code>api</code>.
+     *
+     */
+    public void setApi( String api ) { 
+        this.api = api;
     }
 
 }

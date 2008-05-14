@@ -32,6 +32,9 @@ public class ISO8601DateParser {
 
     public static Date parse( String input ) {
 
+        if ( input == null )
+            return null;
+        
         int min_length = 20;
         int max_length = 26;
 

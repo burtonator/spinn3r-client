@@ -34,7 +34,8 @@ import org.w3c.dom.*;
 public class PermalinkClient extends BaseClient implements Client {
 
     /**
-     * The permalink API can only handle 10 items at once.
+     * The permalink API can only handle 10 items at once since each piece of
+     * content is SO huge.
      */
     public static int MAX_LIMIT = 10;
 

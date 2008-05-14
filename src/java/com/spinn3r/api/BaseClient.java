@@ -1,4 +1,4 @@
- /*
+/*
  * Copyright 2007 Tailrank, Inc.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -143,7 +143,7 @@ public abstract class BaseClient implements Client {
      */
     private long sleepDuration = -1;
     
-    private List<BaseItem> results = null;
+    private List<BaseItem> results = new ArrayList();
 
     protected Config config = null;
 
@@ -307,12 +307,13 @@ public abstract class BaseClient implements Client {
         setLastRequestURL( resource );
 
         try {
+
+            System.out.printf( "DUMP: %s\n", resource );
             parse( doFetch( resource ) );
         } catch ( Exception e ) {
             throw new ParseException( e );
         }
 
-            
     }
 
     public Document doFetch( String resource ) throws IOException,
@@ -427,7 +428,7 @@ public abstract class BaseClient implements Client {
         for( int i = 0; i < items.getLength(); ++i ) {
 
             Element current = (Element)items.item( i );
-
+            
             result.add( parseItem( current ) );
             
         }
@@ -461,7 +462,11 @@ public abstract class BaseClient implements Client {
             String param_tier = "" + config.getTierStart() + ":" + config.getTierEnd();
             addParam( params, "tier", param_tier );
         }
-            
+
+        if ( config.getSkipDescription() ) {
+            addParam( params, "skip_description", "true" );
+        }
+        
         return getRouter() + params.toString();
         
     }
@@ -591,11 +596,20 @@ public abstract class BaseClient implements Client {
 
     // **** XML parsing utilities ***********************************************
 
-    protected List parseTags( Element current ) {
+    public static int parseInt( String v ) {
+
+        if ( v == null || v.equals( "" ) )
+            return 0;
+
+        return Integer.parseInt( v );
+        
+    }
+    
+    public static List parseTags( Element current ) {
         return parseChildNodesAsList( current, "category" );
     }
 
-    protected List parseChildNodesAsList( Element current, String name ) {
+    public static List parseChildNodesAsList( Element current, String name ) {
 
         List result = new ArrayList();
         
@@ -617,14 +631,14 @@ public abstract class BaseClient implements Client {
         return result;
     }
 
-    protected Element getElementByTagName( Element current,
-                                           String name ) {
+    public static Element getElementByTagName( Element current,
+                                               String name ) {
         return getElementByTagName( current, name, null );
     }
     
-    protected Element getElementByTagName( Element current,
-                                           String name,
-                                           String namespace ) {
+    public static Element getElementByTagName( Element current,
+                                               String name,
+                                               String namespace ) {
 
         NodeList elements = null;
 
@@ -643,14 +657,14 @@ public abstract class BaseClient implements Client {
 
     }
     
-    protected String getElementCDATAByTagName( Element current, String name ) {
+    public static String getElementCDATAByTagName( Element current, String name ) {
 
         return getElementCDATAByTagName( current, name, null );
     }
 
-    protected String getElementCDATAByTagName( Element current,
-                                               String name,
-                                               String namespace ) {
+    public static String getElementCDATAByTagName( Element current,
+                                                   String name,
+                                                   String namespace ) {
 
         Element e = getElementByTagName( current, name, namespace );
 
