@@ -22,45 +22,26 @@ import java.util.*;
  * Used to startup the API and specify defaults for limits, where to start
  * indexing, tiers, language, etc.
  */
-public class SourceListConfig extends Config {
+public class PermalinkHistoryConfig extends Config {
 
-    private Date           publishedAfter               = null; 
-    private Date           foundAfter               = null; 
+    private String           source               = null; 
 
     /**
      * 
-     * Get the value of <code>publishedAfter</code>.
+     * Get the value of <code>source</code>.
      *
      */
-    public Date getPublishedAfter() { 
-        return this.publishedAfter;
+    public String getSource() { 
+        return this.source;
     }
 
     /**
      * 
-     * Set the value of <code>publishedAfter</code>.
+     * Set the value of <code>source</code>.
      *
      */
-    public void setPublishedAfter( Date publishedAfter ) { 
-        this.publishedAfter = publishedAfter;
-    }
-
-    /**
-     * 
-     * Get the value of <code>foundAfter</code>.
-     *
-     */
-    public Date getFoundAfter() { 
-        return this.foundAfter;
-    }
-
-    /**
-     * 
-     * Set the value of <code>foundAfter</code>.
-     *
-     */
-    public void setFoundAfter( Date foundAfter ) { 
-        this.foundAfter = foundAfter;
+    public void setSource( String source ) { 
+        this.source = source;
     }
 
 }

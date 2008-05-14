@@ -27,18 +27,16 @@ import org.w3c.dom.*;
 /**
  * 
  */
-public class SourceListClient extends BaseClient implements Client {
+public class PermalinkHistoryClient extends BaseClient implements Client {
 
-    public static int MAX_LIMIT = 250;
-
-    public static int OPTIMAL_LIMIT = 250;
-
-    public static int CONSERVATIVE_LIMIT = 10;
+    public static int MAX_LIMIT            = 10;
+    public static int OPTIMAL_LIMIT        = 10;
+    public static int CONSERVATIVE_LIMIT   = 10;
 
     /**
      * Base router request URL.
      */
-    public static String ROUTER = "http://api.spinn3r.com/rss/source.list?";
+    public static String ROUTER = "http://api.spinn3r.com/rss/permalink.history?";
 
     public void fetch() throws IOException,
                                ParseException,
@@ -52,7 +50,7 @@ public class SourceListClient extends BaseClient implements Client {
      */
     protected String generateFirstRequestURL() {
 
-        SourceListConfig config = (SourceListConfig)super.getConfig();
+        PermalinkHistoryConfig config = (PermalinkHistoryConfig)super.getConfig();
         
         StringBuffer params = new StringBuffer( 1024 ) ;
 
@@ -64,14 +62,7 @@ public class SourceListClient extends BaseClient implements Client {
         addParam( params, "limit",   limit );
         addParam( params, "vendor",  config.getVendor() );
         addParam( params, "version", config.getVersion() );
-
-        //AFTER param needs to be added which should be ISO8601
-
-        if ( config.getPublishedAfter() != null )
-            addParam( params, "published_after",   toISO8601( config.getPublishedAfter() ) );
-
-        if ( config.getFoundAfter() != null )
-            addParam( params, "found_after",   toISO8601( config.getFoundAfter() ) );
+        addParam( params, "source",  config.getSource() );
 
         return getRouter() + params.toString();
         
@@ -94,30 +85,29 @@ public class SourceListClient extends BaseClient implements Client {
     }
 
     public String getRouter() {
-        return "http://" + getHost() + "/rss/source.list?";
+        return "http://" + getHost() + "/rss/permalink.history?";
     }
 
     public static void main( String[] args ) throws Exception {
 
-        SourceListConfig config = new SourceListConfig();
-        SourceListClient client = new SourceListClient();
+        PermalinkHistoryConfig config = new PermalinkHistoryConfig();
+        PermalinkHistoryClient client = new PermalinkHistoryClient();
 
         config.setVendor( "debug" );
         config.setVersion( "2.2.1" );
+        config.setSource( "http://techcrunch.com" );
         
         client.setConfig( config );
         client.setHost( "dev.api.spinn3r.com" );
 
+        List results;
+        
         client.fetch();
-
-        List results = client.getResults();
-
+        results = client.getResults();
         System.out.printf( "DUMP: Found %d items\n" , results.size() );
 
         client.fetch();
-
         results = client.getResults();
-
         System.out.printf( "DUMP: Found %d items\n" , results.size() );
 
     }
