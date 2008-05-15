@@ -317,7 +317,7 @@ public abstract class BaseClient implements Client {
     public Document doFetch( String resource ) throws IOException,
                                                       ParseException,
                                                       InterruptedException {
-
+        
         // create the HTTP connection.
         URL request = new URL( resource );
         URLConnection conn = request.openConnection();
@@ -520,8 +520,7 @@ public abstract class BaseClient implements Client {
         //base elements.
         item.setTitle( getElementCDATAByTagName( current, "title" ) );
 
-        item.setDescription( getElementCDATAByTagName( current,
-                                                       "description" ) );
+        item.setDescription( getElementCDATAByTagName( current, "description" ) );
 
         item.setLink( getElementCDATAByTagName( current, "link" )  );
         item.setGuid( getElementCDATAByTagName( current, "guid" )  );
@@ -531,7 +530,7 @@ public abstract class BaseClient implements Client {
 
         // dc:source
         item.setSource( getElementCDATAByTagName( current, "source", NS_DC ) );
-
+        
         // weblog:title
         // weblog:description
         item.setWeblogTitle( getElementCDATAByTagName( current, "title", NS_WEBLOG ) );
