@@ -56,12 +56,7 @@ public class SourceListClient extends BaseClient implements Client {
         
         StringBuffer params = new StringBuffer( 1024 ) ;
 
-        int limit = config.getLimit();
-        
-        if ( limit > getMaxLimit() )
-            limit = getMaxLimit();
-        
-        addParam( params, "limit",   limit );
+        addParam( params, "limit",   getOptimalLimit() );
         addParam( params, "vendor",  config.getVendor() );
         addParam( params, "version", config.getVersion() );
 
@@ -102,23 +97,14 @@ public class SourceListClient extends BaseClient implements Client {
         SourceListConfig config = new SourceListConfig();
         SourceListClient client = new SourceListClient();
 
-        config.setVendor( "debug" );
+        config.setVendor( "XXXX" );
         config.setVersion( "2.2.1" );
         
         client.setConfig( config );
-        client.setHost( "dev.api.spinn3r.com" );
 
         client.fetch();
 
         List results = client.getResults();
-
-        System.out.printf( "DUMP: Found %d items\n" , results.size() );
-
-        client.fetch();
-
-        results = client.getResults();
-
-        System.out.printf( "DUMP: Found %d items\n" , results.size() );
 
     }
 

@@ -106,7 +106,6 @@ public class PermalinkStatusClient extends BaseClient implements Client {
         config.setResource( "http://feedblog.org/2008/05/10/using-zookeeper-to-configure-external-monitoring-systems/" );
         
         client.setConfig( config );
-        client.setHost( "dev.api.spinn3r.com" );
 
         client.fetch();
         List<BaseItem> results = client.getResults();

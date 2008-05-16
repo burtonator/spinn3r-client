@@ -98,7 +98,6 @@ public class PermalinkHistoryClient extends BaseClient implements Client {
         config.setSource( "http://techcrunch.com" );
         
         client.setConfig( config );
-        client.setHost( "dev.api.spinn3r.com" );
 
         List results;
         
