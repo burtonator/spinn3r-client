@@ -29,6 +29,16 @@ import org.w3c.dom.*;
  */
 public class SourceListClient extends BaseClient implements Client {
 
+    /**
+     * When we've ran out of results (because the client is up to date) then we
+     * should spin for a few seconds.  If the sleep interval is -1 then we sleep
+     * for a random amount of time between 0 and 30 seconds.
+     *
+     * Default: Zero since it's usual for the permalinks status API to return <
+     * 10 results.
+     */
+    public static final long DEFAULT_SLEEP_INTERVAL = 0L;
+
     public static int MAX_LIMIT = 250;
 
     public static int OPTIMAL_LIMIT = 250;
@@ -39,6 +49,11 @@ public class SourceListClient extends BaseClient implements Client {
      * Base router request URL.
      */
     public static String ROUTER = "http://api.spinn3r.com/rss/source.list?";
+
+    /**
+     * How long we should sleep if an API call doesn't return enough values.
+     */
+    private long sleepInterval = DEFAULT_SLEEP_INTERVAL;
 
     public void fetch() throws IOException,
                                ParseException,
@@ -92,6 +107,10 @@ public class SourceListClient extends BaseClient implements Client {
         return "http://" + getHost() + "/rss/source.list?";
     }
 
+    public long getSleepInterval() {
+        return sleepInterval;
+    }
+
     public static void main( String[] args ) throws Exception {
 
         SourceListConfig config = new SourceListConfig();
@@ -99,12 +118,37 @@ public class SourceListClient extends BaseClient implements Client {
 
         config.setVendor( "XXXX" );
         config.setVersion( "2.2.1" );
+
+        Date date = new Date( 1210661536159L );
+        
+        config.setFoundAfter( date );
         
         client.setConfig( config );
 
-        client.fetch();
+        int max = 2000;
+        int total = 0;
+        
+        while( true ) {
 
-        List results = client.getResults();
+            client.fetch();
+
+            List<Source> results = client.getResults();
+
+            total += results.size();
+                
+            for( Source item : results ) {
+                System.out.printf( "resouce:    %s\n", item.getLink() );
+                System.out.printf( "date_found: %s\n", item.getDateFound() );
+            }
+
+            //System.out.printf( "Found %d results:\n", results.size() );
+            System.out.printf( "Last request URL: %s\n", client.getLastRequestURL() );
+            System.out.printf( "Next request URL: %s\n", client.getNextRequestURL() );
+
+            if ( total >= max )
+                break;
+            
+        }
 
     }
 

@@ -63,6 +63,7 @@ public abstract class BaseClient implements Client {
     public static final String NS_DC      = "http://purl.org/dc/elements/1.1/" ;
     public static final String NS_ATOM    = "http://www.w3.org/2005/Atom" ;
     public static final String NS_WEBLOG  = "http://tailrank.com/ns/#weblog" ;
+    public static final String NS_SOURCE  = "http://tailrank.com/ns/#source" ;
     public static final String NS_POST    = "http://tailrank.com/ns/#post" ;
     public static final String NS_FEED    = "http://tailrank.com/ns/#feed" ;
 
@@ -371,6 +372,7 @@ public abstract class BaseClient implements Client {
         } catch ( Exception e ) {
             throw new ParseException( e );
         }
+        
     }
     
     /**
@@ -719,9 +721,9 @@ public abstract class BaseClient implements Client {
 
     // **** URL request handling ************************************************
 
-    protected void addParam( StringBuffer buff,
-                             String name,
-                             Object value ) {
+    public static void addParam( StringBuffer buff,
+                                 String name,
+                                 Object value ) {
         addParam( buff, name, value, false );
     }
 
@@ -729,10 +731,10 @@ public abstract class BaseClient implements Client {
      * Add a parameter to the first request URL.  After the first call this is
      * no longer needed. 
      */
-    protected void addParam( StringBuffer buff,
-                             String name,
-                             Object value,
-                             boolean optional ) {
+    public static void addParam( StringBuffer buff,
+                                 String name,
+                                 Object value,
+                                 boolean optional ) {
 
         if ( optional && value == null )
             return;             

@@ -25,7 +25,7 @@ import java.util.*;
 public class SourceListConfig extends Config {
 
     private Date           publishedAfter               = null; 
-    private Date           foundAfter               = null; 
+    private Date           foundAfter                   = null; 
 
     /**
      * 

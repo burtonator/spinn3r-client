@@ -44,10 +44,11 @@ public class SourceClient extends BaseClient implements Client {
 
         StringBuffer params = new StringBuffer();
 
-        addParam( params, "link", link );
-        addParam( params, "vendor",  config.getVendor() );
-        addParam( params, "version", config.getVersion() );
-
+        addParam( params, "link",       link );
+        addParam( params, "vendor",     config.getVendor() );
+        addParam( params, "version",    config.getVersion() );
+        //addParam( params, "force",      "true" );
+        
         String resource = String.format( "http://%s/rss/source.register?%s", getHost(), params );
         
         Document doc = doFetch( resource );
@@ -105,11 +106,11 @@ public class SourceClient extends BaseClient implements Client {
         SourceClient client = new SourceClient();
 
         Config config = new Config();
-        config.setVendor( "test" );
+        config.setVendor( "debug" );
         
         client.setConfig( config );
 
-        client.setHost( "api.spinn3r.com" );
+        client.setHost( "dev.api.spinn3r.com" );
 
         String method     = args[0];
         String resource   = args[1];

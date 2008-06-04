@@ -55,9 +55,9 @@ public class Source extends BaseItem {
         setLink( getElementCDATAByTagName( element, "link" ) );
         
         setDescription( getElementCDATAByTagName( element, "description" ) );
-        setGuid( getElementCDATAByTagName( element, "guid", NS_WEBLOG ) );
-        setDateFound( ISO8601DateParser.parse( getElementCDATAByTagName( element, "date_found", NS_WEBLOG ) ) );
-        setIndegree( parseInt( getElementCDATAByTagName( element, "indegree", NS_WEBLOG ) ) );
+        setGuid( getElementCDATAByTagName( element, "guid", NS_SOURCE ) );
+        setDateFound( ISO8601DateParser.parse( getElementCDATAByTagName( element, "date_found", NS_SOURCE ) ) );
+        setIndegree( parseInt( getElementCDATAByTagName( element, "indegree", NS_SOURCE ) ) );
 
         // FIXME: guid, resource_status
         
