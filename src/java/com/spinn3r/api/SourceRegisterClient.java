@@ -61,8 +61,7 @@ public class SourceRegisterClient {
         SourceRegisterClient client = new SourceRegisterClient();
         SourceRegisterConfig config = new SourceRegisterConfig();
 
-        config.setVendor( "debug" );
-        config.setHost( "dev.api.spinn3r.com" );
+        config.setVendor( "XXXX" );
 
         client.setConfig( config );
 

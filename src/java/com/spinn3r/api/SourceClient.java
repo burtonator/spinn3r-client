@@ -110,11 +110,9 @@ public class SourceClient extends BaseClient implements Client {
         SourceClient client = new SourceClient();
 
         Config config = new Config();
-        config.setVendor( "biz360" );
+        config.setVendor( "XXXX" );
         
         client.setConfig( config );
-
-        client.setHost( "dev.api.spinn3r.com" );
 
         String method     = args[0];
         String resource   = args[1];

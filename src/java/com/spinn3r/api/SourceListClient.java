@@ -116,9 +116,7 @@ public class SourceListClient extends BaseClient implements Client {
         SourceListConfig config = new SourceListConfig();
         SourceListClient client = new SourceListClient();
 
-        client.setHost( "dev.api.spinn3r.com" );
-        
-        config.setVendor( "spinn3r" );
+        config.setVendor( "XXXX" );
 
         //start with an arbitrary date
         Date date = new Date( 1210661536159L );
