@@ -39,6 +39,8 @@ public class SourceClient extends BaseClient implements Client {
 
     /**
      * Register a new weblog within Spinn3r.
+     * 
+     * @throws Exception when registration fails.
      */
     public void register( String link ) throws Exception {
 
@@ -57,6 +59,8 @@ public class SourceClient extends BaseClient implements Client {
 
     /**
      * Check on the status of a weblog within Spinn3r.
+     *
+     * @throws FileNotFoundException when the weblog was not found in our index.
      */
     public Source status( String link ) throws Exception {
 
@@ -106,7 +110,7 @@ public class SourceClient extends BaseClient implements Client {
         SourceClient client = new SourceClient();
 
         Config config = new Config();
-        config.setVendor( "debug" );
+        config.setVendor( "biz360" );
         
         client.setConfig( config );
 

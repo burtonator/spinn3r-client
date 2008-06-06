@@ -318,35 +318,37 @@ public abstract class BaseClient implements Client {
     public Document doFetch( String resource ) throws IOException,
                                                       ParseException,
                                                       InterruptedException {
-        
-        // create the HTTP connection.
-        URL request = new URL( resource );
-        URLConnection conn = request.openConnection();
 
-        // set the UserAgent so Spinn3r know which client lib is calling.
-        conn.setRequestProperty( USER_AGENT_HEADER, USER_AGENT );
-        conn.setRequestProperty( ACCEPT_ENCODING_HEADER, GZIP_ENCODING );
-        
-        long call_before = System.currentTimeMillis();
-        
-        conn.connect();
-
-        //NOTE: because this is XML we don't need to use the Content-Type
-        //returned by the HTTP server as the XML encoding declaration should be
-        //used.
-
-        localInputStream = getLocalInputStream( conn.getInputStream() );
-
-        if ( GZIP_ENCODING.equals( conn.getContentEncoding() ) )
-            isCompressed = true;
-
-        InputStream is = getInputStream();
-        
-        long call_after = System.currentTimeMillis();
-
-        setCallDuration( call_after - call_before );
+        URLConnection conn = null;
         
         try {
+        
+            // create the HTTP connection.
+            URL request = new URL( resource );
+            conn = request.openConnection();
+
+            // set the UserAgent so Spinn3r know which client lib is calling.
+            conn.setRequestProperty( USER_AGENT_HEADER, USER_AGENT );
+            conn.setRequestProperty( ACCEPT_ENCODING_HEADER, GZIP_ENCODING );
+            
+            long call_before = System.currentTimeMillis();
+            
+            conn.connect();
+
+            //NOTE: because this is XML we don't need to use the Content-Type
+            //returned by the HTTP server as the XML encoding declaration should be
+            //used.
+
+            localInputStream = getLocalInputStream( conn.getInputStream() );
+
+            if ( GZIP_ENCODING.equals( conn.getContentEncoding() ) )
+                isCompressed = true;
+
+            InputStream is = getInputStream();
+            
+            long call_after = System.currentTimeMillis();
+
+            setCallDuration( call_after - call_before );
 
             // now get the system XML parser using JAXP
 
@@ -355,8 +357,6 @@ public abstract class BaseClient implements Client {
 
             //namespaces won't work at ALL if this isn't enabled.
             docBuildFactory.setNamespaceAware( true );
-
-            //FIXME: ok ... don't I need to ADD the namespaces?
             
             DocumentBuilder parser =
                 docBuildFactory.newDocumentBuilder();
@@ -368,6 +368,15 @@ public abstract class BaseClient implements Client {
             // Another advantage to DOM is that it's very portable.
             
             return parser.parse( is );
+
+        } catch ( IOException ioe ) {
+
+            //create a custom exception message with the right error.
+            String message = conn.getHeaderField( null );
+            IOException ce = new IOException( message );
+            ce.setStackTrace( ioe.getStackTrace() );
+            
+            throw ce;
 
         } catch ( Exception e ) {
             throw new ParseException( e );

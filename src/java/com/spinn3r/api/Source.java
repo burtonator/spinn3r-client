@@ -28,6 +28,8 @@ import static com.spinn3r.api.BaseClient.*;
  * Represents a source within Spinn3r.
  */
 public class Source extends BaseItem {
+
+    private boolean disabled = false;
     
     private int tier = -1;
     
@@ -47,20 +49,44 @@ public class Source extends BaseItem {
 
     private int resourceStatus = -1;
 
+    private Feed feed = new Feed();
+
     public Source() { }
 
-    public Source( Element element ) {
+    public Source( Element e ) {
 
-        setTitle( getElementCDATAByTagName( element, "title" ) );
-        setLink( getElementCDATAByTagName( element, "link" ) );
-        
-        setDescription( getElementCDATAByTagName( element, "description" ) );
-        setGuid( getElementCDATAByTagName( element, "guid", NS_SOURCE ) );
-        setDateFound( ISO8601DateParser.parse( getElementCDATAByTagName( element, "date_found", NS_SOURCE ) ) );
-        setIndegree( parseInt( getElementCDATAByTagName( element, "indegree", NS_SOURCE ) ) );
+        title             = getElementCDATAByTagName( e, "title" );
+        link              = getElementCDATAByTagName( e, "link" );
+        description       = getElementCDATAByTagName( e, "description" );
 
-        // FIXME: guid, resource_status
+        guid              = getElementCDATAByTagName( e, "guid",                          NS_SOURCE );
+        resource          = getElementCDATAByTagName( e, "resource",                      NS_SOURCE );
+
+        indegree          = parseInt( getElementCDATAByTagName( e, "indegree",            NS_SOURCE ) );
+        tier              = parseInt( getElementCDATAByTagName( e, "tier",                NS_SOURCE ) );
+        resourceStatus    = parseInt( getElementCDATAByTagName( e, "resource_status",     NS_SOURCE ) );
+
+        dateFound         = ISO8601DateParser.parse( getElementCDATAByTagName( e, "date_found", NS_SOURCE ) );
+
+        disabled          = "true".equals( getElementCDATAByTagName( e, "disabled", NS_SOURCE ) );
         
+        //FIXME: resource, resource_status, tier, spam_probability
+        
+        // FIXME: add resource_status
+
+        feed.guid                 = getElementCDATAByTagName( e, "guid",             NS_FEED );
+        feed.resource             = getElementCDATAByTagName( e, "resource",         NS_FEED );
+        feed.link                 = getElementCDATAByTagName( e, "link",             NS_FEED );
+        feed.channelLink          = getElementCDATAByTagName( e, "channel_link",     NS_FEED );
+        feed.channelTitle         = getElementCDATAByTagName( e, "channel_title",    NS_FEED );
+        feed.channelDescription   = getElementCDATAByTagName( e, "channel_desc",     NS_FEED );
+        feed.etag                 = getElementCDATAByTagName( e, "etag",             NS_FEED );
+
+        feed.resourceStatus       = parseInt( getElementCDATAByTagName( e, "resource_status",  NS_FEED ) );
+
+        feed.dateFound            = ISO8601DateParser.parse( getElementCDATAByTagName( e, "date_found", NS_FEED ) );
+        feed.lastPublished        = ISO8601DateParser.parse( getElementCDATAByTagName( e, "last_published", NS_FEED ) );
+
     }
     
     /**
@@ -225,4 +251,29 @@ public class Source extends BaseItem {
         this.resourceStatus = resourceStatus;
     }
 
+    /**
+     * 
+     * Get the value of <code>disabled</code>.
+     *
+     */
+    public boolean getDisabled() { 
+        return this.disabled;
+    }
+
+    /**
+     * 
+     * Set the value of <code>disabled</code>.
+     *
+     */
+    public void setDisabled( boolean disabled ) { 
+        this.disabled = disabled;
+    }
+
+    /**
+     * Get the feed for this source.
+     */
+    public Feed getFeed() {
+        return feed;
+    }
+    
 }

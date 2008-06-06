@@ -116,36 +116,68 @@ public class SourceListClient extends BaseClient implements Client {
         SourceListConfig config = new SourceListConfig();
         SourceListClient client = new SourceListClient();
 
-        config.setVendor( "XXXX" );
-        config.setVersion( "2.2.1" );
+        client.setHost( "dev.api.spinn3r.com" );
+        
+        config.setVendor( "spinn3r" );
 
+        //start with an arbitrary date
         Date date = new Date( 1210661536159L );
-        
+
+        //We're looking to find new weblogs as we find them.  Alternatively, one
+        //could use setPublishedAfter to detect when we find new URLs.
         config.setFoundAfter( date );
-        
+
+        //tell the client to use this specific config.
         client.setConfig( config );
 
-        int max = 2000;
-        int total = 0;
-        
         while( true ) {
 
+            //connect to the network and fetch the next batch of results.
             client.fetch();
 
+            //get the the results in a data structure that we can manipulate
             List<Source> results = client.getResults();
 
-            total += results.size();
-                
-            for( Source item : results ) {
-                System.out.printf( "resouce:    %s\n", item.getLink() );
-                System.out.printf( "date_found: %s\n", item.getDateFound() );
+            //iterate over each source.
+            for( Source source : results ) {
+
+                System.out.printf( "source title:           %s\n", source.getTitle() );
+                System.out.printf( "source description:     %s\n", source.getDescription() );
+
+                System.out.printf( "source guid:            %s\n", source.getGuid() );
+                System.out.printf( "source resource:        %s\n", source.getResource() );
+                System.out.printf( "source resource status: %s\n", source.getResourceStatus() );
+                System.out.printf( "source link:            %s\n", source.getLink() );
+                System.out.printf( "source date_found:      %s\n", source.getDateFound() );
+                System.out.printf( "source tier:            %s\n", source.getTier() );
+                System.out.printf( "source indegree:        %s\n", source.getIndegree() );
+                System.out.printf( "source disabled:        %s\n", source.getDisabled() );
+
+                //get feed specific data.
+                Feed feed = source.getFeed();
+
+                System.out.printf( "feed guid:              %s\n", feed.getGuid() );
+                System.out.printf( "feed resource:          %s\n", feed.getResource() );
+                System.out.printf( "feed resource status:   %s\n", feed.getResourceStatus() );
+                System.out.printf( "feed link:              %s\n", feed.getLink() );
+                System.out.printf( "feed last published:    %s\n", feed.getLastPublished() );
+                System.out.printf( "feed date found:        %s\n", feed.getDateFound() );
+                System.out.printf( "feed title:             %s\n", feed.getChannelTitle() );
+                System.out.printf( "feed link:              %s\n", feed.getChannelLink() );
+                System.out.printf( "feed description:       %s\n", feed.getChannelDescription() );
+                System.out.printf( "feed etag:              %s\n", feed.getEtag() );
+
+                System.out.printf( "---\n" );
+
             }
 
-            //System.out.printf( "Found %d results:\n", results.size() );
             System.out.printf( "Last request URL: %s\n", client.getLastRequestURL() );
             System.out.printf( "Next request URL: %s\n", client.getNextRequestURL() );
+            System.out.printf( "---\n" );
 
-            if ( total >= max )
+            //optionally we dan determine if there are no more resources by
+            //detecting if we didn't find a full page.
+            if ( config.getLimit() != results.size() )
                 break;
             
         }
