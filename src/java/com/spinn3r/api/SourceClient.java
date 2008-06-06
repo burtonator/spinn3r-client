@@ -77,27 +77,12 @@ public class SourceClient extends BaseClient implements Client {
 
             Document doc = doFetch( resource );
 
-            Source source = new Source();
-
             Element root = (Element)doc.getFirstChild();
 
             Element channel = getElementByTagName( root, "channel" );
 
-            // TODO: we should be able to just use new Source( channel ) now and
-            // it should pull out the right values and have better code re-use.
-            // I just need to test it...
+            Source source = new Source( channel );
 
-            // source = new Source( channel );
-            
-            //determine the next_request_url so that we can fetch the second page of
-            //results.
-            source.setTitle( getElementCDATAByTagName( channel, "title" ) );
-            source.setLink( getElementCDATAByTagName( channel, "link" ) );
-            source.setDescription( getElementCDATAByTagName( channel, "description" ) );
-            source.setGuid( getElementCDATAByTagName( channel, "guid", NS_WEBLOG ) );
-            source.setDateFound( ISO8601DateParser.parse( getElementCDATAByTagName( channel, "date_found", NS_WEBLOG ) ) );
-            source.setIndegree( Integer.parseInt( getElementCDATAByTagName( channel, "indegree", NS_WEBLOG ) ) );
-            
             return source;
 
         } catch ( FileNotFoundException e ) {
