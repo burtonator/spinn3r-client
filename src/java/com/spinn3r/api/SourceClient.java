@@ -41,19 +41,20 @@ public class SourceClient extends BaseClient implements Client {
      * Register a new weblog within Spinn3r.
      * 
      * @throws Exception when registration fails.
+     * @deprecated use SourceRegisterClient.  This method will be supported
+     * until Aug 1, 2008 at which point it will be removed.
      */
     public void register( String link ) throws Exception {
 
-        StringBuffer params = new StringBuffer();
+        SourceRegisterClient client = new SourceRegisterClient();
+        SourceRegisterConfig config = new SourceRegisterConfig();
 
-        addParam( params, "link",       link );
-        addParam( params, "vendor",     config.getVendor() );
-        addParam( params, "version",    config.getVersion() );
-        //addParam( params, "force",      "true" );
-        
-        String resource = String.format( "http://%s/rss/source.register?%s", getHost(), params );
-        
-        Document doc = doFetch( resource );
+        config.setVendor(  super.getConfig().getVendor() );
+        config.setVersion( super.getConfig().getVersion() );
+
+        client.setConfig( config );
+
+        client.register( link );
 
     }
 
@@ -82,6 +83,12 @@ public class SourceClient extends BaseClient implements Client {
 
             Element channel = getElementByTagName( root, "channel" );
 
+            // TODO: we should be able to just use new Source( channel ) now and
+            // it should pull out the right values and have better code re-use.
+            // I just need to test it...
+
+            // source = new Source( channel );
+            
             //determine the next_request_url so that we can fetch the second page of
             //results.
             source.setTitle( getElementCDATAByTagName( channel, "title" ) );
@@ -90,8 +97,6 @@ public class SourceClient extends BaseClient implements Client {
             source.setGuid( getElementCDATAByTagName( channel, "guid", NS_WEBLOG ) );
             source.setDateFound( ISO8601DateParser.parse( getElementCDATAByTagName( channel, "date_found", NS_WEBLOG ) ) );
             source.setIndegree( Integer.parseInt( getElementCDATAByTagName( channel, "indegree", NS_WEBLOG ) ) );
-            
-            //FIXME: feed info
             
             return source;
 

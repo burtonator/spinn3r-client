@@ -28,6 +28,8 @@ import static com.spinn3r.api.BaseClient.*;
  * Represents a source within Spinn3r.
  */
 public class Source extends BaseItem {
+    
+    private float spamProbability = -0.0f;
 
     private boolean disabled = false;
     
@@ -55,37 +57,36 @@ public class Source extends BaseItem {
 
     public Source( Element e ) {
 
-        title             = getElementCDATAByTagName( e, "title" );
-        link              = getElementCDATAByTagName( e, "link" );
-        description       = getElementCDATAByTagName( e, "description" );
+        title                     = getElementCDATAByTagName( e, "title" );
+        link                      = getElementCDATAByTagName( e, "link" );
+        description               = getElementCDATAByTagName( e, "description" );
 
-        guid              = getElementCDATAByTagName( e, "guid",                          NS_SOURCE );
-        resource          = getElementCDATAByTagName( e, "resource",                      NS_SOURCE );
+        guid                      = getElementCDATAByTagName( e, "guid",                                      NS_SOURCE );
+        resource                  = getElementCDATAByTagName( e, "resource",                                  NS_SOURCE );
 
-        indegree          = parseInt( getElementCDATAByTagName( e, "indegree",            NS_SOURCE ) );
-        tier              = parseInt( getElementCDATAByTagName( e, "tier",                NS_SOURCE ) );
-        resourceStatus    = parseInt( getElementCDATAByTagName( e, "resource_status",     NS_SOURCE ) );
+        indegree                  = parseInt( getElementCDATAByTagName( e, "indegree",                        NS_SOURCE ) );
+        tier                      = parseInt( getElementCDATAByTagName( e, "tier",                            NS_SOURCE ) );
+        resourceStatus            = parseInt( getElementCDATAByTagName( e, "resource_status",                 NS_SOURCE ) );
 
-        dateFound         = ISO8601DateParser.parse( getElementCDATAByTagName( e, "date_found", NS_SOURCE ) );
+        dateFound                 = ISO8601DateParser.parse( getElementCDATAByTagName( e, "date_found",       NS_SOURCE ) );
 
-        disabled          = "true".equals( getElementCDATAByTagName( e, "disabled", NS_SOURCE ) );
-        
-        //FIXME: resource, resource_status, tier, spam_probability
-        
-        // FIXME: add resource_status
+        disabled                  = "true".equals( getElementCDATAByTagName( e, "disabled",                   NS_SOURCE ) );
 
-        feed.guid                 = getElementCDATAByTagName( e, "guid",             NS_FEED );
-        feed.resource             = getElementCDATAByTagName( e, "resource",         NS_FEED );
-        feed.link                 = getElementCDATAByTagName( e, "link",             NS_FEED );
-        feed.channelLink          = getElementCDATAByTagName( e, "channel_link",     NS_FEED );
-        feed.channelTitle         = getElementCDATAByTagName( e, "channel_title",    NS_FEED );
-        feed.channelDescription   = getElementCDATAByTagName( e, "channel_desc",     NS_FEED );
-        feed.etag                 = getElementCDATAByTagName( e, "etag",             NS_FEED );
+        spamProbability           = parseFloat( getElementCDATAByTagName( e, "spam_probability",              NS_SOURCE ) ,
+                                                -0.0f );
 
-        feed.resourceStatus       = parseInt( getElementCDATAByTagName( e, "resource_status",  NS_FEED ) );
+        feed.guid                 = getElementCDATAByTagName( e, "guid",                                      NS_FEED );
+        feed.resource             = getElementCDATAByTagName( e, "resource",                                  NS_FEED );
+        feed.link                 = getElementCDATAByTagName( e, "link",                                      NS_FEED );
+        feed.channelLink          = getElementCDATAByTagName( e, "channel_link",                              NS_FEED );
+        feed.channelTitle         = getElementCDATAByTagName( e, "channel_title",                             NS_FEED );
+        feed.channelDescription   = getElementCDATAByTagName( e, "channel_desc",                              NS_FEED );
+        feed.etag                 = getElementCDATAByTagName( e, "etag",                                      NS_FEED );
 
-        feed.dateFound            = ISO8601DateParser.parse( getElementCDATAByTagName( e, "date_found", NS_FEED ) );
-        feed.lastPublished        = ISO8601DateParser.parse( getElementCDATAByTagName( e, "last_published", NS_FEED ) );
+        feed.resourceStatus       = parseInt( getElementCDATAByTagName( e, "resource_status",                 NS_FEED ) );
+
+        feed.dateFound            = ISO8601DateParser.parse( getElementCDATAByTagName( e, "date_found",       NS_FEED ) );
+        feed.lastPublished        = ISO8601DateParser.parse( getElementCDATAByTagName( e, "last_published",   NS_FEED ) );
 
     }
     
@@ -267,6 +268,24 @@ public class Source extends BaseItem {
      */
     public void setDisabled( boolean disabled ) { 
         this.disabled = disabled;
+    }
+
+    /**
+     * 
+     * Get the value of <code>spamProbability</code>.
+     *
+     */
+    public float getSpamProbability() { 
+        return this.spamProbability;
+    }
+
+    /**
+     * 
+     * Set the value of <code>spamProbability</code>.
+     *
+     */
+    public void setSpamProbability( float spamProbability ) { 
+        this.spamProbability = spamProbability;
     }
 
     /**

@@ -45,14 +45,14 @@ public class SourceRegisterClient {
         
         String resource = String.format( "http://%s/rss/source.register?%s", config.getHost(), params );
 
-        //this is kind of a hack but mostly acceptable.  We should refactor at
-        //some point though.
+        // This is kind of a hack but mostly acceptable.  We should refactor at
+        // some point though.
         SourceClient client = new SourceClient();
         Document doc = client.doFetch( resource );
 
     }
 
-    private void setConfig( SourceRegisterConfig config ) {
+    public void setConfig( SourceRegisterConfig config ) {
         this.config = config;
     }
     

@@ -612,6 +612,15 @@ public abstract class BaseClient implements Client {
         return Integer.parseInt( v );
         
     }
+
+    public static float parseFloat( String v, float _default ) {
+
+        if ( v == null || v.equals( "" ) )
+            return _default;
+
+        return Float.parseFloat( v );
+
+    }
     
     public static List parseTags( Element current ) {
         return parseChildNodesAsList( current, "category" );
