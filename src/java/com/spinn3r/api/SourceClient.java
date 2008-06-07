@@ -122,11 +122,7 @@ public class SourceClient extends BaseClient implements Client {
                 return;
             }
 
-            System.out.printf( "         title: %s\n", source.getTitle() );
-            System.out.printf( "          link: %s\n", source.getLink() );
-            System.out.printf( "   description: %s\n", source.getDescription() );
-            System.out.printf( "    date_found: %s\n", source.getDateFound() );
-            System.out.printf( "      indegree: %s\n", source.getIndegree() );
+            SourceListClient.printf( source );
 
         }
             

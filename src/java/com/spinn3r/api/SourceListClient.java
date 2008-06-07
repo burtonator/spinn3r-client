@@ -111,6 +111,42 @@ public class SourceListClient extends BaseClient implements Client {
         return sleepInterval;
     }
 
+    /**
+     * Print a source to stdout.
+     *
+     */
+    public static void printf( Source source ) {
+
+        System.out.printf( "source title:               %s\n", source.getTitle() );
+        System.out.printf( "source description:         %s\n", source.getDescription() );
+
+        System.out.printf( "source guid:                %s\n", source.getGuid() );
+        System.out.printf( "source resource:            %s\n", source.getResource() );
+        System.out.printf( "source resource status:     %s\n", source.getResourceStatus() );
+        System.out.printf( "source link:                %s\n", source.getLink() );
+        System.out.printf( "source date_found:          %s\n", source.getDateFound() );
+        System.out.printf( "source tier:                %s\n", source.getTier() );
+        System.out.printf( "source indegree:            %s\n", source.getIndegree() );
+        System.out.printf( "source disabled:            %s\n", source.getDisabled() );
+
+        //get feed specific data.
+        Feed feed = source.getFeed();
+
+        System.out.printf( "feed guid:                  %s\n", feed.getGuid() );
+        System.out.printf( "feed resource:              %s\n", feed.getResource() );
+        System.out.printf( "feed resource status:       %s\n", feed.getResourceStatus() );
+        System.out.printf( "feed link:                  %s\n", feed.getLink() );
+        System.out.printf( "feed last published:        %s\n", feed.getLastPublished() );
+        System.out.printf( "feed date found:            %s\n", feed.getDateFound() );
+        System.out.printf( "feed channel title:         %s\n", feed.getChannelTitle() );
+        System.out.printf( "feed channel link:          %s\n", feed.getChannelLink() );
+        System.out.printf( "feed channel desc:          %s\n", feed.getChannelDescription() );
+        System.out.printf( "feed etag:                  %s\n", feed.getEtag() );
+
+        System.out.printf( "---\n" );
+
+    }
+    
     public static void main( String[] args ) throws Exception {
 
         SourceListConfig config = new SourceListConfig();
@@ -138,35 +174,7 @@ public class SourceListClient extends BaseClient implements Client {
 
             //iterate over each source.
             for( Source source : results ) {
-
-                System.out.printf( "source title:           %s\n", source.getTitle() );
-                System.out.printf( "source description:     %s\n", source.getDescription() );
-
-                System.out.printf( "source guid:            %s\n", source.getGuid() );
-                System.out.printf( "source resource:        %s\n", source.getResource() );
-                System.out.printf( "source resource status: %s\n", source.getResourceStatus() );
-                System.out.printf( "source link:            %s\n", source.getLink() );
-                System.out.printf( "source date_found:      %s\n", source.getDateFound() );
-                System.out.printf( "source tier:            %s\n", source.getTier() );
-                System.out.printf( "source indegree:        %s\n", source.getIndegree() );
-                System.out.printf( "source disabled:        %s\n", source.getDisabled() );
-
-                //get feed specific data.
-                Feed feed = source.getFeed();
-
-                System.out.printf( "feed guid:              %s\n", feed.getGuid() );
-                System.out.printf( "feed resource:          %s\n", feed.getResource() );
-                System.out.printf( "feed resource status:   %s\n", feed.getResourceStatus() );
-                System.out.printf( "feed link:              %s\n", feed.getLink() );
-                System.out.printf( "feed last published:    %s\n", feed.getLastPublished() );
-                System.out.printf( "feed date found:        %s\n", feed.getDateFound() );
-                System.out.printf( "feed title:             %s\n", feed.getChannelTitle() );
-                System.out.printf( "feed link:              %s\n", feed.getChannelLink() );
-                System.out.printf( "feed description:       %s\n", feed.getChannelDescription() );
-                System.out.printf( "feed etag:              %s\n", feed.getEtag() );
-
-                System.out.printf( "---\n" );
-
+                printf( source );
             }
 
             System.out.printf( "Last request URL: %s\n", client.getLastRequestURL() );
