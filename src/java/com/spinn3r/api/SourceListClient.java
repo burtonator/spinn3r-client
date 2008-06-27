@@ -128,6 +128,8 @@ public class SourceListClient extends BaseClient implements Client {
         System.out.printf( "source tier:                %s\n", source.getTier() );
         System.out.printf( "source indegree:            %s\n", source.getIndegree() );
         System.out.printf( "source disabled:            %s\n", source.getDisabled() );
+        System.out.printf( "source lang:                %s\n", source.getLang() );
+        System.out.printf( "source publisher type:      %s\n", source.getPublisherType() );
 
         //get feed specific data.
         Feed feed = source.getFeed();
@@ -152,14 +154,15 @@ public class SourceListClient extends BaseClient implements Client {
         SourceListConfig config = new SourceListConfig();
         SourceListClient client = new SourceListClient();
 
-        config.setVendor( "XXXX" );
+        config.setVendor( args[0] );
 
         //start with an arbitrary date
         Date date = new Date( 1210661536159L );
 
         //We're looking to find new weblogs as we find them.  Alternatively, one
         //could use setPublishedAfter to detect when we find new URLs.
-        config.setFoundAfter( date );
+        //config.setFoundAfter( date );
+        config.setPublishedAfter( date );
 
         //tell the client to use this specific config.
         client.setConfig( config );

@@ -122,14 +122,10 @@ public abstract class BaseClient implements Client {
 
     /**
      * Whether we should use HTTP Keep Alive in java.net.URL.  We default to
-     * false here because MOST of our TCP connections won't ever be re-used and
-     * we're just wasting file handles on the robot and keeping a connection
-     * open to the remote host which uses one of their threads.  I also think
-     * this yields a bug in Tailrank's robot where numerous threads continually
-     * access thousands of hosts and then we start to run out of available file
-     * handles.  
+     * true here because MOST of our TCP connections WILL be used again since
+     * everything is to spinn3r.com.
      */
-    public static boolean DEFAULT_HTTP_KEEPALIVE = false;
+    public static boolean DEFAULT_HTTP_KEEPALIVE = true;
 
     private String lastRequestURL = null;
     private String nextRequestURL = null;
@@ -959,7 +955,8 @@ public abstract class BaseClient implements Client {
         System.setProperty( "http.maxRedirects",
                             Integer.toString( DEFAULT_MAX_REDIRECTS ) );
 
-        System.setProperty( "http.keepAlive", Boolean.toString( DEFAULT_HTTP_KEEPALIVE ) );
+        System.setProperty( "http.keepAlive",
+                            Boolean.toString( DEFAULT_HTTP_KEEPALIVE ) );
 
     }
     

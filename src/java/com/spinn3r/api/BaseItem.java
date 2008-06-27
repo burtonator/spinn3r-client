@@ -25,36 +25,36 @@ import java.net.*;
  */
 public abstract class BaseItem {
     
-    private List tags                   = null;
+    protected List tags                   = null;
 
-    private String title                = null;
-    private String link                 = null;
-    private String description          = null;
-    private String guid                 = null;
-    private String lang                 = null;
+    protected String title                = null;
+    protected String link                 = null;
+    protected String description          = null;
+    protected String guid                 = null;
+    protected String lang                 = null;
 
-    private String resourceGUID         = null;
+    protected String resourceGUID         = null;
 
-    private String source               = null;
+    protected String source               = null;
 
-    private String weblogTitle          = null;
-    private String weblogDescription    = null;
-    private String weblogPublisherType  = null;
+    protected String weblogTitle          = null;
+    protected String weblogDescription    = null;
+    protected String weblogPublisherType  = null;
 
-    private int weblogTier              = -1;
-    private int weblogIndegree          = -1;
+    protected int weblogTier              = -1;
+    protected int weblogIndegree          = -1;
 
-    private Date pubDate                = null;
-    private Date published              = null;
+    protected Date pubDate                = null;
+    protected Date published              = null;
     
-    private String authorName           = null;
-    private String authorEmail          = null;
-    private String authorLink           = null;
+    protected String authorName           = null;
+    protected String authorEmail          = null;
+    protected String authorLink           = null;
 
-    private String contentExtract       = null;
-    private String commentExtract       = null;
+    protected String contentExtract       = null;
+    protected String commentExtract       = null;
 
-    private String feedURL              = null;
+    protected String feedURL              = null;
 
     /**
      * 

@@ -51,6 +51,8 @@ public class Source extends BaseItem {
 
     private int resourceStatus = -1;
 
+    private String publisherType = null;
+
     private Feed feed = new Feed();
 
     public Source() { }
@@ -64,6 +66,8 @@ public class Source extends BaseItem {
         guid                      = getElementCDATAByTagName( e, "guid",                                      NS_SOURCE );
         resource                  = getElementCDATAByTagName( e, "resource",                                  NS_SOURCE );
 
+        lang                      = getElementCDATAByTagName( e, "lang",                                      NS_DC );
+        
         indegree                  = parseInt( getElementCDATAByTagName( e, "indegree",                        NS_SOURCE ) );
         tier                      = parseInt( getElementCDATAByTagName( e, "tier",                            NS_SOURCE ) );
         resourceStatus            = parseInt( getElementCDATAByTagName( e, "resource_status",                 NS_SOURCE ) );
@@ -74,6 +78,8 @@ public class Source extends BaseItem {
 
         spamProbability           = parseFloat( getElementCDATAByTagName( e, "spam_probability",              NS_SOURCE ) ,
                                                 -0.0f );
+
+        publisherType             = getElementCDATAByTagName( e, "publisher_type",                            NS_SOURCE );
 
         feed.guid                 = getElementCDATAByTagName( e, "guid",                                      NS_FEED );
         feed.resource             = getElementCDATAByTagName( e, "resource",                                  NS_FEED );
@@ -286,6 +292,24 @@ public class Source extends BaseItem {
      */
     public void setSpamProbability( float spamProbability ) { 
         this.spamProbability = spamProbability;
+    }
+
+   /**
+     * 
+     * Get the value of <code>publisherType</code>.
+     *
+     */
+    public String getPublisherType() { 
+        return this.publisherType;
+    }
+
+    /**
+     * 
+     * Set the value of <code>publisherType</code>.
+     *
+     */
+    public void setPublisherType( String publisherType ) { 
+        this.publisherType = publisherType;
     }
 
     /**
