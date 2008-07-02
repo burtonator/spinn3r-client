@@ -49,6 +49,25 @@ public class Feed extends BaseItem {
     
     String guid = null;
 
+    public Feed() {}
+
+    public Feed( Element e ) {
+
+        guid                 = getElementCDATAByTagName( e, "guid",                                      NS_FEED );
+        resource             = getElementCDATAByTagName( e, "resource",                                  NS_FEED );
+        link                 = getElementCDATAByTagName( e, "link",                                      NS_FEED );
+        channelLink          = getElementCDATAByTagName( e, "channel_link",                              NS_FEED );
+        channelTitle         = getElementCDATAByTagName( e, "channel_title",                             NS_FEED );
+        channelDescription   = getElementCDATAByTagName( e, "channel_desc",                              NS_FEED );
+        etag                 = getElementCDATAByTagName( e, "etag",                                      NS_FEED );
+
+        resourceStatus       = parseInt( getElementCDATAByTagName( e, "resource_status",                 NS_FEED ) );
+
+        dateFound            = ISO8601DateParser.parse( getElementCDATAByTagName( e, "date_found",       NS_FEED ) );
+        lastPublished        = ISO8601DateParser.parse( getElementCDATAByTagName( e, "last_published",   NS_FEED ) );
+
+    }
+    
     /**
      * 
      * Get the value of <code>resourceStatus</code>.
@@ -229,4 +248,23 @@ public class Feed extends BaseItem {
         this.guid = guid;
     }
 
+   /**
+     * Dump this item to stdout.
+     *
+     */
+    public void dump() {
+
+        System.out.printf( "feed guid:                  %s\n", getGuid() );
+        System.out.printf( "feed resource:              %s\n", getResource() );
+        System.out.printf( "feed resource status:       %s\n", getResourceStatus() );
+        System.out.printf( "feed link:                  %s\n", getLink() );
+        System.out.printf( "feed last published:        %s\n", getLastPublished() );
+        System.out.printf( "feed date found:            %s\n", getDateFound() );
+        System.out.printf( "feed channel title:         %s\n", getChannelTitle() );
+        System.out.printf( "feed channel link:          %s\n", getChannelLink() );
+        System.out.printf( "feed channel desc:          %s\n", getChannelDescription() );
+        System.out.printf( "feed etag:                  %s\n", getEtag() );
+
+    }
+        
 }

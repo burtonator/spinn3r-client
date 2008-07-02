@@ -50,6 +50,39 @@ public class FeedClient extends BaseClient implements Client {
         super.fetch( config );
     }
 
+    /**
+     * Check on the status of a weblog within Spinn3r.
+     *
+     * @throws FileNotFoundException when the weblog was not found in our index.
+     */
+    public Feed status( String link ) throws Exception {
+
+        try {
+
+            StringBuffer params = new StringBuffer();
+
+            addParam( params, "link", link );
+            addParam( params, "vendor",  config.getVendor() );
+            addParam( params, "version", config.getVersion() );
+
+            String resource = String.format( "http://%s/rss/feed.status?%s", getHost(), params );
+
+            Document doc = doFetch( resource );
+
+            Element root = (Element)doc.getFirstChild();
+
+            Element channel = getElementByTagName( root, "channel" );
+
+            Feed feed = new Feed( channel );
+
+            return feed;
+
+        } catch ( FileNotFoundException e ) {
+            return null;
+        }
+        
+    }
+
     protected BaseItem parseItem( Element current ) throws Exception {
 
         FeedItem item = new FeedItem();
@@ -73,5 +106,34 @@ public class FeedClient extends BaseClient implements Client {
     public String getRouter() {
         return "http://" + getHost() + "/rss/feed.getDelta?";
     }
-    
+
+    public static void main( String[] args ) throws Exception {
+
+        FeedClient client = new FeedClient();
+
+        Config config = new Config();
+        config.setVendor( "XXXX" );
+
+        client.setConfig( config );
+
+        String method     = args[0];
+        String resource   = args[1];
+
+        System.out.printf( "%s for %s\n", method, resource );
+
+        if ( method.equals( "status" ) ) {
+
+            Feed feed = client.status( resource );
+
+            if ( feed == null ) {
+                System.out.printf( "Not found\n" );
+                return;
+            }
+
+            feed.dump();
+
+        }
+            
+    }
+
 }

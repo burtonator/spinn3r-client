@@ -101,7 +101,7 @@ public class SourceClient extends BaseClient implements Client {
 
         Config config = new Config();
         config.setVendor( "XXXX" );
-        
+                
         client.setConfig( config );
 
         String method     = args[0];

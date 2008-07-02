@@ -64,7 +64,11 @@ public class PermalinkHistoryClient extends BaseClient implements Client {
         addParam( params, "version", config.getVersion() );
         addParam( params, "source",  config.getSource() );
 
-        return getRouter() + params.toString();
+        String result = getRouter() + params.toString();
+
+        System.out.printf( "%s\n", result );
+        
+        return result;
         
     }
 
@@ -88,14 +92,27 @@ public class PermalinkHistoryClient extends BaseClient implements Client {
         return "http://" + getHost() + "/rss/permalink.history?";
     }
 
+    public static void dump( List<BaseItem> results ) {
+
+
+        for( BaseItem item : results ) {
+            System.out.println( "link:                   " + item.getLink() );
+            System.out.println( "title:                  " + item.getTitle() );
+            System.out.println( "pubDate:                " + item.getPubDate() );
+            System.out.println( "published:              " + item.getPublished() );
+            System.out.println( "-" );
+        }
+
+    }
+    
     public static void main( String[] args ) throws Exception {
 
         PermalinkHistoryConfig config = new PermalinkHistoryConfig();
         PermalinkHistoryClient client = new PermalinkHistoryClient();
 
-        config.setVendor( "debug" );
         config.setVersion( "2.2.1" );
-        config.setSource( "http://techcrunch.com" );
+        config.setVendor( args[0] );
+        config.setSource( args[1] );
         
         client.setConfig( config );
 
@@ -103,10 +120,12 @@ public class PermalinkHistoryClient extends BaseClient implements Client {
         
         client.fetch();
         results = client.getResults();
+        dump( results );
         System.out.printf( "DUMP: Found %d items\n" , results.size() );
 
         client.fetch();
         results = client.getResults();
+        dump( results );
         System.out.printf( "DUMP: Found %d items\n" , results.size() );
 
     }

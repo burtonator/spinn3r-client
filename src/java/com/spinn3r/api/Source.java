@@ -59,6 +59,8 @@ public class Source extends BaseItem {
 
     public Source( Element e ) {
 
+        feed                      = new Feed( e );
+
         title                     = getElementCDATAByTagName( e, "title" );
         link                      = getElementCDATAByTagName( e, "link" );
         description               = getElementCDATAByTagName( e, "description" );
@@ -80,19 +82,6 @@ public class Source extends BaseItem {
                                                 -0.0f );
 
         publisherType             = getElementCDATAByTagName( e, "publisher_type",                            NS_SOURCE );
-
-        feed.guid                 = getElementCDATAByTagName( e, "guid",                                      NS_FEED );
-        feed.resource             = getElementCDATAByTagName( e, "resource",                                  NS_FEED );
-        feed.link                 = getElementCDATAByTagName( e, "link",                                      NS_FEED );
-        feed.channelLink          = getElementCDATAByTagName( e, "channel_link",                              NS_FEED );
-        feed.channelTitle         = getElementCDATAByTagName( e, "channel_title",                             NS_FEED );
-        feed.channelDescription   = getElementCDATAByTagName( e, "channel_desc",                              NS_FEED );
-        feed.etag                 = getElementCDATAByTagName( e, "etag",                                      NS_FEED );
-
-        feed.resourceStatus       = parseInt( getElementCDATAByTagName( e, "resource_status",                 NS_FEED ) );
-
-        feed.dateFound            = ISO8601DateParser.parse( getElementCDATAByTagName( e, "date_found",       NS_FEED ) );
-        feed.lastPublished        = ISO8601DateParser.parse( getElementCDATAByTagName( e, "last_published",   NS_FEED ) );
 
     }
     
@@ -318,5 +307,27 @@ public class Source extends BaseItem {
     public Feed getFeed() {
         return feed;
     }
-    
+
+    /**
+     * Dump this item to stdout.
+     *
+     */
+    public void dump() {
+
+        System.out.printf( "source title:               %s\n", getTitle() );
+        System.out.printf( "source description:         %s\n", getDescription() );
+
+        System.out.printf( "source guid:                %s\n", getGuid() );
+        System.out.printf( "source resource:            %s\n", getResource() );
+        System.out.printf( "source resource status:     %s\n", getResourceStatus() );
+        System.out.printf( "source link:                %s\n", getLink() );
+        System.out.printf( "source date_found:          %s\n", getDateFound() );
+        System.out.printf( "source tier:                %s\n", getTier() );
+        System.out.printf( "source indegree:            %s\n", getIndegree() );
+        System.out.printf( "source disabled:            %s\n", getDisabled() );
+        System.out.printf( "source lang:                %s\n", getLang() );
+        System.out.printf( "source publisher type:      %s\n", getPublisherType() );
+
+    }
+
 }
