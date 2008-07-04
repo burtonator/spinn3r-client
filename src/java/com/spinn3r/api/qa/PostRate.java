@@ -22,10 +22,6 @@ import java.util.*;
 import java.io.*;
 
 /**
- * Command line debug client for testing the API.  Also shows example usage.
- * 
- * This class will fetch the current API results as of INTERVAL minutes and then
- * keep fetching until it's up to date.
  * 
  */
 public class PostRate {
@@ -57,6 +53,11 @@ public class PostRate {
     private static long start = -1;
 
     private HashMap<Long,Integer> countRegistry = new HashMap();
+
+    /**
+     * Total number of downloaded items.
+     */
+    private int total = 0;
     
     public PostRate( Client client ) {
         this.client = client;
@@ -67,38 +68,37 @@ public class PostRate {
      */
     void process( List<BaseItem> results ) throws Exception {
 
-        int total = 0;
+        //update the number of values for this item interval
+        long interval = 60L * 1000L;
+
         for( BaseItem item : results ) {
-            ++total;
 
             //update the state internally so we have a copy of the last item
             //found.
-            last = item.getPubDate();
+            Date ts   = item.getPubDate();
+            last      = item.getPubDate();
+
+            long slice = (ts.getTime() / interval) * interval;
+
+            if ( ! countRegistry.containsKey( slice ) )
+                countRegistry.put( slice, 0 );
             
+            int current = countRegistry.get( slice );
+            ++current ;
+            countRegistry.put( slice, current );
+
         }
 
-        //update the number of values for this item interval
-        long interval = 60L * 60L * 1000L;
-
-        long hour = (last.getTime() / interval) * interval;
-
-        if ( ! countRegistry.containsKey( hour ) )
-            countRegistry.put( hour, 0 );
-        
-        int current_total = countRegistry.get( hour );
-        
-        current_total += total;
-        
-        countRegistry.put( hour, current_total );
+        total += results.size();
 
         long diff = (start + INTERVAL) - last.getTime();
         
         System.out.println( "---" );
         System.out.println( "Seconds behind:   " + ( diff / 1000 ) );
         System.out.println( "Minutes behind:   " + ( diff / (60*1000) ) );
-        System.out.println( "Current total :   " + current_total );
+        System.out.println( "Total :   " + total );
 
-        if ( current_total % 1000 == 0 && current_total != 0 ) {
+        if ( total % 1000 == 0 && total != 0 ) {
             printStats();
         }
         
@@ -109,9 +109,9 @@ public class PostRate {
         System.out.println( "------" );
         System.out.println( "Current stats: " );
         
-        for( long hour : countRegistry.keySet() ) {
+        for( long slice : countRegistry.keySet() ) {
 
-            System.out.println( new Date( hour ) + ": " + countRegistry.get( hour ) );
+            System.out.println( new Date( slice ) + ": " + countRegistry.get( slice ) );
             
         }
         

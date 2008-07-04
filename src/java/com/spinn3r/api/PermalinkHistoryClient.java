@@ -110,10 +110,11 @@ public class PermalinkHistoryClient extends BaseClient implements Client {
         PermalinkHistoryConfig config = new PermalinkHistoryConfig();
         PermalinkHistoryClient client = new PermalinkHistoryClient();
 
-        config.setVersion( "2.2.1" );
+        //config.setVersion( "2.);
         config.setVendor( args[0] );
         config.setSource( args[1] );
-        
+
+        client.setHost( "dev.api.spinn3r.com" );
         client.setConfig( config );
 
         List results;

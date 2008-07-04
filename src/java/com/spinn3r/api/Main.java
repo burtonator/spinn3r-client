@@ -403,7 +403,7 @@ public class Main {
         System.out.println( "                          Default: none" );        
         System.out.println();
         System.out.println( "    --limit=xx            Number of items to return per iteration." );
-        System.out.println( "                          Default: 10" );        
+        System.out.println( "                          Default: 10 for permalink, 100 for feed" );        
         System.out.println();
         System.out.println( "    --save=DIRECTORY      Save result XML to disk in the specified directory." );
         System.out.println( "                          Default: none" );        
