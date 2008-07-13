@@ -29,7 +29,7 @@ public class PostRate {
     /**
      * How far behind should be start by default?
      */
-    public static long INTERVAL = 24L * 60L * 60L * 1000L;
+    public static long INTERVAL = 60L * 60L * 1000L;
 
     /**
      * The date of the last item we found.
@@ -78,7 +78,7 @@ public class PostRate {
             Date ts   = item.getPubDate();
             last      = item.getPubDate();
 
-            long slice = (ts.getTime() / interval) * interval;
+            long slice = (long)(Math.floor((double)ts.getTime() / (double)interval) * interval);
 
             if ( ! countRegistry.containsKey( slice ) )
                 countRegistry.put( slice, 0 );
@@ -98,7 +98,7 @@ public class PostRate {
         System.out.println( "Minutes behind:   " + ( diff / (60*1000) ) );
         System.out.println( "Total :   " + total );
 
-        if ( total % 1000 == 0 && total != 0 ) {
+        if ( total % 100 == 0 && total != 0 ) {
             printStats();
         }
         
@@ -111,7 +111,7 @@ public class PostRate {
         
         for( long slice : countRegistry.keySet() ) {
 
-            System.out.println( new Date( slice ) + ": " + countRegistry.get( slice ) );
+            System.out.printf( "%s: %s\n", (int)(slice / 1000), countRegistry.get( slice ) );
             
         }
         
@@ -154,9 +154,12 @@ public class PostRate {
         Config config = null;
         Client client = null;
         
-        config = new FeedConfig();
-        client = new FeedClient();
-        
+        //config = new FeedConfig();
+        //client = new FeedClient();
+
+        config = new PermalinkConfig();
+        client = new PermalinkClient();
+
         // set your vendor.  This is required.  Don't use the default.
         
         config.setVendor( vendor );
@@ -170,7 +173,15 @@ public class PostRate {
         
         long now = System.currentTimeMillis();
         start = now - INTERVAL;
-        config.setAfter( new Date( start ) );
+        Date after = new Date( start ) ;
+        config.setAfter( after );
+
+        //1994-11-05T13:15:30Z
+
+        //Date after = ISO8601DateParser.parse( "2008-07-04T00:38:00Z" );
+
+        System.out.printf( "Finding records after: %s\n", after );
+        config.setAfter( after );
         
         client.setConfig( config );
 

@@ -101,9 +101,11 @@ public class PermalinkStatusClient extends BaseClient implements Client {
         PermalinkStatusConfig config = new PermalinkStatusConfig();
         PermalinkStatusClient client = new PermalinkStatusClient();
 
+        String resource = args[0];
+        
         config.setVendor( "debug" );
         config.setVersion( "2.2.1" );
-        config.setResource( "http://feedblog.org/2008/05/10/using-zookeeper-to-configure-external-monitoring-systems/" );
+        config.setResource( resource );
         
         client.setConfig( config );
 
@@ -140,6 +142,11 @@ public class PermalinkStatusClient extends BaseClient implements Client {
             System.out.println( "description: " );
             System.out.println( "-" );
             System.out.println( item.getDescription() );
+            System.out.println( "-" );
+
+            System.out.println( "content extract: " );
+            System.out.println( "-" );
+            System.out.println( item.getContentExtract() );
             System.out.println( "-" );
 
         }

@@ -119,7 +119,10 @@ public class Main {
             //found.
             last = item.getPubDate();
 
-            if ( before > 0 && last.getTime() > before )
+            System.out.printf( "last: %s\n", last.getTime() );
+            System.out.printf( "before: %s\n", before );
+            
+            if ( before > 0 && last.getTime() >= before )
                 break;
 
             if ( filter != null ) {
@@ -239,7 +242,7 @@ public class Main {
                 if ( range > 0 && last.getTime() > config.getAfter().getTime() + range )
                     break;
 
-                if ( before > 0 && last.getTime() > before )
+                if ( before > 0 && last.getTime() >= before )
                     break;
                 
             } catch ( Exception e ) {
@@ -580,7 +583,7 @@ public class Main {
             System.out.println( "After: " + new Date( after ) );
 
         if ( before > -1 ) 
-            System.out.println( "Before: " + new Date( before ) );
+            System.out.printf( "Before: %s (%s) \n", new Date( before ), before );
 
         System.out.println( "Saving results to disk: " + save );
         

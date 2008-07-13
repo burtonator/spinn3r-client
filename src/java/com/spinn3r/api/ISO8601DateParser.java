@@ -24,7 +24,11 @@ import java.text.*;
 /**
  * ISO 8601 date parsing utility.  Designed for parsing the ISO subset used in
  * Dublin Core, RSS 1.0, and Atom.
- * 
+ *
+ * Example:
+ *
+ * 1994-11-05T13:15:30Z
+ *
  * @author <a href="mailto:burton@apache.org">Kevin A. Burton (burtonator)</a>
  * @version $Id: ISO8601DateParser.java 155416 2005-02-26 13:00:10Z dirkv $
  */
@@ -112,6 +116,11 @@ public class ISO8601DateParser {
         c.set( Calendar.HOUR_OF_DAY, hour );
         c.set( Calendar.MINUTE, minute );
         c.set( Calendar.SECOND, second );
+
+        //clear out milliseconds.  this is important or we'll have
+        //nondeterministic results.
+        c.set( Calendar.MILLISECOND, 0 );
+
         c.setTimeZone( tz );
         
         return c.getTime();
