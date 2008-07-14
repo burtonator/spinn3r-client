@@ -44,8 +44,10 @@
           <format property="timestamp" pattern="MM-dd-yyyy hh:mm:ss 'PST'" locale="PST"/>
         </tstamp>
 
+        <!-- FIXME: add Main class support -->
         <manifest file="compile/META-INF/MANIFEST.MF">
-          <attribute name="Built-By" value="${user.name}"/>
+          <attribute name="Built-By"       value="${user.name}"/>
+          <attribute name="Main-Class"     value="com.spinn3r.api.Main"/>
           <section name="common">
             <attribute name="Specification-Title"       value="${project}"/>
             <attribute name="Specification-Version"     value="${version}"/>
