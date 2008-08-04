@@ -33,16 +33,13 @@ import org.w3c.dom.*;
  */
 public class FeedClient extends BaseClient implements Client {
 
-    public static int MAX_LIMIT = 100;
+    public static String DEFAULT_ENDPOINT = "/rss/feed.getDelta?";
 
-    public static int OPTIMAL_LIMIT = 100;
+    public static int MAX_LIMIT            = 100;
+    public static int OPTIMAL_LIMIT        = 100;
+    public static int CONSERVATIVE_LIMIT   = 10;
 
-    public static int CONSERVATIVE_LIMIT = 10;
-    
-    /**
-     * Base router request URL.
-     */
-    public static String ROUTER = "http://api.spinn3r.com/rss/feed.getDelta?";
+    private String endpoint = DEFAULT_ENDPOINT;
 
     public void fetch() throws IOException,
                                ParseException,
@@ -104,7 +101,15 @@ public class FeedClient extends BaseClient implements Client {
     }
 
     public String getRouter() {
-        return "http://" + getHost() + "/rss/feed.getDelta?";
+        return "http://" + getHost() + getEndpoint();
+    }
+
+    public String getEndpoint() {
+        return endpoint;
+    }
+
+    public void setEndpoint( String v ) {
+        this.endpoint = v;
     }
 
     public static void main( String[] args ) throws Exception {

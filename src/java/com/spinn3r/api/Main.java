@@ -104,6 +104,13 @@ public class Main {
 
     private static boolean timing = true;
 
+    /**
+     * Sample performance times...
+     */
+    private static PerformanceSampler sampler1   = new PerformanceSampler( 1L  * 60L * 1000L );
+    private static PerformanceSampler sampler5   = new PerformanceSampler( 5L  * 60L * 1000L );
+    private static PerformanceSampler sampler15  = new PerformanceSampler( 15L * 60L * 1000L );
+    
     public Main( BaseClient client ) {
         this.client = client;
     }
@@ -115,12 +122,16 @@ public class Main {
 
         for( BaseItem item : results ) {
 
+            sampler1.sample( item.getPubDate() );
+            sampler5.sample( item.getPubDate() );
+            sampler15.sample( item.getPubDate() );
+            
             //update the state internally so we have a copy of the last item
             //found.
             last = item.getPubDate();
-
-            System.out.printf( "last: %s\n", last.getTime() );
-            System.out.printf( "before: %s\n", before );
+            
+            //System.out.printf( "last: %s\n", last.getTime() );
+            //System.out.printf( "before: %s\n", before );
             
             if ( before > 0 && last.getTime() >= before )
                 break;
@@ -202,6 +213,30 @@ public class Main {
             System.out.println( "API call duration:        " + client.getCallDuration() );
             System.out.println( "API sleep duration:       " + client.getSleepDuration() );
 
+            System.out.print( "API performance:          " );
+            System.out.print( sampler1.getPerformance() );
+            System.out.print( "    " );
+            System.out.print( sampler5.getPerformance() );
+            System.out.print( "    " );
+            System.out.print( sampler15.getPerformance() );
+
+            System.out.println();
+
+            /*
+
+              This won't really work because gzip number are hidden and I can't
+              use the raw number of characters in the string because this might
+              be a multi-byte UTC sequence.
+              
+            System.out.print( "Effective bandwidth:    " );
+            System.out.print( client.bs1.getBandwidthAsHumanMetric() );
+            System.out.print( "    " );
+            System.out.print( client.bs5.getBandwidthAsHumanMetric() );
+            System.out.print( "    " );
+            System.out.print( client.bs15.getBandwidthAsHumanMetric() );
+            */
+            System.out.println();
+            
         }
             
         System.out.println( "--" );
@@ -215,8 +250,10 @@ public class Main {
             
         long diff = System.currentTimeMillis() - last.getTime();
 
-        if ( timing )
+        if ( timing ) {
+
             System.out.println( "Seconds behind present:   " + ( diff / 1000 ) );
+        }
 
     }
 

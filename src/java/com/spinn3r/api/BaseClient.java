@@ -72,7 +72,10 @@ public abstract class BaseClient implements Client {
 
     public static final String GZIP_ENCODING = "gzip";
 
-    public static String USER_AGENT = "Spinn3r API Reference Client " + Config.DEFAULT_VERSION + " (Java)";
+    // Would be nice to have this use String.format() but this isn't really
+    // compatible back to Java 1.4.. are we requiring Java 1.5 now?
+
+    public static String USER_AGENT = "Spinn3r API Reference Client " + Config.DEFAULT_VERSION + " (Java " + System.getProperty( "java.version" ) + ")";
 
     /**
      * Default hostname for building the router URL.  This can be changed to
@@ -113,6 +116,10 @@ public abstract class BaseClient implements Client {
      */
     public static int DEFAULT_CONNECT_TIMEOUT = 5 * 60 * 1000;
 
+    /**
+     * Lower read timeout.  Makes NO sense to wait for five minutes to read a
+     * byte from spinn3r.
+     */
     public static int DEFAULT_READ_TIMEOUT = DEFAULT_CONNECT_TIMEOUT;
 
     /**
@@ -159,7 +166,14 @@ public abstract class BaseClient implements Client {
      * The host for calling API methods.
      */
     String host = DEFAULT_HOST;
-    
+
+    /**
+     * Sample performance times...
+     */
+    BandwidthSampler bs1   = new BandwidthSampler( 1L  * 60L * 1000L );
+    BandwidthSampler bs5   = new BandwidthSampler( 5L  * 60L * 1000L );
+    BandwidthSampler bs15  = new BandwidthSampler( 15L * 60L * 1000L );
+
     // **** fetching support ****************************************************
 
     /**
@@ -401,10 +415,17 @@ public abstract class BaseClient implements Client {
     
         int readCount = 0;
 
+        int total = 0;
+        
         while( ( readCount = is.read( data )) > 0 ) {
             bos.write( data, 0, readCount );
+            total += readCount;
         }
 
+        bs1.sample( total );
+        bs5.sample( total );
+        bs15.sample( total );
+        
         is.close();
         bos.close();
 
