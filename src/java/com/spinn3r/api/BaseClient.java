@@ -67,9 +67,12 @@ public abstract class BaseClient implements Client {
     public static final String NS_POST    = "http://tailrank.com/ns/#post" ;
     public static final String NS_FEED    = "http://tailrank.com/ns/#feed" ;
 
-    public static final String USER_AGENT_HEADER = "User-Agent";
-    public static final String ACCEPT_ENCODING_HEADER = "Accept-Encoding";
+    public static final String USER_AGENT_HEADER       = "User-Agent";
+    public static final String ACCEPT_ENCODING_HEADER  = "Accept-Encoding";
 
+    public static String FEED_HANDLER       = "feed";
+    public static String PERMALINK_HANDLER  = "permalink";
+    
     public static final String GZIP_ENCODING = "gzip";
 
     // Would be nice to have this use String.format() but this isn't really

@@ -33,11 +33,6 @@ public class PermalinkHistoryClient extends BaseClient implements Client {
     public static int OPTIMAL_LIMIT        = 10;
     public static int CONSERVATIVE_LIMIT   = 10;
 
-    /**
-     * Base router request URL.
-     */
-    public static String ROUTER = "http://api.spinn3r.com/rss/permalink.history?";
-
     public void fetch() throws IOException,
                                ParseException,
                                InterruptedException {
@@ -89,7 +84,7 @@ public class PermalinkHistoryClient extends BaseClient implements Client {
     }
 
     public String getRouter() {
-        return "http://" + getHost() + "/rss/permalink.history?";
+        return String.format( "http://%s/rss/%s.history?", getHost(), BaseClient.PERMALINK_HANDLER );
     }
 
     public static void dump( List<BaseItem> results ) {

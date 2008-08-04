@@ -33,13 +33,9 @@ import org.w3c.dom.*;
  */
 public class FeedClient extends BaseClient implements Client {
 
-    public static String DEFAULT_ENDPOINT = "/rss/feed.getDelta?";
-
     public static int MAX_LIMIT            = 100;
     public static int OPTIMAL_LIMIT        = 100;
     public static int CONSERVATIVE_LIMIT   = 10;
-
-    private String endpoint = DEFAULT_ENDPOINT;
 
     public void fetch() throws IOException,
                                ParseException,
@@ -58,11 +54,12 @@ public class FeedClient extends BaseClient implements Client {
 
             StringBuffer params = new StringBuffer();
 
-            addParam( params, "link", link );
+            addParam( params, "link",    link );
             addParam( params, "vendor",  config.getVendor() );
             addParam( params, "version", config.getVersion() );
 
-            String resource = String.format( "http://%s/rss/feed.status?%s", getHost(), params );
+            String resource = String.format( "http://%s/rss/%s.status?%s",
+                                             getHost(), BaseClient.FEED_HANDLER, params );
 
             Document doc = doFetch( resource );
 
@@ -101,15 +98,7 @@ public class FeedClient extends BaseClient implements Client {
     }
 
     public String getRouter() {
-        return "http://" + getHost() + getEndpoint();
-    }
-
-    public String getEndpoint() {
-        return endpoint;
-    }
-
-    public void setEndpoint( String v ) {
-        this.endpoint = v;
+        return String.format( "http://%s/rss/%s.getDelta?", getHost(), BaseClient.FEED_HANDLER );
     }
 
     public static void main( String[] args ) throws Exception {

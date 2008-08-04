@@ -32,8 +32,6 @@ import org.w3c.dom.*;
  * <code>java.util.concurrent</code> constructs.
  */
 public class PermalinkClient extends BaseClient implements Client {
-
-    public static String DEFAULT_ENDPOINT = "/rss/permalink.getDelta?";
     
     /**
      * The permalink API can only handle 10 items at once since each piece of
@@ -43,8 +41,6 @@ public class PermalinkClient extends BaseClient implements Client {
     public static int OPTIMAL_LIMIT        = 50;
     public static int CONSERVATIVE_LIMIT   = 10;
 
-    private String endpoint = DEFAULT_ENDPOINT;
-    
     public void fetch() throws IOException,
                                ParseException,
                                InterruptedException {
@@ -72,15 +68,7 @@ public class PermalinkClient extends BaseClient implements Client {
     }
 
     public String getRouter() {
-        return "http://" + getHost() + getEndpoint();
-    }
-
-    public String getEndpoint() {
-        return endpoint;
-    }
-
-    public void setEndpoint( String v ) {
-        this.endpoint = v;
+        return String.format( "http://%s/rss/%s.getDelta?", getHost(), BaseClient.PERMALINK_HANDLER );
     }
 
 }
