@@ -591,6 +591,11 @@ public class Main {
                 continue;
             }
 
+            if ( v.startsWith( "--enable3" ) ) {
+                BaseClient.FEED_HANDLER       = "feed3";
+                BaseClient.PERMALINK_HANDLER  = "permalink3";
+            }
+            
             if ( v.startsWith( "com.spinn3r" ) )
                 continue;
 

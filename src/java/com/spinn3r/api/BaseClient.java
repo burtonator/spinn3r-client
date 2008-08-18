@@ -379,8 +379,16 @@ public abstract class BaseClient implements Client {
             // and lightweight.
             //
             // Another advantage to DOM is that it's very portable.
+
+            long before = System.currentTimeMillis();
             
-            return parser.parse( is );
+            Document doc = parser.parse( is );
+
+            long after = System.currentTimeMillis();
+
+            System.out.printf( "parse duration: %s\n", (after-before) );
+            
+            return doc;
 
         } catch ( IOException ioe ) {
 

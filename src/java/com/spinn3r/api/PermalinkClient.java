@@ -37,7 +37,7 @@ public class PermalinkClient extends BaseClient implements Client {
      * The permalink API can only handle 10 items at once since each piece of
      * content is SO huge.
      */
-    public static int MAX_LIMIT            = 50;
+    public static int MAX_LIMIT            = 100;
     public static int OPTIMAL_LIMIT        = 50;
     public static int CONSERVATIVE_LIMIT   = 10;
 

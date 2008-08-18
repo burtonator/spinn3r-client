@@ -86,6 +86,9 @@ public class RFC822DateParser {
 
     public static Date parse( String input ) throws java.text.ParseException {
 
+        if ( input == null )
+            return null;
+        
         //NOTE: SimpleDateFormat uses GMT[-+]hh:mm for the TZ which breaks
         //things a bit.  Before we go on we have to repair this.
         SimpleDateFormat df = newSimpleDateFormat();

@@ -40,7 +40,7 @@ public class Config {
     /**
      * When fetching the API this specifies the default version to return.
      */
-    public static String   DEFAULT_VERSION     = "2.2.5";
+    public static String   DEFAULT_VERSION     = "2.3.0";
     
     private int            limit               = DEFAULT_LIMIT;
     private String         lang                = null;
