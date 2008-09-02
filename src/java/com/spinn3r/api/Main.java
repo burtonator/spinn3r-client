@@ -461,6 +461,8 @@ public class Main {
         System.out.println( "                          save bandwidth for users who only need metadata." );        
         System.out.println( "                          Default: false" );        
         System.out.println();
+        System.out.println( "    --enable3             Enable Spinn3r 3.0 extensions." );
+        System.out.println();
 
     }
 
@@ -490,7 +492,7 @@ public class Main {
         Config       config   = null;
         BaseClient   client   = null;
 
-        if ( api.equals( "feed" ) ) {
+        if ( api.startsWith( "feed" ) ) {
         
             config = new FeedConfig();
             client = new FeedClient();
@@ -594,6 +596,7 @@ public class Main {
             if ( v.startsWith( "--enable3" ) ) {
                 BaseClient.FEED_HANDLER       = "feed3";
                 BaseClient.PERMALINK_HANDLER  = "permalink3";
+                continue;
             }
             
             if ( v.startsWith( "com.spinn3r" ) )

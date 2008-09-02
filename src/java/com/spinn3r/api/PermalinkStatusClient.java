@@ -25,7 +25,8 @@ import javax.xml.parsers.*;
 import org.w3c.dom.*;
 
 /**
- * 
+ *
+ * @deprecated This code is deprecated and will be removed after 2008-11-01.
  */
 public class PermalinkStatusClient extends BaseClient implements Client {
 
