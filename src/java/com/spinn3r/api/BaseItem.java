@@ -24,7 +24,7 @@ import java.net.*;
  * Represents a single item returned from the API.
  */
 public abstract class BaseItem {
-    
+
     protected List tags                   = null;
 
     protected String title                = null;
@@ -55,6 +55,103 @@ public abstract class BaseItem {
     protected String commentExtract       = null;
 
     protected String feedURL              = null;
+
+    private String postBody               = null;
+    private String postTitle              = null;
+
+    private String postHashcode           = null;
+    private String feedHashcode           = null;
+    private String sourceHashcode         = null;
+
+    /**
+     * 
+     * Get the value of <code>postHashcode</code>.
+     *
+     */
+    public String getPostHashcode() { 
+        return this.postHashcode;
+    }
+
+    /**
+     * 
+     * Set the value of <code>postHashcode</code>.
+     *
+     */
+    public void setPostHashcode( String postHashcode ) { 
+        this.postHashcode = postHashcode;
+    }
+
+    /**
+     * 
+     * Get the value of <code>feedHashcode</code>.
+     *
+     */
+    public String getFeedHashcode() { 
+        return this.feedHashcode;
+    }
+
+    /**
+     * 
+     * Set the value of <code>feedHashcode</code>.
+     *
+     */
+    public void setFeedHashcode( String feedHashcode ) { 
+        this.feedHashcode = feedHashcode;
+    }
+
+    /**
+     * 
+     * Get the value of <code>sourceHashcode</code>.
+     *
+     */
+    public String getSourceHashcode() { 
+        return this.sourceHashcode;
+    }
+
+    /**
+     * 
+     * Set the value of <code>sourceHashcode</code>.
+     *
+     */
+    public void setSourceHashcode( String sourceHashcode ) { 
+        this.sourceHashcode = sourceHashcode;
+    }
+
+    /**
+     * 
+     * Set the value of <code>postBody</code>.
+     *
+     */
+    public void setPostBody( String postBody ) { 
+        this.postBody = postBody;
+    }
+
+    /**
+     * 
+     * Get the value of <code>postBody</code>.
+     *
+     */
+    public String getPostBody() { 
+        return this.postBody;
+    }
+    
+    /**
+     * 
+     * Set the value of <code>postTitle</code>.
+     *
+     */
+    public void setPostTitle( String postTitle ) { 
+        this.postTitle = postTitle;
+    }
+
+    /**
+     * 
+     * Get the value of <code>postTitle</code>.
+     *
+     */
+    public String getPostTitle() { 
+        return this.postTitle;
+    }
 
     /**
      * 
@@ -416,7 +513,6 @@ public abstract class BaseItem {
         this.feedURL = feedURL;
     }
 
-
     /**
      * 
      * Get the value of <code>resourceGUID</code>.
@@ -435,7 +531,6 @@ public abstract class BaseItem {
         this.resourceGUID = resourceGUID;
     }
 
-    
     public String toString() {
         return link;
     }

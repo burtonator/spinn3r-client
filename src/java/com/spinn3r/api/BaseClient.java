@@ -78,8 +78,10 @@ public abstract class BaseClient implements Client {
     // Would be nice to have this use String.format() but this isn't really
     // compatible back to Java 1.4.. are we requiring Java 1.5 now?
 
-    public static String USER_AGENT = "Spinn3r API Reference Client " + Config.DEFAULT_VERSION + " (Java " + System.getProperty( "java.version" ) + ")";
-
+    public static String USER_AGENT = String.format( "Spinn3r API Reference Client %s (Java %s)",
+                                                     Config.DEFAULT_VERSION,
+                                                     System.getProperty( "java.version" ) );
+        
     /**
      * Default hostname for building the router URL.  This can be changed to
      * use an additional dedicated host if necessary.
@@ -626,6 +628,18 @@ public abstract class BaseClient implements Client {
 
         item.setResourceGUID( getElementCDATAByTagName( current, "resource_guid", NS_POST ) );
 
+        //spinn3r 3.x values
+
+        //FIXME: post:timestamp, feed:link
+        
+        item.setPostTitle( getElementCDATAByTagName( current, "title", NS_POST ) );
+        item.setPostBody( getElementCDATAByTagName( current, "body", NS_POST ) );
+
+        item.setPostHashcode( getElementCDATAByTagName( current,   "hashcode", NS_POST ) );
+        item.setSourceHashcode( getElementCDATAByTagName( current, "hashcode", NS_SOURCE ) );
+        item.setFeedHashcode( getElementCDATAByTagName( current,   "hashcode", NS_FEED ) );
+
+        
         return item;
         
     }

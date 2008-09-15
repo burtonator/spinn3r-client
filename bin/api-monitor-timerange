@@ -1,0 +1,172 @@
+#!/bin/sh
+
+# 
+# ./bin/api-monitor-timerange --minutes=60 --offset=0 --no-archive
+
+#script to start the spinn3r API for the next hour.. LIVE, and then run the same
+#code over the EXACT same time window and compare the number of results.
+
+DEFAULT_HOST=api.spinn3r.com
+DEFAULT_MINUTES=15
+DEFAULT_OFFSET=0
+
+host=$DEFAULT_HOST
+minutes=$DEFAULT_MINUTES
+offset=$DEFAULT_OFFSET
+
+no_archive=false
+
+# while the first argument starts with --
+while [ "${1:0:2}" = "--" ]; do
+
+    arg=$1
+    shift
+
+    arg_name=$(echo $arg | cut -d'=' -f1)
+    arg_value=$(echo $arg | cut -d'=' -f2)
+   
+    if [ "$arg_name" = "" ]; then
+        arg_name=$arg
+    fi
+
+    if [ "$arg_name" == "--host" ]; then
+        host=$arg_value
+        continue
+    fi
+
+    if [ "$arg_name" == "--minutes" ]; then
+        minutes=$arg_value
+        continue
+    fi
+
+    if [ "$arg_name" == "--offset" ]; then
+        offset=$arg_value
+        continue
+    fi
+
+    if [ "$arg_name" == "--no-archive" ]; then
+        no_archive=true
+        continue
+    fi
+
+    echo "Unknown argument: $arg"
+    exit 1
+
+done
+
+cat <<EOF
+
+Running with config:
+
+    host:        $host
+    minutes:     $minutes
+    offset:      $offset
+    no_archive:  $no_archive
+
+EOF
+
+set -o noglob
+set -e
+#set -x
+
+if [ "$offset" != "0" ]; then
+    offset=$(expr $offset * 60 * 1000)
+fi
+
+while [ true ]; do
+
+    interval=$(expr $minutes * 60 * 1000 )
+
+    now=$(expr $(date +%s) * 1000)
+
+    # change the offset to say that it's back it 
+    now=$(expr $now - $offset)
+
+    after=$now
+    before=$(expr $now + $interval)
+
+    live_file=$(mktemp api-monitor-timerange-live.$before-$after.XXXXXX)
+    archive_file=$(mktemp api-monitor-timerange-archive.$before-$after.XXXXXX)
+
+    echo "Live file: $live_file"
+    echo "Archive file: $archive_file"
+
+    #take a live snapshot (this will take at LEAST an hour to run)
+
+    echo "Fetching $minutes minute(s) worth of live and archived data "
+    echo "after: $after"
+    echo "before: $before"
+
+    echo "Performing live snapshot..."
+
+    #set -xv
+    (time ./bin/jexec  com.spinn3r.api.Main \
+                      --enable3 \
+                      --host=$host \
+                      --timing=false \
+                      --vendor=spinn3r-api-monitor-timerange \
+                      --after=$after \
+                      --before=$before ) > $live_file 2>&1
+    set +xv
+
+    echo "Performing live snapshot...done"
+
+    if [ "$no_archive" = "false" ]; then
+
+        echo "Performing archive snapshot..."
+        #set -xv
+        # take an archive snapthot.
+        (time ./bin/jexec  com.spinn3r.api.Main \
+                          --enable3 \
+                          --host=$host \
+                          --timing=false \
+                          --vendor=spinn3r-api-monitor-timerange \
+                          --after=$after \
+                          --before=$before ) > $archive_file 2>&1
+
+        set +xv
+        echo "Performing archive snapshot...done"
+
+        echo -n "result: "
+        head -10 $live_file | grep -i after: 
+        echo -n "result: "
+        head -10 $live_file | grep -i before: 
+
+        after_iso8601=$(head -10 $live_file |grep -i after |grep -Eo '2008[^ ]+')
+        before_iso8601=$(head -10 $live_file |grep -i before |grep -Eo '2008[^ ]+')
+
+        # compare results
+
+        live_post_nr=$(grep -c "guid:" $live_file)
+
+        archive_post_nr=$(grep -c "guid:" $archive_file)
+
+        echo "Live NR items:     $live_post_nr" 
+        echo "Archive NR items:  $archive_post_nr" 
+
+        if [ "$live_post_nr" != "$archive_post_nr" ]; then
+            echo "result: FAILURE: $live_post_nr vs $archive_post_nr posts"
+        else
+            echo "result: SUCCESS: $live_post_nr posts"
+        fi
+
+        live_md5=$(grep -E '^guid:' $live_file | md5sum)
+        archive_md5=$(grep -E '^guid:' $archive_file | md5sum)
+
+        if [ "$live_md5" != "$archive_md5" ]; then
+            echo "result: FAILURE: md5"
+        else 
+            echo "result: SUCCESS: md5"
+        fi
+
+        mv $life_file api-monitor-timerange-live.$after-$before
+
+    fi
+
+    mv $live_file api-monitor-timerange-live.$before-$after
+
+    if [ -e $archive_file ]; then
+        mv $archive_file api-monitor-timerange-archive.$before-$after
+    fi
+
+done

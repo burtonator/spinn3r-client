@@ -21,7 +21,7 @@ import java.io.*;
 import java.net.*;
 
 /**
- * Represents a single item returned from the API.
+ * Represents a fed item returned from the API.
  */
 public class FeedItem extends BaseItem {
 

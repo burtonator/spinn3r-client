@@ -207,4 +207,24 @@ public class ISO8601DateParser {
         }
     }
 
+    public static String toString( Date date ) {
+
+        TimeZone tz = TimeZone.getTimeZone( "UTC" );
+        
+        Calendar c = Calendar.getInstance( tz );
+
+        c.setTime( date );
+        
+        String result = String.format( "%d-%02d-%02dT%02d:%02d:%02dZ",
+                                       c.get( Calendar.YEAR ),
+                                       c.get( Calendar.MONTH ) + 1,
+                                       c.get( Calendar.DAY_OF_MONTH ),
+                                       c.get( Calendar.HOUR_OF_DAY ),
+                                       c.get( Calendar.MINUTE ),
+                                       c.get( Calendar.SECOND ) );
+                                 
+        return result;
+        
+    }
+
 }

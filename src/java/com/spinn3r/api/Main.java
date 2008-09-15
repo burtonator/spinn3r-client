@@ -158,6 +158,7 @@ public class Main {
             if ( show_results >= 2 ) {
 
                 System.out.println( "title:                  " + item.getTitle() );
+                System.out.println( "post title:             " + item.getPostTitle() );
                 System.out.println( "source:                 " + item.getSource() );
                 System.out.println( "pubDate:                " + item.getPubDate() );
                 System.out.println( "published:              " + item.getPublished() );
@@ -625,10 +626,10 @@ public class Main {
         System.out.println( "Using api:    " + api );
 
         if ( after > -1 ) 
-            System.out.println( "After: " + new Date( after ) );
+            System.out.printf( "After: %s (%s)\n", ISO8601DateParser.toString( new Date( after ) ), after );
 
         if ( before > -1 ) 
-            System.out.printf( "Before: %s (%s) \n", new Date( before ), before );
+            System.out.printf( "Before: %s (%s)\n", ISO8601DateParser.toString( new Date( before ) ), before );
 
         System.out.println( "Saving results to disk: " + save );
         
