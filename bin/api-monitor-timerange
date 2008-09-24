@@ -44,6 +44,12 @@ while [ "${1:0:2}" = "--" ]; do
         continue
     fi
 
+    if [ "$arg_name" == "--use-live-file" ]; then
+        use_live_file=true
+        live_file=$arg_value
+        continue
+    fi
+
     if [ "$arg_name" == "--no-archive" ]; then
         no_archive=true
         continue
@@ -85,31 +91,36 @@ while [ true ]; do
     after=$now
     before=$(expr $now + $interval)
 
-    live_file=$(mktemp api-monitor-timerange-live.$before-$after.XXXXXX)
     archive_file=$(mktemp api-monitor-timerange-archive.$before-$after.XXXXXX)
+    
+    if [ "$use_live_file" != "true" ]; then 
 
-    echo "Live file: $live_file"
-    echo "Archive file: $archive_file"
+        live_file=$(mktemp api-monitor-timerange-live.$before-$after.XXXXXX)
 
-    #take a live snapshot (this will take at LEAST an hour to run)
+        echo "Live file: $live_file"
+        echo "Archive file: $archive_file"
 
-    echo "Fetching $minutes minute(s) worth of live and archived data "
-    echo "after: $after"
-    echo "before: $before"
+        #take a live snapshot (this will take at LEAST an hour to run)
 
-    echo "Performing live snapshot..."
+        echo "Fetching $minutes minute(s) worth of live and archived data "
+        echo "after: $after"
+        echo "before: $before"
 
-    #set -xv
-    (time ./bin/jexec  com.spinn3r.api.Main \
-                      --enable3 \
-                      --host=$host \
-                      --timing=false \
-                      --vendor=spinn3r-api-monitor-timerange \
-                      --after=$after \
-                      --before=$before ) > $live_file 2>&1
-    set +xv
+        echo "Performing live snapshot..."
 
-    echo "Performing live snapshot...done"
+        #set -xv
+        (time ./bin/jexec  com.spinn3r.api.Main \
+                          --enable3 \
+                          --host=$host \
+                          --timing=false \
+                          --vendor=spinn3r-api-monitor-timerange \
+                          --after=$after \
+                          --before=$before ) > $live_file 2>&1
+        set +xv
+
+        echo "Performing live snapshot...done"
+
+    fi
 
     if [ "$no_archive" = "false" ]; then
 

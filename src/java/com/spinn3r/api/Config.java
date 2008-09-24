@@ -35,7 +35,7 @@ public class Config {
      * Default number of results to fetch.
      *
      */
-    public static int      DEFAULT_LIMIT       = 10;
+    public static int      DEFAULT_LIMIT       = -1;
 
     /**
      * When fetching the API this specifies the default version to return.

@@ -464,6 +464,8 @@ public class Main {
         System.out.println();
         System.out.println( "    --enable3             Enable Spinn3r 3.0 extensions." );
         System.out.println();
+        System.out.println( "    --memory              Print current memroy settings and exit.  Useful or debugging.." );
+        System.out.println();
 
     }
 
@@ -578,6 +580,12 @@ public class Main {
                 continue;
             }
 
+            if ( v.startsWith( "--memory" ) ) {
+                
+                System.out.printf( "max memory: %s\n", Runtime.getRuntime().maxMemory() );
+                System.exit( 0 );
+            }
+
             if ( v.startsWith( "--host" ) ) {
                 client.setHost( getOpt( v ) );
                 continue;
@@ -620,6 +628,18 @@ public class Main {
             System.exit( 1 );
         }
 
+        if ( Runtime.getRuntime().maxMemory() < 384000000 ) {
+
+            System.out.printf( "ERROR: Reference client requires at least 384MB of memory.\n" );
+            System.out.printf( "\n" );
+            System.out.printf( "Now running with: %s\n", Runtime.getRuntime().maxMemory() );
+            System.out.printf( "\n" );
+            System.out.printf( "Add -XMx384M to your command line and run again.\n" );
+            
+            System.exit( 1 );
+            
+        }
+        
         //use defaults
 
         System.out.println( "Using vendor: " + config.getVendor() );

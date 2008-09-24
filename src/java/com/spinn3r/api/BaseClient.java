@@ -233,7 +233,7 @@ public abstract class BaseClient implements Client {
             
                 // set the optimial limit if necessary
                 if ( retry_ctr == 0 )
-                    config.setLimit( getOptimalLimit() );
+                    config.setLimit( getLimit() );
                 else
                     config.setLimit( getConservativeLimit() );
                 
@@ -868,7 +868,7 @@ public abstract class BaseClient implements Client {
      * Set the value of <code>nextRequestURL</code>.
      *
      */
-    protected void setNextRequestURL( String nextRequestURL ) { 
+    public void setNextRequestURL( String nextRequestURL ) { 
         this.nextRequestURL = nextRequestURL;
     }
 
@@ -971,6 +971,21 @@ public abstract class BaseClient implements Client {
         
     }
 
+    /**
+     * Return the correct limit, factoring in the limit set by the user. 
+     *
+     */
+    public int getLimit() {
+
+        int limit = config.getLimit();
+
+        if ( limit == -1 )
+            return getOptimalLimit();
+
+        return limit;
+        
+    }
+    
     /**
      * Set reasonable HTTP timeouts and DNS caching settings via a static
      * constructor BEFORE any HTTP calls are used.
