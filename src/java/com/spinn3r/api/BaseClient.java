@@ -387,8 +387,6 @@ public abstract class BaseClient implements Client {
             Document doc = parser.parse( is );
 
             long after = System.currentTimeMillis();
-
-            System.out.printf( "parse duration: %s\n", (after-before) );
             
             return doc;
 
@@ -402,7 +400,13 @@ public abstract class BaseClient implements Client {
             throw ce;
 
         } catch ( Exception e ) {
-            throw new ParseException( e );
+
+            String message = String.format( "Unable to parse %s: %s" , getLastRequestURL(), e.getMessage() );
+
+            ParseException pe = new ParseException( message );
+            pe.initCause( e );
+            
+            throw pe;
         }
         
     }
@@ -497,10 +501,13 @@ public abstract class BaseClient implements Client {
 
         //add optional params
         addParam( params, "lang", config.getLang(), true );
+
+        /*
         if ( config.getTierStart() >= 0 ) {
             String param_tier = "" + config.getTierStart() + ":" + config.getTierEnd();
             addParam( params, "tier", param_tier );
         }
+        */
 
         if ( config.getSkipDescription() ) {
             addParam( params, "skip_description", "true" );

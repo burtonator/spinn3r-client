@@ -455,9 +455,6 @@ public class Main {
         System.out.println( "    --host=hostname       Custom hostname for making calls against. Dev use only." );
         System.out.println( "                          Default: api.spinn3r.com" );        
         System.out.println();
-        System.out.println( "    --tier=start:end      Narrow results to a specific ranking by tier." );
-        System.out.println( "                          Default: none" );        
-        System.out.println();
         System.out.println( "    --skip_description    When true do NOT return the RSS description from the server.  This can" );
         System.out.println( "                          save bandwidth for users who only need metadata." );        
         System.out.println( "                          Default: false" );        
@@ -588,17 +585,6 @@ public class Main {
 
             if ( v.startsWith( "--host" ) ) {
                 client.setHost( getOpt( v ) );
-                continue;
-            }
-
-            if ( v.startsWith( "--tier" ) ) {
-
-                String[] split = getOpt( v ).split( ":" );
-
-                int start = Integer.parseInt( split[ 0 ] );
-                int end = Integer.parseInt( split[ 1 ] );
-                
-                config.setTier( start, end );
                 continue;
             }
 
