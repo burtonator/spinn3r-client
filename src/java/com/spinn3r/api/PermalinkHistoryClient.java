@@ -57,7 +57,7 @@ public class PermalinkHistoryClient extends BaseClient implements Client {
         addParam( params, "limit",   limit );
         addParam( params, "vendor",  config.getVendor() );
         addParam( params, "version", config.getVersion() );
-        addParam( params, "source",  config.getSource() );
+        addParam( params, "source",  URLEncoder.encode( config.getSource() ) );
 
         String result = getRouter() + params.toString();
 

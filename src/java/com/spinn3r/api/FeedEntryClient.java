@@ -25,10 +25,9 @@ import javax.xml.parsers.*;
 import org.w3c.dom.*;
 
 /**
- *
- * @deprecated This code is deprecated and will be removed after 2008-11-01.
+ * 
  */
-public class PermalinkStatusClient extends BaseClient implements Client {
+public class FeedEntryClient extends BaseClient implements Client {
 
     public static int MAX_LIMIT            = 10;
     public static int OPTIMAL_LIMIT        = 10;
@@ -46,7 +45,7 @@ public class PermalinkStatusClient extends BaseClient implements Client {
      */
     protected String generateFirstRequestURL() {
 
-        PermalinkStatusConfig config = (PermalinkStatusConfig)super.getConfig();
+        FeedEntryConfig config = (FeedEntryConfig)super.getConfig();
         
         StringBuffer params = new StringBuffer( 1024 ) ;
 
@@ -55,10 +54,10 @@ public class PermalinkStatusClient extends BaseClient implements Client {
         if ( limit > getMaxLimit() )
             limit = getMaxLimit();
         
-        addParam( params, "limit",   limit );
-        addParam( params, "vendor",  config.getVendor() );
-        addParam( params, "version", config.getVersion() );
-        addParam( params, "resource",  config.getResource() );
+        addParam( params, "limit",     limit );
+        addParam( params, "vendor",    config.getVendor() );
+        addParam( params, "version",   config.getVersion() );
+        addParam( params, "resource",  URLEncoder.encode( config.getResource() ) );
 
         String result = getRouter() + params.toString();
         
@@ -68,7 +67,7 @@ public class PermalinkStatusClient extends BaseClient implements Client {
 
     protected BaseItem parseItem( Element current ) throws Exception {
 
-        PermalinkItem item = new PermalinkItem();
+        FeedItem item = new FeedItem();
 
         return super.parseItem( current, item );
         
@@ -87,13 +86,13 @@ public class PermalinkStatusClient extends BaseClient implements Client {
     }
 
     public String getRouter() {
-        return String.format( "http://%s/rss/%s.status?", getHost(), BaseClient.PERMALINK_HANDLER );
+        return String.format( "http://%s/rss/%s.entry?", getHost(), "feed3" );
     }
 
     public static void main( String[] args ) throws Exception {
 
-        PermalinkStatusConfig config = new PermalinkStatusConfig();
-        PermalinkStatusClient client = new PermalinkStatusClient();
+        FeedEntryConfig config = new FeedEntryConfig();
+        FeedEntryClient client = new FeedEntryClient();
 
         String resource = args[0];
         

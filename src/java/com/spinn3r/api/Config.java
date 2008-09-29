@@ -156,8 +156,11 @@ public class Config {
      */
     public void setLimit( int limit ) {
 
-        if ( limit < 10 )
-            throw new IllegalArgumentException( "Minimum limit is 10." );
+        // NOTE: there are now LEGIT reasons to use a limit of 1 especially when
+        // using the .entry() API
+        
+        //if ( limit < 10 )
+        //    throw new IllegalArgumentException( "Minimum limit is 10." );
         
         this.limit = limit;
     }

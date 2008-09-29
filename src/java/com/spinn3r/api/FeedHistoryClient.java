@@ -58,8 +58,8 @@ public class FeedHistoryClient extends BaseClient implements Client {
         addParam( params, "vendor",  config.getVendor() );
         addParam( params, "version", config.getVersion() );
 
-        addParam( params, "source",           config.getSource() , true );
-        addParam( params, "feed",             config.getFeed() , true );
+        addParam( params, "source",           URLEncoder.encode( config.getSource() ) , true );
+        addParam( params, "feed",             URLEncoder.encode( config.getFeed() ) , true );
         addParam( params, "feed_hashcode",    config.getFeedHashcode() , true );
         addParam( params, "source_hashcode",  config.getSourceHashcode() , true );
 

@@ -54,14 +54,12 @@ public class PermalinkEntryClient extends BaseClient implements Client {
         if ( limit > getMaxLimit() )
             limit = getMaxLimit();
         
-        addParam( params, "limit",   limit );
-        addParam( params, "vendor",  config.getVendor() );
-        addParam( params, "version", config.getVersion() );
-        addParam( params, "resource",  config.getResource() );
+        addParam( params, "limit",     limit );
+        addParam( params, "vendor",    config.getVendor() );
+        addParam( params, "version",   config.getVersion() );
+        addParam( params, "resource",  URLEncoder.encode( config.getResource() ) );
 
         String result = getRouter() + params.toString();
-
-        System.out.printf( "DUMP: %s\n" , result );
         
         return result;
         
@@ -88,7 +86,7 @@ public class PermalinkEntryClient extends BaseClient implements Client {
     }
 
     public String getRouter() {
-        return String.format( "http://%s/rss/%s.status?", getHost(), BaseClient.PERMALINK_HANDLER );
+        return String.format( "http://%s/rss/%s.status?", getHost(), "permalink3" );
     }
 
     public static void main( String[] args ) throws Exception {
