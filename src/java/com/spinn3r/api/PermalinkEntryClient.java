@@ -94,12 +94,11 @@ public class PermalinkEntryClient extends BaseClient implements Client {
         PermalinkEntryConfig config = new PermalinkEntryConfig();
         PermalinkEntryClient client = new PermalinkEntryClient();
 
-        String resource = args[0];
-        
         config.setVendor( "debug" );
         config.setVersion( "2.2.1" );
-        config.setResource( resource );
-        
+
+        config.setResource( args[0] );
+
         client.setConfig( config );
 
         client.fetch();

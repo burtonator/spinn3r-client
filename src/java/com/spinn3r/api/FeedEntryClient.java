@@ -57,9 +57,16 @@ public class FeedEntryClient extends BaseClient implements Client {
         addParam( params, "limit",     limit );
         addParam( params, "vendor",    config.getVendor() );
         addParam( params, "version",   config.getVersion() );
-        addParam( params, "resource",  URLEncoder.encode( config.getResource() ) );
+
+        if ( config.getResource() != null )
+            addParam( params, "resource", URLEncoder.encode( config.getResource() ) );
+
+        if ( config.getId() != null )
+            addParam( params, "id", config.getId() );
 
         String result = getRouter() + params.toString();
+
+        //System.out.printf( "\n%s\n", result );
         
         return result;
         
@@ -93,13 +100,16 @@ public class FeedEntryClient extends BaseClient implements Client {
 
         FeedEntryConfig config = new FeedEntryConfig();
         FeedEntryClient client = new FeedEntryClient();
-
-        String resource = args[0];
         
         config.setVendor( "debug" );
         config.setVersion( "2.2.1" );
-        config.setResource( resource );
-        
+
+        if ( args[0].startsWith( "http:" ) ) {
+            config.setResource( args[0] );
+        } else {
+            config.setId( args[0] );
+        }
+
         client.setConfig( config );
 
         client.fetch();
