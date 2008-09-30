@@ -646,7 +646,6 @@ public abstract class BaseClient implements Client {
         item.setSourceHashcode( getElementCDATAByTagName( current, "hashcode", NS_SOURCE ) );
         item.setFeedHashcode( getElementCDATAByTagName( current,   "hashcode", NS_FEED ) );
 
-        
         return item;
         
     }

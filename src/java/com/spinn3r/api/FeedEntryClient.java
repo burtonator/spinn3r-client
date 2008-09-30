@@ -121,6 +121,7 @@ public class FeedEntryClient extends BaseClient implements Client {
         for( BaseItem item : results ) {
 
             System.out.println( "----" );
+            System.out.println( "hashcode:               " + item.getPostHashcode() );
             System.out.println( "link:                   " + item.getLink() );
             System.out.println( "guid:                   " + item.getGuid() );
             System.out.println( "feed URL:               " + item.getFeedURL() );
