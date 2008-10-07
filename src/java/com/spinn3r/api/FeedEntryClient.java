@@ -104,6 +104,8 @@ public class FeedEntryClient extends BaseClient implements Client {
         config.setVendor( "debug" );
         config.setVersion( "2.2.1" );
 
+        config.setLimit( 1 );
+        
         if ( args[0].startsWith( "http:" ) ) {
             config.setResource( args[0] );
         } else {

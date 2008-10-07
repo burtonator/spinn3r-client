@@ -38,6 +38,11 @@ public class FeedEntryConfig extends Config {
     private String           id                     = null;
 
     /**
+     * How long we should sleep if an API call doesn't return enough values.
+     */
+    private long sleepInterval = DEFAULT_SLEEP_INTERVAL;
+
+    /**
      * 
      * Get the value of <code>id</code>.
      *
@@ -54,11 +59,6 @@ public class FeedEntryConfig extends Config {
     public void setId( String id ) { 
         this.id = id;
     }
-
-    /**
-     * How long we should sleep if an API call doesn't return enough values.
-     */
-    private long sleepInterval = DEFAULT_SLEEP_INTERVAL;
 
     /**
      * 

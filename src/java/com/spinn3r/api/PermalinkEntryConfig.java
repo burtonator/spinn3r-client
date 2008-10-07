@@ -35,11 +35,30 @@ public class PermalinkEntryConfig extends Config {
     public static final long DEFAULT_SLEEP_INTERVAL = 0L;
 
     private String           resource               = null; 
+    private String           id                     = null;
 
     /**
      * How long we should sleep if an API call doesn't return enough values.
      */
     private long sleepInterval = DEFAULT_SLEEP_INTERVAL;
+
+    /**
+     * 
+     * Get the value of <code>id</code>.
+     *
+     */
+    public String getId() { 
+        return this.id;
+    }
+
+    /**
+     * 
+     * Set the value of <code>id</code>.
+     *
+     */
+    public void setId( String id ) { 
+        this.id = id;
+    }
 
     /**
      * 

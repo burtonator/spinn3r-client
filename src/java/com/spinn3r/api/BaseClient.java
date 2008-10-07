@@ -72,6 +72,7 @@ public abstract class BaseClient implements Client {
 
     public static String FEED_HANDLER       = "feed";
     public static String PERMALINK_HANDLER  = "permalink";
+    public static String COMMENT_HANDLER    = "comment3";
     
     public static final String GZIP_ENCODING = "gzip";
 
@@ -337,7 +338,7 @@ public abstract class BaseClient implements Client {
         URLConnection conn = null;
         
         try {
-        
+
             // create the HTTP connection.
             URL request = new URL( resource );
             conn = request.openConnection();
@@ -512,8 +513,12 @@ public abstract class BaseClient implements Client {
         if ( config.getSkipDescription() ) {
             addParam( params, "skip_description", "true" );
         }
+
+        String result = getRouter() + params.toString();
+
+        System.out.printf( "FIXME: %s\n", result );
         
-        return getRouter() + params.toString();
+        return result;
         
     }
 

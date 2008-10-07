@@ -411,7 +411,7 @@ public class Main {
         System.out.println();
         System.out.println( "Optional params:" );
         System.out.println();
-        System.out.println( "    --api=API             Specify the name of the API (feed or permalink)." );
+        System.out.println( "    --api=API             Specify the name of the API (feed, permalink, comment)." );
         System.out.println( "                          Default: feed" );        
         System.out.println();
         System.out.println( "    --after=NNN           Time in millis for when we should start indexing." );
@@ -493,15 +493,14 @@ public class Main {
         BaseClient   client   = null;
 
         if ( api.startsWith( "feed" ) ) {
-        
             config = new FeedConfig();
             client = new FeedClient();
-                
+        } else if ( api.startsWith( "comment" ) ) {
+            config = new CommentConfig();
+            client = new CommentClient();
         } else {
-
             config = new PermalinkConfig();
             client = new PermalinkClient();
-
         }
 
         config.setApi( api );

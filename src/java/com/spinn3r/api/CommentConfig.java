@@ -17,12 +17,11 @@
 package com.spinn3r.api;
 
 import java.util.*;
-import java.io.*;
-import java.net.*;
 
 /**
- * Represents a feed item returned from the API.
+ * Used to startup the API and specify defaults for limits, where to start
+ * indexing, tiers, language, etc.
  */
-public class FeedItem extends BaseItem {
+public class CommentConfig extends PermalinkConfig {
 
 }

@@ -21,8 +21,8 @@ import java.io.*;
 import java.net.*;
 
 /**
- * Represents a feed item returned from the API.
+ * Represents a comment item returned from the API.
  */
-public class FeedItem extends BaseItem {
+public class CommentItem extends BaseItem {
 
 }

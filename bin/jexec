@@ -1,6 +1,7 @@
 #!/bin/sh
 
 NEW_CLASSPATH=$(find target -name "*.jar" -exec echo -n "{}": ";")
+NEW_CLASSPATH=$NEW_CLASSPATH:$(find lib -name "*.jar" -exec echo -n "{}": ";")
 
 ulimit -n 1000000 2> /dev/null
 
@@ -44,17 +45,18 @@ fi
 
 if [ "$2" != "" ]; then
 
+    shift
     set -x
     exec $JAVA -Djava.awt.headless=true \
-               -Xms32M -Xmx256M \
+               -Xms32M -Xmx768M \
                $JAVA_OPTS \
-               $CLASSNAME $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 $15 
+               $CLASSNAME $@
 
 else
 
     set -x
     exec $JAVA -Djava.awt.headless=true \
-               -Xms32M -Xmx256M \
+               -Xms32M -Xmx768M \
                $JAVA_OPTS \
                $CLASSNAME 
 

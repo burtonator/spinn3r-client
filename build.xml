@@ -11,11 +11,22 @@
     <property name="version"      value="2.3.1"/>
     <property name="vendor"       value="Tailrank Inc."/>
 
+    <path id="project.classpath">
+
+        <pathelement location="compile"/>
+
+        <fileset dir="lib">
+             <include name="*.jar"/>
+        </fileset>
+
+    </path>
+
     <target name="compile">
 
         <mkdir dir="compile"/>
 
-        <javac nowarn="on"
+        <javac classpathref="project.classpath"
+               nowarn="on"
                source="1.5"
                target="1.5"
                srcdir="src/java"

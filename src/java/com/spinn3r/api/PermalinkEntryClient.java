@@ -57,10 +57,15 @@ public class PermalinkEntryClient extends BaseClient implements Client {
         addParam( params, "limit",     limit );
         addParam( params, "vendor",    config.getVendor() );
         addParam( params, "version",   config.getVersion() );
-        addParam( params, "resource",  URLEncoder.encode( config.getResource() ) );
+
+        if ( config.getResource() != null )
+            addParam( params, "resource", URLEncoder.encode( config.getResource() ) );
+
+        if ( config.getId() != null )
+            addParam( params, "id", config.getId() );
 
         String result = getRouter() + params.toString();
-        
+
         return result;
         
     }
@@ -86,7 +91,7 @@ public class PermalinkEntryClient extends BaseClient implements Client {
     }
 
     public String getRouter() {
-        return String.format( "http://%s/rss/%s.status?", getHost(), "permalink3" );
+        return String.format( "http://%s/rss/%s.entry?", getHost(), "permalink3" );
     }
 
     public static void main( String[] args ) throws Exception {
@@ -96,54 +101,68 @@ public class PermalinkEntryClient extends BaseClient implements Client {
 
         config.setVendor( "debug" );
         config.setVersion( "2.2.1" );
+        config.setLimit( 10 );
 
-        config.setResource( args[0] );
+        if ( args[0].startsWith( "http:" ) ) {
+            config.setResource( args[0] );
+        } else {
+            config.setId( args[0] );
+        }
 
         client.setConfig( config );
 
-        client.fetch();
-        List<BaseItem> results = client.getResults();
+        while( true ) {
 
-        System.out.printf( "%s\n", client.getLastRequestURL() );
-        System.out.printf( "DUMP: Found %d items\n" , results.size() );
-
-        for( BaseItem item : results ) {
-
-            System.out.println( "----" );
-            System.out.println( "hashcode:               " + item.getPostHashcode() );
-            System.out.println( "link:                   " + item.getLink() );
-            System.out.println( "guid:                   " + item.getGuid() );
-            System.out.println( "feed URL:               " + item.getFeedURL() );
-
-            System.out.println( "title:                  " + item.getTitle() );
-            System.out.println( "source:                 " + item.getSource() );
-            System.out.println( "pubDate:                " + item.getPubDate() );
-            System.out.println( "published:              " + item.getPublished() );
+            client.fetch();
+            List<BaseItem> results = client.getResults();
             
-            System.out.println( "weblog title:           " + item.getWeblogTitle() );
-            System.out.println( "weblog tier:            " + item.getWeblogTier() );
-            System.out.println( "weblog publisher type:  " + item.getWeblogPublisherType() );
-            System.out.println( "weblog indegree:        " + item.getWeblogIndegree() );
-            
-            System.out.println( "author name:            " + item.getAuthorName() );
-            System.out.println( "author email:           " + item.getAuthorEmail() );
-            System.out.println( "author link:            " + item.getAuthorLink() );
+            System.out.printf( "Last request URL: %s\n", client.getLastRequestURL() );
+            System.out.printf( "Next request URL: %s\n", client.getNextRequestURL() );
 
-            System.out.println( "lang:                   " + item.getLang() );
-            System.out.println( "tags:                   " + item.getTags() );
-            
-            System.out.println( "description: " );
-            System.out.println( "-" );
-            System.out.println( item.getDescription() );
-            System.out.println( "-" );
+            if ( results.size() == 0 )
+                break;
 
-            System.out.println( "content extract: " );
-            System.out.println( "-" );
-            System.out.println( item.getContentExtract() );
-            System.out.println( "-" );
+            System.out.printf( "DUMP: Found %d items\n" , results.size() );
+
+            for( BaseItem item : results ) {
+
+                System.out.println( "----" );
+                System.out.println( "hashcode:               " + item.getPostHashcode() );
+                System.out.println( "link:                   " + item.getLink() );
+                System.out.println( "guid:                   " + item.getGuid() );
+                System.out.println( "feed URL:               " + item.getFeedURL() );
+
+                System.out.println( "title:                  " + item.getTitle() );
+                System.out.println( "source:                 " + item.getSource() );
+                System.out.println( "pubDate:                " + item.getPubDate() );
+                System.out.println( "published:              " + item.getPublished() );
+                
+                System.out.println( "weblog title:           " + item.getWeblogTitle() );
+                System.out.println( "weblog tier:            " + item.getWeblogTier() );
+                System.out.println( "weblog publisher type:  " + item.getWeblogPublisherType() );
+                System.out.println( "weblog indegree:        " + item.getWeblogIndegree() );
+                
+                System.out.println( "author name:            " + item.getAuthorName() );
+                System.out.println( "author email:           " + item.getAuthorEmail() );
+                System.out.println( "author link:            " + item.getAuthorLink() );
+
+                System.out.println( "lang:                   " + item.getLang() );
+                System.out.println( "tags:                   " + item.getTags() );
+                
+                System.out.println( "description: " );
+                System.out.println( "-" );
+                System.out.println( item.getDescription() );
+                System.out.println( "-" );
+
+                System.out.println( "content extract: " );
+                System.out.println( "-" );
+                System.out.println( item.getContentExtract() );
+                System.out.println( "-" );
+
+            }
 
         }
-        
+            
     }
 
 }
