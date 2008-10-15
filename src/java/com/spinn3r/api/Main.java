@@ -21,7 +21,8 @@ import java.io.*;
 import java.util.regex.*;
 
 /**
- * Command line debug client for testing the API.  Also shows example usage.
+ * <a href="http://spinn3r.com">Spinn3r</a> command line debug client for
+ * testing the API.  Also shows example usage.
  * 
  * This class will fetch the current API results as of INTERVAL minutes and then
  * keep fetching until it's up to date.
