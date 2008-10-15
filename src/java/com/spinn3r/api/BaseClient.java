@@ -516,7 +516,7 @@ public abstract class BaseClient implements Client {
 
         String result = getRouter() + params.toString();
 
-        System.out.printf( "FIXME: %s\n", result );
+        //System.out.printf( "FIXME: %s\n", result );
         
         return result;
         
