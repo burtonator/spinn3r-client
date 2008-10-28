@@ -501,7 +501,8 @@ public abstract class BaseClient implements Client {
         addParam( params, "after",   toISO8601( config.getAfter() ) );
 
         //add optional params
-        addParam( params, "lang", config.getLang(), true );
+        //OBSOLETE/REMOVED
+        //addParam( params, "lang", config.getLang(), true );
 
         /*
         if ( config.getTierStart() >= 0 ) {

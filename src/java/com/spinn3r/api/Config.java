@@ -46,8 +46,6 @@ public class Config {
     private String         lang                = null;
     private String         version             = DEFAULT_VERSION;
     private String         vendor              = null;
-    private int            tier_start          = -1;
-    private int            tier_end            = -1;
     private Date           after               = new Date(); /* use epoch as default */
     private String         firstRequestURL     = null;
     private boolean        skipDescription     = false;
@@ -133,24 +131,6 @@ public class Config {
 
     /**
      * 
-     * Get the value of <code>lang</code>.
-     *
-     */
-    public String getLang() { 
-        return this.lang;
-    }
-
-    /**
-     * 
-     * Set the value of <code>lang</code>.
-     *
-     */
-    public void setLang( String lang ) { 
-        this.lang = lang;
-    }
-
-    /**
-     * 
      * Set the value of <code>limit</code>.
      *
      */
@@ -172,22 +152,6 @@ public class Config {
      */
     public int getLimit() { 
         return this.limit;
-    }
-
-    /**
-     * Specify the tier to fetch.
-     */
-    public void setTier( int start, int end ) {
-        tier_start = start;
-        tier_end   = end;
-    }
-
-    public int getTierStart() {
-        return tier_start;
-    }
-
-    public int getTierEnd() {
-        return tier_end;
     }
 
     public long getSleepInterval() {

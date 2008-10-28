@@ -441,9 +441,6 @@ public class Main {
         System.out.println( "    --range=NNNN          Unix time duration (in millis) to terminate the API." );
         System.out.println( "                          Default: none" );        
         System.out.println();
-        System.out.println( "    --lang=xx             Two letter language code to use" );
-        System.out.println( "                          Default: none" );        
-        System.out.println();
         System.out.println( "    --limit=xx            Number of items to return per iteration." );
         System.out.println( "                          Default: 10 for permalink, 100 for feed" );        
         System.out.println();
@@ -514,11 +511,6 @@ public class Main {
 
             if ( v.startsWith( "--vendor" ) ) {
                 config.setVendor( getOpt( v ) );
-                continue;
-            }
-
-            if ( v.startsWith( "--lang" ) ) {
-                config.setLang( getOpt( v, "en" ) );
                 continue;
             }
 

@@ -104,6 +104,8 @@ public class CommentHistoryClient extends BaseClient implements Client {
     
     public static void main( String[] args ) throws Exception {
 
+        //example comment history usage.
+        
         CommentHistoryConfig config = new CommentHistoryConfig();
         CommentHistoryClient client = new CommentHistoryClient();
 
