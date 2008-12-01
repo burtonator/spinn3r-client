@@ -76,8 +76,12 @@ public class FeedEntryClient extends BaseClient implements Client {
 
         FeedItem item = new FeedItem();
 
-        return super.parseItem( current, item );
+        return (BaseItem)super.parseItem( current, item );
         
+    }
+
+    public List<BaseItem> getResults() { 
+        return (List<BaseItem>)this.results;
     }
 
     protected int getMaxLimit() {

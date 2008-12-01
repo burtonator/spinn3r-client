@@ -72,7 +72,7 @@ public class Main {
     /**
      * Results from the last call.
      */
-    private List<BaseItem> results = null;
+    private List<BaseResult> results = null;
 
     /**
      * When true, filter results for each pass.
@@ -119,79 +119,92 @@ public class Main {
     /**
      * Process results, handling them as necessary.
      */
-    void process( List<BaseItem> results ) throws Exception {
+    void process( List<BaseResult> results ) throws Exception {
 
-        for( BaseItem item : results ) {
+        for( BaseResult result : results ) {
 
-            sampler1.sample( item.getPubDate() );
-            sampler5.sample( item.getPubDate() );
-            sampler15.sample( item.getPubDate() );
-            
             //update the state internally so we have a copy of the last item
             //found.
-            last = item.getPubDate();
-            
+            last = result.getPubDate();
+
+            sampler1.sample( last );
+            sampler5.sample( last );
+            sampler15.sample( last );
+
             //System.out.printf( "last: %s\n", last.getTime() );
             //System.out.printf( "before: %s\n", before );
             
             if ( before > 0 && last.getTime() >= before )
                 break;
 
-            if ( filter != null ) {
+            if ( result instanceof BaseItem ) {
 
-                Pattern p = Pattern.compile( filter );
-                Matcher m = p.matcher( item.getGuid() );
-
-                if ( ! m.find() )
-                    continue;
-
-            }
+                BaseItem item = (BaseItem)result ;
             
-            if ( show_results >= 1 ) {
+                if ( filter != null ) {
 
+                    Pattern p = Pattern.compile( filter );
+                    Matcher m = p.matcher( item.getGuid() );
+
+                    if ( ! m.find() )
+                        continue;
+
+                }
+                
+                if ( show_results >= 1 ) {
+
+                    System.out.println( "----" );
+                    System.out.println( "link:                   " + item.getLink() );
+                    System.out.println( "guid:                   " + item.getGuid() );
+                    System.out.println( "feed URL:               " + item.getFeedURL() );
+
+                }
+
+                if ( show_results >= 2 ) {
+
+                    System.out.println( "title:                  " + item.getTitle() );
+                    System.out.println( "post title:             " + item.getPostTitle() );
+                    System.out.println( "source:                 " + item.getSource() );
+                    System.out.println( "pubDate:                " + item.getPubDate() );
+                    System.out.println( "published:              " + item.getPublished() );
+                    
+                    System.out.println( "weblog title:           " + item.getWeblogTitle() );
+                    System.out.println( "weblog tier:            " + item.getWeblogTier() );
+                    System.out.println( "weblog publisher type:  " + item.getWeblogPublisherType() );
+                    System.out.println( "weblog indegree:        " + item.getWeblogIndegree() );
+                    
+                    System.out.println( "author name:            " + item.getAuthorName() );
+                    System.out.println( "author email:           " + item.getAuthorEmail() );
+                    System.out.println( "author link:            " + item.getAuthorLink() );
+
+                    System.out.println( "lang:                   " + item.getLang() );
+                    System.out.println( "tags:                   " + item.getTags() );
+
+                }
+                    
+                if ( show_results >= 3 ) {
+                    
+                    System.out.println( "description: " );
+                    System.out.println( "-" );
+                    System.out.println( item.getDescription() );
+                    System.out.println( "-" );
+
+                    System.out.println( "content extract: " );
+                    System.out.println( "-" );
+                    System.out.println( item.getContentExtract() );
+                    System.out.println( "-" );
+
+                }
+
+            } else if ( result instanceof LinkItem ) {
+
+                LinkItem link = (LinkItem)result;
+                
                 System.out.println( "----" );
-                System.out.println( "link:                   " + item.getLink() );
-                System.out.println( "guid:                   " + item.getGuid() );
-                System.out.println( "feed URL:               " + item.getFeedURL() );
-
-            }
-
-            if ( show_results >= 2 ) {
-
-                System.out.println( "title:                  " + item.getTitle() );
-                System.out.println( "post title:             " + item.getPostTitle() );
-                System.out.println( "source:                 " + item.getSource() );
-                System.out.println( "pubDate:                " + item.getPubDate() );
-                System.out.println( "published:              " + item.getPublished() );
+                System.out.printf( "%s\n", link.getLinkXml() );
                 
-                System.out.println( "weblog title:           " + item.getWeblogTitle() );
-                System.out.println( "weblog tier:            " + item.getWeblogTier() );
-                System.out.println( "weblog publisher type:  " + item.getWeblogPublisherType() );
-                System.out.println( "weblog indegree:        " + item.getWeblogIndegree() );
-                
-                System.out.println( "author name:            " + item.getAuthorName() );
-                System.out.println( "author email:           " + item.getAuthorEmail() );
-                System.out.println( "author link:            " + item.getAuthorLink() );
-
-                System.out.println( "lang:                   " + item.getLang() );
-                System.out.println( "tags:                   " + item.getTags() );
-
             }
                 
-            if ( show_results >= 3 ) {
-                
-                System.out.println( "description: " );
-                System.out.println( "-" );
-                System.out.println( item.getDescription() );
-                System.out.println( "-" );
-
-                System.out.println( "content extract: " );
-                System.out.println( "-" );
-                System.out.println( item.getContentExtract() );
-                System.out.println( "-" );
-
-            }
-
         }
         
     }
@@ -286,7 +299,7 @@ public class Main {
                 
             } catch ( Exception e ) {
 
-                System.out.println( "Caught exception while processing API:  " );
+                System.out.println( "Caught exception while processing API:  " + client.getLastRequestURL() );
                 System.out.println( e.getMessage() );
                 System.out.println( "Retrying in " + RETRY_INTERVAL + "ms" );
 
@@ -303,7 +316,7 @@ public class Main {
     /**
      * Perform a fetch of the next API call.  
      */
-    private List<BaseItem> doFetch() throws Exception {
+    private List<BaseResult> doFetch() throws Exception {
 
         Config config = client.getConfig();
 
@@ -315,7 +328,7 @@ public class Main {
 
         long fetch_after  = System.currentTimeMillis();
 
-        List<BaseItem> results = client.getResults();
+        List<BaseResult> results = client.getResults();
 
         if ( save != null && results.size() != 0 ) {
 
@@ -412,7 +425,7 @@ public class Main {
         System.out.println();
         System.out.println( "Optional params:" );
         System.out.println();
-        System.out.println( "    --api=API             Specify the name of the API (feed, permalink, comment)." );
+        System.out.println( "    --api=API             Specify the name of the API (feed, permalink, comment, link)." );
         System.out.println( "                          Default: feed" );        
         System.out.println();
         System.out.println( "    --after=NNN           Time in millis for when we should start indexing." );
@@ -459,7 +472,9 @@ public class Main {
         System.out.println();
         System.out.println( "    --enable3             Enable Spinn3r 3.0 extensions." );
         System.out.println();
-        System.out.println( "    --memory              Print current memroy settings and exit.  Useful or debugging.." );
+        System.out.println( "    --memory              Print current memory settings and exit.  Useful or debugging.." );
+        System.out.println();
+        System.out.println( "    --spam_probability=NN Set the lower bound for spam probability filtering.  Default(0.0)" );
         System.out.println();
 
     }
@@ -496,6 +511,9 @@ public class Main {
         } else if ( api.startsWith( "comment" ) ) {
             config = new CommentConfig();
             client = new CommentClient();
+        } else if ( api.startsWith( "link" ) ) {
+            config = new LinkConfig();
+            client = new LinkClient();
         } else {
             config = new PermalinkConfig();
             client = new PermalinkClient();
@@ -569,6 +587,11 @@ public class Main {
                 continue;
             }
 
+            if ( v.startsWith( "--spam_probability" ) ) {
+                config.setSpamProbability( Double.parseDouble( getOpt( v ) ) );
+                continue;
+            }
+
             if ( v.startsWith( "--memory" ) ) {
                 
                 System.out.printf( "max memory: %s\n", Runtime.getRuntime().maxMemory() );
@@ -612,7 +635,7 @@ public class Main {
             System.out.printf( "\n" );
             System.out.printf( "Now running with: %s\n", Runtime.getRuntime().maxMemory() );
             System.out.printf( "\n" );
-            System.out.printf( "Add -XMx384M to your command line and run again.\n" );
+            System.out.printf( "Add -Xmx384M to your command line and run again.\n" );
             
             System.exit( 1 );
             

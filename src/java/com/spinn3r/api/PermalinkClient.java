@@ -47,11 +47,15 @@ public class PermalinkClient extends BaseClient implements Client {
         super.fetch( config );
     }
 
+    public List<BaseItem> getResults() { 
+        return (List<BaseItem>)super.results;
+    }
+    
     protected BaseItem parseItem( Element current ) throws Exception {
 
         PermalinkItem item = new PermalinkItem();
 
-        return super.parseItem( current, item );
+        return (BaseItem)super.parseItem( current, item );
         
     }
 

@@ -67,6 +67,10 @@ public class PermalinkHistoryClient extends BaseClient implements Client {
         
     }
 
+    public List<BaseItem> getResults() { 
+        return (List<BaseItem>)super.results;
+    }
+
     protected BaseItem parseItem( Element current ) throws Exception {
         return new Source( current );
     }
@@ -88,7 +92,6 @@ public class PermalinkHistoryClient extends BaseClient implements Client {
     }
 
     public static void dump( List<BaseItem> results ) {
-
 
         for( BaseItem item : results ) {
             System.out.println( "link:                   " + item.getLink() );

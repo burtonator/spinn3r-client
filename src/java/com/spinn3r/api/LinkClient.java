@@ -29,7 +29,7 @@ import org.w3c.dom.*;
  * thread safety by using <code>synchronized</code> or
  * <code>java.util.concurrent</code> constructs.
  */
-public class CommentClient extends BaseClient implements Client {
+public class LinkClient extends BaseClient implements Client {
     
     public static int MAX_LIMIT            = 100;
     public static int OPTIMAL_LIMIT        = 50;
@@ -41,15 +41,16 @@ public class CommentClient extends BaseClient implements Client {
         super.fetch( config );
     }
 
-    public List<BaseItem> getResults() { 
-        return (List<BaseItem>)super.results;
+    public List<LinkItem> getResults() { 
+        return (List<LinkItem>)super.results;
     }
 
-    protected BaseItem parseItem( Element current ) throws Exception {
+    protected LinkItem parseItem( Element current ) throws Exception {
 
-        CommentItem item = new CommentItem();
+        LinkItem item = new LinkItem();
+        item.parse( current );
 
-        return (BaseItem)super.parseItem( current, item );
+        return item;
         
     }
 
@@ -67,7 +68,7 @@ public class CommentClient extends BaseClient implements Client {
 
     public String getRouter() {
 
-        String router = String.format( "http://%s/rss/%s.getDelta?", getHost(), BaseClient.COMMENT_HANDLER );
+        String router = String.format( "http://%s/rss/%s.getDelta?", getHost(), BaseClient.LINK_HANDLER );
 
         return router;
 

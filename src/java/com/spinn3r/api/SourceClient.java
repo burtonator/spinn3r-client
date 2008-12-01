@@ -37,6 +37,10 @@ public class SourceClient extends BaseClient implements Client {
 
     }
 
+    public List<BaseItem> getResults() { 
+        return (List<BaseItem>)super.results;
+    }
+
     /**
      * Register a new weblog within Spinn3r.
      * 

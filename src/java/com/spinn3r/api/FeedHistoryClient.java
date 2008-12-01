@@ -71,6 +71,10 @@ public class FeedHistoryClient extends BaseClient implements Client {
         
     }
 
+    public List<BaseItem> getResults() { 
+        return (List<BaseItem>)super.results;
+    }
+
     protected BaseItem parseItem( Element current ) throws Exception {
         return new Source( current );
     }

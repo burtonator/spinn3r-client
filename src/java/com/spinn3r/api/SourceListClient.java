@@ -87,6 +87,10 @@ public class SourceListClient extends BaseClient implements Client {
         
     }
 
+    public List<Source> getResults() { 
+        return (List<Source>)super.results;
+    }
+
     protected BaseItem parseItem( Element current ) throws Exception {
         return new Source( current );
     }

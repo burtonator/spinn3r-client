@@ -66,13 +66,16 @@ public abstract class BaseClient implements Client {
     public static final String NS_SOURCE  = "http://tailrank.com/ns/#source" ;
     public static final String NS_POST    = "http://tailrank.com/ns/#post" ;
     public static final String NS_FEED    = "http://tailrank.com/ns/#feed" ;
-
+    public static final String NS_LINK    = "http://spinn3r.com/ns/link" ;
+    public static final String NS_TARGET  = "http://spinn3r.com/ns/#target" ;
+    
     public static final String USER_AGENT_HEADER       = "User-Agent";
     public static final String ACCEPT_ENCODING_HEADER  = "Accept-Encoding";
 
-    public static String FEED_HANDLER       = "feed";
-    public static String PERMALINK_HANDLER  = "permalink";
+    public static String FEED_HANDLER       = "feed3";
+    public static String PERMALINK_HANDLER  = "permalink3";
     public static String COMMENT_HANDLER    = "comment3";
+    public static String LINK_HANDLER       = "link3";
     
     public static final String GZIP_ENCODING = "gzip";
 
@@ -153,7 +156,7 @@ public abstract class BaseClient implements Client {
      */
     private long sleepDuration = -1;
     
-    private List<BaseItem> results = new ArrayList();
+    protected List results = new ArrayList();
 
     protected Config config = null;
 
@@ -477,7 +480,7 @@ public abstract class BaseClient implements Client {
             
         }
 
-        this.setResults( result );
+        this.results = result;
         
     }
 
@@ -497,6 +500,9 @@ public abstract class BaseClient implements Client {
         addParam( params, "vendor",  config.getVendor() );
         addParam( params, "version", config.getVersion() );
 
+        if ( config.getSpamProbability() != Config.DEFAULT_SPAM_PROBABILITY )
+            addParam( params, "spam_probability", config.getSpamProbability() );
+        
         //AFTER param needs to be added which should be ISO8601
         addParam( params, "after",   toISO8601( config.getAfter() ) );
 
@@ -564,13 +570,15 @@ public abstract class BaseClient implements Client {
     /**
      * Parse an individual item which might be specific to this client.
      */
-    protected BaseItem parseItem( Element current ) throws Exception {
+    protected BaseResult parseItem( Element current ) throws Exception {
         throw new Exception( "Not implemented" );
     }
 
-    protected BaseItem parseItem( Element current,
-                                  BaseItem item ) throws Exception {
-
+    protected BaseResult parseItem( Element current,
+                                    BaseResult result ) throws Exception {
+        
+        BaseItem item = (BaseItem)result;
+        
         //base elements.
         item.setTitle( getElementCDATAByTagName( current, "title" ) );
 
@@ -884,23 +892,24 @@ public abstract class BaseClient implements Client {
         this.nextRequestURL = nextRequestURL;
     }
 
-    /**
-     * 
-     * Get the value of <code>result</code>.
-     *
-     */
-    public List getResults() { 
-        return this.results;
-    }
+    
+//     /**
+//      * 
+//      * Get the value of <code>result</code>.
+//      *
+//      */
+//     public List<BaseResult> getResults() { 
+//         return this.results;
+//     }
 
-    /**
-     * 
-     * Set the value of <code>result</code>.
-     *
-     */
-    public void setResults( List results ) { 
-        this.results = results;
-    }
+//     /**
+//      * 
+//      * Set the value of <code>result</code>.
+//      *
+//      */
+//     public void setResults( List<BaseResult> results ) { 
+//         this.results = results;
+//     }
 
     /**
      * 
@@ -977,7 +986,7 @@ public abstract class BaseClient implements Client {
         if ( results == null || results.size() == 0 )
             return null;
 
-        BaseItem item = results.get( results.size() - 1 );
+        BaseResult item = (BaseResult)results.get( results.size() - 1 );
 
         return new Date( item.getPubDate().getTime() - RESTART_BUFFER );
         

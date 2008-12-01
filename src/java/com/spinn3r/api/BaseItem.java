@@ -23,7 +23,7 @@ import java.net.*;
 /**
  * Represents a single item returned from the API.
  */
-public abstract class BaseItem {
+public abstract class BaseItem extends BaseResult {
 
     protected List tags                   = null;
 

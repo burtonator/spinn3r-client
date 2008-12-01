@@ -23,6 +23,7 @@ import java.util.*;
  * indexing, tiers, language, etc.
  */
 public class Config {
+    
 
     /**
      * When we've ran out of results (because the client is up to date) then we
@@ -40,7 +41,12 @@ public class Config {
     /**
      * When fetching the API this specifies the default version to return.
      */
-    public static String   DEFAULT_VERSION     = "2.3.1";
+    public static String   DEFAULT_VERSION     = "3.0.0";
+
+    /**
+     * Default spam probability.
+     */
+    public static double DEFAULT_SPAM_PROBABILITY = 0.0;
     
     private int            limit               = DEFAULT_LIMIT;
     private String         lang                = null;
@@ -50,6 +56,25 @@ public class Config {
     private String         firstRequestURL     = null;
     private boolean        skipDescription     = false;
     private String         api                 = null;
+    private double         spamProbability     = DEFAULT_SPAM_PROBABILITY;
+
+    /**
+     * 
+     * Get the value of <code>spamProbability</code>.
+     *
+     */
+    public double getSpamProbability() { 
+        return this.spamProbability;
+    }
+
+    /**
+     * 
+     * Set the value of <code>spamProbability</code>.
+     *
+     */
+    public void setSpamProbability( double spamProbability ) { 
+        this.spamProbability = spamProbability;
+    }
 
     /**
      * How long we should sleep if an API call doesn't return enough values.

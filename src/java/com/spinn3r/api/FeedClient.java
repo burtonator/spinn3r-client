@@ -77,11 +77,15 @@ public class FeedClient extends BaseClient implements Client {
         
     }
 
+    public List<BaseItem> getResults() { 
+        return (List<BaseItem>)super.results;
+    }
+
     protected BaseItem parseItem( Element current ) throws Exception {
 
         FeedItem item = new FeedItem();
 
-        return super.parseItem( current, item );
+        return (BaseItem)super.parseItem( current, item );
         
     }
 
