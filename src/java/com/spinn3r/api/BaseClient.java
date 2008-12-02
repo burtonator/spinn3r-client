@@ -675,6 +675,15 @@ public abstract class BaseClient implements Client {
         
     }
 
+    public static long parseLong( String v ) {
+
+        if ( v == null || v.equals( "" ) )
+            return 0L;
+
+        return Long.parseLong( v );
+        
+    }
+
     public static float parseFloat( String v, float _default ) {
 
         if ( v == null || v.equals( "" ) )
@@ -892,7 +901,6 @@ public abstract class BaseClient implements Client {
         this.nextRequestURL = nextRequestURL;
     }
 
-    
 //     /**
 //      * 
 //      * Get the value of <code>result</code>.

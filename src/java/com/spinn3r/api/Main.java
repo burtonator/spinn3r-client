@@ -201,7 +201,8 @@ public class Main {
                 LinkItem link = (LinkItem)result;
                 
                 System.out.println( "----" );
-                System.out.printf( "%s\n", link.getLinkXml() );
+                System.out.printf( "link XML:      %s\n", link.getLinkXml() );
+                System.out.printf( "link title:    %s\n", link.getLinkTitle() );
                 
             }
                 
