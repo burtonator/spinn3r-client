@@ -43,7 +43,6 @@ if [[ $interval = "" ]]; then
     interval=$(expr 6 \* 60 \* 60 \* 1000)
 fi
 
-
 if [[ $offset = "" ]]; then
     offset=$(expr 20 \* 60 \* 1000)
 fi
@@ -59,11 +58,19 @@ after=$(expr $before - $interval)
 jar=""
 
 if [[ $jar = "" ]]; then
-    jar=$(ls -1 spinn3r-client-*.jar | sort |tail -1)
+    jar=$(ls -1 spinn3r-client-*.jar 2> /dev/null | sort |tail -1)
+fi
+
+if [[ $jar = "" ]]; then
+    jar=$(ls -1 ./target/spinn3r-client-*.jar 2> /dev/null | sort |tail -1)
+fi
+
+if [[ $jar = "" ]]; then
+    jar=$(ls -1 ./lib/spinn3r-client-*.jar 2> /dev/null | sort |tail -1)
 fi
 
 time java -Xmx512M \
-          -jar spinn3r-client-3.0.0-rc1.jar \
+          -jar $jar \
           --vendor=$vendor \
           --api=$api \
           --before=$before \

@@ -8,7 +8,7 @@
 
     <property name="project"      value="spinn3r-client"/>
     <property name="javadocdir"   value="javadoc"/>
-    <property name="version"      value="3.0.7-rc1"/>
+    <property name="version"      value="3.0.7-rc2"/>
     <property name="vendor"       value="Tailrank Inc."/>
 
     <path id="project.classpath">
@@ -55,7 +55,6 @@
           <format property="timestamp" pattern="MM-dd-yyyy hh:mm:ss 'PST'" locale="PST"/>
         </tstamp>
 
-        <!-- FIXME: add Main class support -->
         <manifest file="compile/META-INF/MANIFEST.MF">
           <attribute name="Built-By"       value="${user.name}"/>
           <attribute name="Main-Class"     value="com.spinn3r.api.Main"/>
