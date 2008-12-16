@@ -816,6 +816,13 @@ public abstract class BaseClient implements Client {
         addParam( buff, name, value, false );
     }
 
+    public static void addParam( StringBuffer buff,
+                                 String name,
+                                 Object value,
+                                 boolean optional ) {
+        addParam( buff, name, value, false, false );
+    }
+    
     /**
      * Add a parameter to the first request URL.  After the first call this is
      * no longer needed. 
@@ -823,10 +830,14 @@ public abstract class BaseClient implements Client {
     public static void addParam( StringBuffer buff,
                                  String name,
                                  Object value,
-                                 boolean optional ) {
+                                 boolean optional,
+                                 boolean urlencode ) {
 
         if ( optional && value == null )
             return;             
+
+        if ( value != null && urlencode )
+            value = URLEncoder.encode( value.toString() );
         
         if ( buff.length() > 0 )
             buff.append( "&" );

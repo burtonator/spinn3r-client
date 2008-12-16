@@ -1,0 +1,20 @@
+#!/bin/sh
+
+vendor=$1
+api=$2
+
+if [[ $api == "" || $vendor == "" ]] ; then 
+    echo "$0 vendor api"
+    exit 1
+fi
+
+interval=$(expr 6 \* 60 \* 60 \* 1000)
+offset=$(expr 20 \* 60 \* 1000)
+
+now=$(date +%s)
+now=$(expr $now \* 1000)
+
+before=$(expr $now - $offset)
+after=$(expr $before - $interval)
+
+time java -Xmx512M -jar spinn3r-client-3.0.0-rc1.jar --vendor=$vendor --api=feed --before=$before --after=$after --show_results=0
