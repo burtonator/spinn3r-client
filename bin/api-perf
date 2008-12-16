@@ -2,7 +2,9 @@
 
 ###
 #
-# Run the spinn3r API for a given time inteval, 
+# Run the spinn3r API for a given time inteval, and benchmark the performance.
+#
+#
 # 
 
 vendor=$1
@@ -51,6 +53,14 @@ now=$(expr $now \* 1000)
 
 before=$(expr $now - $offset)
 after=$(expr $before - $interval)
+
+# find the .jar
+
+jar=""
+
+if [[ $jar = "" ]]; then
+    jar=$(ls -1 spinn3r-client-*.jar | sort |tail -1)
+fi
 
 time java -Xmx512M \
           -jar spinn3r-client-3.0.0-rc1.jar \
