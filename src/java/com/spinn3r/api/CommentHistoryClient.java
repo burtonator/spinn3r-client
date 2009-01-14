@@ -57,7 +57,24 @@ public class CommentHistoryClient extends BaseClient implements Client {
         addParam( params, "limit",   limit );
         addParam( params, "vendor",  config.getVendor() );
         addParam( params, "version", config.getVersion() );
-        addParam( params, "source",  URLEncoder.encode( config.getSource() ) );
+
+        if ( config.getSource() != null )
+            addParam( params, "source",  URLEncoder.encode( config.getSource() ) );
+
+        if ( config.getPermalink() != null )
+            addParam( params, "permalink",  URLEncoder.encode( config.getPermalink() ) );
+
+        if ( config.getFeed() != null )
+            addParam( params, "feed",  URLEncoder.encode( config.getFeed() ) );
+
+        if ( config.getSource() != null )
+            addParam( params, "source_hashcode",  URLEncoder.encode( config.getSourceHashcode() ) );
+
+        if ( config.getPermalink() != null )
+            addParam( params, "permalink_hashcode",  URLEncoder.encode( config.getPermalinkHashcode() ) );
+
+        if ( config.getFeed() != null )
+            addParam( params, "feed_hashcode",  URLEncoder.encode( config.getFeedHashcode() ) );
 
         String result = getRouter() + params.toString();
 

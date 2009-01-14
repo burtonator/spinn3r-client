@@ -23,8 +23,18 @@ import java.util.*;
  * indexing, tiers, language, etc.
  */
 public class CommentHistoryConfig extends Config {
+    
+    private String permalinkHashcode = null;
+    
+    private String feedHashcode = null;
+    
+    private String sourceHashcode = null;
+    
+    private String feed = null;
+    
+    private String permalink = null;
 
-    private String           source               = null; 
+    private String source = null; 
 
     /**
      * 
@@ -42,6 +52,96 @@ public class CommentHistoryConfig extends Config {
      */
     public void setSource( String source ) { 
         this.source = source;
+    }
+
+    /**
+     * 
+     * Get the value of <code>permalink</code>.
+     *
+     */
+    public String getPermalink() { 
+        return this.permalink;
+    }
+
+    /**
+     * 
+     * Set the value of <code>permalink</code>.
+     *
+     */
+    public void setPermalink( String permalink ) { 
+        this.permalink = permalink;
+    }
+
+    /**
+     * 
+     * Get the value of <code>feed</code>.
+     *
+     */
+    public String getFeed() { 
+        return this.feed;
+    }
+
+    /**
+     * 
+     * Set the value of <code>feed</code>.
+     *
+     */
+    public void setFeed( String feed ) { 
+        this.feed = feed;
+    }
+
+    /**
+     * 
+     * Get the value of <code>sourceHashcode</code>.
+     *
+     */
+    public String getSourceHashcode() { 
+        return this.sourceHashcode;
+    }
+
+    /**
+     * 
+     * Set the value of <code>sourceHashcode</code>.
+     *
+     */
+    public void setSourceHashcode( String sourceHashcode ) { 
+        this.sourceHashcode = sourceHashcode;
+    }
+
+    /**
+     * 
+     * Get the value of <code>feedHashcode</code>.
+     *
+     */
+    public String getFeedHashcode() { 
+        return this.feedHashcode;
+    }
+
+    /**
+     * 
+     * Set the value of <code>feedHashcode</code>.
+     *
+     */
+    public void setFeedHashcode( String feedHashcode ) { 
+        this.feedHashcode = feedHashcode;
+    }
+
+    /**
+     * 
+     * Get the value of <code>permalinkHashcode</code>.
+     *
+     */
+    public String getPermalinkHashcode() { 
+        return this.permalinkHashcode;
+    }
+
+    /**
+     * 
+     * Set the value of <code>permalinkHashcode</code>.
+     *
+     */
+    public void setPermalinkHashcode( String permalinkHashcode ) { 
+        this.permalinkHashcode = permalinkHashcode;
     }
 
 }

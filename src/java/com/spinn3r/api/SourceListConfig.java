@@ -23,7 +23,8 @@ import java.util.*;
  * indexing, tiers, language, etc.
  */
 public class SourceListConfig extends Config {
-
+    
+    private Date           postedAfter                  = null;
     private Date           publishedAfter               = null; 
     private Date           foundAfter                   = null; 
 
@@ -61,6 +62,24 @@ public class SourceListConfig extends Config {
      */
     public void setFoundAfter( Date foundAfter ) { 
         this.foundAfter = foundAfter;
+    }
+
+    /**
+     * 
+     * Get the value of <code>postedAfter</code>.
+     *
+     */
+    public Date getPostedAfter() { 
+        return this.postedAfter;
+    }
+
+    /**
+     * 
+     * Set the value of <code>postedAfter</code>.
+     *
+     */
+    public void setPostedAfter( Date postedAfter ) { 
+        this.postedAfter = postedAfter;
     }
 
 }

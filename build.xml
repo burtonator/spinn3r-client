@@ -8,7 +8,7 @@
 
     <property name="project"      value="spinn3r-client"/>
     <property name="javadocdir"   value="javadoc"/>
-    <property name="version"      value="3.0.7-rc2"/>
+    <property name="version"      value="3.0.9-rc3"/>
     <property name="vendor"       value="Tailrank Inc."/>
 
     <path id="project.classpath">
@@ -213,6 +213,7 @@
 
         <copy todir="target/${project}-${version}">
             <fileset dir=".">
+                <include name="bin/api-perf"/>
                 <include name="lib/*.jar"/>
                 <include name="src/java/**"/>
                 <include name="build.xml"/>

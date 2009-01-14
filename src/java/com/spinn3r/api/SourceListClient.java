@@ -80,6 +80,9 @@ public class SourceListClient extends BaseClient implements Client {
         if ( config.getPublishedAfter() != null )
             addParam( params, "published_after",   toISO8601( config.getPublishedAfter() ) );
 
+        if ( config.getPostedAfter() != null )
+            addParam( params, "posted_after",   toISO8601( config.getPostedAfter() ) );
+
         if ( config.getFoundAfter() != null )
             addParam( params, "found_after",   toISO8601( config.getFoundAfter() ) );
 

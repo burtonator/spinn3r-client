@@ -4,8 +4,15 @@
 #
 # Run the spinn3r API for a given time inteval, and benchmark the performance.
 #
-#
 # 
+# 
+# The best way to set this up is to put a spinn3r-api-perf script in
+# /etc/cron.daily with the following:
+#
+# cd /usr/local/spinn3r-client
+#
+# ./bin/api-perf spinn3r-perf-feed3 feed3
+# ./bin/api-perf spinn3r-perf-permalink3 permalink3
 
 vendor=$1
 api=$2
