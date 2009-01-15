@@ -140,16 +140,26 @@ public class SourceListClient extends BaseClient implements Client {
         SourceListConfig config = new SourceListConfig();
         SourceListClient client = new SourceListClient();
 
-        config.setVendor( args[0] );
+        Map<String,String> opts = getopt( args );
 
-        //start with an arbitrary date
-        Date date = new Date( 1210661536159L );
+        if ( opts.containsKey( "vendor" ) )
+            config.setVendor( opts.get( "vendor" ) );
+        else
+            throw new RuntimeException( "Must specify vendor" );
 
-        //We're looking to find new weblogs as we find them.  Alternatively, one
-        //could use setPublishedAfter to detect when we find new URLs.
-        //config.setFoundAfter( date );
-        config.setPublishedAfter( date );
-
+        if ( opts.containsKey( "published_after" ) ) {
+            String date = opts.get( "published_after" );
+            config.setPublishedAfter( ISO8601DateParser.parse( date ) );
+        } else if ( opts.containsKey( "posted_after" ) ) {
+            String date = opts.get( "posted_after" );
+            config.setPostedAfter( ISO8601DateParser.parse( date ) );
+        } else if ( opts.containsKey( "found_after" ) ) {
+            String date = opts.get( "found_after" );
+            config.setFoundAfter( ISO8601DateParser.parse( date ) );
+        } else {
+            throw new RuntimeException( "Specify published_after, posted_after, or found_after." );
+        }
+            
         //tell the client to use this specific config.
         client.setConfig( config );
 

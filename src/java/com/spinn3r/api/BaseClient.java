@@ -1025,7 +1025,35 @@ public abstract class BaseClient implements Client {
         return limit;
         
     }
-    
+
+    /**
+     * Parse command line arguments like --foo=bar where foo is the key and bar
+     * is the value.
+     *
+     */
+    public static Map<String,String> getopt( String[] args ) {
+
+        Map<String,String> result = new HashMap();
+        
+        for( String arg : args ) {
+
+            String[] split = arg.split( "=" );
+
+            String key = split[0];
+
+            if ( key.startsWith( "--" ) )
+                key = key.substring( 2, key.length() );
+            
+            String value = split[1];
+
+            result.put( key, value );
+            
+        }
+
+        return result;
+        
+    }
+
     /**
      * Set reasonable HTTP timeouts and DNS caching settings via a static
      * constructor BEFORE any HTTP calls are used.

@@ -67,13 +67,14 @@ public class CommentHistoryClient extends BaseClient implements Client {
         if ( config.getFeed() != null )
             addParam( params, "feed",  URLEncoder.encode( config.getFeed() ) );
 
-        if ( config.getSource() != null )
+        //hashcodes
+        if ( config.getSourceHashcode() != null )
             addParam( params, "source_hashcode",  URLEncoder.encode( config.getSourceHashcode() ) );
 
-        if ( config.getPermalink() != null )
+        if ( config.getPermalinkHashcode() != null )
             addParam( params, "permalink_hashcode",  URLEncoder.encode( config.getPermalinkHashcode() ) );
 
-        if ( config.getFeed() != null )
+        if ( config.getFeedHashcode() != null )
             addParam( params, "feed_hashcode",  URLEncoder.encode( config.getFeedHashcode() ) );
 
         String result = getRouter() + params.toString();
@@ -129,18 +130,23 @@ public class CommentHistoryClient extends BaseClient implements Client {
         CommentHistoryConfig config = new CommentHistoryConfig();
         CommentHistoryClient client = new CommentHistoryClient();
 
-        config.setVendor( args[0] );
-        config.setSource( args[1] );
+        Map<String,String> opts = getopt( args );
+
+        if ( opts.containsKey( "vendor" ) )
+            config.setVendor( opts.get( "vendor" ) );
+        else
+            throw new RuntimeException( "Must specify vendor" );
+
+        if ( opts.containsKey( "permalink_hashcode" ) )
+            config.setPermalinkHashcode( opts.get( "permalink_hashcode" ) );
+
+        if ( opts.containsKey( "permalink" ) )
+            config.setPermalink( opts.get( "permalink" ) );
 
         client.setConfig( config );
 
         List results;
         
-        client.fetch();
-        results = client.getResults();
-        dump( results );
-        System.out.printf( "DUMP: Found %d items\n" , results.size() );
-
         client.fetch();
         results = client.getResults();
         dump( results );
