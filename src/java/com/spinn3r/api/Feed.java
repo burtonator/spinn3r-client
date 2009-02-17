@@ -28,7 +28,7 @@ import static com.spinn3r.api.BaseClient.*;
  * Represents a source within Spinn3r.
  */
 public class Feed extends BaseItem {
-    
+
     int resourceStatus = -1;
     
     String link = null;
@@ -42,7 +42,9 @@ public class Feed extends BaseItem {
     String etag = null;
     
     Date lastPublished = null;
-    
+
+    Date lastPosted = null;
+
     Date dateFound = null;
     
     String resource = null;
@@ -65,6 +67,7 @@ public class Feed extends BaseItem {
 
         dateFound            = ISO8601DateParser.parse( getElementCDATAByTagName( e, "date_found",       NS_FEED ) );
         lastPublished        = ISO8601DateParser.parse( getElementCDATAByTagName( e, "last_published",   NS_FEED ) );
+        lastPosted           = ISO8601DateParser.parse( getElementCDATAByTagName( e, "last_posted",      NS_FEED ) );
 
     }
     
@@ -248,6 +251,24 @@ public class Feed extends BaseItem {
         this.guid = guid;
     }
 
+    /**
+     * 
+     * Get the value of <code>lastPosted</code>.
+     *
+     */
+    public Date getLastPosted() { 
+        return this.lastPosted;
+    }
+
+    /**
+     * 
+     * Set the value of <code>lastPosted</code>.
+     *
+     */
+    public void setLastPosted( Date lastPosted ) { 
+        this.lastPosted = lastPosted;
+    }
+
    /**
      * Dump this item to stdout.
      *
@@ -264,6 +285,8 @@ public class Feed extends BaseItem {
         System.out.printf( "feed channel link:          %s\n", getChannelLink() );
         System.out.printf( "feed channel desc:          %s\n", getChannelDescription() );
         System.out.printf( "feed etag:                  %s\n", getEtag() );
+        System.out.printf( "feed last published:        %s\n", ISO8601DateParser.toString( getLastPublished() ) );
+        System.out.printf( "feed last posted:           %s\n", ISO8601DateParser.toString( getLastPosted() ) );
 
     }
         

@@ -29,8 +29,8 @@ import org.w3c.dom.*;
  */
 public class LinkHistoryClient extends BaseClient implements Client {
 
-    public static int MAX_LIMIT            = 10;
-    public static int OPTIMAL_LIMIT        = 10;
+    public static int MAX_LIMIT            = 100;
+    public static int OPTIMAL_LIMIT        = 100;
     public static int CONSERVATIVE_LIMIT   = 10;
 
     public void fetch() throws IOException,

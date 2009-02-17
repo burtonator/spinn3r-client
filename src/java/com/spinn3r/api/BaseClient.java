@@ -82,9 +82,10 @@ public abstract class BaseClient implements Client {
     // Would be nice to have this use String.format() but this isn't really
     // compatible back to Java 1.4.. are we requiring Java 1.5 now?
 
-    public static String USER_AGENT = String.format( "Spinn3r API Reference Client %s (Java %s)",
+    public static String USER_AGENT = String.format( "Spinn3r API Reference Client %s (Java %s, maxMemory=%s)",
                                                      Config.DEFAULT_VERSION,
-                                                     System.getProperty( "java.version" ) );
+                                                     System.getProperty( "java.version" ),
+                                                     Runtime.getRuntime().maxMemory() );
         
     /**
      * Default hostname for building the router URL.  This can be changed to
@@ -183,6 +184,8 @@ public abstract class BaseClient implements Client {
     BandwidthSampler bs5   = new BandwidthSampler( 5L  * 60L * 1000L );
     BandwidthSampler bs15  = new BandwidthSampler( 15L * 60L * 1000L );
 
+    private boolean hasMoreResults = true;
+    
     // **** fetching support ****************************************************
 
     /**
@@ -332,6 +335,8 @@ public abstract class BaseClient implements Client {
             throw new ParseException( e );
         }
 
+        hasMoreResults = results.size() == requestLimit;
+        
     }
 
     public Document doFetch( String resource ) throws IOException,
@@ -1026,6 +1031,14 @@ public abstract class BaseClient implements Client {
         
     }
 
+    /**
+     * Return true if more results are available.
+     *
+     */
+    public boolean hasMoreResults() {
+        return hasMoreResults;
+    }
+    
     /**
      * Parse command line arguments like --foo=bar where foo is the key and bar
      * is the value.

@@ -29,8 +29,8 @@ import org.w3c.dom.*;
  */
 public class CommentHistoryClient extends BaseClient implements Client {
 
-    public static int MAX_LIMIT            = 10;
-    public static int OPTIMAL_LIMIT        = 10;
+    public static int MAX_LIMIT            = 100;
+    public static int OPTIMAL_LIMIT        = 50;
     public static int CONSERVATIVE_LIMIT   = 10;
 
     public void fetch() throws IOException,
@@ -79,8 +79,6 @@ public class CommentHistoryClient extends BaseClient implements Client {
 
         String result = getRouter() + params.toString();
 
-        System.out.printf( "%s\n", result );
-        
         return result;
         
     }
@@ -146,11 +144,19 @@ public class CommentHistoryClient extends BaseClient implements Client {
         client.setConfig( config );
 
         List results;
-        
-        client.fetch();
-        results = client.getResults();
-        dump( results );
-        System.out.printf( "DUMP: Found %d items\n" , results.size() );
+
+        while( client.hasMoreResults() ) {
+
+            client.fetch();
+            
+            results = client.getResults();
+
+            System.out.printf( "Found %s results: \n", results.size() );
+            System.out.printf( "Last request URL: %s\n", client.getLastRequestURL() );
+
+            dump( results );
+
+        }
 
     }
 
