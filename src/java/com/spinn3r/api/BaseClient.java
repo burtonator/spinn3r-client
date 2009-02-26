@@ -469,9 +469,18 @@ public abstract class BaseClient implements Client {
 
         Element channel = getElementByTagName( root, "channel" );
 
+        String next = getElementCDATAByTagName( channel, "next_request_url", NS_API );
+
+        //TODO: apply the correct hostname to the next request.
+
+        if ( getHost() != null ) {
+            String path = next.substring( next.indexOf( "/", "http://".length() ), next.length() );
+            next = String.format( "http://%s%s", getHost(), path );
+        }
+        
         //determine the next_request_url so that we can fetch the second page of
         //results.
-        setNextRequestURL( getElementCDATAByTagName( channel, "next_request_url", NS_API ) );
+        setNextRequestURL( next );
 
         List result = new ArrayList();
 
