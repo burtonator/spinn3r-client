@@ -1,0 +1,67 @@
+package spinn3rApi;
+
+option java_package         = "com.spinn3r.api.protocolbuffers";
+option java_outer_classname = "Spinn3rApi";
+
+message Content {
+  required string mime_type = 1;
+  optional bytes  content   = 2;
+}
+
+message Response {
+  optional string source               = 1;
+  optional string previous_request_url = 2;
+  optional string next_request_url     = 3;
+  repeated Entry  entries              = 4;
+}
+
+
+message Author {
+  optional string name  = 1;
+  optional string email = 2;
+  optional string link  = 3;
+}
+
+
+message Source {
+  optional string resource       = 1;
+  optional string title          = 2;
+  optional string description    = 3;
+  optional sint32 tier           = 4;
+  optional int32  indegree       = 5;
+  optional int32  iranking       = 6;
+  optional string publisher_type = 7;
+  optional string hashcode       = 8;
+}
+
+
+message FeedEntry {
+  repeated string  category       = 1;
+  repeated Author  author         = 2;
+  optional string  hashcode       = 3;
+  optional int64   identifier     = 4;
+  optional string  title          = 5;
+  optional string  last_published = 6;
+  optional string  date_found     = 7;
+  optional Content body           = 8;
+
+}
+
+
+message Feed {
+  optional string link     = 1;
+  optional string hashcode = 2;
+  optional string url      = 3;
+}
+
+
+message Entry {
+  optional string  title            = 1;
+  optional string  link             = 2;
+  optional string  lang             = 3;
+  optional Content content          = 4;
+  optional Content content_extract  = 5;
+  optional float   spam_probability = 6;
+  optional string  date_found       = 7;
+  optional int64   identifier       = 8;
+}
