@@ -7,6 +7,384 @@ public final class Spinn3rApi {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
+  public static final class Link extends
+      com.google.protobuf.GeneratedMessage {
+    // Use Link.newBuilder() to construct.
+    private Link() {}
+    
+    private static final Link defaultInstance = new Link();
+    public static Link getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Link getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_Link_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_Link_fieldAccessorTable;
+    }
+    
+    // optional string href = 1;
+    private boolean hasHref;
+    private java.lang.String href_ = "";
+    public boolean hasHref() { return hasHref; }
+    public java.lang.String getHref() { return href_; }
+    
+    // optional string resource = 2;
+    private boolean hasResource;
+    private java.lang.String resource_ = "";
+    public boolean hasResource() { return hasResource; }
+    public java.lang.String getResource() { return resource_; }
+    
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Link parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Link parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Link parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Link parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Link parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Link parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Link parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Link parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.newBuilder()
+      private Builder() {}
+      
+      com.spinn3r.api.protocolbuffers.Spinn3rApi.Link result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.Link();
+      
+      @Override
+      protected com.spinn3r.api.protocolbuffers.Spinn3rApi.Link internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.Link();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.getDescriptor();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Link getDefaultInstanceForType() {
+        return com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.getDefaultInstance();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Link build() {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private com.spinn3r.api.protocolbuffers.Spinn3rApi.Link buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Link buildPartial() {
+        com.spinn3r.api.protocolbuffers.Spinn3rApi.Link returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      
+      // optional string href = 1;
+      public boolean hasHref() {
+        return result.hasHref();
+      }
+      public java.lang.String getHref() {
+        return result.getHref();
+      }
+      public Builder setHref(java.lang.String value) {
+        result.hasHref = true;
+        result.href_ = value;
+        return this;
+      }
+      public Builder clearHref() {
+        result.hasHref = false;
+        result.href_ = "";
+        return this;
+      }
+      
+      // optional string resource = 2;
+      public boolean hasResource() {
+        return result.hasResource();
+      }
+      public java.lang.String getResource() {
+        return result.getResource();
+      }
+      public Builder setResource(java.lang.String value) {
+        result.hasResource = true;
+        result.resource_ = value;
+        return this;
+      }
+      public Builder clearResource() {
+        result.hasResource = false;
+        result.resource_ = "";
+        return this;
+      }
+    }
+    
+    static {
+      com.spinn3r.api.protocolbuffers.Spinn3rApi.getDescriptor();
+    }
+  }
+  
+  public static final class Lang extends
+      com.google.protobuf.GeneratedMessage {
+    // Use Lang.newBuilder() to construct.
+    private Lang() {}
+    
+    private static final Lang defaultInstance = new Lang();
+    public static Lang getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Lang getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_Lang_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_Lang_fieldAccessorTable;
+    }
+    
+    // optional string code = 1;
+    private boolean hasCode;
+    private java.lang.String code_ = "";
+    public boolean hasCode() { return hasCode; }
+    public java.lang.String getCode() { return code_; }
+    
+    // optional float probility = 2;
+    private boolean hasProbility;
+    private float probility_ = 0F;
+    public boolean hasProbility() { return hasProbility; }
+    public float getProbility() { return probility_; }
+    
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang.newBuilder()
+      private Builder() {}
+      
+      com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang();
+      
+      @Override
+      protected com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang.getDescriptor();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang getDefaultInstanceForType() {
+        return com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang.getDefaultInstance();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang build() {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang buildPartial() {
+        com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      
+      // optional string code = 1;
+      public boolean hasCode() {
+        return result.hasCode();
+      }
+      public java.lang.String getCode() {
+        return result.getCode();
+      }
+      public Builder setCode(java.lang.String value) {
+        result.hasCode = true;
+        result.code_ = value;
+        return this;
+      }
+      public Builder clearCode() {
+        result.hasCode = false;
+        result.code_ = "";
+        return this;
+      }
+      
+      // optional float probility = 2;
+      public boolean hasProbility() {
+        return result.hasProbility();
+      }
+      public float getProbility() {
+        return result.getProbility();
+      }
+      public Builder setProbility(float value) {
+        result.hasProbility = true;
+        result.probility_ = value;
+        return this;
+      }
+      public Builder clearProbility() {
+        result.hasProbility = false;
+        result.probility_ = 0F;
+        return this;
+      }
+    }
+    
+    static {
+      com.spinn3r.api.protocolbuffers.Spinn3rApi.getDescriptor();
+    }
+  }
+  
   public static final class Content extends
       com.google.protobuf.GeneratedMessage {
     // Use Content.newBuilder() to construct.
@@ -196,6 +574,2698 @@ public final class Spinn3rApi {
     }
   }
   
+  public static final class Author extends
+      com.google.protobuf.GeneratedMessage {
+    // Use Author.newBuilder() to construct.
+    private Author() {}
+    
+    private static final Author defaultInstance = new Author();
+    public static Author getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Author getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_Author_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_Author_fieldAccessorTable;
+    }
+    
+    // optional string name = 1;
+    private boolean hasName;
+    private java.lang.String name_ = "";
+    public boolean hasName() { return hasName; }
+    public java.lang.String getName() { return name_; }
+    
+    // optional string email = 2;
+    private boolean hasEmail;
+    private java.lang.String email_ = "";
+    public boolean hasEmail() { return hasEmail; }
+    public java.lang.String getEmail() { return email_; }
+    
+    // repeated .spinn3rApi.Link link = 3;
+    private java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link> link_ =
+      java.util.Collections.emptyList();
+    public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link> getLinkList() {
+      return link_;
+    }
+    public int getLinkCount() { return link_.size(); }
+    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Link getLink(int index) {
+      return link_.get(index);
+    }
+    
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Author parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Author parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Author parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Author parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Author parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Author parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Author parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Author parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(com.spinn3r.api.protocolbuffers.Spinn3rApi.Author prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using com.spinn3r.api.protocolbuffers.Spinn3rApi.Author.newBuilder()
+      private Builder() {}
+      
+      com.spinn3r.api.protocolbuffers.Spinn3rApi.Author result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.Author();
+      
+      @Override
+      protected com.spinn3r.api.protocolbuffers.Spinn3rApi.Author internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.Author();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.spinn3r.api.protocolbuffers.Spinn3rApi.Author.getDescriptor();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Author getDefaultInstanceForType() {
+        return com.spinn3r.api.protocolbuffers.Spinn3rApi.Author.getDefaultInstance();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Author build() {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private com.spinn3r.api.protocolbuffers.Spinn3rApi.Author buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Author buildPartial() {
+        if (result.link_ != java.util.Collections.EMPTY_LIST) {
+          result.link_ =
+            java.util.Collections.unmodifiableList(result.link_);
+        }
+        com.spinn3r.api.protocolbuffers.Spinn3rApi.Author returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      
+      // optional string name = 1;
+      public boolean hasName() {
+        return result.hasName();
+      }
+      public java.lang.String getName() {
+        return result.getName();
+      }
+      public Builder setName(java.lang.String value) {
+        result.hasName = true;
+        result.name_ = value;
+        return this;
+      }
+      public Builder clearName() {
+        result.hasName = false;
+        result.name_ = "";
+        return this;
+      }
+      
+      // optional string email = 2;
+      public boolean hasEmail() {
+        return result.hasEmail();
+      }
+      public java.lang.String getEmail() {
+        return result.getEmail();
+      }
+      public Builder setEmail(java.lang.String value) {
+        result.hasEmail = true;
+        result.email_ = value;
+        return this;
+      }
+      public Builder clearEmail() {
+        result.hasEmail = false;
+        result.email_ = "";
+        return this;
+      }
+      
+      // repeated .spinn3rApi.Link link = 3;
+      public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link> getLinkList() {
+        return java.util.Collections.unmodifiableList(result.link_);
+      }
+      public int getLinkCount() {
+        return result.getLinkCount();
+      }
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Link getLink(int index) {
+        return result.getLink(index);
+      }
+      public Builder setLink(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Link value) {
+        result.link_.set(index, value);
+        return this;
+      }
+      public Builder setLink(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.Builder builderForValue) {
+        result.link_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addLink(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link value) {
+        if (result.link_.isEmpty()) {
+          result.link_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link>();
+        }
+        result.link_.add(value);
+        return this;
+      }
+      public Builder addLink(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.Builder builderForValue) {
+        if (result.link_.isEmpty()) {
+          result.link_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link>();
+        }
+        result.link_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllLink(
+          java.lang.Iterable<? extends com.spinn3r.api.protocolbuffers.Spinn3rApi.Link> values) {
+        if (result.link_.isEmpty()) {
+          result.link_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link>();
+        }
+        super.addAll(values, result.link_);
+        return this;
+      }
+      public Builder clearLink() {
+        result.link_ = java.util.Collections.emptyList();
+        return this;
+      }
+    }
+    
+    static {
+      com.spinn3r.api.protocolbuffers.Spinn3rApi.getDescriptor();
+    }
+  }
+  
+  public static final class Source extends
+      com.google.protobuf.GeneratedMessage {
+    // Use Source.newBuilder() to construct.
+    private Source() {}
+    
+    private static final Source defaultInstance = new Source();
+    public static Source getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Source getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_Source_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_Source_fieldAccessorTable;
+    }
+    
+    // repeated .spinn3rApi.Link link = 1;
+    private java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link> link_ =
+      java.util.Collections.emptyList();
+    public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link> getLinkList() {
+      return link_;
+    }
+    public int getLinkCount() { return link_.size(); }
+    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Link getLink(int index) {
+      return link_.get(index);
+    }
+    
+    // optional .spinn3rApi.Link canonical_link = 2;
+    private boolean hasCanonicalLink;
+    private com.spinn3r.api.protocolbuffers.Spinn3rApi.Link canonicalLink_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.getDefaultInstance();
+    public boolean hasCanonicalLink() { return hasCanonicalLink; }
+    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Link getCanonicalLink() { return canonicalLink_; }
+    
+    // optional string title = 3;
+    private boolean hasTitle;
+    private java.lang.String title_ = "";
+    public boolean hasTitle() { return hasTitle; }
+    public java.lang.String getTitle() { return title_; }
+    
+    // optional string hashcode = 4;
+    private boolean hasHashcode;
+    private java.lang.String hashcode_ = "";
+    public boolean hasHashcode() { return hasHashcode; }
+    public java.lang.String getHashcode() { return hashcode_; }
+    
+    // repeated .spinn3rApi.Lang lang = 5;
+    private java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang> lang_ =
+      java.util.Collections.emptyList();
+    public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang> getLangList() {
+      return lang_;
+    }
+    public int getLangCount() { return lang_.size(); }
+    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang getLang(int index) {
+      return lang_.get(index);
+    }
+    
+    // optional string generator = 6;
+    private boolean hasGenerator;
+    private java.lang.String generator_ = "";
+    public boolean hasGenerator() { return hasGenerator; }
+    public java.lang.String getGenerator() { return generator_; }
+    
+    // optional string description = 7;
+    private boolean hasDescription;
+    private java.lang.String description_ = "";
+    public boolean hasDescription() { return hasDescription; }
+    public java.lang.String getDescription() { return description_; }
+    
+    // optional sint32 tier = 8;
+    private boolean hasTier;
+    private int tier_ = 0;
+    public boolean hasTier() { return hasTier; }
+    public int getTier() { return tier_; }
+    
+    // optional int32 indegree = 9;
+    private boolean hasIndegree;
+    private int indegree_ = 0;
+    public boolean hasIndegree() { return hasIndegree; }
+    public int getIndegree() { return indegree_; }
+    
+    // optional int32 iranking = 10;
+    private boolean hasIranking;
+    private int iranking_ = 0;
+    public boolean hasIranking() { return hasIranking; }
+    public int getIranking() { return iranking_; }
+    
+    // optional string publisher_type = 11;
+    private boolean hasPublisherType;
+    private java.lang.String publisherType_ = "";
+    public boolean hasPublisherType() { return hasPublisherType; }
+    public java.lang.String getPublisherType() { return publisherType_; }
+    
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Source parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Source parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Source parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Source parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Source parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Source parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Source parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Source parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(com.spinn3r.api.protocolbuffers.Spinn3rApi.Source prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using com.spinn3r.api.protocolbuffers.Spinn3rApi.Source.newBuilder()
+      private Builder() {}
+      
+      com.spinn3r.api.protocolbuffers.Spinn3rApi.Source result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.Source();
+      
+      @Override
+      protected com.spinn3r.api.protocolbuffers.Spinn3rApi.Source internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.Source();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.spinn3r.api.protocolbuffers.Spinn3rApi.Source.getDescriptor();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Source getDefaultInstanceForType() {
+        return com.spinn3r.api.protocolbuffers.Spinn3rApi.Source.getDefaultInstance();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Source build() {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private com.spinn3r.api.protocolbuffers.Spinn3rApi.Source buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Source buildPartial() {
+        if (result.link_ != java.util.Collections.EMPTY_LIST) {
+          result.link_ =
+            java.util.Collections.unmodifiableList(result.link_);
+        }
+        if (result.lang_ != java.util.Collections.EMPTY_LIST) {
+          result.lang_ =
+            java.util.Collections.unmodifiableList(result.lang_);
+        }
+        com.spinn3r.api.protocolbuffers.Spinn3rApi.Source returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      
+      // repeated .spinn3rApi.Link link = 1;
+      public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link> getLinkList() {
+        return java.util.Collections.unmodifiableList(result.link_);
+      }
+      public int getLinkCount() {
+        return result.getLinkCount();
+      }
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Link getLink(int index) {
+        return result.getLink(index);
+      }
+      public Builder setLink(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Link value) {
+        result.link_.set(index, value);
+        return this;
+      }
+      public Builder setLink(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.Builder builderForValue) {
+        result.link_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addLink(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link value) {
+        if (result.link_.isEmpty()) {
+          result.link_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link>();
+        }
+        result.link_.add(value);
+        return this;
+      }
+      public Builder addLink(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.Builder builderForValue) {
+        if (result.link_.isEmpty()) {
+          result.link_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link>();
+        }
+        result.link_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllLink(
+          java.lang.Iterable<? extends com.spinn3r.api.protocolbuffers.Spinn3rApi.Link> values) {
+        if (result.link_.isEmpty()) {
+          result.link_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link>();
+        }
+        super.addAll(values, result.link_);
+        return this;
+      }
+      public Builder clearLink() {
+        result.link_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // optional .spinn3rApi.Link canonical_link = 2;
+      public boolean hasCanonicalLink() {
+        return result.hasCanonicalLink();
+      }
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Link getCanonicalLink() {
+        return result.getCanonicalLink();
+      }
+      public Builder setCanonicalLink(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link value) {
+        result.hasCanonicalLink = true;
+        result.canonicalLink_ = value;
+        return this;
+      }
+      public Builder setCanonicalLink(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.Builder builderForValue) {
+        result.hasCanonicalLink = true;
+        result.canonicalLink_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeCanonicalLink(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link value) {
+        if (result.hasCanonicalLink() &&
+            result.canonicalLink_ != com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.getDefaultInstance()) {
+          result.canonicalLink_ =
+            com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.newBuilder(result.canonicalLink_).mergeFrom(value).buildPartial();
+        } else {
+          result.canonicalLink_ = value;
+        }
+        result.hasCanonicalLink = true;
+        return this;
+      }
+      public Builder clearCanonicalLink() {
+        result.hasCanonicalLink = false;
+        result.canonicalLink_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.getDefaultInstance();
+        return this;
+      }
+      
+      // optional string title = 3;
+      public boolean hasTitle() {
+        return result.hasTitle();
+      }
+      public java.lang.String getTitle() {
+        return result.getTitle();
+      }
+      public Builder setTitle(java.lang.String value) {
+        result.hasTitle = true;
+        result.title_ = value;
+        return this;
+      }
+      public Builder clearTitle() {
+        result.hasTitle = false;
+        result.title_ = "";
+        return this;
+      }
+      
+      // optional string hashcode = 4;
+      public boolean hasHashcode() {
+        return result.hasHashcode();
+      }
+      public java.lang.String getHashcode() {
+        return result.getHashcode();
+      }
+      public Builder setHashcode(java.lang.String value) {
+        result.hasHashcode = true;
+        result.hashcode_ = value;
+        return this;
+      }
+      public Builder clearHashcode() {
+        result.hasHashcode = false;
+        result.hashcode_ = "";
+        return this;
+      }
+      
+      // repeated .spinn3rApi.Lang lang = 5;
+      public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang> getLangList() {
+        return java.util.Collections.unmodifiableList(result.lang_);
+      }
+      public int getLangCount() {
+        return result.getLangCount();
+      }
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang getLang(int index) {
+        return result.getLang(index);
+      }
+      public Builder setLang(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang value) {
+        result.lang_.set(index, value);
+        return this;
+      }
+      public Builder setLang(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang.Builder builderForValue) {
+        result.lang_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addLang(com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang value) {
+        if (result.lang_.isEmpty()) {
+          result.lang_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang>();
+        }
+        result.lang_.add(value);
+        return this;
+      }
+      public Builder addLang(com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang.Builder builderForValue) {
+        if (result.lang_.isEmpty()) {
+          result.lang_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang>();
+        }
+        result.lang_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllLang(
+          java.lang.Iterable<? extends com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang> values) {
+        if (result.lang_.isEmpty()) {
+          result.lang_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang>();
+        }
+        super.addAll(values, result.lang_);
+        return this;
+      }
+      public Builder clearLang() {
+        result.lang_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // optional string generator = 6;
+      public boolean hasGenerator() {
+        return result.hasGenerator();
+      }
+      public java.lang.String getGenerator() {
+        return result.getGenerator();
+      }
+      public Builder setGenerator(java.lang.String value) {
+        result.hasGenerator = true;
+        result.generator_ = value;
+        return this;
+      }
+      public Builder clearGenerator() {
+        result.hasGenerator = false;
+        result.generator_ = "";
+        return this;
+      }
+      
+      // optional string description = 7;
+      public boolean hasDescription() {
+        return result.hasDescription();
+      }
+      public java.lang.String getDescription() {
+        return result.getDescription();
+      }
+      public Builder setDescription(java.lang.String value) {
+        result.hasDescription = true;
+        result.description_ = value;
+        return this;
+      }
+      public Builder clearDescription() {
+        result.hasDescription = false;
+        result.description_ = "";
+        return this;
+      }
+      
+      // optional sint32 tier = 8;
+      public boolean hasTier() {
+        return result.hasTier();
+      }
+      public int getTier() {
+        return result.getTier();
+      }
+      public Builder setTier(int value) {
+        result.hasTier = true;
+        result.tier_ = value;
+        return this;
+      }
+      public Builder clearTier() {
+        result.hasTier = false;
+        result.tier_ = 0;
+        return this;
+      }
+      
+      // optional int32 indegree = 9;
+      public boolean hasIndegree() {
+        return result.hasIndegree();
+      }
+      public int getIndegree() {
+        return result.getIndegree();
+      }
+      public Builder setIndegree(int value) {
+        result.hasIndegree = true;
+        result.indegree_ = value;
+        return this;
+      }
+      public Builder clearIndegree() {
+        result.hasIndegree = false;
+        result.indegree_ = 0;
+        return this;
+      }
+      
+      // optional int32 iranking = 10;
+      public boolean hasIranking() {
+        return result.hasIranking();
+      }
+      public int getIranking() {
+        return result.getIranking();
+      }
+      public Builder setIranking(int value) {
+        result.hasIranking = true;
+        result.iranking_ = value;
+        return this;
+      }
+      public Builder clearIranking() {
+        result.hasIranking = false;
+        result.iranking_ = 0;
+        return this;
+      }
+      
+      // optional string publisher_type = 11;
+      public boolean hasPublisherType() {
+        return result.hasPublisherType();
+      }
+      public java.lang.String getPublisherType() {
+        return result.getPublisherType();
+      }
+      public Builder setPublisherType(java.lang.String value) {
+        result.hasPublisherType = true;
+        result.publisherType_ = value;
+        return this;
+      }
+      public Builder clearPublisherType() {
+        result.hasPublisherType = false;
+        result.publisherType_ = "";
+        return this;
+      }
+    }
+    
+    static {
+      com.spinn3r.api.protocolbuffers.Spinn3rApi.getDescriptor();
+    }
+  }
+  
+  public static final class Feed extends
+      com.google.protobuf.GeneratedMessage {
+    // Use Feed.newBuilder() to construct.
+    private Feed() {}
+    
+    private static final Feed defaultInstance = new Feed();
+    public static Feed getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Feed getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_Feed_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_Feed_fieldAccessorTable;
+    }
+    
+    // repeated .spinn3rApi.Link link = 1;
+    private java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link> link_ =
+      java.util.Collections.emptyList();
+    public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link> getLinkList() {
+      return link_;
+    }
+    public int getLinkCount() { return link_.size(); }
+    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Link getLink(int index) {
+      return link_.get(index);
+    }
+    
+    // optional .spinn3rApi.Link canonical_link = 2;
+    private boolean hasCanonicalLink;
+    private com.spinn3r.api.protocolbuffers.Spinn3rApi.Link canonicalLink_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.getDefaultInstance();
+    public boolean hasCanonicalLink() { return hasCanonicalLink; }
+    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Link getCanonicalLink() { return canonicalLink_; }
+    
+    // optional string title = 3;
+    private boolean hasTitle;
+    private java.lang.String title_ = "";
+    public boolean hasTitle() { return hasTitle; }
+    public java.lang.String getTitle() { return title_; }
+    
+    // optional string hashcode = 4;
+    private boolean hasHashcode;
+    private java.lang.String hashcode_ = "";
+    public boolean hasHashcode() { return hasHashcode; }
+    public java.lang.String getHashcode() { return hashcode_; }
+    
+    // repeated .spinn3rApi.Lang lang = 5;
+    private java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang> lang_ =
+      java.util.Collections.emptyList();
+    public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang> getLangList() {
+      return lang_;
+    }
+    public int getLangCount() { return lang_.size(); }
+    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang getLang(int index) {
+      return lang_.get(index);
+    }
+    
+    // optional string generator = 6;
+    private boolean hasGenerator;
+    private java.lang.String generator_ = "";
+    public boolean hasGenerator() { return hasGenerator; }
+    public java.lang.String getGenerator() { return generator_; }
+    
+    // optional string description = 7;
+    private boolean hasDescription;
+    private java.lang.String description_ = "";
+    public boolean hasDescription() { return hasDescription; }
+    public java.lang.String getDescription() { return description_; }
+    
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed.newBuilder()
+      private Builder() {}
+      
+      com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed();
+      
+      @Override
+      protected com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed.getDescriptor();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed getDefaultInstanceForType() {
+        return com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed.getDefaultInstance();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed build() {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed buildPartial() {
+        if (result.link_ != java.util.Collections.EMPTY_LIST) {
+          result.link_ =
+            java.util.Collections.unmodifiableList(result.link_);
+        }
+        if (result.lang_ != java.util.Collections.EMPTY_LIST) {
+          result.lang_ =
+            java.util.Collections.unmodifiableList(result.lang_);
+        }
+        com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      
+      // repeated .spinn3rApi.Link link = 1;
+      public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link> getLinkList() {
+        return java.util.Collections.unmodifiableList(result.link_);
+      }
+      public int getLinkCount() {
+        return result.getLinkCount();
+      }
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Link getLink(int index) {
+        return result.getLink(index);
+      }
+      public Builder setLink(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Link value) {
+        result.link_.set(index, value);
+        return this;
+      }
+      public Builder setLink(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.Builder builderForValue) {
+        result.link_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addLink(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link value) {
+        if (result.link_.isEmpty()) {
+          result.link_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link>();
+        }
+        result.link_.add(value);
+        return this;
+      }
+      public Builder addLink(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.Builder builderForValue) {
+        if (result.link_.isEmpty()) {
+          result.link_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link>();
+        }
+        result.link_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllLink(
+          java.lang.Iterable<? extends com.spinn3r.api.protocolbuffers.Spinn3rApi.Link> values) {
+        if (result.link_.isEmpty()) {
+          result.link_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link>();
+        }
+        super.addAll(values, result.link_);
+        return this;
+      }
+      public Builder clearLink() {
+        result.link_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // optional .spinn3rApi.Link canonical_link = 2;
+      public boolean hasCanonicalLink() {
+        return result.hasCanonicalLink();
+      }
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Link getCanonicalLink() {
+        return result.getCanonicalLink();
+      }
+      public Builder setCanonicalLink(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link value) {
+        result.hasCanonicalLink = true;
+        result.canonicalLink_ = value;
+        return this;
+      }
+      public Builder setCanonicalLink(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.Builder builderForValue) {
+        result.hasCanonicalLink = true;
+        result.canonicalLink_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeCanonicalLink(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link value) {
+        if (result.hasCanonicalLink() &&
+            result.canonicalLink_ != com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.getDefaultInstance()) {
+          result.canonicalLink_ =
+            com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.newBuilder(result.canonicalLink_).mergeFrom(value).buildPartial();
+        } else {
+          result.canonicalLink_ = value;
+        }
+        result.hasCanonicalLink = true;
+        return this;
+      }
+      public Builder clearCanonicalLink() {
+        result.hasCanonicalLink = false;
+        result.canonicalLink_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.getDefaultInstance();
+        return this;
+      }
+      
+      // optional string title = 3;
+      public boolean hasTitle() {
+        return result.hasTitle();
+      }
+      public java.lang.String getTitle() {
+        return result.getTitle();
+      }
+      public Builder setTitle(java.lang.String value) {
+        result.hasTitle = true;
+        result.title_ = value;
+        return this;
+      }
+      public Builder clearTitle() {
+        result.hasTitle = false;
+        result.title_ = "";
+        return this;
+      }
+      
+      // optional string hashcode = 4;
+      public boolean hasHashcode() {
+        return result.hasHashcode();
+      }
+      public java.lang.String getHashcode() {
+        return result.getHashcode();
+      }
+      public Builder setHashcode(java.lang.String value) {
+        result.hasHashcode = true;
+        result.hashcode_ = value;
+        return this;
+      }
+      public Builder clearHashcode() {
+        result.hasHashcode = false;
+        result.hashcode_ = "";
+        return this;
+      }
+      
+      // repeated .spinn3rApi.Lang lang = 5;
+      public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang> getLangList() {
+        return java.util.Collections.unmodifiableList(result.lang_);
+      }
+      public int getLangCount() {
+        return result.getLangCount();
+      }
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang getLang(int index) {
+        return result.getLang(index);
+      }
+      public Builder setLang(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang value) {
+        result.lang_.set(index, value);
+        return this;
+      }
+      public Builder setLang(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang.Builder builderForValue) {
+        result.lang_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addLang(com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang value) {
+        if (result.lang_.isEmpty()) {
+          result.lang_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang>();
+        }
+        result.lang_.add(value);
+        return this;
+      }
+      public Builder addLang(com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang.Builder builderForValue) {
+        if (result.lang_.isEmpty()) {
+          result.lang_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang>();
+        }
+        result.lang_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllLang(
+          java.lang.Iterable<? extends com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang> values) {
+        if (result.lang_.isEmpty()) {
+          result.lang_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang>();
+        }
+        super.addAll(values, result.lang_);
+        return this;
+      }
+      public Builder clearLang() {
+        result.lang_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // optional string generator = 6;
+      public boolean hasGenerator() {
+        return result.hasGenerator();
+      }
+      public java.lang.String getGenerator() {
+        return result.getGenerator();
+      }
+      public Builder setGenerator(java.lang.String value) {
+        result.hasGenerator = true;
+        result.generator_ = value;
+        return this;
+      }
+      public Builder clearGenerator() {
+        result.hasGenerator = false;
+        result.generator_ = "";
+        return this;
+      }
+      
+      // optional string description = 7;
+      public boolean hasDescription() {
+        return result.hasDescription();
+      }
+      public java.lang.String getDescription() {
+        return result.getDescription();
+      }
+      public Builder setDescription(java.lang.String value) {
+        result.hasDescription = true;
+        result.description_ = value;
+        return this;
+      }
+      public Builder clearDescription() {
+        result.hasDescription = false;
+        result.description_ = "";
+        return this;
+      }
+    }
+    
+    static {
+      com.spinn3r.api.protocolbuffers.Spinn3rApi.getDescriptor();
+    }
+  }
+  
+  public static final class PermalinkEntry extends
+      com.google.protobuf.GeneratedMessage {
+    // Use PermalinkEntry.newBuilder() to construct.
+    private PermalinkEntry() {}
+    
+    private static final PermalinkEntry defaultInstance = new PermalinkEntry();
+    public static PermalinkEntry getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public PermalinkEntry getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_PermalinkEntry_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_PermalinkEntry_fieldAccessorTable;
+    }
+    
+    // repeated .spinn3rApi.Link link = 1;
+    private java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link> link_ =
+      java.util.Collections.emptyList();
+    public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link> getLinkList() {
+      return link_;
+    }
+    public int getLinkCount() { return link_.size(); }
+    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Link getLink(int index) {
+      return link_.get(index);
+    }
+    
+    // optional .spinn3rApi.Link canonical_link = 2;
+    private boolean hasCanonicalLink;
+    private com.spinn3r.api.protocolbuffers.Spinn3rApi.Link canonicalLink_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.getDefaultInstance();
+    public boolean hasCanonicalLink() { return hasCanonicalLink; }
+    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Link getCanonicalLink() { return canonicalLink_; }
+    
+    // optional string title = 3;
+    private boolean hasTitle;
+    private java.lang.String title_ = "";
+    public boolean hasTitle() { return hasTitle; }
+    public java.lang.String getTitle() { return title_; }
+    
+    // optional string hashcode = 4;
+    private boolean hasHashcode;
+    private java.lang.String hashcode_ = "";
+    public boolean hasHashcode() { return hasHashcode; }
+    public java.lang.String getHashcode() { return hashcode_; }
+    
+    // repeated .spinn3rApi.Lang lang = 5;
+    private java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang> lang_ =
+      java.util.Collections.emptyList();
+    public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang> getLangList() {
+      return lang_;
+    }
+    public int getLangCount() { return lang_.size(); }
+    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang getLang(int index) {
+      return lang_.get(index);
+    }
+    
+    // repeated .spinn3rApi.Author author = 6;
+    private java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Author> author_ =
+      java.util.Collections.emptyList();
+    public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Author> getAuthorList() {
+      return author_;
+    }
+    public int getAuthorCount() { return author_.size(); }
+    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Author getAuthor(int index) {
+      return author_.get(index);
+    }
+    
+    // repeated string category = 7;
+    private java.util.List<java.lang.String> category_ =
+      java.util.Collections.emptyList();
+    public java.util.List<java.lang.String> getCategoryList() {
+      return category_;
+    }
+    public int getCategoryCount() { return category_.size(); }
+    public java.lang.String getCategory(int index) {
+      return category_.get(index);
+    }
+    
+    // optional float spam_probability = 8;
+    private boolean hasSpamProbability;
+    private float spamProbability_ = 0F;
+    public boolean hasSpamProbability() { return hasSpamProbability; }
+    public float getSpamProbability() { return spamProbability_; }
+    
+    // optional string last_published = 9;
+    private boolean hasLastPublished;
+    private java.lang.String lastPublished_ = "";
+    public boolean hasLastPublished() { return hasLastPublished; }
+    public java.lang.String getLastPublished() { return lastPublished_; }
+    
+    // optional string date_found = 10;
+    private boolean hasDateFound;
+    private java.lang.String dateFound_ = "";
+    public boolean hasDateFound() { return hasDateFound; }
+    public java.lang.String getDateFound() { return dateFound_; }
+    
+    // optional int64 identifier = 11;
+    private boolean hasIdentifier;
+    private long identifier_ = 0L;
+    public boolean hasIdentifier() { return hasIdentifier; }
+    public long getIdentifier() { return identifier_; }
+    
+    // optional .spinn3rApi.Content content = 12;
+    private boolean hasContent;
+    private com.spinn3r.api.protocolbuffers.Spinn3rApi.Content content_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.getDefaultInstance();
+    public boolean hasContent() { return hasContent; }
+    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Content getContent() { return content_; }
+    
+    // optional .spinn3rApi.Content content_extract = 13;
+    private boolean hasContentExtract;
+    private com.spinn3r.api.protocolbuffers.Spinn3rApi.Content contentExtract_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.getDefaultInstance();
+    public boolean hasContentExtract() { return hasContentExtract; }
+    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Content getContentExtract() { return contentExtract_; }
+    
+    // optional string generator = 14;
+    private boolean hasGenerator;
+    private java.lang.String generator_ = "";
+    public boolean hasGenerator() { return hasGenerator; }
+    public java.lang.String getGenerator() { return generator_; }
+    
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry.newBuilder()
+      private Builder() {}
+      
+      com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry();
+      
+      @Override
+      protected com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry.getDescriptor();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry getDefaultInstanceForType() {
+        return com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry.getDefaultInstance();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry build() {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry buildPartial() {
+        if (result.link_ != java.util.Collections.EMPTY_LIST) {
+          result.link_ =
+            java.util.Collections.unmodifiableList(result.link_);
+        }
+        if (result.lang_ != java.util.Collections.EMPTY_LIST) {
+          result.lang_ =
+            java.util.Collections.unmodifiableList(result.lang_);
+        }
+        if (result.author_ != java.util.Collections.EMPTY_LIST) {
+          result.author_ =
+            java.util.Collections.unmodifiableList(result.author_);
+        }
+        if (result.category_ != java.util.Collections.EMPTY_LIST) {
+          result.category_ =
+            java.util.Collections.unmodifiableList(result.category_);
+        }
+        com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      
+      // repeated .spinn3rApi.Link link = 1;
+      public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link> getLinkList() {
+        return java.util.Collections.unmodifiableList(result.link_);
+      }
+      public int getLinkCount() {
+        return result.getLinkCount();
+      }
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Link getLink(int index) {
+        return result.getLink(index);
+      }
+      public Builder setLink(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Link value) {
+        result.link_.set(index, value);
+        return this;
+      }
+      public Builder setLink(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.Builder builderForValue) {
+        result.link_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addLink(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link value) {
+        if (result.link_.isEmpty()) {
+          result.link_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link>();
+        }
+        result.link_.add(value);
+        return this;
+      }
+      public Builder addLink(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.Builder builderForValue) {
+        if (result.link_.isEmpty()) {
+          result.link_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link>();
+        }
+        result.link_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllLink(
+          java.lang.Iterable<? extends com.spinn3r.api.protocolbuffers.Spinn3rApi.Link> values) {
+        if (result.link_.isEmpty()) {
+          result.link_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link>();
+        }
+        super.addAll(values, result.link_);
+        return this;
+      }
+      public Builder clearLink() {
+        result.link_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // optional .spinn3rApi.Link canonical_link = 2;
+      public boolean hasCanonicalLink() {
+        return result.hasCanonicalLink();
+      }
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Link getCanonicalLink() {
+        return result.getCanonicalLink();
+      }
+      public Builder setCanonicalLink(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link value) {
+        result.hasCanonicalLink = true;
+        result.canonicalLink_ = value;
+        return this;
+      }
+      public Builder setCanonicalLink(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.Builder builderForValue) {
+        result.hasCanonicalLink = true;
+        result.canonicalLink_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeCanonicalLink(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link value) {
+        if (result.hasCanonicalLink() &&
+            result.canonicalLink_ != com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.getDefaultInstance()) {
+          result.canonicalLink_ =
+            com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.newBuilder(result.canonicalLink_).mergeFrom(value).buildPartial();
+        } else {
+          result.canonicalLink_ = value;
+        }
+        result.hasCanonicalLink = true;
+        return this;
+      }
+      public Builder clearCanonicalLink() {
+        result.hasCanonicalLink = false;
+        result.canonicalLink_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.getDefaultInstance();
+        return this;
+      }
+      
+      // optional string title = 3;
+      public boolean hasTitle() {
+        return result.hasTitle();
+      }
+      public java.lang.String getTitle() {
+        return result.getTitle();
+      }
+      public Builder setTitle(java.lang.String value) {
+        result.hasTitle = true;
+        result.title_ = value;
+        return this;
+      }
+      public Builder clearTitle() {
+        result.hasTitle = false;
+        result.title_ = "";
+        return this;
+      }
+      
+      // optional string hashcode = 4;
+      public boolean hasHashcode() {
+        return result.hasHashcode();
+      }
+      public java.lang.String getHashcode() {
+        return result.getHashcode();
+      }
+      public Builder setHashcode(java.lang.String value) {
+        result.hasHashcode = true;
+        result.hashcode_ = value;
+        return this;
+      }
+      public Builder clearHashcode() {
+        result.hasHashcode = false;
+        result.hashcode_ = "";
+        return this;
+      }
+      
+      // repeated .spinn3rApi.Lang lang = 5;
+      public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang> getLangList() {
+        return java.util.Collections.unmodifiableList(result.lang_);
+      }
+      public int getLangCount() {
+        return result.getLangCount();
+      }
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang getLang(int index) {
+        return result.getLang(index);
+      }
+      public Builder setLang(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang value) {
+        result.lang_.set(index, value);
+        return this;
+      }
+      public Builder setLang(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang.Builder builderForValue) {
+        result.lang_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addLang(com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang value) {
+        if (result.lang_.isEmpty()) {
+          result.lang_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang>();
+        }
+        result.lang_.add(value);
+        return this;
+      }
+      public Builder addLang(com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang.Builder builderForValue) {
+        if (result.lang_.isEmpty()) {
+          result.lang_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang>();
+        }
+        result.lang_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllLang(
+          java.lang.Iterable<? extends com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang> values) {
+        if (result.lang_.isEmpty()) {
+          result.lang_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang>();
+        }
+        super.addAll(values, result.lang_);
+        return this;
+      }
+      public Builder clearLang() {
+        result.lang_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // repeated .spinn3rApi.Author author = 6;
+      public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Author> getAuthorList() {
+        return java.util.Collections.unmodifiableList(result.author_);
+      }
+      public int getAuthorCount() {
+        return result.getAuthorCount();
+      }
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Author getAuthor(int index) {
+        return result.getAuthor(index);
+      }
+      public Builder setAuthor(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Author value) {
+        result.author_.set(index, value);
+        return this;
+      }
+      public Builder setAuthor(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Author.Builder builderForValue) {
+        result.author_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addAuthor(com.spinn3r.api.protocolbuffers.Spinn3rApi.Author value) {
+        if (result.author_.isEmpty()) {
+          result.author_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Author>();
+        }
+        result.author_.add(value);
+        return this;
+      }
+      public Builder addAuthor(com.spinn3r.api.protocolbuffers.Spinn3rApi.Author.Builder builderForValue) {
+        if (result.author_.isEmpty()) {
+          result.author_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Author>();
+        }
+        result.author_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllAuthor(
+          java.lang.Iterable<? extends com.spinn3r.api.protocolbuffers.Spinn3rApi.Author> values) {
+        if (result.author_.isEmpty()) {
+          result.author_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Author>();
+        }
+        super.addAll(values, result.author_);
+        return this;
+      }
+      public Builder clearAuthor() {
+        result.author_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // repeated string category = 7;
+      public java.util.List<java.lang.String> getCategoryList() {
+        return java.util.Collections.unmodifiableList(result.category_);
+      }
+      public int getCategoryCount() {
+        return result.getCategoryCount();
+      }
+      public java.lang.String getCategory(int index) {
+        return result.getCategory(index);
+      }
+      public Builder setCategory(int index, java.lang.String value) {
+        result.category_.set(index, value);
+        return this;
+      }
+      public Builder addCategory(java.lang.String value) {
+        if (result.category_.isEmpty()) {
+          result.category_ = new java.util.ArrayList<java.lang.String>();
+        }
+        result.category_.add(value);
+        return this;
+      }
+      public Builder addAllCategory(
+          java.lang.Iterable<? extends java.lang.String> values) {
+        if (result.category_.isEmpty()) {
+          result.category_ = new java.util.ArrayList<java.lang.String>();
+        }
+        super.addAll(values, result.category_);
+        return this;
+      }
+      public Builder clearCategory() {
+        result.category_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // optional float spam_probability = 8;
+      public boolean hasSpamProbability() {
+        return result.hasSpamProbability();
+      }
+      public float getSpamProbability() {
+        return result.getSpamProbability();
+      }
+      public Builder setSpamProbability(float value) {
+        result.hasSpamProbability = true;
+        result.spamProbability_ = value;
+        return this;
+      }
+      public Builder clearSpamProbability() {
+        result.hasSpamProbability = false;
+        result.spamProbability_ = 0F;
+        return this;
+      }
+      
+      // optional string last_published = 9;
+      public boolean hasLastPublished() {
+        return result.hasLastPublished();
+      }
+      public java.lang.String getLastPublished() {
+        return result.getLastPublished();
+      }
+      public Builder setLastPublished(java.lang.String value) {
+        result.hasLastPublished = true;
+        result.lastPublished_ = value;
+        return this;
+      }
+      public Builder clearLastPublished() {
+        result.hasLastPublished = false;
+        result.lastPublished_ = "";
+        return this;
+      }
+      
+      // optional string date_found = 10;
+      public boolean hasDateFound() {
+        return result.hasDateFound();
+      }
+      public java.lang.String getDateFound() {
+        return result.getDateFound();
+      }
+      public Builder setDateFound(java.lang.String value) {
+        result.hasDateFound = true;
+        result.dateFound_ = value;
+        return this;
+      }
+      public Builder clearDateFound() {
+        result.hasDateFound = false;
+        result.dateFound_ = "";
+        return this;
+      }
+      
+      // optional int64 identifier = 11;
+      public boolean hasIdentifier() {
+        return result.hasIdentifier();
+      }
+      public long getIdentifier() {
+        return result.getIdentifier();
+      }
+      public Builder setIdentifier(long value) {
+        result.hasIdentifier = true;
+        result.identifier_ = value;
+        return this;
+      }
+      public Builder clearIdentifier() {
+        result.hasIdentifier = false;
+        result.identifier_ = 0L;
+        return this;
+      }
+      
+      // optional .spinn3rApi.Content content = 12;
+      public boolean hasContent() {
+        return result.hasContent();
+      }
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Content getContent() {
+        return result.getContent();
+      }
+      public Builder setContent(com.spinn3r.api.protocolbuffers.Spinn3rApi.Content value) {
+        result.hasContent = true;
+        result.content_ = value;
+        return this;
+      }
+      public Builder setContent(com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.Builder builderForValue) {
+        result.hasContent = true;
+        result.content_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeContent(com.spinn3r.api.protocolbuffers.Spinn3rApi.Content value) {
+        if (result.hasContent() &&
+            result.content_ != com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.getDefaultInstance()) {
+          result.content_ =
+            com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.newBuilder(result.content_).mergeFrom(value).buildPartial();
+        } else {
+          result.content_ = value;
+        }
+        result.hasContent = true;
+        return this;
+      }
+      public Builder clearContent() {
+        result.hasContent = false;
+        result.content_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.getDefaultInstance();
+        return this;
+      }
+      
+      // optional .spinn3rApi.Content content_extract = 13;
+      public boolean hasContentExtract() {
+        return result.hasContentExtract();
+      }
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Content getContentExtract() {
+        return result.getContentExtract();
+      }
+      public Builder setContentExtract(com.spinn3r.api.protocolbuffers.Spinn3rApi.Content value) {
+        result.hasContentExtract = true;
+        result.contentExtract_ = value;
+        return this;
+      }
+      public Builder setContentExtract(com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.Builder builderForValue) {
+        result.hasContentExtract = true;
+        result.contentExtract_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeContentExtract(com.spinn3r.api.protocolbuffers.Spinn3rApi.Content value) {
+        if (result.hasContentExtract() &&
+            result.contentExtract_ != com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.getDefaultInstance()) {
+          result.contentExtract_ =
+            com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.newBuilder(result.contentExtract_).mergeFrom(value).buildPartial();
+        } else {
+          result.contentExtract_ = value;
+        }
+        result.hasContentExtract = true;
+        return this;
+      }
+      public Builder clearContentExtract() {
+        result.hasContentExtract = false;
+        result.contentExtract_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.getDefaultInstance();
+        return this;
+      }
+      
+      // optional string generator = 14;
+      public boolean hasGenerator() {
+        return result.hasGenerator();
+      }
+      public java.lang.String getGenerator() {
+        return result.getGenerator();
+      }
+      public Builder setGenerator(java.lang.String value) {
+        result.hasGenerator = true;
+        result.generator_ = value;
+        return this;
+      }
+      public Builder clearGenerator() {
+        result.hasGenerator = false;
+        result.generator_ = "";
+        return this;
+      }
+    }
+    
+    static {
+      com.spinn3r.api.protocolbuffers.Spinn3rApi.getDescriptor();
+    }
+  }
+  
+  public static final class FeedEntry extends
+      com.google.protobuf.GeneratedMessage {
+    // Use FeedEntry.newBuilder() to construct.
+    private FeedEntry() {}
+    
+    private static final FeedEntry defaultInstance = new FeedEntry();
+    public static FeedEntry getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public FeedEntry getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_FeedEntry_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_FeedEntry_fieldAccessorTable;
+    }
+    
+    // repeated .spinn3rApi.Link link = 1;
+    private java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link> link_ =
+      java.util.Collections.emptyList();
+    public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link> getLinkList() {
+      return link_;
+    }
+    public int getLinkCount() { return link_.size(); }
+    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Link getLink(int index) {
+      return link_.get(index);
+    }
+    
+    // optional .spinn3rApi.Link canonical_link = 2;
+    private boolean hasCanonicalLink;
+    private com.spinn3r.api.protocolbuffers.Spinn3rApi.Link canonicalLink_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.getDefaultInstance();
+    public boolean hasCanonicalLink() { return hasCanonicalLink; }
+    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Link getCanonicalLink() { return canonicalLink_; }
+    
+    // optional string title = 3;
+    private boolean hasTitle;
+    private java.lang.String title_ = "";
+    public boolean hasTitle() { return hasTitle; }
+    public java.lang.String getTitle() { return title_; }
+    
+    // optional string hashcode = 4;
+    private boolean hasHashcode;
+    private java.lang.String hashcode_ = "";
+    public boolean hasHashcode() { return hasHashcode; }
+    public java.lang.String getHashcode() { return hashcode_; }
+    
+    // repeated .spinn3rApi.Lang lang = 5;
+    private java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang> lang_ =
+      java.util.Collections.emptyList();
+    public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang> getLangList() {
+      return lang_;
+    }
+    public int getLangCount() { return lang_.size(); }
+    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang getLang(int index) {
+      return lang_.get(index);
+    }
+    
+    // repeated .spinn3rApi.Author author = 6;
+    private java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Author> author_ =
+      java.util.Collections.emptyList();
+    public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Author> getAuthorList() {
+      return author_;
+    }
+    public int getAuthorCount() { return author_.size(); }
+    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Author getAuthor(int index) {
+      return author_.get(index);
+    }
+    
+    // repeated string category = 7;
+    private java.util.List<java.lang.String> category_ =
+      java.util.Collections.emptyList();
+    public java.util.List<java.lang.String> getCategoryList() {
+      return category_;
+    }
+    public int getCategoryCount() { return category_.size(); }
+    public java.lang.String getCategory(int index) {
+      return category_.get(index);
+    }
+    
+    // optional float spam_probability = 8;
+    private boolean hasSpamProbability;
+    private float spamProbability_ = 0F;
+    public boolean hasSpamProbability() { return hasSpamProbability; }
+    public float getSpamProbability() { return spamProbability_; }
+    
+    // optional string last_published = 9;
+    private boolean hasLastPublished;
+    private java.lang.String lastPublished_ = "";
+    public boolean hasLastPublished() { return hasLastPublished; }
+    public java.lang.String getLastPublished() { return lastPublished_; }
+    
+    // optional string date_found = 10;
+    private boolean hasDateFound;
+    private java.lang.String dateFound_ = "";
+    public boolean hasDateFound() { return hasDateFound; }
+    public java.lang.String getDateFound() { return dateFound_; }
+    
+    // optional int64 identifier = 11;
+    private boolean hasIdentifier;
+    private long identifier_ = 0L;
+    public boolean hasIdentifier() { return hasIdentifier; }
+    public long getIdentifier() { return identifier_; }
+    
+    // optional .spinn3rApi.Content content = 12;
+    private boolean hasContent;
+    private com.spinn3r.api.protocolbuffers.Spinn3rApi.Content content_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.getDefaultInstance();
+    public boolean hasContent() { return hasContent; }
+    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Content getContent() { return content_; }
+    
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry.newBuilder()
+      private Builder() {}
+      
+      com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry();
+      
+      @Override
+      protected com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry.getDescriptor();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry getDefaultInstanceForType() {
+        return com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry.getDefaultInstance();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry build() {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry buildPartial() {
+        if (result.link_ != java.util.Collections.EMPTY_LIST) {
+          result.link_ =
+            java.util.Collections.unmodifiableList(result.link_);
+        }
+        if (result.lang_ != java.util.Collections.EMPTY_LIST) {
+          result.lang_ =
+            java.util.Collections.unmodifiableList(result.lang_);
+        }
+        if (result.author_ != java.util.Collections.EMPTY_LIST) {
+          result.author_ =
+            java.util.Collections.unmodifiableList(result.author_);
+        }
+        if (result.category_ != java.util.Collections.EMPTY_LIST) {
+          result.category_ =
+            java.util.Collections.unmodifiableList(result.category_);
+        }
+        com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      
+      // repeated .spinn3rApi.Link link = 1;
+      public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link> getLinkList() {
+        return java.util.Collections.unmodifiableList(result.link_);
+      }
+      public int getLinkCount() {
+        return result.getLinkCount();
+      }
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Link getLink(int index) {
+        return result.getLink(index);
+      }
+      public Builder setLink(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Link value) {
+        result.link_.set(index, value);
+        return this;
+      }
+      public Builder setLink(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.Builder builderForValue) {
+        result.link_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addLink(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link value) {
+        if (result.link_.isEmpty()) {
+          result.link_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link>();
+        }
+        result.link_.add(value);
+        return this;
+      }
+      public Builder addLink(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.Builder builderForValue) {
+        if (result.link_.isEmpty()) {
+          result.link_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link>();
+        }
+        result.link_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllLink(
+          java.lang.Iterable<? extends com.spinn3r.api.protocolbuffers.Spinn3rApi.Link> values) {
+        if (result.link_.isEmpty()) {
+          result.link_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Link>();
+        }
+        super.addAll(values, result.link_);
+        return this;
+      }
+      public Builder clearLink() {
+        result.link_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // optional .spinn3rApi.Link canonical_link = 2;
+      public boolean hasCanonicalLink() {
+        return result.hasCanonicalLink();
+      }
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Link getCanonicalLink() {
+        return result.getCanonicalLink();
+      }
+      public Builder setCanonicalLink(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link value) {
+        result.hasCanonicalLink = true;
+        result.canonicalLink_ = value;
+        return this;
+      }
+      public Builder setCanonicalLink(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.Builder builderForValue) {
+        result.hasCanonicalLink = true;
+        result.canonicalLink_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeCanonicalLink(com.spinn3r.api.protocolbuffers.Spinn3rApi.Link value) {
+        if (result.hasCanonicalLink() &&
+            result.canonicalLink_ != com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.getDefaultInstance()) {
+          result.canonicalLink_ =
+            com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.newBuilder(result.canonicalLink_).mergeFrom(value).buildPartial();
+        } else {
+          result.canonicalLink_ = value;
+        }
+        result.hasCanonicalLink = true;
+        return this;
+      }
+      public Builder clearCanonicalLink() {
+        result.hasCanonicalLink = false;
+        result.canonicalLink_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.getDefaultInstance();
+        return this;
+      }
+      
+      // optional string title = 3;
+      public boolean hasTitle() {
+        return result.hasTitle();
+      }
+      public java.lang.String getTitle() {
+        return result.getTitle();
+      }
+      public Builder setTitle(java.lang.String value) {
+        result.hasTitle = true;
+        result.title_ = value;
+        return this;
+      }
+      public Builder clearTitle() {
+        result.hasTitle = false;
+        result.title_ = "";
+        return this;
+      }
+      
+      // optional string hashcode = 4;
+      public boolean hasHashcode() {
+        return result.hasHashcode();
+      }
+      public java.lang.String getHashcode() {
+        return result.getHashcode();
+      }
+      public Builder setHashcode(java.lang.String value) {
+        result.hasHashcode = true;
+        result.hashcode_ = value;
+        return this;
+      }
+      public Builder clearHashcode() {
+        result.hasHashcode = false;
+        result.hashcode_ = "";
+        return this;
+      }
+      
+      // repeated .spinn3rApi.Lang lang = 5;
+      public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang> getLangList() {
+        return java.util.Collections.unmodifiableList(result.lang_);
+      }
+      public int getLangCount() {
+        return result.getLangCount();
+      }
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang getLang(int index) {
+        return result.getLang(index);
+      }
+      public Builder setLang(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang value) {
+        result.lang_.set(index, value);
+        return this;
+      }
+      public Builder setLang(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang.Builder builderForValue) {
+        result.lang_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addLang(com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang value) {
+        if (result.lang_.isEmpty()) {
+          result.lang_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang>();
+        }
+        result.lang_.add(value);
+        return this;
+      }
+      public Builder addLang(com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang.Builder builderForValue) {
+        if (result.lang_.isEmpty()) {
+          result.lang_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang>();
+        }
+        result.lang_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllLang(
+          java.lang.Iterable<? extends com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang> values) {
+        if (result.lang_.isEmpty()) {
+          result.lang_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang>();
+        }
+        super.addAll(values, result.lang_);
+        return this;
+      }
+      public Builder clearLang() {
+        result.lang_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // repeated .spinn3rApi.Author author = 6;
+      public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Author> getAuthorList() {
+        return java.util.Collections.unmodifiableList(result.author_);
+      }
+      public int getAuthorCount() {
+        return result.getAuthorCount();
+      }
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Author getAuthor(int index) {
+        return result.getAuthor(index);
+      }
+      public Builder setAuthor(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Author value) {
+        result.author_.set(index, value);
+        return this;
+      }
+      public Builder setAuthor(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Author.Builder builderForValue) {
+        result.author_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addAuthor(com.spinn3r.api.protocolbuffers.Spinn3rApi.Author value) {
+        if (result.author_.isEmpty()) {
+          result.author_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Author>();
+        }
+        result.author_.add(value);
+        return this;
+      }
+      public Builder addAuthor(com.spinn3r.api.protocolbuffers.Spinn3rApi.Author.Builder builderForValue) {
+        if (result.author_.isEmpty()) {
+          result.author_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Author>();
+        }
+        result.author_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllAuthor(
+          java.lang.Iterable<? extends com.spinn3r.api.protocolbuffers.Spinn3rApi.Author> values) {
+        if (result.author_.isEmpty()) {
+          result.author_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Author>();
+        }
+        super.addAll(values, result.author_);
+        return this;
+      }
+      public Builder clearAuthor() {
+        result.author_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // repeated string category = 7;
+      public java.util.List<java.lang.String> getCategoryList() {
+        return java.util.Collections.unmodifiableList(result.category_);
+      }
+      public int getCategoryCount() {
+        return result.getCategoryCount();
+      }
+      public java.lang.String getCategory(int index) {
+        return result.getCategory(index);
+      }
+      public Builder setCategory(int index, java.lang.String value) {
+        result.category_.set(index, value);
+        return this;
+      }
+      public Builder addCategory(java.lang.String value) {
+        if (result.category_.isEmpty()) {
+          result.category_ = new java.util.ArrayList<java.lang.String>();
+        }
+        result.category_.add(value);
+        return this;
+      }
+      public Builder addAllCategory(
+          java.lang.Iterable<? extends java.lang.String> values) {
+        if (result.category_.isEmpty()) {
+          result.category_ = new java.util.ArrayList<java.lang.String>();
+        }
+        super.addAll(values, result.category_);
+        return this;
+      }
+      public Builder clearCategory() {
+        result.category_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // optional float spam_probability = 8;
+      public boolean hasSpamProbability() {
+        return result.hasSpamProbability();
+      }
+      public float getSpamProbability() {
+        return result.getSpamProbability();
+      }
+      public Builder setSpamProbability(float value) {
+        result.hasSpamProbability = true;
+        result.spamProbability_ = value;
+        return this;
+      }
+      public Builder clearSpamProbability() {
+        result.hasSpamProbability = false;
+        result.spamProbability_ = 0F;
+        return this;
+      }
+      
+      // optional string last_published = 9;
+      public boolean hasLastPublished() {
+        return result.hasLastPublished();
+      }
+      public java.lang.String getLastPublished() {
+        return result.getLastPublished();
+      }
+      public Builder setLastPublished(java.lang.String value) {
+        result.hasLastPublished = true;
+        result.lastPublished_ = value;
+        return this;
+      }
+      public Builder clearLastPublished() {
+        result.hasLastPublished = false;
+        result.lastPublished_ = "";
+        return this;
+      }
+      
+      // optional string date_found = 10;
+      public boolean hasDateFound() {
+        return result.hasDateFound();
+      }
+      public java.lang.String getDateFound() {
+        return result.getDateFound();
+      }
+      public Builder setDateFound(java.lang.String value) {
+        result.hasDateFound = true;
+        result.dateFound_ = value;
+        return this;
+      }
+      public Builder clearDateFound() {
+        result.hasDateFound = false;
+        result.dateFound_ = "";
+        return this;
+      }
+      
+      // optional int64 identifier = 11;
+      public boolean hasIdentifier() {
+        return result.hasIdentifier();
+      }
+      public long getIdentifier() {
+        return result.getIdentifier();
+      }
+      public Builder setIdentifier(long value) {
+        result.hasIdentifier = true;
+        result.identifier_ = value;
+        return this;
+      }
+      public Builder clearIdentifier() {
+        result.hasIdentifier = false;
+        result.identifier_ = 0L;
+        return this;
+      }
+      
+      // optional .spinn3rApi.Content content = 12;
+      public boolean hasContent() {
+        return result.hasContent();
+      }
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Content getContent() {
+        return result.getContent();
+      }
+      public Builder setContent(com.spinn3r.api.protocolbuffers.Spinn3rApi.Content value) {
+        result.hasContent = true;
+        result.content_ = value;
+        return this;
+      }
+      public Builder setContent(com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.Builder builderForValue) {
+        result.hasContent = true;
+        result.content_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeContent(com.spinn3r.api.protocolbuffers.Spinn3rApi.Content value) {
+        if (result.hasContent() &&
+            result.content_ != com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.getDefaultInstance()) {
+          result.content_ =
+            com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.newBuilder(result.content_).mergeFrom(value).buildPartial();
+        } else {
+          result.content_ = value;
+        }
+        result.hasContent = true;
+        return this;
+      }
+      public Builder clearContent() {
+        result.hasContent = false;
+        result.content_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.getDefaultInstance();
+        return this;
+      }
+    }
+    
+    static {
+      com.spinn3r.api.protocolbuffers.Spinn3rApi.getDescriptor();
+    }
+  }
+  
+  public static final class Entry extends
+      com.google.protobuf.GeneratedMessage {
+    // Use Entry.newBuilder() to construct.
+    private Entry() {}
+    
+    private static final Entry defaultInstance = new Entry();
+    public static Entry getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Entry getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_Entry_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_Entry_fieldAccessorTable;
+    }
+    
+    // optional .spinn3rApi.Source source = 1;
+    private boolean hasSource;
+    private com.spinn3r.api.protocolbuffers.Spinn3rApi.Source source_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Source.getDefaultInstance();
+    public boolean hasSource() { return hasSource; }
+    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Source getSource() { return source_; }
+    
+    // optional .spinn3rApi.Feed feed = 2;
+    private boolean hasFeed;
+    private com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed feed_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed.getDefaultInstance();
+    public boolean hasFeed() { return hasFeed; }
+    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed getFeed() { return feed_; }
+    
+    // optional .spinn3rApi.FeedEntry feed_entry = 3;
+    private boolean hasFeedEntry;
+    private com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry feedEntry_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry.getDefaultInstance();
+    public boolean hasFeedEntry() { return hasFeedEntry; }
+    public com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry getFeedEntry() { return feedEntry_; }
+    
+    // optional .spinn3rApi.PermalinkEntry permalink_entry = 4;
+    private boolean hasPermalinkEntry;
+    private com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry permalinkEntry_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry.getDefaultInstance();
+    public boolean hasPermalinkEntry() { return hasPermalinkEntry; }
+    public com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry getPermalinkEntry() { return permalinkEntry_; }
+    
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry.newBuilder()
+      private Builder() {}
+      
+      com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry();
+      
+      @Override
+      protected com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry.getDescriptor();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry getDefaultInstanceForType() {
+        return com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry.getDefaultInstance();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry build() {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry buildPartial() {
+        com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      
+      // optional .spinn3rApi.Source source = 1;
+      public boolean hasSource() {
+        return result.hasSource();
+      }
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Source getSource() {
+        return result.getSource();
+      }
+      public Builder setSource(com.spinn3r.api.protocolbuffers.Spinn3rApi.Source value) {
+        result.hasSource = true;
+        result.source_ = value;
+        return this;
+      }
+      public Builder setSource(com.spinn3r.api.protocolbuffers.Spinn3rApi.Source.Builder builderForValue) {
+        result.hasSource = true;
+        result.source_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeSource(com.spinn3r.api.protocolbuffers.Spinn3rApi.Source value) {
+        if (result.hasSource() &&
+            result.source_ != com.spinn3r.api.protocolbuffers.Spinn3rApi.Source.getDefaultInstance()) {
+          result.source_ =
+            com.spinn3r.api.protocolbuffers.Spinn3rApi.Source.newBuilder(result.source_).mergeFrom(value).buildPartial();
+        } else {
+          result.source_ = value;
+        }
+        result.hasSource = true;
+        return this;
+      }
+      public Builder clearSource() {
+        result.hasSource = false;
+        result.source_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Source.getDefaultInstance();
+        return this;
+      }
+      
+      // optional .spinn3rApi.Feed feed = 2;
+      public boolean hasFeed() {
+        return result.hasFeed();
+      }
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed getFeed() {
+        return result.getFeed();
+      }
+      public Builder setFeed(com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed value) {
+        result.hasFeed = true;
+        result.feed_ = value;
+        return this;
+      }
+      public Builder setFeed(com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed.Builder builderForValue) {
+        result.hasFeed = true;
+        result.feed_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeFeed(com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed value) {
+        if (result.hasFeed() &&
+            result.feed_ != com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed.getDefaultInstance()) {
+          result.feed_ =
+            com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed.newBuilder(result.feed_).mergeFrom(value).buildPartial();
+        } else {
+          result.feed_ = value;
+        }
+        result.hasFeed = true;
+        return this;
+      }
+      public Builder clearFeed() {
+        result.hasFeed = false;
+        result.feed_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed.getDefaultInstance();
+        return this;
+      }
+      
+      // optional .spinn3rApi.FeedEntry feed_entry = 3;
+      public boolean hasFeedEntry() {
+        return result.hasFeedEntry();
+      }
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry getFeedEntry() {
+        return result.getFeedEntry();
+      }
+      public Builder setFeedEntry(com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry value) {
+        result.hasFeedEntry = true;
+        result.feedEntry_ = value;
+        return this;
+      }
+      public Builder setFeedEntry(com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry.Builder builderForValue) {
+        result.hasFeedEntry = true;
+        result.feedEntry_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeFeedEntry(com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry value) {
+        if (result.hasFeedEntry() &&
+            result.feedEntry_ != com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry.getDefaultInstance()) {
+          result.feedEntry_ =
+            com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry.newBuilder(result.feedEntry_).mergeFrom(value).buildPartial();
+        } else {
+          result.feedEntry_ = value;
+        }
+        result.hasFeedEntry = true;
+        return this;
+      }
+      public Builder clearFeedEntry() {
+        result.hasFeedEntry = false;
+        result.feedEntry_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry.getDefaultInstance();
+        return this;
+      }
+      
+      // optional .spinn3rApi.PermalinkEntry permalink_entry = 4;
+      public boolean hasPermalinkEntry() {
+        return result.hasPermalinkEntry();
+      }
+      public com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry getPermalinkEntry() {
+        return result.getPermalinkEntry();
+      }
+      public Builder setPermalinkEntry(com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry value) {
+        result.hasPermalinkEntry = true;
+        result.permalinkEntry_ = value;
+        return this;
+      }
+      public Builder setPermalinkEntry(com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry.Builder builderForValue) {
+        result.hasPermalinkEntry = true;
+        result.permalinkEntry_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergePermalinkEntry(com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry value) {
+        if (result.hasPermalinkEntry() &&
+            result.permalinkEntry_ != com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry.getDefaultInstance()) {
+          result.permalinkEntry_ =
+            com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry.newBuilder(result.permalinkEntry_).mergeFrom(value).buildPartial();
+        } else {
+          result.permalinkEntry_ = value;
+        }
+        result.hasPermalinkEntry = true;
+        return this;
+      }
+      public Builder clearPermalinkEntry() {
+        result.hasPermalinkEntry = false;
+        result.permalinkEntry_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry.getDefaultInstance();
+        return this;
+      }
+    }
+    
+    static {
+      com.spinn3r.api.protocolbuffers.Spinn3rApi.getDescriptor();
+    }
+  }
+  
   public static final class Response extends
       com.google.protobuf.GeneratedMessage {
     // Use Response.newBuilder() to construct.
@@ -221,11 +3291,11 @@ public final class Spinn3rApi {
       return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_Response_fieldAccessorTable;
     }
     
-    // optional string source = 1;
-    private boolean hasSource;
-    private java.lang.String source_ = "";
-    public boolean hasSource() { return hasSource; }
-    public java.lang.String getSource() { return source_; }
+    // optional string request = 1;
+    private boolean hasRequest;
+    private java.lang.String request_ = "";
+    public boolean hasRequest() { return hasRequest; }
+    public java.lang.String getRequest() { return request_; }
     
     // optional string previous_request_url = 2;
     private boolean hasPreviousRequestUrl;
@@ -364,21 +3434,21 @@ public final class Spinn3rApi {
       }
       
       
-      // optional string source = 1;
-      public boolean hasSource() {
-        return result.hasSource();
+      // optional string request = 1;
+      public boolean hasRequest() {
+        return result.hasRequest();
       }
-      public java.lang.String getSource() {
-        return result.getSource();
+      public java.lang.String getRequest() {
+        return result.getRequest();
       }
-      public Builder setSource(java.lang.String value) {
-        result.hasSource = true;
-        result.source_ = value;
+      public Builder setRequest(java.lang.String value) {
+        result.hasRequest = true;
+        result.request_ = value;
         return this;
       }
-      public Builder clearSource() {
-        result.hasSource = false;
-        result.source_ = "";
+      public Builder clearRequest() {
+        result.hasRequest = false;
+        result.request_ = "";
         return this;
       }
       
@@ -469,1550 +3539,21 @@ public final class Spinn3rApi {
     }
   }
   
-  public static final class Author extends
-      com.google.protobuf.GeneratedMessage {
-    // Use Author.newBuilder() to construct.
-    private Author() {}
-    
-    private static final Author defaultInstance = new Author();
-    public static Author getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public Author getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_Author_descriptor;
-    }
-    
-    @Override
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_Author_fieldAccessorTable;
-    }
-    
-    // optional string name = 1;
-    private boolean hasName;
-    private java.lang.String name_ = "";
-    public boolean hasName() { return hasName; }
-    public java.lang.String getName() { return name_; }
-    
-    // optional string email = 2;
-    private boolean hasEmail;
-    private java.lang.String email_ = "";
-    public boolean hasEmail() { return hasEmail; }
-    public java.lang.String getEmail() { return email_; }
-    
-    // optional string link = 3;
-    private boolean hasLink;
-    private java.lang.String link_ = "";
-    public boolean hasLink() { return hasLink; }
-    public java.lang.String getLink() { return link_; }
-    
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Author parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Author parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Author parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Author parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Author parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Author parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Author parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Author parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return new Builder(); }
-    public Builder newBuilderForType() { return new Builder(); }
-    public static Builder newBuilder(com.spinn3r.api.protocolbuffers.Spinn3rApi.Author prototype) {
-      return new Builder().mergeFrom(prototype);
-    }
-    
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      // Construct using com.spinn3r.api.protocolbuffers.Spinn3rApi.Author.newBuilder()
-      private Builder() {}
-      
-      com.spinn3r.api.protocolbuffers.Spinn3rApi.Author result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.Author();
-      
-      @Override
-      protected com.spinn3r.api.protocolbuffers.Spinn3rApi.Author internalGetResult() {
-        return result;
-      }
-      
-      @Override
-      public Builder clear() {
-        result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.Author();
-        return this;
-      }
-      
-      @Override
-      public Builder clone() {
-        return new Builder().mergeFrom(result);
-      }
-      
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return com.spinn3r.api.protocolbuffers.Spinn3rApi.Author.getDescriptor();
-      }
-      
-      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Author getDefaultInstanceForType() {
-        return com.spinn3r.api.protocolbuffers.Spinn3rApi.Author.getDefaultInstance();
-      }
-      
-      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Author build() {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result);
-        }
-        return buildPartial();
-      }
-      
-      private com.spinn3r.api.protocolbuffers.Spinn3rApi.Author buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return buildPartial();
-      }
-      
-      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Author buildPartial() {
-        com.spinn3r.api.protocolbuffers.Spinn3rApi.Author returnMe = result;
-        result = null;
-        return returnMe;
-      }
-      
-      
-      // optional string name = 1;
-      public boolean hasName() {
-        return result.hasName();
-      }
-      public java.lang.String getName() {
-        return result.getName();
-      }
-      public Builder setName(java.lang.String value) {
-        result.hasName = true;
-        result.name_ = value;
-        return this;
-      }
-      public Builder clearName() {
-        result.hasName = false;
-        result.name_ = "";
-        return this;
-      }
-      
-      // optional string email = 2;
-      public boolean hasEmail() {
-        return result.hasEmail();
-      }
-      public java.lang.String getEmail() {
-        return result.getEmail();
-      }
-      public Builder setEmail(java.lang.String value) {
-        result.hasEmail = true;
-        result.email_ = value;
-        return this;
-      }
-      public Builder clearEmail() {
-        result.hasEmail = false;
-        result.email_ = "";
-        return this;
-      }
-      
-      // optional string link = 3;
-      public boolean hasLink() {
-        return result.hasLink();
-      }
-      public java.lang.String getLink() {
-        return result.getLink();
-      }
-      public Builder setLink(java.lang.String value) {
-        result.hasLink = true;
-        result.link_ = value;
-        return this;
-      }
-      public Builder clearLink() {
-        result.hasLink = false;
-        result.link_ = "";
-        return this;
-      }
-    }
-    
-    static {
-      com.spinn3r.api.protocolbuffers.Spinn3rApi.getDescriptor();
-    }
-  }
-  
-  public static final class Source extends
-      com.google.protobuf.GeneratedMessage {
-    // Use Source.newBuilder() to construct.
-    private Source() {}
-    
-    private static final Source defaultInstance = new Source();
-    public static Source getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public Source getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_Source_descriptor;
-    }
-    
-    @Override
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_Source_fieldAccessorTable;
-    }
-    
-    // optional string resource = 1;
-    private boolean hasResource;
-    private java.lang.String resource_ = "";
-    public boolean hasResource() { return hasResource; }
-    public java.lang.String getResource() { return resource_; }
-    
-    // optional string title = 2;
-    private boolean hasTitle;
-    private java.lang.String title_ = "";
-    public boolean hasTitle() { return hasTitle; }
-    public java.lang.String getTitle() { return title_; }
-    
-    // optional string description = 3;
-    private boolean hasDescription;
-    private java.lang.String description_ = "";
-    public boolean hasDescription() { return hasDescription; }
-    public java.lang.String getDescription() { return description_; }
-    
-    // optional sint32 tier = 4;
-    private boolean hasTier;
-    private int tier_ = 0;
-    public boolean hasTier() { return hasTier; }
-    public int getTier() { return tier_; }
-    
-    // optional int32 indegree = 5;
-    private boolean hasIndegree;
-    private int indegree_ = 0;
-    public boolean hasIndegree() { return hasIndegree; }
-    public int getIndegree() { return indegree_; }
-    
-    // optional int32 iranking = 6;
-    private boolean hasIranking;
-    private int iranking_ = 0;
-    public boolean hasIranking() { return hasIranking; }
-    public int getIranking() { return iranking_; }
-    
-    // optional string publisher_type = 7;
-    private boolean hasPublisherType;
-    private java.lang.String publisherType_ = "";
-    public boolean hasPublisherType() { return hasPublisherType; }
-    public java.lang.String getPublisherType() { return publisherType_; }
-    
-    // optional string hashcode = 8;
-    private boolean hasHashcode;
-    private java.lang.String hashcode_ = "";
-    public boolean hasHashcode() { return hasHashcode; }
-    public java.lang.String getHashcode() { return hashcode_; }
-    
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Source parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Source parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Source parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Source parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Source parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Source parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Source parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Source parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return new Builder(); }
-    public Builder newBuilderForType() { return new Builder(); }
-    public static Builder newBuilder(com.spinn3r.api.protocolbuffers.Spinn3rApi.Source prototype) {
-      return new Builder().mergeFrom(prototype);
-    }
-    
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      // Construct using com.spinn3r.api.protocolbuffers.Spinn3rApi.Source.newBuilder()
-      private Builder() {}
-      
-      com.spinn3r.api.protocolbuffers.Spinn3rApi.Source result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.Source();
-      
-      @Override
-      protected com.spinn3r.api.protocolbuffers.Spinn3rApi.Source internalGetResult() {
-        return result;
-      }
-      
-      @Override
-      public Builder clear() {
-        result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.Source();
-        return this;
-      }
-      
-      @Override
-      public Builder clone() {
-        return new Builder().mergeFrom(result);
-      }
-      
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return com.spinn3r.api.protocolbuffers.Spinn3rApi.Source.getDescriptor();
-      }
-      
-      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Source getDefaultInstanceForType() {
-        return com.spinn3r.api.protocolbuffers.Spinn3rApi.Source.getDefaultInstance();
-      }
-      
-      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Source build() {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result);
-        }
-        return buildPartial();
-      }
-      
-      private com.spinn3r.api.protocolbuffers.Spinn3rApi.Source buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return buildPartial();
-      }
-      
-      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Source buildPartial() {
-        com.spinn3r.api.protocolbuffers.Spinn3rApi.Source returnMe = result;
-        result = null;
-        return returnMe;
-      }
-      
-      
-      // optional string resource = 1;
-      public boolean hasResource() {
-        return result.hasResource();
-      }
-      public java.lang.String getResource() {
-        return result.getResource();
-      }
-      public Builder setResource(java.lang.String value) {
-        result.hasResource = true;
-        result.resource_ = value;
-        return this;
-      }
-      public Builder clearResource() {
-        result.hasResource = false;
-        result.resource_ = "";
-        return this;
-      }
-      
-      // optional string title = 2;
-      public boolean hasTitle() {
-        return result.hasTitle();
-      }
-      public java.lang.String getTitle() {
-        return result.getTitle();
-      }
-      public Builder setTitle(java.lang.String value) {
-        result.hasTitle = true;
-        result.title_ = value;
-        return this;
-      }
-      public Builder clearTitle() {
-        result.hasTitle = false;
-        result.title_ = "";
-        return this;
-      }
-      
-      // optional string description = 3;
-      public boolean hasDescription() {
-        return result.hasDescription();
-      }
-      public java.lang.String getDescription() {
-        return result.getDescription();
-      }
-      public Builder setDescription(java.lang.String value) {
-        result.hasDescription = true;
-        result.description_ = value;
-        return this;
-      }
-      public Builder clearDescription() {
-        result.hasDescription = false;
-        result.description_ = "";
-        return this;
-      }
-      
-      // optional sint32 tier = 4;
-      public boolean hasTier() {
-        return result.hasTier();
-      }
-      public int getTier() {
-        return result.getTier();
-      }
-      public Builder setTier(int value) {
-        result.hasTier = true;
-        result.tier_ = value;
-        return this;
-      }
-      public Builder clearTier() {
-        result.hasTier = false;
-        result.tier_ = 0;
-        return this;
-      }
-      
-      // optional int32 indegree = 5;
-      public boolean hasIndegree() {
-        return result.hasIndegree();
-      }
-      public int getIndegree() {
-        return result.getIndegree();
-      }
-      public Builder setIndegree(int value) {
-        result.hasIndegree = true;
-        result.indegree_ = value;
-        return this;
-      }
-      public Builder clearIndegree() {
-        result.hasIndegree = false;
-        result.indegree_ = 0;
-        return this;
-      }
-      
-      // optional int32 iranking = 6;
-      public boolean hasIranking() {
-        return result.hasIranking();
-      }
-      public int getIranking() {
-        return result.getIranking();
-      }
-      public Builder setIranking(int value) {
-        result.hasIranking = true;
-        result.iranking_ = value;
-        return this;
-      }
-      public Builder clearIranking() {
-        result.hasIranking = false;
-        result.iranking_ = 0;
-        return this;
-      }
-      
-      // optional string publisher_type = 7;
-      public boolean hasPublisherType() {
-        return result.hasPublisherType();
-      }
-      public java.lang.String getPublisherType() {
-        return result.getPublisherType();
-      }
-      public Builder setPublisherType(java.lang.String value) {
-        result.hasPublisherType = true;
-        result.publisherType_ = value;
-        return this;
-      }
-      public Builder clearPublisherType() {
-        result.hasPublisherType = false;
-        result.publisherType_ = "";
-        return this;
-      }
-      
-      // optional string hashcode = 8;
-      public boolean hasHashcode() {
-        return result.hasHashcode();
-      }
-      public java.lang.String getHashcode() {
-        return result.getHashcode();
-      }
-      public Builder setHashcode(java.lang.String value) {
-        result.hasHashcode = true;
-        result.hashcode_ = value;
-        return this;
-      }
-      public Builder clearHashcode() {
-        result.hasHashcode = false;
-        result.hashcode_ = "";
-        return this;
-      }
-    }
-    
-    static {
-      com.spinn3r.api.protocolbuffers.Spinn3rApi.getDescriptor();
-    }
-  }
-  
-  public static final class FeedEntry extends
-      com.google.protobuf.GeneratedMessage {
-    // Use FeedEntry.newBuilder() to construct.
-    private FeedEntry() {}
-    
-    private static final FeedEntry defaultInstance = new FeedEntry();
-    public static FeedEntry getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public FeedEntry getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_FeedEntry_descriptor;
-    }
-    
-    @Override
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_FeedEntry_fieldAccessorTable;
-    }
-    
-    // repeated string category = 1;
-    private java.util.List<java.lang.String> category_ =
-      java.util.Collections.emptyList();
-    public java.util.List<java.lang.String> getCategoryList() {
-      return category_;
-    }
-    public int getCategoryCount() { return category_.size(); }
-    public java.lang.String getCategory(int index) {
-      return category_.get(index);
-    }
-    
-    // repeated .spinn3rApi.Author author = 2;
-    private java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Author> author_ =
-      java.util.Collections.emptyList();
-    public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Author> getAuthorList() {
-      return author_;
-    }
-    public int getAuthorCount() { return author_.size(); }
-    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Author getAuthor(int index) {
-      return author_.get(index);
-    }
-    
-    // optional string hashcode = 3;
-    private boolean hasHashcode;
-    private java.lang.String hashcode_ = "";
-    public boolean hasHashcode() { return hasHashcode; }
-    public java.lang.String getHashcode() { return hashcode_; }
-    
-    // optional int64 identifier = 4;
-    private boolean hasIdentifier;
-    private long identifier_ = 0L;
-    public boolean hasIdentifier() { return hasIdentifier; }
-    public long getIdentifier() { return identifier_; }
-    
-    // optional string title = 5;
-    private boolean hasTitle;
-    private java.lang.String title_ = "";
-    public boolean hasTitle() { return hasTitle; }
-    public java.lang.String getTitle() { return title_; }
-    
-    // optional string last_published = 6;
-    private boolean hasLastPublished;
-    private java.lang.String lastPublished_ = "";
-    public boolean hasLastPublished() { return hasLastPublished; }
-    public java.lang.String getLastPublished() { return lastPublished_; }
-    
-    // optional string date_found = 7;
-    private boolean hasDateFound;
-    private java.lang.String dateFound_ = "";
-    public boolean hasDateFound() { return hasDateFound; }
-    public java.lang.String getDateFound() { return dateFound_; }
-    
-    // optional .spinn3rApi.Content body = 8;
-    private boolean hasBody;
-    private com.spinn3r.api.protocolbuffers.Spinn3rApi.Content body_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.getDefaultInstance();
-    public boolean hasBody() { return hasBody; }
-    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Content getBody() { return body_; }
-    
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return new Builder(); }
-    public Builder newBuilderForType() { return new Builder(); }
-    public static Builder newBuilder(com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry prototype) {
-      return new Builder().mergeFrom(prototype);
-    }
-    
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      // Construct using com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry.newBuilder()
-      private Builder() {}
-      
-      com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry();
-      
-      @Override
-      protected com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry internalGetResult() {
-        return result;
-      }
-      
-      @Override
-      public Builder clear() {
-        result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry();
-        return this;
-      }
-      
-      @Override
-      public Builder clone() {
-        return new Builder().mergeFrom(result);
-      }
-      
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry.getDescriptor();
-      }
-      
-      public com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry getDefaultInstanceForType() {
-        return com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry.getDefaultInstance();
-      }
-      
-      public com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry build() {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result);
-        }
-        return buildPartial();
-      }
-      
-      private com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return buildPartial();
-      }
-      
-      public com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry buildPartial() {
-        if (result.category_ != java.util.Collections.EMPTY_LIST) {
-          result.category_ =
-            java.util.Collections.unmodifiableList(result.category_);
-        }
-        if (result.author_ != java.util.Collections.EMPTY_LIST) {
-          result.author_ =
-            java.util.Collections.unmodifiableList(result.author_);
-        }
-        com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry returnMe = result;
-        result = null;
-        return returnMe;
-      }
-      
-      
-      // repeated string category = 1;
-      public java.util.List<java.lang.String> getCategoryList() {
-        return java.util.Collections.unmodifiableList(result.category_);
-      }
-      public int getCategoryCount() {
-        return result.getCategoryCount();
-      }
-      public java.lang.String getCategory(int index) {
-        return result.getCategory(index);
-      }
-      public Builder setCategory(int index, java.lang.String value) {
-        result.category_.set(index, value);
-        return this;
-      }
-      public Builder addCategory(java.lang.String value) {
-        if (result.category_.isEmpty()) {
-          result.category_ = new java.util.ArrayList<java.lang.String>();
-        }
-        result.category_.add(value);
-        return this;
-      }
-      public Builder addAllCategory(
-          java.lang.Iterable<? extends java.lang.String> values) {
-        if (result.category_.isEmpty()) {
-          result.category_ = new java.util.ArrayList<java.lang.String>();
-        }
-        super.addAll(values, result.category_);
-        return this;
-      }
-      public Builder clearCategory() {
-        result.category_ = java.util.Collections.emptyList();
-        return this;
-      }
-      
-      // repeated .spinn3rApi.Author author = 2;
-      public java.util.List<com.spinn3r.api.protocolbuffers.Spinn3rApi.Author> getAuthorList() {
-        return java.util.Collections.unmodifiableList(result.author_);
-      }
-      public int getAuthorCount() {
-        return result.getAuthorCount();
-      }
-      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Author getAuthor(int index) {
-        return result.getAuthor(index);
-      }
-      public Builder setAuthor(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Author value) {
-        result.author_.set(index, value);
-        return this;
-      }
-      public Builder setAuthor(int index, com.spinn3r.api.protocolbuffers.Spinn3rApi.Author.Builder builderForValue) {
-        result.author_.set(index, builderForValue.build());
-        return this;
-      }
-      public Builder addAuthor(com.spinn3r.api.protocolbuffers.Spinn3rApi.Author value) {
-        if (result.author_.isEmpty()) {
-          result.author_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Author>();
-        }
-        result.author_.add(value);
-        return this;
-      }
-      public Builder addAuthor(com.spinn3r.api.protocolbuffers.Spinn3rApi.Author.Builder builderForValue) {
-        if (result.author_.isEmpty()) {
-          result.author_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Author>();
-        }
-        result.author_.add(builderForValue.build());
-        return this;
-      }
-      public Builder addAllAuthor(
-          java.lang.Iterable<? extends com.spinn3r.api.protocolbuffers.Spinn3rApi.Author> values) {
-        if (result.author_.isEmpty()) {
-          result.author_ = new java.util.ArrayList<com.spinn3r.api.protocolbuffers.Spinn3rApi.Author>();
-        }
-        super.addAll(values, result.author_);
-        return this;
-      }
-      public Builder clearAuthor() {
-        result.author_ = java.util.Collections.emptyList();
-        return this;
-      }
-      
-      // optional string hashcode = 3;
-      public boolean hasHashcode() {
-        return result.hasHashcode();
-      }
-      public java.lang.String getHashcode() {
-        return result.getHashcode();
-      }
-      public Builder setHashcode(java.lang.String value) {
-        result.hasHashcode = true;
-        result.hashcode_ = value;
-        return this;
-      }
-      public Builder clearHashcode() {
-        result.hasHashcode = false;
-        result.hashcode_ = "";
-        return this;
-      }
-      
-      // optional int64 identifier = 4;
-      public boolean hasIdentifier() {
-        return result.hasIdentifier();
-      }
-      public long getIdentifier() {
-        return result.getIdentifier();
-      }
-      public Builder setIdentifier(long value) {
-        result.hasIdentifier = true;
-        result.identifier_ = value;
-        return this;
-      }
-      public Builder clearIdentifier() {
-        result.hasIdentifier = false;
-        result.identifier_ = 0L;
-        return this;
-      }
-      
-      // optional string title = 5;
-      public boolean hasTitle() {
-        return result.hasTitle();
-      }
-      public java.lang.String getTitle() {
-        return result.getTitle();
-      }
-      public Builder setTitle(java.lang.String value) {
-        result.hasTitle = true;
-        result.title_ = value;
-        return this;
-      }
-      public Builder clearTitle() {
-        result.hasTitle = false;
-        result.title_ = "";
-        return this;
-      }
-      
-      // optional string last_published = 6;
-      public boolean hasLastPublished() {
-        return result.hasLastPublished();
-      }
-      public java.lang.String getLastPublished() {
-        return result.getLastPublished();
-      }
-      public Builder setLastPublished(java.lang.String value) {
-        result.hasLastPublished = true;
-        result.lastPublished_ = value;
-        return this;
-      }
-      public Builder clearLastPublished() {
-        result.hasLastPublished = false;
-        result.lastPublished_ = "";
-        return this;
-      }
-      
-      // optional string date_found = 7;
-      public boolean hasDateFound() {
-        return result.hasDateFound();
-      }
-      public java.lang.String getDateFound() {
-        return result.getDateFound();
-      }
-      public Builder setDateFound(java.lang.String value) {
-        result.hasDateFound = true;
-        result.dateFound_ = value;
-        return this;
-      }
-      public Builder clearDateFound() {
-        result.hasDateFound = false;
-        result.dateFound_ = "";
-        return this;
-      }
-      
-      // optional .spinn3rApi.Content body = 8;
-      public boolean hasBody() {
-        return result.hasBody();
-      }
-      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Content getBody() {
-        return result.getBody();
-      }
-      public Builder setBody(com.spinn3r.api.protocolbuffers.Spinn3rApi.Content value) {
-        result.hasBody = true;
-        result.body_ = value;
-        return this;
-      }
-      public Builder setBody(com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.Builder builderForValue) {
-        result.hasBody = true;
-        result.body_ = builderForValue.build();
-        return this;
-      }
-      public Builder mergeBody(com.spinn3r.api.protocolbuffers.Spinn3rApi.Content value) {
-        if (result.hasBody() &&
-            result.body_ != com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.getDefaultInstance()) {
-          result.body_ =
-            com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.newBuilder(result.body_).mergeFrom(value).buildPartial();
-        } else {
-          result.body_ = value;
-        }
-        result.hasBody = true;
-        return this;
-      }
-      public Builder clearBody() {
-        result.hasBody = false;
-        result.body_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.getDefaultInstance();
-        return this;
-      }
-    }
-    
-    static {
-      com.spinn3r.api.protocolbuffers.Spinn3rApi.getDescriptor();
-    }
-  }
-  
-  public static final class Feed extends
-      com.google.protobuf.GeneratedMessage {
-    // Use Feed.newBuilder() to construct.
-    private Feed() {}
-    
-    private static final Feed defaultInstance = new Feed();
-    public static Feed getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public Feed getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_Feed_descriptor;
-    }
-    
-    @Override
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_Feed_fieldAccessorTable;
-    }
-    
-    // optional string link = 1;
-    private boolean hasLink;
-    private java.lang.String link_ = "";
-    public boolean hasLink() { return hasLink; }
-    public java.lang.String getLink() { return link_; }
-    
-    // optional string hashcode = 2;
-    private boolean hasHashcode;
-    private java.lang.String hashcode_ = "";
-    public boolean hasHashcode() { return hasHashcode; }
-    public java.lang.String getHashcode() { return hashcode_; }
-    
-    // optional string url = 3;
-    private boolean hasUrl;
-    private java.lang.String url_ = "";
-    public boolean hasUrl() { return hasUrl; }
-    public java.lang.String getUrl() { return url_; }
-    
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return new Builder(); }
-    public Builder newBuilderForType() { return new Builder(); }
-    public static Builder newBuilder(com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed prototype) {
-      return new Builder().mergeFrom(prototype);
-    }
-    
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      // Construct using com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed.newBuilder()
-      private Builder() {}
-      
-      com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed();
-      
-      @Override
-      protected com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed internalGetResult() {
-        return result;
-      }
-      
-      @Override
-      public Builder clear() {
-        result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed();
-        return this;
-      }
-      
-      @Override
-      public Builder clone() {
-        return new Builder().mergeFrom(result);
-      }
-      
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed.getDescriptor();
-      }
-      
-      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed getDefaultInstanceForType() {
-        return com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed.getDefaultInstance();
-      }
-      
-      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed build() {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result);
-        }
-        return buildPartial();
-      }
-      
-      private com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return buildPartial();
-      }
-      
-      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed buildPartial() {
-        com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed returnMe = result;
-        result = null;
-        return returnMe;
-      }
-      
-      
-      // optional string link = 1;
-      public boolean hasLink() {
-        return result.hasLink();
-      }
-      public java.lang.String getLink() {
-        return result.getLink();
-      }
-      public Builder setLink(java.lang.String value) {
-        result.hasLink = true;
-        result.link_ = value;
-        return this;
-      }
-      public Builder clearLink() {
-        result.hasLink = false;
-        result.link_ = "";
-        return this;
-      }
-      
-      // optional string hashcode = 2;
-      public boolean hasHashcode() {
-        return result.hasHashcode();
-      }
-      public java.lang.String getHashcode() {
-        return result.getHashcode();
-      }
-      public Builder setHashcode(java.lang.String value) {
-        result.hasHashcode = true;
-        result.hashcode_ = value;
-        return this;
-      }
-      public Builder clearHashcode() {
-        result.hasHashcode = false;
-        result.hashcode_ = "";
-        return this;
-      }
-      
-      // optional string url = 3;
-      public boolean hasUrl() {
-        return result.hasUrl();
-      }
-      public java.lang.String getUrl() {
-        return result.getUrl();
-      }
-      public Builder setUrl(java.lang.String value) {
-        result.hasUrl = true;
-        result.url_ = value;
-        return this;
-      }
-      public Builder clearUrl() {
-        result.hasUrl = false;
-        result.url_ = "";
-        return this;
-      }
-    }
-    
-    static {
-      com.spinn3r.api.protocolbuffers.Spinn3rApi.getDescriptor();
-    }
-  }
-  
-  public static final class Entry extends
-      com.google.protobuf.GeneratedMessage {
-    // Use Entry.newBuilder() to construct.
-    private Entry() {}
-    
-    private static final Entry defaultInstance = new Entry();
-    public static Entry getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public Entry getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_Entry_descriptor;
-    }
-    
-    @Override
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.spinn3r.api.protocolbuffers.Spinn3rApi.internal_static_spinn3rApi_Entry_fieldAccessorTable;
-    }
-    
-    // optional string title = 1;
-    private boolean hasTitle;
-    private java.lang.String title_ = "";
-    public boolean hasTitle() { return hasTitle; }
-    public java.lang.String getTitle() { return title_; }
-    
-    // optional string link = 2;
-    private boolean hasLink;
-    private java.lang.String link_ = "";
-    public boolean hasLink() { return hasLink; }
-    public java.lang.String getLink() { return link_; }
-    
-    // optional string lang = 3;
-    private boolean hasLang;
-    private java.lang.String lang_ = "";
-    public boolean hasLang() { return hasLang; }
-    public java.lang.String getLang() { return lang_; }
-    
-    // optional .spinn3rApi.Content content = 4;
-    private boolean hasContent;
-    private com.spinn3r.api.protocolbuffers.Spinn3rApi.Content content_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.getDefaultInstance();
-    public boolean hasContent() { return hasContent; }
-    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Content getContent() { return content_; }
-    
-    // optional .spinn3rApi.Content content_extract = 5;
-    private boolean hasContentExtract;
-    private com.spinn3r.api.protocolbuffers.Spinn3rApi.Content contentExtract_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.getDefaultInstance();
-    public boolean hasContentExtract() { return hasContentExtract; }
-    public com.spinn3r.api.protocolbuffers.Spinn3rApi.Content getContentExtract() { return contentExtract_; }
-    
-    // optional float spam_probability = 6;
-    private boolean hasSpamProbability;
-    private float spamProbability_ = 0F;
-    public boolean hasSpamProbability() { return hasSpamProbability; }
-    public float getSpamProbability() { return spamProbability_; }
-    
-    // optional string date_found = 7;
-    private boolean hasDateFound;
-    private java.lang.String dateFound_ = "";
-    public boolean hasDateFound() { return hasDateFound; }
-    public java.lang.String getDateFound() { return dateFound_; }
-    
-    // optional int64 identifier = 8;
-    private boolean hasIdentifier;
-    private long identifier_ = 0L;
-    public boolean hasIdentifier() { return hasIdentifier; }
-    public long getIdentifier() { return identifier_; }
-    
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistry extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return new Builder(); }
-    public Builder newBuilderForType() { return new Builder(); }
-    public static Builder newBuilder(com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry prototype) {
-      return new Builder().mergeFrom(prototype);
-    }
-    
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      // Construct using com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry.newBuilder()
-      private Builder() {}
-      
-      com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry();
-      
-      @Override
-      protected com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry internalGetResult() {
-        return result;
-      }
-      
-      @Override
-      public Builder clear() {
-        result = new com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry();
-        return this;
-      }
-      
-      @Override
-      public Builder clone() {
-        return new Builder().mergeFrom(result);
-      }
-      
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry.getDescriptor();
-      }
-      
-      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry getDefaultInstanceForType() {
-        return com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry.getDefaultInstance();
-      }
-      
-      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry build() {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result);
-        }
-        return buildPartial();
-      }
-      
-      private com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
-          throw new com.google.protobuf.UninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return buildPartial();
-      }
-      
-      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry buildPartial() {
-        com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry returnMe = result;
-        result = null;
-        return returnMe;
-      }
-      
-      
-      // optional string title = 1;
-      public boolean hasTitle() {
-        return result.hasTitle();
-      }
-      public java.lang.String getTitle() {
-        return result.getTitle();
-      }
-      public Builder setTitle(java.lang.String value) {
-        result.hasTitle = true;
-        result.title_ = value;
-        return this;
-      }
-      public Builder clearTitle() {
-        result.hasTitle = false;
-        result.title_ = "";
-        return this;
-      }
-      
-      // optional string link = 2;
-      public boolean hasLink() {
-        return result.hasLink();
-      }
-      public java.lang.String getLink() {
-        return result.getLink();
-      }
-      public Builder setLink(java.lang.String value) {
-        result.hasLink = true;
-        result.link_ = value;
-        return this;
-      }
-      public Builder clearLink() {
-        result.hasLink = false;
-        result.link_ = "";
-        return this;
-      }
-      
-      // optional string lang = 3;
-      public boolean hasLang() {
-        return result.hasLang();
-      }
-      public java.lang.String getLang() {
-        return result.getLang();
-      }
-      public Builder setLang(java.lang.String value) {
-        result.hasLang = true;
-        result.lang_ = value;
-        return this;
-      }
-      public Builder clearLang() {
-        result.hasLang = false;
-        result.lang_ = "";
-        return this;
-      }
-      
-      // optional .spinn3rApi.Content content = 4;
-      public boolean hasContent() {
-        return result.hasContent();
-      }
-      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Content getContent() {
-        return result.getContent();
-      }
-      public Builder setContent(com.spinn3r.api.protocolbuffers.Spinn3rApi.Content value) {
-        result.hasContent = true;
-        result.content_ = value;
-        return this;
-      }
-      public Builder setContent(com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.Builder builderForValue) {
-        result.hasContent = true;
-        result.content_ = builderForValue.build();
-        return this;
-      }
-      public Builder mergeContent(com.spinn3r.api.protocolbuffers.Spinn3rApi.Content value) {
-        if (result.hasContent() &&
-            result.content_ != com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.getDefaultInstance()) {
-          result.content_ =
-            com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.newBuilder(result.content_).mergeFrom(value).buildPartial();
-        } else {
-          result.content_ = value;
-        }
-        result.hasContent = true;
-        return this;
-      }
-      public Builder clearContent() {
-        result.hasContent = false;
-        result.content_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.getDefaultInstance();
-        return this;
-      }
-      
-      // optional .spinn3rApi.Content content_extract = 5;
-      public boolean hasContentExtract() {
-        return result.hasContentExtract();
-      }
-      public com.spinn3r.api.protocolbuffers.Spinn3rApi.Content getContentExtract() {
-        return result.getContentExtract();
-      }
-      public Builder setContentExtract(com.spinn3r.api.protocolbuffers.Spinn3rApi.Content value) {
-        result.hasContentExtract = true;
-        result.contentExtract_ = value;
-        return this;
-      }
-      public Builder setContentExtract(com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.Builder builderForValue) {
-        result.hasContentExtract = true;
-        result.contentExtract_ = builderForValue.build();
-        return this;
-      }
-      public Builder mergeContentExtract(com.spinn3r.api.protocolbuffers.Spinn3rApi.Content value) {
-        if (result.hasContentExtract() &&
-            result.contentExtract_ != com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.getDefaultInstance()) {
-          result.contentExtract_ =
-            com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.newBuilder(result.contentExtract_).mergeFrom(value).buildPartial();
-        } else {
-          result.contentExtract_ = value;
-        }
-        result.hasContentExtract = true;
-        return this;
-      }
-      public Builder clearContentExtract() {
-        result.hasContentExtract = false;
-        result.contentExtract_ = com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.getDefaultInstance();
-        return this;
-      }
-      
-      // optional float spam_probability = 6;
-      public boolean hasSpamProbability() {
-        return result.hasSpamProbability();
-      }
-      public float getSpamProbability() {
-        return result.getSpamProbability();
-      }
-      public Builder setSpamProbability(float value) {
-        result.hasSpamProbability = true;
-        result.spamProbability_ = value;
-        return this;
-      }
-      public Builder clearSpamProbability() {
-        result.hasSpamProbability = false;
-        result.spamProbability_ = 0F;
-        return this;
-      }
-      
-      // optional string date_found = 7;
-      public boolean hasDateFound() {
-        return result.hasDateFound();
-      }
-      public java.lang.String getDateFound() {
-        return result.getDateFound();
-      }
-      public Builder setDateFound(java.lang.String value) {
-        result.hasDateFound = true;
-        result.dateFound_ = value;
-        return this;
-      }
-      public Builder clearDateFound() {
-        result.hasDateFound = false;
-        result.dateFound_ = "";
-        return this;
-      }
-      
-      // optional int64 identifier = 8;
-      public boolean hasIdentifier() {
-        return result.hasIdentifier();
-      }
-      public long getIdentifier() {
-        return result.getIdentifier();
-      }
-      public Builder setIdentifier(long value) {
-        result.hasIdentifier = true;
-        result.identifier_ = value;
-        return this;
-      }
-      public Builder clearIdentifier() {
-        result.hasIdentifier = false;
-        result.identifier_ = 0L;
-        return this;
-      }
-    }
-    
-    static {
-      com.spinn3r.api.protocolbuffers.Spinn3rApi.getDescriptor();
-    }
-  }
-  
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_spinn3rApi_Link_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_spinn3rApi_Link_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_spinn3rApi_Lang_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_spinn3rApi_Lang_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_spinn3rApi_Content_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_spinn3rApi_Content_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_spinn3rApi_Response_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_spinn3rApi_Response_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_spinn3rApi_Author_descriptor;
   private static
@@ -2024,20 +3565,30 @@ public final class Spinn3rApi {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_spinn3rApi_Source_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_spinn3rApi_FeedEntry_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_spinn3rApi_FeedEntry_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_spinn3rApi_Feed_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_spinn3rApi_Feed_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_spinn3rApi_PermalinkEntry_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_spinn3rApi_PermalinkEntry_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_spinn3rApi_FeedEntry_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_spinn3rApi_FeedEntry_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_spinn3rApi_Entry_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_spinn3rApi_Entry_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_spinn3rApi_Response_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_spinn3rApi_Response_fieldAccessorTable;
   
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -2048,51 +3599,81 @@ public final class Spinn3rApi {
   static {
     java.lang.String descriptorData =
       "\n\032src/proto/spinn3rApi.proto\022\nspinn3rApi" +
-      "\"-\n\007Content\022\021\n\tmime_type\030\001 \002(\t\022\017\n\007conten" +
-      "t\030\002 \001(\014\"v\n\010Response\022\016\n\006source\030\001 \001(\t\022\034\n\024p" +
-      "revious_request_url\030\002 \001(\t\022\030\n\020next_reques" +
-      "t_url\030\003 \001(\t\022\"\n\007entries\030\004 \003(\0132\021.spinn3rAp" +
-      "i.Entry\"3\n\006Author\022\014\n\004name\030\001 \001(\t\022\r\n\005email" +
-      "\030\002 \001(\t\022\014\n\004link\030\003 \001(\t\"\232\001\n\006Source\022\020\n\010resou" +
-      "rce\030\001 \001(\t\022\r\n\005title\030\002 \001(\t\022\023\n\013description\030" +
-      "\003 \001(\t\022\014\n\004tier\030\004 \001(\021\022\020\n\010indegree\030\005 \001(\005\022\020\n" +
-      "\010iranking\030\006 \001(\005\022\026\n\016publisher_type\030\007 \001(\t\022" +
-      "\020\n\010hashcode\030\010 \001(\t\"\305\001\n\tFeedEntry\022\020\n\010categ" +
-      "ory\030\001 \003(\t\022\"\n\006author\030\002 \003(\0132\022.spinn3rApi.A" +
-      "uthor\022\020\n\010hashcode\030\003 \001(\t\022\022\n\nidentifier\030\004 " +
-      "\001(\003\022\r\n\005title\030\005 \001(\t\022\026\n\016last_published\030\006 \001" +
-      "(\t\022\022\n\ndate_found\030\007 \001(\t\022!\n\004body\030\010 \001(\0132\023.s" +
-      "pinn3rApi.Content\"3\n\004Feed\022\014\n\004link\030\001 \001(\t\022" +
-      "\020\n\010hashcode\030\002 \001(\t\022\013\n\003url\030\003 \001(\t\"\310\001\n\005Entry" +
-      "\022\r\n\005title\030\001 \001(\t\022\014\n\004link\030\002 \001(\t\022\014\n\004lang\030\003 " +
-      "\001(\t\022$\n\007content\030\004 \001(\0132\023.spinn3rApi.Conten" +
-      "t\022,\n\017content_extract\030\005 \001(\0132\023.spinn3rApi." +
-      "Content\022\030\n\020spam_probability\030\006 \001(\002\022\022\n\ndat" +
-      "e_found\030\007 \001(\t\022\022\n\nidentifier\030\010 \001(\003B-\n\037com" +
-      ".spinn3r.api.protocolbuffersB\nSpinn3rApi";
+      "\"&\n\004Link\022\014\n\004href\030\001 \001(\t\022\020\n\010resource\030\002 \001(\t" +
+      "\"\'\n\004Lang\022\014\n\004code\030\001 \001(\t\022\021\n\tprobility\030\002 \001(" +
+      "\002\"-\n\007Content\022\021\n\tmime_type\030\001 \002(\t\022\017\n\007conte" +
+      "nt\030\002 \001(\014\"E\n\006Author\022\014\n\004name\030\001 \001(\t\022\r\n\005emai" +
+      "l\030\002 \001(\t\022\036\n\004link\030\003 \003(\0132\020.spinn3rApi.Link\"" +
+      "\205\002\n\006Source\022\036\n\004link\030\001 \003(\0132\020.spinn3rApi.Li" +
+      "nk\022(\n\016canonical_link\030\002 \001(\0132\020.spinn3rApi." +
+      "Link\022\r\n\005title\030\003 \001(\t\022\020\n\010hashcode\030\004 \001(\t\022\036\n" +
+      "\004lang\030\005 \003(\0132\020.spinn3rApi.Lang\022\021\n\tgenerat" +
+      "or\030\006 \001(\t\022\023\n\013description\030\007 \001(\t\022\014\n\004tier\030\010 " +
+      "\001(\021\022\020\n\010indegree\030\t \001(\005\022\020\n\010iranking\030\n \001(\005\022" +
+      "\026\n\016publisher_type\030\013 \001(\t\"\271\001\n\004Feed\022\036\n\004link" +
+      "\030\001 \003(\0132\020.spinn3rApi.Link\022(\n\016canonical_li" +
+      "nk\030\002 \001(\0132\020.spinn3rApi.Link\022\r\n\005title\030\003 \001(" +
+      "\t\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030\005 \003(\0132\020.spin" +
+      "n3rApi.Lang\022\021\n\tgenerator\030\006 \001(\t\022\023\n\013descri" +
+      "ption\030\007 \001(\t\"\222\003\n\016PermalinkEntry\022\036\n\004link\030\001" +
+      " \003(\0132\020.spinn3rApi.Link\022(\n\016canonical_link" +
+      "\030\002 \001(\0132\020.spinn3rApi.Link\022\r\n\005title\030\003 \001(\t\022" +
+      "\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030\005 \003(\0132\020.spinn3" +
+      "rApi.Lang\022\"\n\006author\030\006 \003(\0132\022.spinn3rApi.A" +
+      "uthor\022\020\n\010category\030\007 \003(\t\022\030\n\020spam_probabil" +
+      "ity\030\010 \001(\002\022\026\n\016last_published\030\t \001(\t\022\022\n\ndat" +
+      "e_found\030\n \001(\t\022\022\n\nidentifier\030\013 \001(\003\022$\n\007con" +
+      "tent\030\014 \001(\0132\023.spinn3rApi.Content\022,\n\017conte" +
+      "nt_extract\030\r \001(\0132\023.spinn3rApi.Content\022\021\n" +
+      "\tgenerator\030\016 \001(\t\"\314\002\n\tFeedEntry\022\036\n\004link\030\001" +
+      " \003(\0132\020.spinn3rApi.Link\022(\n\016canonical_link" +
+      "\030\002 \001(\0132\020.spinn3rApi.Link\022\r\n\005title\030\003 \001(\t\022" +
+      "\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030\005 \003(\0132\020.spinn3" +
+      "rApi.Lang\022\"\n\006author\030\006 \003(\0132\022.spinn3rApi.A" +
+      "uthor\022\020\n\010category\030\007 \003(\t\022\030\n\020spam_probabil" +
+      "ity\030\010 \001(\002\022\026\n\016last_published\030\t \001(\t\022\022\n\ndat" +
+      "e_found\030\n \001(\t\022\022\n\nidentifier\030\013 \001(\003\022$\n\007con" +
+      "tent\030\014 \001(\0132\023.spinn3rApi.Content\"\253\001\n\005Entr" +
+      "y\022\"\n\006source\030\001 \001(\0132\022.spinn3rApi.Source\022\036\n" +
+      "\004feed\030\002 \001(\0132\020.spinn3rApi.Feed\022)\n\nfeed_en" +
+      "try\030\003 \001(\0132\025.spinn3rApi.FeedEntry\0223\n\017perm" +
+      "alink_entry\030\004 \001(\0132\032.spinn3rApi.Permalink" +
+      "Entry\"w\n\010Response\022\017\n\007request\030\001 \001(\t\022\034\n\024pr" +
+      "evious_request_url\030\002 \001(\t\022\030\n\020next_request" +
+      "_url\030\003 \001(\t\022\"\n\007entries\030\004 \003(\0132\021.spinn3rApi" +
+      ".EntryB-\n\037com.spinn3r.api.protocolbuffer" +
+      "sB\nSpinn3rApi";
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
             com.google.protobuf.Descriptors.FileDescriptor root) {
           descriptor = root;
-          internal_static_spinn3rApi_Content_descriptor =
+          internal_static_spinn3rApi_Link_descriptor =
             getDescriptor().getMessageTypes().get(0);
+          internal_static_spinn3rApi_Link_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_spinn3rApi_Link_descriptor,
+              new java.lang.String[] { "Href", "Resource", },
+              com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.class,
+              com.spinn3r.api.protocolbuffers.Spinn3rApi.Link.Builder.class);
+          internal_static_spinn3rApi_Lang_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_spinn3rApi_Lang_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_spinn3rApi_Lang_descriptor,
+              new java.lang.String[] { "Code", "Probility", },
+              com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang.class,
+              com.spinn3r.api.protocolbuffers.Spinn3rApi.Lang.Builder.class);
+          internal_static_spinn3rApi_Content_descriptor =
+            getDescriptor().getMessageTypes().get(2);
           internal_static_spinn3rApi_Content_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_spinn3rApi_Content_descriptor,
               new java.lang.String[] { "MimeType", "Content", },
               com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.class,
               com.spinn3r.api.protocolbuffers.Spinn3rApi.Content.Builder.class);
-          internal_static_spinn3rApi_Response_descriptor =
-            getDescriptor().getMessageTypes().get(1);
-          internal_static_spinn3rApi_Response_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_spinn3rApi_Response_descriptor,
-              new java.lang.String[] { "Source", "PreviousRequestUrl", "NextRequestUrl", "Entries", },
-              com.spinn3r.api.protocolbuffers.Spinn3rApi.Response.class,
-              com.spinn3r.api.protocolbuffers.Spinn3rApi.Response.Builder.class);
           internal_static_spinn3rApi_Author_descriptor =
-            getDescriptor().getMessageTypes().get(2);
+            getDescriptor().getMessageTypes().get(3);
           internal_static_spinn3rApi_Author_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_spinn3rApi_Author_descriptor,
@@ -2100,37 +3681,53 @@ public final class Spinn3rApi {
               com.spinn3r.api.protocolbuffers.Spinn3rApi.Author.class,
               com.spinn3r.api.protocolbuffers.Spinn3rApi.Author.Builder.class);
           internal_static_spinn3rApi_Source_descriptor =
-            getDescriptor().getMessageTypes().get(3);
+            getDescriptor().getMessageTypes().get(4);
           internal_static_spinn3rApi_Source_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_spinn3rApi_Source_descriptor,
-              new java.lang.String[] { "Resource", "Title", "Description", "Tier", "Indegree", "Iranking", "PublisherType", "Hashcode", },
+              new java.lang.String[] { "Link", "CanonicalLink", "Title", "Hashcode", "Lang", "Generator", "Description", "Tier", "Indegree", "Iranking", "PublisherType", },
               com.spinn3r.api.protocolbuffers.Spinn3rApi.Source.class,
               com.spinn3r.api.protocolbuffers.Spinn3rApi.Source.Builder.class);
-          internal_static_spinn3rApi_FeedEntry_descriptor =
-            getDescriptor().getMessageTypes().get(4);
-          internal_static_spinn3rApi_FeedEntry_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_spinn3rApi_FeedEntry_descriptor,
-              new java.lang.String[] { "Category", "Author", "Hashcode", "Identifier", "Title", "LastPublished", "DateFound", "Body", },
-              com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry.class,
-              com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry.Builder.class);
           internal_static_spinn3rApi_Feed_descriptor =
             getDescriptor().getMessageTypes().get(5);
           internal_static_spinn3rApi_Feed_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_spinn3rApi_Feed_descriptor,
-              new java.lang.String[] { "Link", "Hashcode", "Url", },
+              new java.lang.String[] { "Link", "CanonicalLink", "Title", "Hashcode", "Lang", "Generator", "Description", },
               com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed.class,
               com.spinn3r.api.protocolbuffers.Spinn3rApi.Feed.Builder.class);
-          internal_static_spinn3rApi_Entry_descriptor =
+          internal_static_spinn3rApi_PermalinkEntry_descriptor =
             getDescriptor().getMessageTypes().get(6);
+          internal_static_spinn3rApi_PermalinkEntry_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_spinn3rApi_PermalinkEntry_descriptor,
+              new java.lang.String[] { "Link", "CanonicalLink", "Title", "Hashcode", "Lang", "Author", "Category", "SpamProbability", "LastPublished", "DateFound", "Identifier", "Content", "ContentExtract", "Generator", },
+              com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry.class,
+              com.spinn3r.api.protocolbuffers.Spinn3rApi.PermalinkEntry.Builder.class);
+          internal_static_spinn3rApi_FeedEntry_descriptor =
+            getDescriptor().getMessageTypes().get(7);
+          internal_static_spinn3rApi_FeedEntry_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_spinn3rApi_FeedEntry_descriptor,
+              new java.lang.String[] { "Link", "CanonicalLink", "Title", "Hashcode", "Lang", "Author", "Category", "SpamProbability", "LastPublished", "DateFound", "Identifier", "Content", },
+              com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry.class,
+              com.spinn3r.api.protocolbuffers.Spinn3rApi.FeedEntry.Builder.class);
+          internal_static_spinn3rApi_Entry_descriptor =
+            getDescriptor().getMessageTypes().get(8);
           internal_static_spinn3rApi_Entry_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_spinn3rApi_Entry_descriptor,
-              new java.lang.String[] { "Title", "Link", "Lang", "Content", "ContentExtract", "SpamProbability", "DateFound", "Identifier", },
+              new java.lang.String[] { "Source", "Feed", "FeedEntry", "PermalinkEntry", },
               com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry.class,
               com.spinn3r.api.protocolbuffers.Spinn3rApi.Entry.Builder.class);
+          internal_static_spinn3rApi_Response_descriptor =
+            getDescriptor().getMessageTypes().get(9);
+          internal_static_spinn3rApi_Response_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_spinn3rApi_Response_descriptor,
+              new java.lang.String[] { "Request", "PreviousRequestUrl", "NextRequestUrl", "Entries", },
+              com.spinn3r.api.protocolbuffers.Spinn3rApi.Response.class,
+              com.spinn3r.api.protocolbuffers.Spinn3rApi.Response.Builder.class);
           return null;
         }
       };

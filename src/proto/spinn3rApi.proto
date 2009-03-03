@@ -3,65 +3,106 @@ package spinn3rApi;
 option java_package         = "com.spinn3r.api.protocolbuffers";
 option java_outer_classname = "Spinn3rApi";
 
+
+message Link {
+  optional string href      = 1;
+  optional string resource  = 2;
+}
+
+
+message Lang {
+  optional string code      = 1;
+  optional float  probility = 2;
+}
+
+
 message Content {
   required string mime_type = 1;
   optional bytes  content   = 2;
-}
-
-message Response {
-  optional string source               = 1;
-  optional string previous_request_url = 2;
-  optional string next_request_url     = 3;
-  repeated Entry  entries              = 4;
 }
 
 
 message Author {
   optional string name  = 1;
   optional string email = 2;
-  optional string link  = 3;
+  repeated Link   link  = 3;
 }
 
 
 message Source {
-  optional string resource       = 1;
-  optional string title          = 2;
-  optional string description    = 3;
-  optional sint32 tier           = 4;
-  optional int32  indegree       = 5;
-  optional int32  iranking       = 6;
-  optional string publisher_type = 7;
-  optional string hashcode       = 8;
-}
+  repeated Link   link           = 1;
+  optional Link   canonical_link = 2;
+  optional string title          = 3;
+  optional string hashcode       = 4;
+  repeated Lang   lang           = 5;
+  optional string generator      = 6;
+  optional string description    = 7;
 
-
-message FeedEntry {
-  repeated string  category       = 1;
-  repeated Author  author         = 2;
-  optional string  hashcode       = 3;
-  optional int64   identifier     = 4;
-  optional string  title          = 5;
-  optional string  last_published = 6;
-  optional string  date_found     = 7;
-  optional Content body           = 8;
-
+  optional sint32 tier           = 8;
+  optional int32  indegree       = 9;
+  optional int32  iranking       = 10;
+  optional string publisher_type = 11;
 }
 
 
 message Feed {
-  optional string link     = 1;
-  optional string hashcode = 2;
-  optional string url      = 3;
+  repeated Link   link           = 1;
+  optional Link   canonical_link = 2;
+  optional string title          = 3;
+  optional string hashcode       = 4;
+  repeated Lang   lang           = 5;
+  optional string generator      = 6;
+  optional string description    = 7;
+}
+
+
+message PermalinkEntry {
+  repeated Link    link             = 1;
+  optional Link    canonical_link   = 2;
+  optional string  title            = 3;
+  optional string  hashcode         = 4;
+  repeated Lang    lang             = 5;
+  repeated Author  author           = 6;
+  repeated string  category         = 7;
+  optional float   spam_probability = 8;
+  optional string  last_published   = 9;
+  optional string  date_found       = 10;
+  optional int64   identifier       = 11;
+  optional Content content          = 12;
+
+  optional Content content_extract  = 13;
+  optional string generator         = 14;
+}
+
+
+message FeedEntry {
+  repeated Link    link             = 1;
+  optional Link    canonical_link   = 2;
+  optional string  title            = 3;
+  optional string  hashcode         = 4;
+  repeated Lang    lang             = 5;
+  repeated Author  author           = 6;
+  repeated string  category         = 7;
+  optional float   spam_probability = 8;
+  optional string  last_published   = 9;
+  optional string  date_found       = 10;
+  optional int64   identifier       = 11;
+  optional Content content          = 12;
 }
 
 
 message Entry {
-  optional string  title            = 1;
-  optional string  link             = 2;
-  optional string  lang             = 3;
-  optional Content content          = 4;
-  optional Content content_extract  = 5;
-  optional float   spam_probability = 6;
-  optional string  date_found       = 7;
-  optional int64   identifier       = 8;
+  optional Source         source          = 1;
+  optional Feed           feed            = 2;
+  optional FeedEntry      feed_entry      = 3;
+  optional PermalinkEntry permalink_entry = 4;
 }
+
+
+message Response {
+  optional string request              = 1;
+  optional string previous_request_url = 2;
+  optional string next_request_url     = 3;
+  repeated Entry  entries              = 4;
+}
+
