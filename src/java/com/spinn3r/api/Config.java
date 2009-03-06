@@ -57,6 +57,26 @@ public class Config {
     private boolean        skipDescription     = false;
     private String         api                 = null;
     private double         spamProbability     = DEFAULT_SPAM_PROBABILITY;
+    private boolean        useProtobuf         = false;
+
+    /**
+     * 
+     * Get the value of <code>useProtobuf</code>.
+     *
+     */
+    public boolean getUseProtobuf() { 
+        return this.useProtobuf;
+    }
+
+    /**
+     * 
+     * Set the value of <code>useProtobuf</code>.
+     *
+     */
+    public void setUseProtobuf( boolean useProtobuf ) { 
+        this.useProtobuf = useProtobuf;
+    }
+
 
     /**
      * 

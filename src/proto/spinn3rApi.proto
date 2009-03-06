@@ -1,7 +1,7 @@
-package spinn3rApi;
+package contentApi;
 
-option java_package         = "com.spinn3r.api.protocolbuffers";
-option java_outer_classname = "Spinn3rApi";
+option java_package         = "com.spinn3r.api.protobuf";
+option java_outer_classname = "ContentApi";
 
 
 message Link {
@@ -11,8 +11,8 @@ message Link {
 
 
 message Lang {
-  optional string code      = 1;
-  optional float  probility = 2;
+  optional string code        = 1;
+  optional float  probability = 2;
 }
 
 
@@ -71,7 +71,7 @@ message PermalinkEntry {
   optional Content content          = 12;
 
   optional Content content_extract  = 13;
-  optional string generator         = 14;
+  optional string  generator        = 14;
 }
 
 
@@ -100,9 +100,9 @@ message Entry {
 
 
 message Response {
-  optional string request              = 1;
+  optional string request_url          = 1;
   optional string previous_request_url = 2;
   optional string next_request_url     = 3;
-  repeated Entry  entries              = 4;
+  repeated Entry  entry                = 4;
 }
 

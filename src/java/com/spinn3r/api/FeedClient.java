@@ -61,7 +61,7 @@ public class FeedClient extends BaseClient implements Client {
             String resource = String.format( "http://%s/rss/%s.status?%s",
                                              getHost(), BaseClient.FEED_HANDLER, params );
 
-            Document doc = doFetch( resource );
+            Document doc = doXmlFetch( resource );
 
             Element root = (Element)doc.getFirstChild();
 

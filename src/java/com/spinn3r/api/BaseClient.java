@@ -31,6 +31,8 @@ import javax.xml.parsers.*;
 
 import org.w3c.dom.*;
 
+import com.spinn3r.api.protobuf.*;
+
 /**
  * Generic client support used which need to be in all APIs.
  *
@@ -330,7 +332,12 @@ public abstract class BaseClient implements Client {
         setLastRequestURL( resource );
 
         try {
-            parse( doFetch( resource ) );
+
+            if ( config.getUseProtobuf() )
+                protobufParse( doProtobufFetch( resource ) );
+            else
+                xmlParse( doXmlFetch( resource ) );
+
         } catch ( Exception e ) {
             throw new ParseException( e );
         }
@@ -339,9 +346,8 @@ public abstract class BaseClient implements Client {
         
     }
 
-    public Document doFetch( String resource ) throws IOException,
-                                                      ParseException,
-                                                      InterruptedException {
+
+    private URLConnection getConnection ( String resource ) throws IOException {
 
         URLConnection conn = null;
         
@@ -354,19 +360,58 @@ public abstract class BaseClient implements Client {
             // set the UserAgent so Spinn3r know which client lib is calling.
             conn.setRequestProperty( USER_AGENT_HEADER, USER_AGENT );
             conn.setRequestProperty( ACCEPT_ENCODING_HEADER, GZIP_ENCODING );
-            
-            long call_before = System.currentTimeMillis();
-            
+                        
             conn.connect();
 
-            //NOTE: because this is XML we don't need to use the Content-Type
-            //returned by the HTTP server as the XML encoding declaration should be
-            //used.
+        } 
 
-            localInputStream = getLocalInputStream( conn.getInputStream() );
+        catch ( IOException ioe ) {
+
+            //create a custom exception message with the right error.
+            String message = conn.getHeaderField( null );
+            IOException ce = new IOException( message );
+            ce.setStackTrace( ioe.getStackTrace() );
+            
+            throw ce;
+        }
+
+        return conn;
+    }
+
+
+    public ContentApi.Response doProtobufFetch( String resource ) throws IOException, InterruptedException {
+ 
+        long call_before = System.currentTimeMillis();
+
+        URLConnection       conn = getConnection( resource );
+        ContentApi.Response res  = ContentApi.Response.parseFrom( conn.getInputStream() );
+
+        long call_after = System.currentTimeMillis();
+
+        setCallDuration( call_after - call_before );
+        
+        return res;
+    }
+
+
+    public Document doXmlFetch( String resource ) throws IOException,
+                                                      ParseException,
+                                                      InterruptedException {
+
+        URLConnection conn = null;
+        
+        try {
+
+            long call_before = System.currentTimeMillis();
+
+            conn = getConnection( resource );
+
+            localInputStream = getLocalInputStream( conn.getInputStream() ); //BUG: this seems redunt
 
             if ( GZIP_ENCODING.equals( conn.getContentEncoding() ) )
                 isCompressed = true;
+
+            String content_type = conn.getContentType();
 
             InputStream is = getInputStream();
             
@@ -399,16 +444,13 @@ public abstract class BaseClient implements Client {
             
             return doc;
 
-        } catch ( IOException ioe ) {
+        } 
 
-            //create a custom exception message with the right error.
-            String message = conn.getHeaderField( null );
-            IOException ce = new IOException( message );
-            ce.setStackTrace( ioe.getStackTrace() );
-            
-            throw ce;
+        catch ( IOException ioe ) {
+            throw ioe;
+        } 
 
-        } catch ( Exception e ) {
+        catch ( Exception e ) {
 
             String message = String.format( "Unable to parse %s: %s" , getLastRequestURL(), e.getMessage() );
 
@@ -463,7 +505,7 @@ public abstract class BaseClient implements Client {
      * We've received a response from the API so parse it out.
      *
      */
-    protected void parse( Document doc ) throws Exception {
+    protected void xmlParse( Document doc ) throws Exception {
 
         Element root = (Element)doc.getFirstChild();
 
@@ -497,6 +539,40 @@ public abstract class BaseClient implements Client {
         this.results = result;
         
     }
+
+
+    /**
+     * We've received a response from the API so parse it out.
+     *
+     */
+    protected void protobufParse( ContentApi.Response response ) throws Exception {
+
+
+        String next = response.getNextRequestUrl();
+
+        //TODO: apply the correct hostname to the next request.
+
+        if ( getHost() != null ) {
+            String path = next.substring( next.indexOf( "/", "http://".length() ), next.length() );
+            next = String.format( "http://%s%s", getHost(), path );
+        }
+        
+        //determine the next_request_url so that we can fetch the second page of
+        //results.
+        setNextRequestURL( next );
+
+        List result = new ArrayList();
+
+        for ( ContentApi.Entry entry : response.getEntryList() ) {
+                
+            //result.add( parseItem( entry ) );
+            
+        }
+
+        this.results = result;
+        
+    }
+
 
     /**
      * Generate the first request URL based just on configuration directives.
