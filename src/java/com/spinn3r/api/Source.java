@@ -59,7 +59,8 @@ public class Source extends BaseItem {
 
     public Source() { }
 
-    public Source ( ContentApi.Response response ) {
+    public Source ( ContentApi.Entry entry ) {
+        feed = new Feed ( entry );
         // BOOG
     }
 

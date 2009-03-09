@@ -74,7 +74,7 @@ public class PermalinkHistoryClient extends BaseClient implements Client {
     }
 
 
-    protected BaseResult parseItem( ContentApi.Response current ) throws Exception {
+    protected BaseResult parseItem( ContentApi.Entry current ) throws Exception {
         return new Source( current );
     }
 

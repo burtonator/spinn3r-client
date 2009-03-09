@@ -76,7 +76,7 @@ public class PermalinkEntryClient extends BaseClient implements Client {
     }
 
 
-    protected BaseResult parseItem( ContentApi.Response current ) throws Exception {
+    protected BaseResult parseItem( ContentApi.Entry current ) throws Exception {
         throw new UnimplementedException ("protobuf support not implmented for this client");
     }
 

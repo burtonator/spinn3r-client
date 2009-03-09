@@ -24,6 +24,8 @@ import org.w3c.dom.*;
 
 import static com.spinn3r.api.BaseClient.*;
 
+import com.spinn3r.api.protobuf.*;
+
 /**
  * Represents a source within Spinn3r.
  */
@@ -52,6 +54,29 @@ public class Feed extends BaseItem {
     String guid = null;
 
     public Feed() {}
+
+    public Feed( ContentApi.Entry entry ) {
+        
+        if ( ! entry.hasFeed() )
+            throw new MissingRequiredFieldException ( "missing feed" );
+
+        ContentApi.Feed feed = entry.getFeed();
+
+        guid                 = feed.getHashcode();
+        resource             = feed.getCanonicalLink().getResource();
+        link                 = feed.getCanonicalLink().getHref();
+        channelLink          = ""; //BUG
+        channelTitle         = feed.getTitle();
+        channelDescription   = feed.getDescription();
+        etag                 = ""; //BUG
+
+        resourceStatus       = feed.getResourceStatus();
+
+        dateFound            = null;//BUG
+        lastPublished        = null;//BUG
+        lastPosted           = null;//BUG
+        
+    }    
 
     public Feed( Element e ) {
 

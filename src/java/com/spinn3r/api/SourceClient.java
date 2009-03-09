@@ -66,7 +66,7 @@ public class SourceClient extends BaseClient implements Client {
 
 
 
-    protected BaseResult parseItem( ContentApi.Response current ) throws Exception {
+    protected BaseResult parseItem( ContentApi.Entry current ) throws Exception {
         // BUG: how come this api dose not implment any parcres?
         throw new UnimplementedException ("protobuf support not implmented for this client");
     }
