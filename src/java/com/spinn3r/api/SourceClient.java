@@ -24,6 +24,8 @@ import javax.xml.parsers.*;
 
 import org.w3c.dom.*;
 
+import com.spinn3r.api.protobuf.*;
+
 /**
  * API client that implements Spinn3r's source registration API.
  */
@@ -61,6 +63,14 @@ public class SourceClient extends BaseClient implements Client {
         client.register( link );
 
     }
+
+
+
+    protected BaseResult parseItem( ContentApi.Response current ) throws Exception {
+        // BUG: how come this api dose not implment any parcres?
+        throw new UnimplementedException ("protobuf support not implmented for this client");
+    }
+
 
     /**
      * Check on the status of a weblog within Spinn3r.

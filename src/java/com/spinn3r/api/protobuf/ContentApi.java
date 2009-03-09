@@ -900,25 +900,31 @@ public final class ContentApi {
     public boolean hasDescription() { return hasDescription; }
     public java.lang.String getDescription() { return description_; }
     
-    // optional sint32 tier = 8;
+    // optional int32 resource_status = 8;
+    private boolean hasResourceStatus;
+    private int resourceStatus_ = 0;
+    public boolean hasResourceStatus() { return hasResourceStatus; }
+    public int getResourceStatus() { return resourceStatus_; }
+    
+    // optional sint32 tier = 9;
     private boolean hasTier;
     private int tier_ = 0;
     public boolean hasTier() { return hasTier; }
     public int getTier() { return tier_; }
     
-    // optional int32 indegree = 9;
+    // optional int32 indegree = 10;
     private boolean hasIndegree;
     private int indegree_ = 0;
     public boolean hasIndegree() { return hasIndegree; }
     public int getIndegree() { return indegree_; }
     
-    // optional int32 iranking = 10;
+    // optional int32 iranking = 11;
     private boolean hasIranking;
     private int iranking_ = 0;
     public boolean hasIranking() { return hasIranking; }
     public int getIranking() { return iranking_; }
     
-    // optional string publisher_type = 11;
+    // optional string publisher_type = 12;
     private boolean hasPublisherType;
     private java.lang.String publisherType_ = "";
     public boolean hasPublisherType() { return hasPublisherType; }
@@ -1238,7 +1244,25 @@ public final class ContentApi {
         return this;
       }
       
-      // optional sint32 tier = 8;
+      // optional int32 resource_status = 8;
+      public boolean hasResourceStatus() {
+        return result.hasResourceStatus();
+      }
+      public int getResourceStatus() {
+        return result.getResourceStatus();
+      }
+      public Builder setResourceStatus(int value) {
+        result.hasResourceStatus = true;
+        result.resourceStatus_ = value;
+        return this;
+      }
+      public Builder clearResourceStatus() {
+        result.hasResourceStatus = false;
+        result.resourceStatus_ = 0;
+        return this;
+      }
+      
+      // optional sint32 tier = 9;
       public boolean hasTier() {
         return result.hasTier();
       }
@@ -1256,7 +1280,7 @@ public final class ContentApi {
         return this;
       }
       
-      // optional int32 indegree = 9;
+      // optional int32 indegree = 10;
       public boolean hasIndegree() {
         return result.hasIndegree();
       }
@@ -1274,7 +1298,7 @@ public final class ContentApi {
         return this;
       }
       
-      // optional int32 iranking = 10;
+      // optional int32 iranking = 11;
       public boolean hasIranking() {
         return result.hasIranking();
       }
@@ -1292,7 +1316,7 @@ public final class ContentApi {
         return this;
       }
       
-      // optional string publisher_type = 11;
+      // optional string publisher_type = 12;
       public boolean hasPublisherType() {
         return result.hasPublisherType();
       }
@@ -1392,6 +1416,12 @@ public final class ContentApi {
     private java.lang.String description_ = "";
     public boolean hasDescription() { return hasDescription; }
     public java.lang.String getDescription() { return description_; }
+    
+    // optional int32 resource_status = 8;
+    private boolean hasResourceStatus;
+    private int resourceStatus_ = 0;
+    public boolean hasResourceStatus() { return hasResourceStatus; }
+    public int getResourceStatus() { return resourceStatus_; }
     
     public static com.spinn3r.api.protobuf.ContentApi.Feed parseFrom(
         com.google.protobuf.ByteString data)
@@ -1704,6 +1734,24 @@ public final class ContentApi {
       public Builder clearDescription() {
         result.hasDescription = false;
         result.description_ = "";
+        return this;
+      }
+      
+      // optional int32 resource_status = 8;
+      public boolean hasResourceStatus() {
+        return result.hasResourceStatus();
+      }
+      public int getResourceStatus() {
+        return result.getResourceStatus();
+      }
+      public Builder setResourceStatus(int value) {
+        result.hasResourceStatus = true;
+        result.resourceStatus_ = value;
+        return this;
+      }
+      public Builder clearResourceStatus() {
+        result.hasResourceStatus = false;
+        result.resourceStatus_ = 0;
         return this;
       }
     }
@@ -3604,45 +3652,46 @@ public final class ContentApi {
       "\001(\002\"-\n\007Content\022\021\n\tmime_type\030\001 \002(\t\022\017\n\007con" +
       "tent\030\002 \001(\014\"E\n\006Author\022\014\n\004name\030\001 \001(\t\022\r\n\005em" +
       "ail\030\002 \001(\t\022\036\n\004link\030\003 \003(\0132\020.contentApi.Lin" +
-      "k\"\205\002\n\006Source\022\036\n\004link\030\001 \003(\0132\020.contentApi." +
+      "k\"\236\002\n\006Source\022\036\n\004link\030\001 \003(\0132\020.contentApi." +
       "Link\022(\n\016canonical_link\030\002 \001(\0132\020.contentAp" +
       "i.Link\022\r\n\005title\030\003 \001(\t\022\020\n\010hashcode\030\004 \001(\t\022" +
       "\036\n\004lang\030\005 \003(\0132\020.contentApi.Lang\022\021\n\tgener" +
-      "ator\030\006 \001(\t\022\023\n\013description\030\007 \001(\t\022\014\n\004tier\030" +
-      "\010 \001(\021\022\020\n\010indegree\030\t \001(\005\022\020\n\010iranking\030\n \001(" +
-      "\005\022\026\n\016publisher_type\030\013 \001(\t\"\271\001\n\004Feed\022\036\n\004li" +
-      "nk\030\001 \003(\0132\020.contentApi.Link\022(\n\016canonical_" +
-      "link\030\002 \001(\0132\020.contentApi.Link\022\r\n\005title\030\003 " +
-      "\001(\t\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030\005 \003(\0132\020.co" +
-      "ntentApi.Lang\022\021\n\tgenerator\030\006 \001(\t\022\023\n\013desc" +
-      "ription\030\007 \001(\t\"\222\003\n\016PermalinkEntry\022\036\n\004link" +
-      "\030\001 \003(\0132\020.contentApi.Link\022(\n\016canonical_li" +
-      "nk\030\002 \001(\0132\020.contentApi.Link\022\r\n\005title\030\003 \001(" +
-      "\t\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030\005 \003(\0132\020.cont" +
-      "entApi.Lang\022\"\n\006author\030\006 \003(\0132\022.contentApi" +
-      ".Author\022\020\n\010category\030\007 \003(\t\022\030\n\020spam_probab" +
-      "ility\030\010 \001(\002\022\026\n\016last_published\030\t \001(\t\022\022\n\nd" +
-      "ate_found\030\n \001(\t\022\022\n\nidentifier\030\013 \001(\003\022$\n\007c" +
-      "ontent\030\014 \001(\0132\023.contentApi.Content\022,\n\017con" +
-      "tent_extract\030\r \001(\0132\023.contentApi.Content\022" +
-      "\021\n\tgenerator\030\016 \001(\t\"\314\002\n\tFeedEntry\022\036\n\004link" +
-      "\030\001 \003(\0132\020.contentApi.Link\022(\n\016canonical_li" +
-      "nk\030\002 \001(\0132\020.contentApi.Link\022\r\n\005title\030\003 \001(" +
-      "\t\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030\005 \003(\0132\020.cont" +
-      "entApi.Lang\022\"\n\006author\030\006 \003(\0132\022.contentApi" +
-      ".Author\022\020\n\010category\030\007 \003(\t\022\030\n\020spam_probab" +
-      "ility\030\010 \001(\002\022\026\n\016last_published\030\t \001(\t\022\022\n\nd" +
-      "ate_found\030\n \001(\t\022\022\n\nidentifier\030\013 \001(\003\022$\n\007c" +
-      "ontent\030\014 \001(\0132\023.contentApi.Content\"\253\001\n\005En" +
-      "try\022\"\n\006source\030\001 \001(\0132\022.contentApi.Source\022" +
-      "\036\n\004feed\030\002 \001(\0132\020.contentApi.Feed\022)\n\nfeed_" +
-      "entry\030\003 \001(\0132\025.contentApi.FeedEntry\0223\n\017pe" +
-      "rmalink_entry\030\004 \001(\0132\032.contentApi.Permali" +
-      "nkEntry\"y\n\010Response\022\023\n\013request_url\030\001 \001(\t" +
-      "\022\034\n\024previous_request_url\030\002 \001(\t\022\030\n\020next_r" +
-      "equest_url\030\003 \001(\t\022 \n\005entry\030\004 \003(\0132\021.conten" +
-      "tApi.EntryB&\n\030com.spinn3r.api.protobufB\n" +
-      "ContentApi";
+      "ator\030\006 \001(\t\022\023\n\013description\030\007 \001(\t\022\027\n\017resou" +
+      "rce_status\030\010 \001(\005\022\014\n\004tier\030\t \001(\021\022\020\n\010indegr" +
+      "ee\030\n \001(\005\022\020\n\010iranking\030\013 \001(\005\022\026\n\016publisher_" +
+      "type\030\014 \001(\t\"\322\001\n\004Feed\022\036\n\004link\030\001 \003(\0132\020.cont" +
+      "entApi.Link\022(\n\016canonical_link\030\002 \001(\0132\020.co" +
+      "ntentApi.Link\022\r\n\005title\030\003 \001(\t\022\020\n\010hashcode" +
+      "\030\004 \001(\t\022\036\n\004lang\030\005 \003(\0132\020.contentApi.Lang\022\021" +
+      "\n\tgenerator\030\006 \001(\t\022\023\n\013description\030\007 \001(\t\022\027" +
+      "\n\017resource_status\030\010 \001(\005\"\222\003\n\016PermalinkEnt" +
+      "ry\022\036\n\004link\030\001 \003(\0132\020.contentApi.Link\022(\n\016ca" +
+      "nonical_link\030\002 \001(\0132\020.contentApi.Link\022\r\n\005" +
+      "title\030\003 \001(\t\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030\005 " +
+      "\003(\0132\020.contentApi.Lang\022\"\n\006author\030\006 \003(\0132\022." +
+      "contentApi.Author\022\020\n\010category\030\007 \003(\t\022\030\n\020s" +
+      "pam_probability\030\010 \001(\002\022\026\n\016last_published\030" +
+      "\t \001(\t\022\022\n\ndate_found\030\n \001(\t\022\022\n\nidentifier\030" +
+      "\013 \001(\003\022$\n\007content\030\014 \001(\0132\023.contentApi.Cont" +
+      "ent\022,\n\017content_extract\030\r \001(\0132\023.contentAp" +
+      "i.Content\022\021\n\tgenerator\030\016 \001(\t\"\314\002\n\tFeedEnt" +
+      "ry\022\036\n\004link\030\001 \003(\0132\020.contentApi.Link\022(\n\016ca" +
+      "nonical_link\030\002 \001(\0132\020.contentApi.Link\022\r\n\005" +
+      "title\030\003 \001(\t\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030\005 " +
+      "\003(\0132\020.contentApi.Lang\022\"\n\006author\030\006 \003(\0132\022." +
+      "contentApi.Author\022\020\n\010category\030\007 \003(\t\022\030\n\020s" +
+      "pam_probability\030\010 \001(\002\022\026\n\016last_published\030" +
+      "\t \001(\t\022\022\n\ndate_found\030\n \001(\t\022\022\n\nidentifier\030" +
+      "\013 \001(\003\022$\n\007content\030\014 \001(\0132\023.contentApi.Cont" +
+      "ent\"\253\001\n\005Entry\022\"\n\006source\030\001 \001(\0132\022.contentA" +
+      "pi.Source\022\036\n\004feed\030\002 \001(\0132\020.contentApi.Fee" +
+      "d\022)\n\nfeed_entry\030\003 \001(\0132\025.contentApi.FeedE" +
+      "ntry\0223\n\017permalink_entry\030\004 \001(\0132\032.contentA" +
+      "pi.PermalinkEntry\"y\n\010Response\022\023\n\013request" +
+      "_url\030\001 \001(\t\022\034\n\024previous_request_url\030\002 \001(\t" +
+      "\022\030\n\020next_request_url\030\003 \001(\t\022 \n\005entry\030\004 \003(" +
+      "\0132\021.contentApi.EntryB&\n\030com.spinn3r.api." +
+      "protobufB\nContentApi";
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
@@ -3685,7 +3734,7 @@ public final class ContentApi {
           internal_static_contentApi_Source_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_contentApi_Source_descriptor,
-              new java.lang.String[] { "Link", "CanonicalLink", "Title", "Hashcode", "Lang", "Generator", "Description", "Tier", "Indegree", "Iranking", "PublisherType", },
+              new java.lang.String[] { "Link", "CanonicalLink", "Title", "Hashcode", "Lang", "Generator", "Description", "ResourceStatus", "Tier", "Indegree", "Iranking", "PublisherType", },
               com.spinn3r.api.protobuf.ContentApi.Source.class,
               com.spinn3r.api.protobuf.ContentApi.Source.Builder.class);
           internal_static_contentApi_Feed_descriptor =
@@ -3693,7 +3742,7 @@ public final class ContentApi {
           internal_static_contentApi_Feed_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_contentApi_Feed_descriptor,
-              new java.lang.String[] { "Link", "CanonicalLink", "Title", "Hashcode", "Lang", "Generator", "Description", },
+              new java.lang.String[] { "Link", "CanonicalLink", "Title", "Hashcode", "Lang", "Generator", "Description", "ResourceStatus", },
               com.spinn3r.api.protobuf.ContentApi.Feed.class,
               com.spinn3r.api.protobuf.ContentApi.Feed.Builder.class);
           internal_static_contentApi_PermalinkEntry_descriptor =

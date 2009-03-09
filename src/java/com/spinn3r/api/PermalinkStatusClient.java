@@ -24,6 +24,8 @@ import javax.xml.parsers.*;
 
 import org.w3c.dom.*;
 
+import com.spinn3r.api.protobuf.*;
+
 /**
  *
  * @deprecated This code is deprecated and will be removed after 2008-11-01.
@@ -69,6 +71,12 @@ public class PermalinkStatusClient extends BaseClient implements Client {
     public List<BaseItem> getResults() { 
         return (List<BaseItem>)super.results;
     }
+
+
+    protected BaseResult parseItem( ContentApi.Response current ) throws Exception {
+        throw new UnimplementedException ("protobuf support not implmented for this client");
+    }
+
 
     protected BaseItem parseItem( Element current ) throws Exception {
 

@@ -24,6 +24,8 @@ import javax.xml.parsers.*;
 
 import org.w3c.dom.*;
 
+import com.spinn3r.api.protobuf.*;
+
 /**
  * <p> Reference API implementation for fetching Feed content form Spinn3r.
  *
@@ -79,6 +81,10 @@ public class FeedClient extends BaseClient implements Client {
 
     public List<BaseItem> getResults() { 
         return (List<BaseItem>)super.results;
+    }
+
+    protected BaseResult parseItem( ContentApi.Response current ) throws Exception {
+        throw new UnimplementedException ("protobuf support not implmented for this client");
     }
 
     protected BaseItem parseItem( Element current ) throws Exception {

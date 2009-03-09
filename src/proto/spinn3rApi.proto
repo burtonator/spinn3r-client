@@ -30,29 +30,31 @@ message Author {
 
 
 message Source {
-  repeated Link   link           = 1;
-  optional Link   canonical_link = 2;
-  optional string title          = 3;
-  optional string hashcode       = 4;
-  repeated Lang   lang           = 5;
-  optional string generator      = 6;
-  optional string description    = 7;
+  repeated Link   link            = 1;
+  optional Link   canonical_link  = 2;
+  optional string title           = 3;
+  optional string hashcode        = 4;
+  repeated Lang   lang            = 5;
+  optional string generator       = 6;
+  optional string description     = 7;
+  optional int32  resource_status = 8;
 
-  optional sint32 tier           = 8;
-  optional int32  indegree       = 9;
-  optional int32  iranking       = 10;
-  optional string publisher_type = 11;
+  optional sint32 tier            = 9;
+  optional int32  indegree        = 10;
+  optional int32  iranking        = 11;
+  optional string publisher_type  = 12;
 }
 
 
 message Feed {
-  repeated Link   link           = 1;
-  optional Link   canonical_link = 2;
-  optional string title          = 3;
-  optional string hashcode       = 4;
-  repeated Lang   lang           = 5;
-  optional string generator      = 6;
-  optional string description    = 7;
+  repeated Link   link            = 1;
+  optional Link   canonical_link  = 2;
+  optional string title           = 3;
+  optional string hashcode        = 4;
+  repeated Lang   lang            = 5;
+  optional string generator       = 6;
+  optional string description     = 7;
+  optional int32  resource_status = 8;
 }
 
 

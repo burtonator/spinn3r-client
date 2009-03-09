@@ -24,6 +24,8 @@ import javax.xml.parsers.*;
 
 import org.w3c.dom.*;
 
+import com.spinn3r.api.protobuf.*;
+
 /**
  * 
  */
@@ -71,6 +73,12 @@ public class FeedEntryClient extends BaseClient implements Client {
         return result;
         
     }
+
+
+    protected BaseResult parseItem( ContentApi.Response current ) throws Exception {
+        throw new UnimplementedException ("protobuf support not implmented for this client");
+    }
+
 
     protected BaseItem parseItem( Element current ) throws Exception {
 

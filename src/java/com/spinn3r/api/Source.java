@@ -24,6 +24,8 @@ import org.w3c.dom.*;
 
 import static com.spinn3r.api.BaseClient.*;
 
+import com.spinn3r.api.protobuf.*;
+
 /**
  * Represents a source within Spinn3r.
  */
@@ -56,6 +58,10 @@ public class Source extends BaseItem {
     private Feed feed = new Feed();
 
     public Source() { }
+
+    public Source ( ContentApi.Response response ) {
+        // BOOG
+    }
 
     public Source( Element e ) {
 

@@ -24,6 +24,8 @@ import javax.xml.parsers.*;
 
 import org.w3c.dom.*;
 
+import com.spinn3r.api.protobuf.*;
+
 /**
  * 
  */
@@ -78,6 +80,10 @@ public class LinkHistoryClient extends BaseClient implements Client {
 
     public List<LinkItem> getResults() { 
         return (List<LinkItem>)super.results;
+    }
+
+    protected BaseResult parseItem( ContentApi.Response current ) throws Exception {
+        throw new UnimplementedException ("protobuf support not implmented for this client");
     }
 
     protected LinkItem parseItem( Element current ) throws Exception {

@@ -24,6 +24,7 @@ import javax.xml.parsers.*;
 
 import org.w3c.dom.*;
 
+import com.spinn3r.api.protobuf.*;
 /**
  * 
  */
@@ -92,6 +93,11 @@ public class SourceListClient extends BaseClient implements Client {
 
     public List<Source> getResults() { 
         return (List<Source>)super.results;
+    }
+
+
+    protected BaseResult parseItem( ContentApi.Response current ) throws Exception {
+        return new Source( current );
     }
 
     protected BaseItem parseItem( Element current ) throws Exception {

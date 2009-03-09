@@ -664,6 +664,9 @@ public abstract class BaseClient implements Client {
         throw new Exception( "Not implemented" );
     }
 
+    abstract protected BaseResult parseItem( ContentApi.Response current ) throws Exception;
+
+
     protected BaseResult parseItem( Element current,
                                     BaseResult result ) throws Exception {
         
