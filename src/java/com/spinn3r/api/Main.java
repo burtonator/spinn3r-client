@@ -20,6 +20,8 @@ import java.util.*;
 import java.io.*;
 import java.util.regex.*;
 
+import com.spinn3r.api.util.*;
+
 /**
  * <a href="http://spinn3r.com">Spinn3r</a> command line debug client for
  * testing the API.  Also shows example usage.
@@ -360,7 +362,20 @@ public class Main {
                 new File( file.getParent() ).mkdirs();
                 
             } else {
-                file = new File( root, now + ".xml" );
+
+                String path = now + ".xml";
+
+                String lastRequestURL = client.getLastRequestURL();
+
+                lastRequestURL = lastRequestURL.substring( lastRequestURL.indexOf( "/", "http://".length() ),
+                                                           lastRequestURL.length() );
+
+                path = Base64.encodeFilesafe( MD5.encode( lastRequestURL ) );
+                path += ".xml";
+                path = path.replaceAll( "-", "=" );
+                
+                file = new File( root, path );
+                
             }
             
             InputStream is = client.getInputStream();
@@ -630,11 +645,14 @@ public class Main {
             System.exit( 1 );
         }
 
-        if ( Runtime.getRuntime().maxMemory() < 384000000 ) {
+        long maxMemory = Runtime.getRuntime().maxMemory();
+        long requiredMemory = 384L * 1000L * 1000L;
+        
+        if ( maxMemory < requiredMemory ) {
 
             System.out.printf( "ERROR: Reference client requires at least 384MB of memory.\n" );
             System.out.printf( "\n" );
-            System.out.printf( "Now running with: %s\n", Runtime.getRuntime().maxMemory() );
+            System.out.printf( "Now running with: %s vs %s required\n", maxMemory, requiredMemory );
             System.out.printf( "\n" );
             System.out.printf( "Add -Xmx384M to your command line and run again.\n" );
             

@@ -61,7 +61,7 @@ public abstract class BaseClient implements Client {
      * Go back in time to make sure we recrawl everything.
      */
     public static final int RESTART_BUFFER = 30 * 1000;
-    
+
     public static final String NS_API     = "http://tailrank.com/ns/#api";
     public static final String NS_DC      = "http://purl.org/dc/elements/1.1/" ;
     public static final String NS_ATOM    = "http://www.w3.org/2005/Atom" ;
@@ -81,6 +81,8 @@ public abstract class BaseClient implements Client {
     public static String LINK_HANDLER       = "link3";
     
     public static final String GZIP_ENCODING = "gzip";
+
+    public static boolean DISABLE_PARSE = false;
 
     // Would be nice to have this use String.format() but this isn't really
     // compatible back to Java 1.4.. are we requiring Java 1.5 now?
@@ -241,13 +243,17 @@ public abstract class BaseClient implements Client {
 
             try {
             
-                // set the optimial limit if necessary
+                // set the optimal limit if necessary
                 if ( retry_ctr == 0 )
                     config.setLimit( getLimit() );
                 else
                     config.setLimit( getConservativeLimit() );
                 
                 doFetch( config );
+
+                // we performed one HTTP fetch successfully, restore the limit.
+                config.setLimit( getOptimalLimit() );
+                
                 break;
                 
             } catch ( Exception e ) {
@@ -312,11 +318,15 @@ public abstract class BaseClient implements Client {
 
         } else if ( results.size() < requestLimit ) {
 
-            long sleepInterval = config.getSleepInterval();
+            if ( ! DISABLE_PARSE ) {
             
-            //we've fetched before so determine if we need to spin.
-            Thread.sleep( sleepInterval );
-            setSleepDuration( sleepInterval );
+                long sleepInterval = config.getSleepInterval();
+                
+                //we've fetched before so determine if we need to spin.
+                Thread.sleep( sleepInterval );
+                setSleepDuration( sleepInterval );
+
+            }
             
         } 
 
@@ -420,6 +430,12 @@ public abstract class BaseClient implements Client {
 
             setCallDuration( call_after - call_before );
 
+            if ( DISABLE_PARSE ) {
+                //use the X-Next-Requested-URL if known.
+                setNextRequestURL( conn.getHeaderField( "X-Next-Request-URL" ) );
+                return null;
+            }
+
             // now get the system XML parser using JAXP
 
             DocumentBuilderFactory docBuildFactory =
@@ -477,7 +493,8 @@ public abstract class BaseClient implements Client {
     private byte[] getInputStreamAsByteArray( InputStream is ) throws IOException {
 
         //include length of content from the original site with contentLength
-        ByteArrayOutputStream bos = new ByteArrayOutputStream( 500000 ); /* reasonable sized buffer */
+
+        ByteArrayOutputStream bos = new ByteArrayOutputStream( 500000 ); 
       
         //now process the Reader...
         byte data[] = new byte[2048];
@@ -513,13 +530,6 @@ public abstract class BaseClient implements Client {
         Element channel = getElementByTagName( root, "channel" );
 
         String next = getElementCDATAByTagName( channel, "next_request_url", NS_API );
-
-        //TODO: apply the correct hostname to the next request.
-
-        if ( getHost() != null ) {
-            String path = next.substring( next.indexOf( "/", "http://".length() ), next.length() );
-            next = String.format( "http://%s%s", getHost(), path );
-        }
         
         //determine the next_request_url so that we can fetch the second page of
         //results.
@@ -1106,8 +1116,16 @@ public abstract class BaseClient implements Client {
      * Set the value of <code>nextRequestURL</code>.
      *
      */
-    public void setNextRequestURL( String nextRequestURL ) { 
-        this.nextRequestURL = nextRequestURL;
+    public void setNextRequestURL( String next ) { 
+
+        //TODO: apply the correct hostname to the next request.
+
+        if ( getHost() != null ) {
+            String path = next.substring( next.indexOf( "/", "http://".length() ), next.length() );
+            next = String.format( "http://%s%s", getHost(), path );
+        }
+
+        this.nextRequestURL = next;
     }
 
 //     /**
