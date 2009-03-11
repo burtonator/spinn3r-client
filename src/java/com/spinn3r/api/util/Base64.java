@@ -122,6 +122,10 @@ public class Base64 {
         return encode( in, false, base64Alphabet, -1 );
     }
 
+    public static byte[] encodeAsByteArray( byte[] in ) {
+        return encodeAsByteArray( in, false, base64Alphabet );
+    }
+
     public static String encode( byte[] in, int limit ) {
         return encode( in, false, base64Alphabet, limit );
     }
@@ -163,6 +167,45 @@ public class Base64 {
             while (outLen < out.length)
                 out[outLen++] = '_';
         return new String(out, 0, outLen);
+    }
+
+    /**
+     * Caller should specify equalsPad=true if they want a standards compliant
+     * encoding.
+     *
+     * The output needs to be a byte array because this is a bit more efficient
+     * for high performance work. 
+     */
+    public static byte[] encodeAsByteArray( byte[] in,
+                                            boolean equalsPad,
+                                            char[] alphabet ) {
+        
+        byte[] out = new byte[((in.length+2)/3)*4];
+        int rem = in.length%3;
+        int o = 0;
+        for (int i = 0; i < in.length;) {
+            int val = ((int)in[i++] & 0xFF) << 16;
+            if (i < in.length)
+                val |= ((int)in[i++] & 0xFF) << 8;
+            if (i < in.length)
+                val |= ((int)in[i++] & 0xFF);
+            out[o++] = (byte)alphabet[(val>>18) & 0x3F];
+            out[o++] = (byte)alphabet[(val>>12) & 0x3F];
+            out[o++] = (byte)alphabet[(val>>6) & 0x3F];
+            out[o++] = (byte)alphabet[val & 0x3F];
+        }
+        int outLen = out.length;
+        switch (rem) {
+        case 1: outLen -= 2; break;
+        case 2: outLen -= 1; break;
+        }
+        // Pad with '~' signs up to a multiple of four if requested.
+        if (equalsPad)
+            while (outLen < out.length)
+                out[outLen++] = '_';
+
+        return out;
+
     }
 
     /**
