@@ -65,16 +65,14 @@ public class Feed extends BaseItem {
         guid                 = feed.getHashcode();
         resource             = feed.getCanonicalLink().getResource();
         link                 = feed.getCanonicalLink().getHref();
-        channelLink          = ""; //BUG
+        channelLink          = feed.getChannelLink().getHref();
         channelTitle         = feed.getTitle();
         channelDescription   = feed.getDescription();
-        etag                 = ""; //BUG
-
+        etag                 = feed.getEtag();
         resourceStatus       = feed.getResourceStatus();
-
-        dateFound            = null;//BUG
-        lastPublished        = null;//BUG
-        lastPosted           = null;//BUG
+        lastPosted           = ISO8601DateParser.parse( feed.getLastPosted()    );
+        dateFound            = ISO8601DateParser.parse( feed.getDateFound()     );
+        lastPublished        = ISO8601DateParser.parse( feed.getLastPublished() );
         
     }    
 

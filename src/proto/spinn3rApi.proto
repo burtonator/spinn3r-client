@@ -30,31 +30,43 @@ message Author {
 
 
 message Source {
-  repeated Link   link            = 1;
-  optional Link   canonical_link  = 2;
-  optional string title           = 3;
-  optional string hashcode        = 4;
-  repeated Lang   lang            = 5;
-  optional string generator       = 6;
-  optional string description     = 7;
-  optional int32  resource_status = 8;
+  repeated Link   link             = 1;
+  optional Link   canonical_link   = 2;
+  optional string title            = 3;
+  optional string hashcode         = 4;
+  repeated Lang   lang             = 5;
+  optional string generator        = 6;
+  optional string description      = 7;
+  optional int32  resource_status  = 8;
+  optional string last_posted      = 9;
+  optional string last_published   = 10;
+  optional string date_found       = 11;
+  optional string etag             = 12;
+  optional float  spam_probability = 13;
 
-  optional sint32 tier            = 9;
-  optional int32  indegree        = 10;
-  optional int32  iranking        = 11;
-  optional string publisher_type  = 12;
+  optional sint32 tier             = 14;
+  optional int32  indegree         = 15;
+  optional string publisher_type   = 16;
+  optional bool   disabled         = 17;
 }
 
 
 message Feed {
-  repeated Link   link            = 1;
-  optional Link   canonical_link  = 2;
-  optional string title           = 3;
-  optional string hashcode        = 4;
-  repeated Lang   lang            = 5;
-  optional string generator       = 6;
-  optional string description     = 7;
-  optional int32  resource_status = 8;
+  repeated Link   link             = 1;
+  optional Link   canonical_link   = 2;
+  optional string title            = 3;
+  optional string hashcode         = 4;
+  repeated Lang   lang             = 5;
+  optional string generator        = 6;
+  optional string description      = 7;
+  optional int32  resource_status  = 8;
+  optional string last_posted      = 9;
+  optional string last_published   = 10;
+  optional string date_found       = 11;
+  optional string etag             = 12;
+  optional float  spam_probability = 13;
+
+  optional Link   channel_link     = 14;
 }
 
 

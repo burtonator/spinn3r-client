@@ -32,6 +32,7 @@ import javax.xml.parsers.*;
 import org.w3c.dom.*;
 
 import com.spinn3r.api.protobuf.*;
+import com.spinn3r.api.util.CompressedBLOB;
 
 /**
  * Generic client support used which need to be in all APIs.
@@ -564,9 +565,7 @@ public abstract class BaseClient implements Client {
         List result = new ArrayList();
 
         for ( ContentApi.Entry entry : response.getEntryList() ) {
-                
-            //result.add( parseItem( entry ) );
-            
+            result.add( parseItem( entry ) );
         }
 
         this.results = result;
@@ -664,11 +663,11 @@ public abstract class BaseClient implements Client {
         throw new Exception( "Not implemented" );
     }
 
+
     abstract protected BaseResult parseItem( ContentApi.Entry current ) throws Exception;
 
 
-    protected BaseResult parseItem( Element current,
-                                    BaseResult result ) throws Exception {
+    protected BaseResult parseItem( Element current, BaseResult result ) throws Exception {
         
         BaseItem item = (BaseItem)result;
         
@@ -756,6 +755,112 @@ public abstract class BaseClient implements Client {
         return item;
         
     }
+
+
+    protected BaseResult parseItem( ContentApi.Entry entry, BaseResult result ) throws Exception {
+        
+        if ( ! entry.hasSource() )
+            throw new MissingRequiredFieldException ( "missing source" );
+
+        ContentApi.Source source = entry.getSource();
+
+        if ( ! entry.hasFeed() )
+            throw new MissingRequiredFieldException ( "missing feed" );
+
+        ContentApi.Feed feed = entry.getFeed();
+
+
+        if ( ! entry.hasPermalinkEntry() )
+            throw new MissingRequiredFieldException ( "missing PermalinkEntry" );
+
+        ContentApi.PermalinkEntry permalink_entry = entry.getPermalinkEntry();
+
+
+        if ( ! entry.hasFeedEntry() )
+            throw new MissingRequiredFieldException ( "missing feedEntry" );
+
+        ContentApi.FeedEntry feed_entry  = entry.getFeedEntry();
+
+        BaseItem item = (BaseItem)result;
+        
+        //base elements.
+        item.setTitle( source.getTitle() );
+
+        item.setDescription( source.getDescription() );
+
+        item.setLink( source.getCanonicalLink().getHref() );
+        item.setGuid( source.getHashcode() );
+
+        // dc:lang
+        item.setLang( source.getLang(0).getCode() );
+
+        // dc:source
+        item.setSource( source.getCanonicalLink().getResource() );//BUG
+        
+        // weblog:title
+        // weblog:description
+        item.setWeblogTitle( source.getTitle() );
+
+        item.setWeblogDescription( source.getDescription() );
+
+        item.setWeblogTier( source.getTier() );
+
+        item.setPubDate( RFC822DateParser.parse( source.getLastPublished() ) );
+
+        String atom_published = feed.getLastPublished();
+        if ( feed.hasLastPublished() && ! atom_published.equals( "" ) )
+            item.setPublished( ISO8601DateParser.parse( atom_published ) );
+        
+
+        if ( source.hasIndegree() )
+            item.setWeblogIndegree( source.getIndegree() );        
+        
+        item.setWeblogPublisherType( source.getPublisherType().trim() );
+
+        item.setTags( feed_entry.getCategoryList() );
+
+        if ( permalink_entry.getAuthorCount() > 0 ) {
+            
+            ContentApi.Author author = permalink_entry.getAuthor( 0 );
+
+            item.setAuthorName ( author.getName()           );
+            item.setAuthorEmail( author.getEmail()          );
+            item.setAuthorLink ( author.getLink(0).getHref() );
+
+        }
+
+        // Spinn3r 2.1 post content.
+
+        CompressedBLOB extract_bytes =
+            new CompressedBLOB ( permalink_entry.getContentExtract().getContent().toByteArray() );
+
+        String content_extract = extract_bytes.getContent();
+
+        item.setContentExtract( content_extract );
+
+        item.setFeedURL( feed.getCanonicalLink().getHref() );
+
+        item.setResourceGUID( feed_entry.getHashcode() );
+
+        //spinn3r 3.x values
+
+        //FIXME: post:timestamp, feed:link
+        
+        item.setPostTitle( feed_entry.getHashcode() );
+
+        CompressedBLOB body_bytes =
+            new CompressedBLOB ( feed_entry.getContent().getContent().toByteArray() );
+
+        item.setPostBody ( body_bytes.getContent() );
+
+        item.setPostHashcode  ( feed_entry.getHashcode() );
+        item.setSourceHashcode( source.getHashcode()     );
+        item.setFeedHashcode  ( feed.getHashcode()       );
+
+        return item;
+        
+    }
+
 
     // **** XML parsing utilities ***********************************************
 

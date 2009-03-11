@@ -906,29 +906,59 @@ public final class ContentApi {
     public boolean hasResourceStatus() { return hasResourceStatus; }
     public int getResourceStatus() { return resourceStatus_; }
     
-    // optional sint32 tier = 9;
+    // optional string last_posted = 9;
+    private boolean hasLastPosted;
+    private java.lang.String lastPosted_ = "";
+    public boolean hasLastPosted() { return hasLastPosted; }
+    public java.lang.String getLastPosted() { return lastPosted_; }
+    
+    // optional string last_published = 10;
+    private boolean hasLastPublished;
+    private java.lang.String lastPublished_ = "";
+    public boolean hasLastPublished() { return hasLastPublished; }
+    public java.lang.String getLastPublished() { return lastPublished_; }
+    
+    // optional string date_found = 11;
+    private boolean hasDateFound;
+    private java.lang.String dateFound_ = "";
+    public boolean hasDateFound() { return hasDateFound; }
+    public java.lang.String getDateFound() { return dateFound_; }
+    
+    // optional string etag = 12;
+    private boolean hasEtag;
+    private java.lang.String etag_ = "";
+    public boolean hasEtag() { return hasEtag; }
+    public java.lang.String getEtag() { return etag_; }
+    
+    // optional float spam_probability = 13;
+    private boolean hasSpamProbability;
+    private float spamProbability_ = 0F;
+    public boolean hasSpamProbability() { return hasSpamProbability; }
+    public float getSpamProbability() { return spamProbability_; }
+    
+    // optional sint32 tier = 14;
     private boolean hasTier;
     private int tier_ = 0;
     public boolean hasTier() { return hasTier; }
     public int getTier() { return tier_; }
     
-    // optional int32 indegree = 10;
+    // optional int32 indegree = 15;
     private boolean hasIndegree;
     private int indegree_ = 0;
     public boolean hasIndegree() { return hasIndegree; }
     public int getIndegree() { return indegree_; }
     
-    // optional int32 iranking = 11;
-    private boolean hasIranking;
-    private int iranking_ = 0;
-    public boolean hasIranking() { return hasIranking; }
-    public int getIranking() { return iranking_; }
-    
-    // optional string publisher_type = 12;
+    // optional string publisher_type = 16;
     private boolean hasPublisherType;
     private java.lang.String publisherType_ = "";
     public boolean hasPublisherType() { return hasPublisherType; }
     public java.lang.String getPublisherType() { return publisherType_; }
+    
+    // optional bool disabled = 17;
+    private boolean hasDisabled;
+    private boolean disabled_ = false;
+    public boolean hasDisabled() { return hasDisabled; }
+    public boolean getDisabled() { return disabled_; }
     
     public static com.spinn3r.api.protobuf.ContentApi.Source parseFrom(
         com.google.protobuf.ByteString data)
@@ -1262,7 +1292,97 @@ public final class ContentApi {
         return this;
       }
       
-      // optional sint32 tier = 9;
+      // optional string last_posted = 9;
+      public boolean hasLastPosted() {
+        return result.hasLastPosted();
+      }
+      public java.lang.String getLastPosted() {
+        return result.getLastPosted();
+      }
+      public Builder setLastPosted(java.lang.String value) {
+        result.hasLastPosted = true;
+        result.lastPosted_ = value;
+        return this;
+      }
+      public Builder clearLastPosted() {
+        result.hasLastPosted = false;
+        result.lastPosted_ = "";
+        return this;
+      }
+      
+      // optional string last_published = 10;
+      public boolean hasLastPublished() {
+        return result.hasLastPublished();
+      }
+      public java.lang.String getLastPublished() {
+        return result.getLastPublished();
+      }
+      public Builder setLastPublished(java.lang.String value) {
+        result.hasLastPublished = true;
+        result.lastPublished_ = value;
+        return this;
+      }
+      public Builder clearLastPublished() {
+        result.hasLastPublished = false;
+        result.lastPublished_ = "";
+        return this;
+      }
+      
+      // optional string date_found = 11;
+      public boolean hasDateFound() {
+        return result.hasDateFound();
+      }
+      public java.lang.String getDateFound() {
+        return result.getDateFound();
+      }
+      public Builder setDateFound(java.lang.String value) {
+        result.hasDateFound = true;
+        result.dateFound_ = value;
+        return this;
+      }
+      public Builder clearDateFound() {
+        result.hasDateFound = false;
+        result.dateFound_ = "";
+        return this;
+      }
+      
+      // optional string etag = 12;
+      public boolean hasEtag() {
+        return result.hasEtag();
+      }
+      public java.lang.String getEtag() {
+        return result.getEtag();
+      }
+      public Builder setEtag(java.lang.String value) {
+        result.hasEtag = true;
+        result.etag_ = value;
+        return this;
+      }
+      public Builder clearEtag() {
+        result.hasEtag = false;
+        result.etag_ = "";
+        return this;
+      }
+      
+      // optional float spam_probability = 13;
+      public boolean hasSpamProbability() {
+        return result.hasSpamProbability();
+      }
+      public float getSpamProbability() {
+        return result.getSpamProbability();
+      }
+      public Builder setSpamProbability(float value) {
+        result.hasSpamProbability = true;
+        result.spamProbability_ = value;
+        return this;
+      }
+      public Builder clearSpamProbability() {
+        result.hasSpamProbability = false;
+        result.spamProbability_ = 0F;
+        return this;
+      }
+      
+      // optional sint32 tier = 14;
       public boolean hasTier() {
         return result.hasTier();
       }
@@ -1280,7 +1400,7 @@ public final class ContentApi {
         return this;
       }
       
-      // optional int32 indegree = 10;
+      // optional int32 indegree = 15;
       public boolean hasIndegree() {
         return result.hasIndegree();
       }
@@ -1298,25 +1418,7 @@ public final class ContentApi {
         return this;
       }
       
-      // optional int32 iranking = 11;
-      public boolean hasIranking() {
-        return result.hasIranking();
-      }
-      public int getIranking() {
-        return result.getIranking();
-      }
-      public Builder setIranking(int value) {
-        result.hasIranking = true;
-        result.iranking_ = value;
-        return this;
-      }
-      public Builder clearIranking() {
-        result.hasIranking = false;
-        result.iranking_ = 0;
-        return this;
-      }
-      
-      // optional string publisher_type = 12;
+      // optional string publisher_type = 16;
       public boolean hasPublisherType() {
         return result.hasPublisherType();
       }
@@ -1331,6 +1433,24 @@ public final class ContentApi {
       public Builder clearPublisherType() {
         result.hasPublisherType = false;
         result.publisherType_ = "";
+        return this;
+      }
+      
+      // optional bool disabled = 17;
+      public boolean hasDisabled() {
+        return result.hasDisabled();
+      }
+      public boolean getDisabled() {
+        return result.getDisabled();
+      }
+      public Builder setDisabled(boolean value) {
+        result.hasDisabled = true;
+        result.disabled_ = value;
+        return this;
+      }
+      public Builder clearDisabled() {
+        result.hasDisabled = false;
+        result.disabled_ = false;
         return this;
       }
     }
@@ -1422,6 +1542,36 @@ public final class ContentApi {
     private int resourceStatus_ = 0;
     public boolean hasResourceStatus() { return hasResourceStatus; }
     public int getResourceStatus() { return resourceStatus_; }
+    
+    // optional string last_posted = 9;
+    private boolean hasLastPosted;
+    private java.lang.String lastPosted_ = "";
+    public boolean hasLastPosted() { return hasLastPosted; }
+    public java.lang.String getLastPosted() { return lastPosted_; }
+    
+    // optional string last_published = 10;
+    private boolean hasLastPublished;
+    private java.lang.String lastPublished_ = "";
+    public boolean hasLastPublished() { return hasLastPublished; }
+    public java.lang.String getLastPublished() { return lastPublished_; }
+    
+    // optional string date_found = 11;
+    private boolean hasDateFound;
+    private java.lang.String dateFound_ = "";
+    public boolean hasDateFound() { return hasDateFound; }
+    public java.lang.String getDateFound() { return dateFound_; }
+    
+    // optional string etag = 12;
+    private boolean hasEtag;
+    private java.lang.String etag_ = "";
+    public boolean hasEtag() { return hasEtag; }
+    public java.lang.String getEtag() { return etag_; }
+    
+    // optional .contentApi.Link channel_link = 13;
+    private boolean hasChannelLink;
+    private com.spinn3r.api.protobuf.ContentApi.Link channelLink_ = com.spinn3r.api.protobuf.ContentApi.Link.getDefaultInstance();
+    public boolean hasChannelLink() { return hasChannelLink; }
+    public com.spinn3r.api.protobuf.ContentApi.Link getChannelLink() { return channelLink_; }
     
     public static com.spinn3r.api.protobuf.ContentApi.Feed parseFrom(
         com.google.protobuf.ByteString data)
@@ -1752,6 +1902,112 @@ public final class ContentApi {
       public Builder clearResourceStatus() {
         result.hasResourceStatus = false;
         result.resourceStatus_ = 0;
+        return this;
+      }
+      
+      // optional string last_posted = 9;
+      public boolean hasLastPosted() {
+        return result.hasLastPosted();
+      }
+      public java.lang.String getLastPosted() {
+        return result.getLastPosted();
+      }
+      public Builder setLastPosted(java.lang.String value) {
+        result.hasLastPosted = true;
+        result.lastPosted_ = value;
+        return this;
+      }
+      public Builder clearLastPosted() {
+        result.hasLastPosted = false;
+        result.lastPosted_ = "";
+        return this;
+      }
+      
+      // optional string last_published = 10;
+      public boolean hasLastPublished() {
+        return result.hasLastPublished();
+      }
+      public java.lang.String getLastPublished() {
+        return result.getLastPublished();
+      }
+      public Builder setLastPublished(java.lang.String value) {
+        result.hasLastPublished = true;
+        result.lastPublished_ = value;
+        return this;
+      }
+      public Builder clearLastPublished() {
+        result.hasLastPublished = false;
+        result.lastPublished_ = "";
+        return this;
+      }
+      
+      // optional string date_found = 11;
+      public boolean hasDateFound() {
+        return result.hasDateFound();
+      }
+      public java.lang.String getDateFound() {
+        return result.getDateFound();
+      }
+      public Builder setDateFound(java.lang.String value) {
+        result.hasDateFound = true;
+        result.dateFound_ = value;
+        return this;
+      }
+      public Builder clearDateFound() {
+        result.hasDateFound = false;
+        result.dateFound_ = "";
+        return this;
+      }
+      
+      // optional string etag = 12;
+      public boolean hasEtag() {
+        return result.hasEtag();
+      }
+      public java.lang.String getEtag() {
+        return result.getEtag();
+      }
+      public Builder setEtag(java.lang.String value) {
+        result.hasEtag = true;
+        result.etag_ = value;
+        return this;
+      }
+      public Builder clearEtag() {
+        result.hasEtag = false;
+        result.etag_ = "";
+        return this;
+      }
+      
+      // optional .contentApi.Link channel_link = 13;
+      public boolean hasChannelLink() {
+        return result.hasChannelLink();
+      }
+      public com.spinn3r.api.protobuf.ContentApi.Link getChannelLink() {
+        return result.getChannelLink();
+      }
+      public Builder setChannelLink(com.spinn3r.api.protobuf.ContentApi.Link value) {
+        result.hasChannelLink = true;
+        result.channelLink_ = value;
+        return this;
+      }
+      public Builder setChannelLink(com.spinn3r.api.protobuf.ContentApi.Link.Builder builderForValue) {
+        result.hasChannelLink = true;
+        result.channelLink_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeChannelLink(com.spinn3r.api.protobuf.ContentApi.Link value) {
+        if (result.hasChannelLink() &&
+            result.channelLink_ != com.spinn3r.api.protobuf.ContentApi.Link.getDefaultInstance()) {
+          result.channelLink_ =
+            com.spinn3r.api.protobuf.ContentApi.Link.newBuilder(result.channelLink_).mergeFrom(value).buildPartial();
+        } else {
+          result.channelLink_ = value;
+        }
+        result.hasChannelLink = true;
+        return this;
+      }
+      public Builder clearChannelLink() {
+        result.hasChannelLink = false;
+        result.channelLink_ = com.spinn3r.api.protobuf.ContentApi.Link.getDefaultInstance();
         return this;
       }
     }
@@ -3652,46 +3908,52 @@ public final class ContentApi {
       "\001(\002\"-\n\007Content\022\021\n\tmime_type\030\001 \002(\t\022\017\n\007con" +
       "tent\030\002 \001(\014\"E\n\006Author\022\014\n\004name\030\001 \001(\t\022\r\n\005em" +
       "ail\030\002 \001(\t\022\036\n\004link\030\003 \003(\0132\020.contentApi.Lin" +
-      "k\"\236\002\n\006Source\022\036\n\004link\030\001 \003(\0132\020.contentApi." +
+      "k\"\207\003\n\006Source\022\036\n\004link\030\001 \003(\0132\020.contentApi." +
       "Link\022(\n\016canonical_link\030\002 \001(\0132\020.contentAp" +
       "i.Link\022\r\n\005title\030\003 \001(\t\022\020\n\010hashcode\030\004 \001(\t\022" +
       "\036\n\004lang\030\005 \003(\0132\020.contentApi.Lang\022\021\n\tgener" +
       "ator\030\006 \001(\t\022\023\n\013description\030\007 \001(\t\022\027\n\017resou" +
-      "rce_status\030\010 \001(\005\022\014\n\004tier\030\t \001(\021\022\020\n\010indegr" +
-      "ee\030\n \001(\005\022\020\n\010iranking\030\013 \001(\005\022\026\n\016publisher_" +
-      "type\030\014 \001(\t\"\322\001\n\004Feed\022\036\n\004link\030\001 \003(\0132\020.cont" +
-      "entApi.Link\022(\n\016canonical_link\030\002 \001(\0132\020.co" +
-      "ntentApi.Link\022\r\n\005title\030\003 \001(\t\022\020\n\010hashcode" +
-      "\030\004 \001(\t\022\036\n\004lang\030\005 \003(\0132\020.contentApi.Lang\022\021" +
-      "\n\tgenerator\030\006 \001(\t\022\023\n\013description\030\007 \001(\t\022\027" +
-      "\n\017resource_status\030\010 \001(\005\"\222\003\n\016PermalinkEnt" +
-      "ry\022\036\n\004link\030\001 \003(\0132\020.contentApi.Link\022(\n\016ca" +
-      "nonical_link\030\002 \001(\0132\020.contentApi.Link\022\r\n\005" +
-      "title\030\003 \001(\t\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030\005 " +
-      "\003(\0132\020.contentApi.Lang\022\"\n\006author\030\006 \003(\0132\022." +
-      "contentApi.Author\022\020\n\010category\030\007 \003(\t\022\030\n\020s" +
-      "pam_probability\030\010 \001(\002\022\026\n\016last_published\030" +
-      "\t \001(\t\022\022\n\ndate_found\030\n \001(\t\022\022\n\nidentifier\030" +
-      "\013 \001(\003\022$\n\007content\030\014 \001(\0132\023.contentApi.Cont" +
-      "ent\022,\n\017content_extract\030\r \001(\0132\023.contentAp" +
-      "i.Content\022\021\n\tgenerator\030\016 \001(\t\"\314\002\n\tFeedEnt" +
-      "ry\022\036\n\004link\030\001 \003(\0132\020.contentApi.Link\022(\n\016ca" +
-      "nonical_link\030\002 \001(\0132\020.contentApi.Link\022\r\n\005" +
-      "title\030\003 \001(\t\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030\005 " +
-      "\003(\0132\020.contentApi.Lang\022\"\n\006author\030\006 \003(\0132\022." +
-      "contentApi.Author\022\020\n\010category\030\007 \003(\t\022\030\n\020s" +
-      "pam_probability\030\010 \001(\002\022\026\n\016last_published\030" +
-      "\t \001(\t\022\022\n\ndate_found\030\n \001(\t\022\022\n\nidentifier\030" +
-      "\013 \001(\003\022$\n\007content\030\014 \001(\0132\023.contentApi.Cont" +
-      "ent\"\253\001\n\005Entry\022\"\n\006source\030\001 \001(\0132\022.contentA" +
-      "pi.Source\022\036\n\004feed\030\002 \001(\0132\020.contentApi.Fee" +
-      "d\022)\n\nfeed_entry\030\003 \001(\0132\025.contentApi.FeedE" +
-      "ntry\0223\n\017permalink_entry\030\004 \001(\0132\032.contentA" +
-      "pi.PermalinkEntry\"y\n\010Response\022\023\n\013request" +
-      "_url\030\001 \001(\t\022\034\n\024previous_request_url\030\002 \001(\t" +
-      "\022\030\n\020next_request_url\030\003 \001(\t\022 \n\005entry\030\004 \003(" +
-      "\0132\021.contentApi.EntryB&\n\030com.spinn3r.api." +
-      "protobufB\nContentApi";
+      "rce_status\030\010 \001(\005\022\023\n\013last_posted\030\t \001(\t\022\026\n" +
+      "\016last_published\030\n \001(\t\022\022\n\ndate_found\030\013 \001(" +
+      "\t\022\014\n\004etag\030\014 \001(\t\022\030\n\020spam_probability\030\r \001(" +
+      "\002\022\014\n\004tier\030\016 \001(\021\022\020\n\010indegree\030\017 \001(\005\022\026\n\016pub" +
+      "lisher_type\030\020 \001(\t\022\020\n\010disabled\030\021 \001(\010\"\311\002\n\004" +
+      "Feed\022\036\n\004link\030\001 \003(\0132\020.contentApi.Link\022(\n\016" +
+      "canonical_link\030\002 \001(\0132\020.contentApi.Link\022\r" +
+      "\n\005title\030\003 \001(\t\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030" +
+      "\005 \003(\0132\020.contentApi.Lang\022\021\n\tgenerator\030\006 \001" +
+      "(\t\022\023\n\013description\030\007 \001(\t\022\027\n\017resource_stat" +
+      "us\030\010 \001(\005\022\023\n\013last_posted\030\t \001(\t\022\026\n\016last_pu" +
+      "blished\030\n \001(\t\022\022\n\ndate_found\030\013 \001(\t\022\014\n\004eta" +
+      "g\030\014 \001(\t\022&\n\014channel_link\030\r \001(\0132\020.contentA" +
+      "pi.Link\"\222\003\n\016PermalinkEntry\022\036\n\004link\030\001 \003(\013" +
+      "2\020.contentApi.Link\022(\n\016canonical_link\030\002 \001" +
+      "(\0132\020.contentApi.Link\022\r\n\005title\030\003 \001(\t\022\020\n\010h" +
+      "ashcode\030\004 \001(\t\022\036\n\004lang\030\005 \003(\0132\020.contentApi" +
+      ".Lang\022\"\n\006author\030\006 \003(\0132\022.contentApi.Autho" +
+      "r\022\020\n\010category\030\007 \003(\t\022\030\n\020spam_probability\030" +
+      "\010 \001(\002\022\026\n\016last_published\030\t \001(\t\022\022\n\ndate_fo" +
+      "und\030\n \001(\t\022\022\n\nidentifier\030\013 \001(\003\022$\n\007content" +
+      "\030\014 \001(\0132\023.contentApi.Content\022,\n\017content_e" +
+      "xtract\030\r \001(\0132\023.contentApi.Content\022\021\n\tgen" +
+      "erator\030\016 \001(\t\"\314\002\n\tFeedEntry\022\036\n\004link\030\001 \003(\013" +
+      "2\020.contentApi.Link\022(\n\016canonical_link\030\002 \001" +
+      "(\0132\020.contentApi.Link\022\r\n\005title\030\003 \001(\t\022\020\n\010h" +
+      "ashcode\030\004 \001(\t\022\036\n\004lang\030\005 \003(\0132\020.contentApi" +
+      ".Lang\022\"\n\006author\030\006 \003(\0132\022.contentApi.Autho" +
+      "r\022\020\n\010category\030\007 \003(\t\022\030\n\020spam_probability\030" +
+      "\010 \001(\002\022\026\n\016last_published\030\t \001(\t\022\022\n\ndate_fo" +
+      "und\030\n \001(\t\022\022\n\nidentifier\030\013 \001(\003\022$\n\007content" +
+      "\030\014 \001(\0132\023.contentApi.Content\"\253\001\n\005Entry\022\"\n" +
+      "\006source\030\001 \001(\0132\022.contentApi.Source\022\036\n\004fee" +
+      "d\030\002 \001(\0132\020.contentApi.Feed\022)\n\nfeed_entry\030" +
+      "\003 \001(\0132\025.contentApi.FeedEntry\0223\n\017permalin" +
+      "k_entry\030\004 \001(\0132\032.contentApi.PermalinkEntr" +
+      "y\"y\n\010Response\022\023\n\013request_url\030\001 \001(\t\022\034\n\024pr" +
+      "evious_request_url\030\002 \001(\t\022\030\n\020next_request" +
+      "_url\030\003 \001(\t\022 \n\005entry\030\004 \003(\0132\021.contentApi.E" +
+      "ntryB&\n\030com.spinn3r.api.protobufB\nConten" +
+      "tApi";
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
@@ -3734,7 +3996,7 @@ public final class ContentApi {
           internal_static_contentApi_Source_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_contentApi_Source_descriptor,
-              new java.lang.String[] { "Link", "CanonicalLink", "Title", "Hashcode", "Lang", "Generator", "Description", "ResourceStatus", "Tier", "Indegree", "Iranking", "PublisherType", },
+              new java.lang.String[] { "Link", "CanonicalLink", "Title", "Hashcode", "Lang", "Generator", "Description", "ResourceStatus", "LastPosted", "LastPublished", "DateFound", "Etag", "SpamProbability", "Tier", "Indegree", "PublisherType", "Disabled", },
               com.spinn3r.api.protobuf.ContentApi.Source.class,
               com.spinn3r.api.protobuf.ContentApi.Source.Builder.class);
           internal_static_contentApi_Feed_descriptor =
@@ -3742,7 +4004,7 @@ public final class ContentApi {
           internal_static_contentApi_Feed_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_contentApi_Feed_descriptor,
-              new java.lang.String[] { "Link", "CanonicalLink", "Title", "Hashcode", "Lang", "Generator", "Description", "ResourceStatus", },
+              new java.lang.String[] { "Link", "CanonicalLink", "Title", "Hashcode", "Lang", "Generator", "Description", "ResourceStatus", "LastPosted", "LastPublished", "DateFound", "Etag", "ChannelLink", },
               com.spinn3r.api.protobuf.ContentApi.Feed.class,
               com.spinn3r.api.protobuf.ContentApi.Feed.Builder.class);
           internal_static_contentApi_PermalinkEntry_descriptor =

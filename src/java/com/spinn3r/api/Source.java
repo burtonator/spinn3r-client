@@ -60,8 +60,29 @@ public class Source extends BaseItem {
     public Source() { }
 
     public Source ( ContentApi.Entry entry ) {
+
         feed = new Feed ( entry );
-        // BOOG
+        
+        if ( ! entry.hasSource() )
+            throw new MissingRequiredFieldException ( "missing source" );
+
+        ContentApi.Source source = entry.getSource();
+
+
+        title                     = source.getTitle();
+        link                      = source.getCanonicalLink().getHref();
+        description               = source.getDescription();
+        guid                      = source.getHashcode();
+        resource                  = source.getCanonicalLink().getResource();
+        lang                      = source.getLang(0).getCode();
+        indegree                  = source.getIndegree();
+        tier                      = source.getTier();
+        resourceStatus            = source.getResourceStatus();
+        disabled                  = source.getDisabled();
+        publisherType             = source.getPublisherType();
+        dateFound                 = ISO8601DateParser.parse( source.getDateFound() );
+        spamProbability           = source.getSpamProbability();
+        
     }
 
     public Source( Element e ) {
