@@ -331,7 +331,7 @@ public class CompressedBLOB {
         }
 
         catch ( Exception t ) {
-            throw new DecompressionError ( t );
+            throw new DecompressionException ( t );
         }
         
     }

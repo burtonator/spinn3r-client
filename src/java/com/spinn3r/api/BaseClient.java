@@ -242,7 +242,7 @@ public abstract class BaseClient implements Client {
         while( true ) {
 
             try {
-            
+
                 // set the optimal limit if necessary
                 if ( retry_ctr == 0 )
                     config.setLimit( getLimit() );
@@ -252,6 +252,10 @@ public abstract class BaseClient implements Client {
                 doFetch( config );
 
                 // we performed one HTTP fetch successfully, restore the limit.
+                //NOTE: that if the user sets the limit to say 20, and then we
+                //break, it could revert to ten, and then revert to the optimal
+                //limit (which could be 100).  This is fine for now as I want to
+                //totally remove the ability for customers to change the limit.
                 config.setLimit( getOptimalLimit() );
                 
                 break;
@@ -357,7 +361,6 @@ public abstract class BaseClient implements Client {
         
     }
 
-
     private URLConnection getConnection ( String resource ) throws IOException {
 
         URLConnection conn = null;
@@ -389,7 +392,6 @@ public abstract class BaseClient implements Client {
         return conn;
     }
 
-
     public ContentApi.Response doProtobufFetch( String resource ) throws IOException, InterruptedException {
  
         long call_before = System.currentTimeMillis();
@@ -403,7 +405,6 @@ public abstract class BaseClient implements Client {
         
         return res;
     }
-
 
     public Document doXmlFetch( String resource ) throws IOException,
                                                       ParseException,
@@ -551,13 +552,11 @@ public abstract class BaseClient implements Client {
         
     }
 
-
     /**
      * We've received a response from the API so parse it out.
      *
      */
     protected void protobufParse( ContentApi.Response response ) throws Exception {
-
 
         String next = response.getNextRequestUrl();
 
@@ -581,7 +580,6 @@ public abstract class BaseClient implements Client {
         this.results = result;
         
     }
-
 
     /**
      * Generate the first request URL based just on configuration directives.
@@ -673,9 +671,7 @@ public abstract class BaseClient implements Client {
         throw new Exception( "Not implemented" );
     }
 
-
     abstract protected BaseResult parseItem( ContentApi.Entry current ) throws Exception;
-
 
     protected BaseResult parseItem( Element current, BaseResult result ) throws Exception {
         
@@ -766,7 +762,6 @@ public abstract class BaseClient implements Client {
         
     }
 
-
     protected BaseResult parseItem( ContentApi.Entry entry, BaseResult result ) throws Exception {
         
         if ( ! entry.hasSource() )
@@ -779,12 +774,10 @@ public abstract class BaseClient implements Client {
 
         ContentApi.Feed feed = entry.getFeed();
 
-
         if ( ! entry.hasPermalinkEntry() )
             throw new MissingRequiredFieldException ( "missing PermalinkEntry" );
 
         ContentApi.PermalinkEntry permalink_entry = entry.getPermalinkEntry();
-
 
         if ( ! entry.hasFeedEntry() )
             throw new MissingRequiredFieldException ( "missing feedEntry" );
@@ -820,7 +813,6 @@ public abstract class BaseClient implements Client {
         String atom_published = feed.getLastPublished();
         if ( feed.hasLastPublished() && ! atom_published.equals( "" ) )
             item.setPublished( ISO8601DateParser.parse( atom_published ) );
-        
 
         if ( source.hasIndegree() )
             item.setWeblogIndegree( source.getIndegree() );        
@@ -870,7 +862,6 @@ public abstract class BaseClient implements Client {
         return item;
         
     }
-
 
     // **** XML parsing utilities ***********************************************
 

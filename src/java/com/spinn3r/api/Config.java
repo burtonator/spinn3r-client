@@ -178,6 +178,12 @@ public class Config {
      * 
      * Set the value of <code>limit</code>.
      *
+     * @deprecated This method will be changing to protected in the future.
+     * We're going to remove the option for users to set the limit on the number
+     * of items per response as we have found this to cause problems in
+     * production applications.  Having Spinn3r select the optimal values has
+     * turned out to be better for everyone involved and yielded much higher
+     * performance.
      */
     public void setLimit( int limit ) {
 
