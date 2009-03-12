@@ -353,7 +353,9 @@ public abstract class BaseClient implements Client {
             else
                 xmlParse( doXmlFetch( resource ) );
 
-        } catch ( Exception e ) {
+        } 
+
+        catch ( Exception e ) {
             throw new ParseException( e );
         }
 
