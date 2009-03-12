@@ -38,10 +38,12 @@ public class SourceRegisterClient {
 
         StringBuffer params = new StringBuffer();
 
-        BaseClient.addParam( params, "link",       URLEncoder.encode( link ) );
-        BaseClient.addParam( params, "vendor",     config.getVendor() );
-        BaseClient.addParam( params, "version",    config.getVersion() );
-        BaseClient.addParam( params, "force",      config.getForce() );
+        BaseClient.addParam( params, "link",             URLEncoder.encode( link ) );
+        BaseClient.addParam( params, "vendor",           config.getVendor() );
+        BaseClient.addParam( params, "version",          config.getVersion() );
+        BaseClient.addParam( params, "force",            config.getForce() );
+        BaseClient.addParam( params, "feed",             config.getFeed() );
+        BaseClient.addParam( params, "publisher_type",   config.getPublisherType() );
         
         String resource = String.format( "http://%s/rss/source.register?%s", config.getHost(), params );
 

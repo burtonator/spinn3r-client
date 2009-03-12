@@ -32,6 +32,46 @@ public class SourceRegisterConfig {
 
     private boolean        force            = false;
 
+    private String         feed             = null;
+
+    private String         publisherType    = null;
+
+    /**
+     * 
+     * Set the value of <code>publisherType</code>.
+     *
+     */
+    public void setPublisherType( String publisherType ) { 
+        this.publisherType = publisherType;
+    }
+
+    /**
+     * 
+     * Get the value of <code>publisherType</code>.
+     *
+     */
+    public String getPublisherType() { 
+        return this.publisherType;
+    }
+
+    /**
+     * 
+     * Get the value of <code>feed</code>.
+     *
+     */
+    public String getFeed() { 
+        return this.feed;
+    }
+
+    /**
+     * 
+     * Set the value of <code>feed</code>.
+     *
+     */
+    public void setFeed( String feed ) { 
+        this.feed = feed;
+    }
+
     /**
      * 
      * Specify the vendor for this call.  This MUST be specified or the client
