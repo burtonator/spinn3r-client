@@ -80,7 +80,12 @@ public class PermalinkClient extends BaseClient implements Client {
     }
 
     public String getRouter() {
-        return String.format( "http://%s/rss/%s.getDelta?", getHost(), BaseClient.PERMALINK_HANDLER );
+        String format_string = "http://%s/protobuf/%s.getDelta?"; //BOOG "http://%s/rss/%s.getDelta?"; 
+ 
+       if ( config.getUseProtobuf() ) 
+            format_string = "http://%s/protobuf/%s.getDelta?";
+
+        return String.format( format_string, getHost(), BaseClient.PERMALINK_HANDLER );
     }
 
 }

@@ -608,6 +608,12 @@ public class Main {
                 continue;
             }
 
+
+            if ( v.startsWith( "--use_protobuf" ) ) {
+                config.setUseProtobuf( Boolean.parseBoolean( getOpt( v ) ) );
+                continue;
+            }
+
             if ( v.startsWith( "--memory" ) ) {
                 
                 System.out.printf( "max memory: %s\n", Runtime.getRuntime().maxMemory() );
