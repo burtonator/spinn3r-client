@@ -535,4 +535,50 @@ public abstract class BaseItem extends BaseResult {
         return link;
     }
 
+    public String dump() {
+
+        StringBuilder buff = new StringBuilder();
+        
+        buff.append( String.format(  "title: %s\n", title ) );
+        buff.append( String.format(  "link: %s\n", link ) );
+        buff.append( String.format(  "description: %s\n", description ) );
+        buff.append( String.format(  "guid: %s\n", guid ) );
+        buff.append( String.format(  "lang: %s\n", lang ) );
+
+        buff.append( String.format(  "tags: %s\n", tags ) );
+
+        buff.append( String.format(  "resourceGUID: %s\n", resourceGUID ) );
+
+        buff.append( String.format(  "source: %s\n", source ) );
+
+        buff.append( String.format(  "weblogTitle: %s\n", weblogTitle ) );
+        buff.append( String.format(  "weblogDescription: %s\n", weblogDescription ) );
+        buff.append( String.format(  "weblogPublisherType: %s\n", weblogPublisherType ) );
+
+        buff.append( String.format(  "weblogTier: %s\n", weblogTier ) );
+        buff.append( String.format(  "weblogIndegree: %s\n", weblogIndegree ) );
+
+        buff.append( String.format(  "pubDate: %s\n", pubDate ) );
+        buff.append( String.format(  "published: %s\n", published ) );
+    
+        buff.append( String.format(  "authorName: %s\n", authorName ) );
+        buff.append( String.format(  "authorEmail: %s\n", authorEmail ) );
+        buff.append( String.format(  "authorLink: %s\n", authorLink ) );
+
+        buff.append( String.format(  "contentExtract: %s\n", contentExtract ) );
+        buff.append( String.format(  "commentExtract: %s\n", commentExtract ) );
+
+        buff.append( String.format(  "feedURL: %s\n", feedURL ) );
+
+        buff.append( String.format(  "postBody: %s\n", postBody ) );
+        buff.append( String.format(  "postTitle: %s\n", postTitle ) );
+
+        buff.append( String.format(  "postHashcode: %s\n", postHashcode ) );
+        buff.append( String.format(  "feedHashcode: %s\n", feedHashcode ) );
+        buff.append( String.format(  "sourceHashcode: %s\n", sourceHashcode ) );
+
+        return buff.toString();
+
+    }
+
 }

@@ -40,7 +40,7 @@ public class PermalinkClient extends BaseClient implements Client {
      * content is SO huge.
      */
     public static int MAX_LIMIT            = 100;
-    public static int OPTIMAL_LIMIT        = 50;
+    public static int OPTIMAL_LIMIT        = 100;
     public static int CONSERVATIVE_LIMIT   = 10;
 
     public void fetch() throws IOException,
@@ -87,8 +87,11 @@ public class PermalinkClient extends BaseClient implements Client {
  
         if ( config.getUseProtobuf() ) 
             format_string = "http://%s/protobuf/%s.getDelta?";
+       
+       String result = String.format( format_string, getHost(), BaseClient.PERMALINK_HANDLER );
 
-        return String.format( format_string, getHost(), BaseClient.PERMALINK_HANDLER );
+       return result;
+       
     }
 
 }

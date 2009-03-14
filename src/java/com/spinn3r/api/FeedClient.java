@@ -36,7 +36,7 @@ import com.spinn3r.api.protobuf.*;
 public class FeedClient extends BaseClient implements Client {
 
     public static int MAX_LIMIT            = 100;
-    public static int OPTIMAL_LIMIT        = 50;
+    public static int OPTIMAL_LIMIT        = 100;
     public static int CONSERVATIVE_LIMIT   = 10;
 
     public void fetch() throws IOException,
