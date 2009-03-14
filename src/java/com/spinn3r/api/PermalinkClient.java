@@ -55,7 +55,10 @@ public class PermalinkClient extends BaseClient implements Client {
 
     
     protected BaseResult parseItem( ContentApi.Entry current ) throws Exception {
-        throw new UnimplementedException ("protobuf support not implmented for this client");
+    
+        PermalinkItem item = new PermalinkItem();
+
+        return (BaseItem)super.parseItem( current, item );
     }
 
 
@@ -80,9 +83,9 @@ public class PermalinkClient extends BaseClient implements Client {
     }
 
     public String getRouter() {
-        String format_string = "http://%s/protobuf/%s.getDelta?"; //BOOG "http://%s/rss/%s.getDelta?"; 
+        String format_string = "http://%s/rss/%s.getDelta?"; 
  
-       if ( config.getUseProtobuf() ) 
+        if ( config.getUseProtobuf() ) 
             format_string = "http://%s/protobuf/%s.getDelta?";
 
         return String.format( format_string, getHost(), BaseClient.PERMALINK_HANDLER );

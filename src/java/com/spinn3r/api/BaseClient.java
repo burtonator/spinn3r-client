@@ -766,6 +766,8 @@ public abstract class BaseClient implements Client {
 
     protected BaseResult parseItem( ContentApi.Entry entry, BaseResult result ) throws Exception {
         
+        System.out.printf( "entry is:\n%s\n", entry.toString() );//BOOG
+
         if ( ! entry.hasSource() )
             throw new MissingRequiredFieldException ( "missing source" );
 
@@ -793,8 +795,8 @@ public abstract class BaseClient implements Client {
 
         item.setDescription( source.getDescription() );
 
-        item.setLink( source.getCanonicalLink().getHref() );
-        item.setGuid( source.getHashcode() );
+        item.setLink( permalink_entry.getCanonicalLink().getHref() );
+        item.setGuid( permalink_entry.getCanonicalLink().getResource() );
 
         // dc:lang
         item.setLang( source.getLang(0).getCode() );
@@ -810,7 +812,7 @@ public abstract class BaseClient implements Client {
 
         item.setWeblogTier( source.getTier() );
 
-        item.setPubDate( RFC822DateParser.parse( source.getLastPublished() ) );
+        item.setPubDate( ISO8601DateParser.parse( source.getLastPublished() ) );
 
         String atom_published = feed.getLastPublished();
         if ( feed.hasLastPublished() && ! atom_published.equals( "" ) )
@@ -844,13 +846,13 @@ public abstract class BaseClient implements Client {
 
         item.setFeedURL( feed.getCanonicalLink().getHref() );
 
-        item.setResourceGUID( feed_entry.getHashcode() );
+        item.setResourceGUID( permalink_entry.getHashcode() );
 
         //spinn3r 3.x values
 
         //FIXME: post:timestamp, feed:link
         
-        item.setPostTitle( feed_entry.getHashcode() );
+        item.setPostTitle( feed_entry.getTitle() );
 
         CompressedBLOB body_bytes =
             new CompressedBLOB ( feed_entry.getContent().getContent().toByteArray() );
