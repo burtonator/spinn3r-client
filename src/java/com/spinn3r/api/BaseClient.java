@@ -532,10 +532,10 @@ public abstract class BaseClient implements Client {
 
         Element channel = getElementByTagName( root, "channel" );
 
-        String next = getElementCDATAByTagName( channel, "next_request_url", NS_API );
-        
         //determine the next_request_url so that we can fetch the second page of
         //results.
+        String next = getElementCDATAByTagName( channel, "next_request_url", NS_API );
+        
         setNextRequestURL( next );
 
         List result = new ArrayList();
@@ -560,17 +560,10 @@ public abstract class BaseClient implements Client {
      */
     protected void protobufParse( ContentApi.Response response ) throws Exception {
 
-        String next = response.getNextRequestUrl();
-
-        //TODO: apply the correct hostname to the next request.
-
-        if ( getHost() != null ) {
-            String path = next.substring( next.indexOf( "/", "http://".length() ), next.length() );
-            next = String.format( "http://%s%s", getHost(), path );
-        }
-        
         //determine the next_request_url so that we can fetch the second page of
         //results.
+        String next = response.getNextRequestUrl();
+        
         setNextRequestURL( next );
 
         List result = new ArrayList();
@@ -766,8 +759,6 @@ public abstract class BaseClient implements Client {
 
     protected BaseResult parseItem( ContentApi.Entry entry, BaseResult result ) throws Exception {
         
-        System.out.printf( "entry is:\n%s\n", entry.toString() );//BOOG
-
         if ( ! entry.hasSource() )
             throw new MissingRequiredFieldException ( "missing source" );
 

@@ -105,8 +105,16 @@ public class Main {
 
     private static String save_method = "flat";
 
+    /**
+     * Include API timings.
+     */
     private static boolean timing = true;
 
+    /**
+     * When in dump mode, print out objects in raw mode.
+     */
+    private static boolean dump = false;
+    
     /**
      * Sample performance times...
      */
@@ -152,6 +160,11 @@ public class Main {
                         continue;
 
                 }
+
+                if ( dump ) {
+                    System.out.printf( "%s\n", item.dump() );
+                    continue;
+                }
                 
                 if ( show_results >= 1 ) {
 
@@ -164,11 +177,20 @@ public class Main {
 
                 if ( show_results >= 2 ) {
 
+                    String pubDate = "";
+                    String published = "";
+
+                    if ( item.getPubDate() != null ) 
+                        pubDate = ISO8601DateParser.toString( item.getPubDate() );
+
+                    if ( item.getPublished() != null ) 
+                        published = ISO8601DateParser.toString( item.getPublished() );
+
                     System.out.println( "title:                  " + item.getTitle() );
                     System.out.println( "post title:             " + item.getPostTitle() );
                     System.out.println( "source:                 " + item.getSource() );
-                    System.out.println( "pubDate:                " + item.getPubDate() );
-                    System.out.println( "published:              " + item.getPublished() );
+                    System.out.println( "pubDate:                " + pubDate );
+                    System.out.println( "published:              " + published );
                     
                     System.out.println( "weblog title:           " + item.getWeblogTitle() );
                     System.out.println( "weblog tier:            " + item.getWeblogTier() );
@@ -608,9 +630,13 @@ public class Main {
                 continue;
             }
 
-
             if ( v.startsWith( "--use_protobuf" ) ) {
                 config.setUseProtobuf( Boolean.parseBoolean( getOpt( v ) ) );
+                continue;
+            }
+
+            if ( v.startsWith( "--dump" ) ) {
+                dump = Boolean.parseBoolean( getOpt( v ) );
                 continue;
             }
 
