@@ -137,6 +137,8 @@ public class Main {
             //found.
             last = result.getPubDate();
 
+            //no pubdate
+            
             sampler1.sample( last );
             sampler5.sample( last );
             sampler15.sample( last );
@@ -144,8 +146,9 @@ public class Main {
             //System.out.printf( "last: %s\n", last.getTime() );
             //System.out.printf( "before: %s\n", before );
             
-            if ( before > 0 && last.getTime() >= before )
+            if ( before > 0 && last.getTime() >= before ) {
                 break;
+            }
 
             if ( result instanceof BaseItem ) {
 
@@ -319,8 +322,13 @@ public class Main {
                 if ( range > 0 && last.getTime() > config.getAfter().getTime() + range )
                     break;
 
-                if ( before > 0 && last.getTime() >= before )
+                if ( before > 0 && last.getTime() >= before ) {
+
+                    System.out.printf( "FIXME: BREAKING no more results: %s vs %s\n",
+                                       ISO8601DateParser.toString( last ),
+                                       ISO8601DateParser.toString( new Date( before ) ) );
                     break;
+                }
                 
             } catch ( Exception e ) {
 

@@ -759,6 +759,8 @@ public abstract class BaseClient implements Client {
 
     protected BaseResult parseItem( ContentApi.Entry entry, BaseResult result ) throws Exception {
         
+        //System.out.printf( "FIXME: entry is:\n%s\n", entry.toString() );
+
         if ( ! entry.hasSource() )
             throw new MissingRequiredFieldException ( "missing source" );
 
@@ -780,34 +782,51 @@ public abstract class BaseClient implements Client {
         ContentApi.FeedEntry feed_entry  = entry.getFeedEntry();
 
         BaseItem item = (BaseItem)result;
-        
+
+        //FIXME FIXME FIXME
+        //FIXME: when using the feed API we need to use feed_entry for this data.
+
         //base elements.
-        item.setTitle( source.getTitle() );
+        if ( ! empty( permalink_entry.getTitle() ) )
+            item.setTitle( permalink_entry.getTitle() );
 
-        item.setDescription( source.getDescription() );
+        CompressedBLOB content_blob =
+            new CompressedBLOB ( permalink_entry.getContent().getContent().toByteArray() );
 
+        if ( ! empty( content_blob.getContent() ) )
+             item.setDescription( content_blob.getContent() );
+        
         item.setLink( permalink_entry.getCanonicalLink().getHref() );
         item.setGuid( permalink_entry.getCanonicalLink().getResource() );
 
         // dc:lang
-        item.setLang( source.getLang(0).getCode() );
+
+        if ( empty( source.getLang(0).getCode() ) ) {
+            item.setLang( "U" );
+        } else {
+            item.setLang( source.getLang(0).getCode() );
+        }
 
         // dc:source
-        item.setSource( source.getCanonicalLink().getResource() );//BUG
+        item.setSource( source.getCanonicalLink().getHref() );
         
         // weblog:title
         // weblog:description
-        item.setWeblogTitle( source.getTitle() );
 
-        item.setWeblogDescription( source.getDescription() );
+        if ( ! empty( source.getTitle() ) )
+            item.setWeblogTitle( source.getTitle() );
+
+        if ( ! empty( source.getDescription() ) )
+            item.setWeblogDescription( source.getDescription() );
 
         item.setWeblogTier( source.getTier() );
 
-        item.setPubDate( ISO8601DateParser.parse( source.getLastPublished() ) );
+        item.setPubDate( ISO8601DateParser.parse( permalink_entry.getDateFound() ) );
 
-        String atom_published = feed.getLastPublished();
-        if ( feed.hasLastPublished() && ! atom_published.equals( "" ) )
-            item.setPublished( ISO8601DateParser.parse( atom_published ) );
+        //FIXME: this is wrog.
+        String last_published = permalink_entry.getLastPublished();
+        if ( ! empty( last_published ) )
+            item.setPublished( ISO8601DateParser.parse( last_published ) );
 
         if ( source.hasIndegree() )
             item.setWeblogIndegree( source.getIndegree() );        
@@ -816,13 +835,19 @@ public abstract class BaseClient implements Client {
 
         item.setTags( feed_entry.getCategoryList() );
 
+        //TODO: support more than one author in a future version.
         if ( permalink_entry.getAuthorCount() > 0 ) {
             
             ContentApi.Author author = permalink_entry.getAuthor( 0 );
 
-            item.setAuthorName ( author.getName()           );
-            item.setAuthorEmail( author.getEmail()          );
-            item.setAuthorLink ( author.getLink(0).getHref() );
+            if ( ! empty( author.getName() ) )
+                item.setAuthorName( author.getName() );
+            
+            if ( ! empty( author.getEmail() ) )
+                item.setAuthorEmail( author.getEmail() );
+
+            if ( ! empty( author.getLink(0).getHref() ) )
+                item.setAuthorLink ( author.getLink(0).getHref() );
 
         }
 
@@ -833,31 +858,43 @@ public abstract class BaseClient implements Client {
 
         String content_extract = extract_bytes.getContent();
 
-        item.setContentExtract( content_extract );
+        if ( ! empty( content_extract ) )
+            item.setContentExtract( content_extract );
 
-        item.setFeedURL( feed.getCanonicalLink().getHref() );
+        if ( ! "".equals( feed.getCanonicalLink().getHref() ) )
+            item.setFeedURL( feed.getCanonicalLink().getHref() );
 
         item.setResourceGUID( permalink_entry.getHashcode() );
 
         //spinn3r 3.x values
 
         //FIXME: post:timestamp, feed:link
-        
-        item.setPostTitle( feed_entry.getTitle() );
+
+        if ( ! empty( feed_entry.getTitle() ) )
+            item.setPostTitle( feed_entry.getTitle() );
 
         CompressedBLOB body_bytes =
             new CompressedBLOB ( feed_entry.getContent().getContent().toByteArray() );
 
-        item.setPostBody ( body_bytes.getContent() );
+        if ( ! empty( body_bytes.getContent() ) )
+            item.setPostBody ( body_bytes.getContent() );
 
         item.setPostHashcode  ( feed_entry.getHashcode() );
         item.setSourceHashcode( source.getHashcode()     );
-        item.setFeedHashcode  ( feed.getHashcode()       );
+
+        if ( ! empty( feed.getHashcode() ) )
+            item.setFeedHashcode ( feed.getHashcode() );
 
         return item;
         
     }
 
+    public boolean empty( String value ) {
+
+        return value == null || "".equals( value );
+        
+    }
+        
     // **** XML parsing utilities ***********************************************
 
     public static int parseInt( String v ) {
