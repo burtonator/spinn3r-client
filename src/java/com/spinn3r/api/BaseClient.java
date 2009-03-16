@@ -615,8 +615,6 @@ public abstract class BaseClient implements Client {
 
         String result = getRouter() + params.toString();
         
-        //System.out.printf( "FIXME: %s\n", result );
-        
         return result;
         
     }
@@ -863,7 +861,7 @@ public abstract class BaseClient implements Client {
         if ( ! empty( content_extract ) )
             item.setContentExtract( content_extract );
 
-        if ( ! "".equals( feed.getCanonicalLink().getHref() ) )
+        if ( ! empty( feed.getCanonicalLink().getHref() ) )
             item.setFeedURL( feed.getCanonicalLink().getHref() );
 
         item.setResourceGUID( permalink_entry.getHashcode() );
