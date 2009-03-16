@@ -340,6 +340,7 @@ public class Source extends BaseItem {
      * Dump this item to stdout.
      *
      */
+    /*
     public void dump() {
 
         System.out.printf( "source title:               %s\n", getTitle() );
@@ -357,5 +358,5 @@ public class Source extends BaseItem {
         System.out.printf( "source publisher type:      %s\n", getPublisherType() );
 
     }
-
+    */
 }

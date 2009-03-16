@@ -296,6 +296,7 @@ public class Feed extends BaseItem {
      * Dump this item to stdout.
      *
      */
+    /*
     public void dump() {
 
         System.out.printf( "feed guid:                  %s\n", getGuid() );
@@ -312,5 +313,6 @@ public class Feed extends BaseItem {
         System.out.printf( "feed last posted:           %s\n", ISO8601DateParser.toString( getLastPosted() ) );
 
     }
-        
+    */
+    
 }
