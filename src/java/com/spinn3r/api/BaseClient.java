@@ -793,10 +793,10 @@ public abstract class BaseClient implements Client {
         CompressedBLOB content_blob =
             new CompressedBLOB ( permalink_entry.getContent().getContent().toByteArray() );
 
-        String content_decompressed = content_blob.decompress();
+        String content = content_blob.decompress();
         
-        if ( ! empty(  content_decompressed ) )
-             item.setDescription( content_decompressed );
+        if ( ! empty(  content ) )
+             item.setDescription( content );
         
         item.setLink( permalink_entry.getCanonicalLink().getHref() );
         item.setGuid( permalink_entry.getCanonicalLink().getResource() );
@@ -855,10 +855,10 @@ public abstract class BaseClient implements Client {
 
         // Spinn3r 2.1 post content.
 
-        CompressedBLOB extract_bytes =
+        CompressedBLOB content_extract_blob =
             new CompressedBLOB ( permalink_entry.getContentExtract().getContent().toByteArray() );
 
-        String content_extract = extract_bytes.getContent();
+        String content_extract = content_extract_blob.decompress();
 
         if ( ! empty( content_extract ) )
             item.setContentExtract( content_extract );
@@ -875,11 +875,13 @@ public abstract class BaseClient implements Client {
         if ( ! empty( feed_entry.getTitle() ) )
             item.setPostTitle( feed_entry.getTitle() );
 
-        CompressedBLOB body_bytes =
+        CompressedBLOB feed_entry_content_blob =
             new CompressedBLOB ( feed_entry.getContent().getContent().toByteArray() );
 
-        if ( ! empty( body_bytes.getContent() ) )
-            item.setPostBody ( body_bytes.getContent() );
+        String feed_entry_content = feed_entry_content_blob.decompress();
+        
+        if ( ! empty( feed_entry_content ) )
+            item.setPostBody ( feed_entry_content );
 
         item.setPostHashcode  ( feed_entry.getHashcode() );
         item.setSourceHashcode( source.getHashcode()     );
