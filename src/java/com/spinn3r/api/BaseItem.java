@@ -55,6 +55,7 @@ public abstract class BaseItem extends BaseResult {
     protected String commentExtract       = null;
 
     protected String feedURL              = null;
+    protected String feedResource         = null;
 
     private String postBody               = null;
     private String postTitle              = null;
@@ -62,6 +63,24 @@ public abstract class BaseItem extends BaseResult {
     private String postHashcode           = null;
     private String feedHashcode           = null;
     private String sourceHashcode         = null;
+
+    /**
+     * 
+     * Get the value of <code>feedResource</code>.
+     *
+     */
+    public String getFeedResource() { 
+        return this.feedResource;
+    }
+
+    /**
+     * 
+     * Set the value of <code>feedResource</code>.
+     *
+     */
+    public void setFeedResource( String feedResource ) { 
+        this.feedResource = feedResource;
+    }
 
     /**
      * 

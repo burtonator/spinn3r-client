@@ -737,6 +737,7 @@ public abstract class BaseClient implements Client {
                                                           NS_POST ) );
 
         item.setFeedURL( getElementCDATAByTagName( current, "url", NS_FEED ) );
+        item.setFeedResource( getElementCDATAByTagName( current, "resource", NS_FEED ) );
 
         item.setResourceGUID( getElementCDATAByTagName( current, "resource_guid", NS_POST ) );
 
@@ -863,6 +864,9 @@ public abstract class BaseClient implements Client {
 
         if ( ! empty( feed.getCanonicalLink().getHref() ) )
             item.setFeedURL( feed.getCanonicalLink().getHref() );
+
+        if ( ! empty( feed.getCanonicalLink().getResource() ) )
+            item.setFeedResource( feed.getCanonicalLink().getResource() );
 
         item.setResourceGUID( permalink_entry.getHashcode() );
 
