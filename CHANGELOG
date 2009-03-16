@@ -1,0 +1,10 @@
+3.0.54
+
+* added support for protobuf based API which is 10x faster. The
+  potobuf is 100% compatable execpt for the fact that white space
+  normalasaton is not proformed on the content.
+
+* fixed feedURL to be the link value and not the resouce. Added a api
+  methoud to expoce the recouse so that the old incorrect value is also
+  exposed so that clients that depend on the old broken behavor can
+  still be made to work.
