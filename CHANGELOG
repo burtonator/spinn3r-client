@@ -1,5 +1,9 @@
 3.0.54
 
+* XML normalization rules are not applied in the new protobuf based client for
+  HTML content.  This is not needed by most of our clients.  We will add a
+  compatibility option for existing customers if this becomes a requirement.
+
 * added support for protobuf based API which is 10x faster. The
   potobuf is 100% compatable execpt for the fact that white space
   normalasaton is not proformed on the content.
