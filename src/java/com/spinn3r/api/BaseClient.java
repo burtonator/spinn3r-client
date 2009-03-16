@@ -793,8 +793,10 @@ public abstract class BaseClient implements Client {
         CompressedBLOB content_blob =
             new CompressedBLOB ( permalink_entry.getContent().getContent().toByteArray() );
 
-        if ( ! empty( content_blob.getContent() ) )
-             item.setDescription( content_blob.getContent() );
+        String content_decompressed = content_blob.decompress();
+        
+        if ( ! empty(  content_decompressed ) )
+             item.setDescription( content_decompressed );
         
         item.setLink( permalink_entry.getCanonicalLink().getHref() );
         item.setGuid( permalink_entry.getCanonicalLink().getResource() );

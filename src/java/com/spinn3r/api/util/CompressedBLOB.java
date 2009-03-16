@@ -176,12 +176,16 @@ public class CompressedBLOB {
     public void setLang( String lang ) {
         this.lang = lang;
     }
+
+    public String getContent() throws Exception {
+        return decompress();
+    }
     
     /**
      * Given the binary data, determine the external form, correctly parse it
      * and return the value as a String.
      */
-    public String getContent() throws Exception {
+    public String decompress() throws Exception {
 
         if ( content != null )
             return content;
