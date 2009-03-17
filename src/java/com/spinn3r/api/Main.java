@@ -653,14 +653,13 @@ public class Main {
                 continue;
             }
 
-            if ( v.startsWith( "--dump" ) ) {
-                dump = Boolean.parseBoolean( getOpt( v ) );
+            if ( v.startsWith( "--dump_fields=" ) ) {
+                dumpFields = Boolean.parseBoolean( getOpt( v ) );
                 continue;
             }
 
-
-            if ( v.startsWith( "--dump_fields" ) ) {
-                dumpFields = Boolean.parseBoolean( getOpt( v ) );
+            if ( v.startsWith( "--dump=" ) ) {
+                dump = Boolean.parseBoolean( getOpt( v ) );
                 continue;
             }
 
