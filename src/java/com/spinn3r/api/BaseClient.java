@@ -790,7 +790,7 @@ public abstract class BaseClient implements Client {
             item.setTitle( permalink_entry.getTitle() );
 
         CompressedBLOB content_blob =
-            new CompressedBLOB ( permalink_entry.getContent().getContent().toByteArray() );
+            new CompressedBLOB ( permalink_entry.getContent().getData().toByteArray() );
 
         String content = content_blob.decompress();
         
@@ -855,7 +855,7 @@ public abstract class BaseClient implements Client {
         // Spinn3r 2.1 post content.
 
         CompressedBLOB content_extract_blob =
-            new CompressedBLOB ( permalink_entry.getContentExtract().getContent().toByteArray() );
+            new CompressedBLOB ( permalink_entry.getContentExtract().getData().toByteArray() );
 
         String content_extract = content_extract_blob.decompress();
 
@@ -878,7 +878,7 @@ public abstract class BaseClient implements Client {
             item.setPostTitle( feed_entry.getTitle() );
 
         CompressedBLOB feed_entry_content_blob =
-            new CompressedBLOB ( feed_entry.getContent().getContent().toByteArray() );
+            new CompressedBLOB ( feed_entry.getContent().getData().toByteArray() );
 
         String feed_entry_content = feed_entry_content_blob.decompress();
         

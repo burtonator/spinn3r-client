@@ -18,7 +18,7 @@ message Lang {
 
 message Content {
   required string mime_type = 1;
-  optional bytes  content   = 2;
+  optional bytes  data      = 2;
 }
 
 
