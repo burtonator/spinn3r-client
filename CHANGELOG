@@ -1,5 +1,10 @@
 3.0.54
 
+* Two new jars are needed to use Spinn3r with protocol buffers:
+
+    lib/jzlib-1.0.7.jar (used for gzip decompression)
+    lib/protobuf-java-2.0.3.jar (protocol buffer support)
+
 * XML normalization rules are not applied in the new protobuf based client for
   HTML content.  This is not needed by most of our clients.  We will add a
   compatibility option for existing customers if this becomes a requirement.

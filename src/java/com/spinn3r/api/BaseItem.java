@@ -555,12 +555,15 @@ public abstract class BaseItem extends BaseResult {
     }
 
     public String dump() {
+        return dump( false );
+    }
+
+    public String dump( boolean fields ) {
 
         StringBuilder buff = new StringBuilder();
         
         buff.append( String.format(  "title: %s\n", title ) );
         buff.append( String.format(  "link: %s\n", link ) );
-        buff.append( String.format(  "description: %s\n", description ) );
         buff.append( String.format(  "guid: %s\n", guid ) );
         buff.append( String.format(  "lang: %s\n", lang ) );
 
@@ -584,17 +587,20 @@ public abstract class BaseItem extends BaseResult {
         buff.append( String.format(  "authorEmail: %s\n", authorEmail ) );
         buff.append( String.format(  "authorLink: %s\n", authorLink ) );
 
-        buff.append( String.format(  "contentExtract: %s\n", contentExtract ) );
-        buff.append( String.format(  "commentExtract: %s\n", commentExtract ) );
-
         buff.append( String.format(  "feedURL: %s\n", feedURL ) );
 
-        buff.append( String.format(  "postBody: %s\n", postBody ) );
         buff.append( String.format(  "postTitle: %s\n", postTitle ) );
 
         buff.append( String.format(  "postHashcode: %s\n", postHashcode ) );
         buff.append( String.format(  "feedHashcode: %s\n", feedHashcode ) );
         buff.append( String.format(  "sourceHashcode: %s\n", sourceHashcode ) );
+
+        if ( ! fields ) {
+            buff.append( String.format(  "description: %s\n", description ) );
+            buff.append( String.format(  "postBody: %s\n", postBody ) );
+            buff.append( String.format(  "contentExtract: %s\n", contentExtract ) );
+            buff.append( String.format(  "commentExtract: %s\n", commentExtract ) );
+        }
 
         return buff.toString();
 

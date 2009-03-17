@@ -114,7 +114,12 @@ public class Main {
      * When in dump mode, print out objects in raw mode.
      */
     private static boolean dump = false;
-    
+
+    /**
+     * When in dump field mode, print fields, but not content.
+     */
+    private static boolean dumpFields = false;
+
     /**
      * Sample performance times...
      */
@@ -168,7 +173,12 @@ public class Main {
                     System.out.printf( "%s\n", item.dump() );
                     continue;
                 }
-                
+
+                if ( dumpFields ) {
+                    System.out.printf( "%s\n", item.dump( true ) );
+                    continue;
+                }
+
                 if ( show_results >= 1 ) {
 
                     System.out.println( "----" );
@@ -645,6 +655,12 @@ public class Main {
 
             if ( v.startsWith( "--dump" ) ) {
                 dump = Boolean.parseBoolean( getOpt( v ) );
+                continue;
+            }
+
+
+            if ( v.startsWith( "--dump_fields" ) ) {
+                dumpFields = Boolean.parseBoolean( getOpt( v ) );
                 continue;
             }
 
