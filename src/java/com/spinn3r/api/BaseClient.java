@@ -592,9 +592,11 @@ public abstract class BaseClient implements Client {
         addParam( params, "vendor",  config.getVendor() );
         addParam( params, "version", config.getVersion() );
 
+        /*
         if ( config.getSpamProbability() != Config.DEFAULT_SPAM_PROBABILITY )
             addParam( params, "spam_probability", config.getSpamProbability() );
-        
+        */
+            
         //AFTER param needs to be added which should be ISO8601
         addParam( params, "after",   toISO8601( config.getAfter() ) );
 

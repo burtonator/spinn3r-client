@@ -1,5 +1,9 @@
 3.0.54
 
+* Removed spam probability filters from the API as this could result in a denial
+  of service.  This will be added in when server-side filtering is re-enabled in
+  a more recent version.
+
 * Two new jars are needed to use Spinn3r with protocol buffers:
 
     lib/jzlib-1.0.7.jar (used for gzip decompression)

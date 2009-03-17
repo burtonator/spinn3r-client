@@ -530,7 +530,7 @@ public class Main {
         System.out.println();
         System.out.println( "    --memory              Print current memory settings and exit.  Useful or debugging.." );
         System.out.println();
-        System.out.println( "    --spam_probability=NN Set the lower bound for spam probability filtering.  Default(0.0)" );
+        //System.out.println( "    --spam_probability=NN Set the lower bound for spam probability filtering.  Default(0.0)" );
         System.out.println();
 
     }
@@ -643,10 +643,12 @@ public class Main {
                 continue;
             }
 
+            /*
             if ( v.startsWith( "--spam_probability" ) ) {
                 config.setSpamProbability( Double.parseDouble( getOpt( v ) ) );
                 continue;
             }
+            */
 
             if ( v.startsWith( "--use_protobuf" ) ) {
                 config.setUseProtobuf( Boolean.parseBoolean( getOpt( v ) ) );
