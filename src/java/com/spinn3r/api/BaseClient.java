@@ -245,6 +245,14 @@ public abstract class BaseClient implements Client {
                     config.setLimit( getConservativeLimit() );
                 
                 doFetch( config );
+
+                // we performed one HTTP fetch successfully, restore the limit.
+                //NOTE: that if the user sets the limit to say 20, and then we
+                //break, it could revert to ten, and then revert to the optimal
+                //limit (which could be 100).  This is fine for now as I want to
+                //totally remove the ability for customers to change the limit.
+                config.setLimit( getOptimalLimit() );
+
                 break;
                 
             } catch ( Exception e ) {
