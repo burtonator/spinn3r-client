@@ -333,10 +333,6 @@ public class Main {
                     break;
 
                 if ( before > 0 && last.getTime() >= before ) {
-
-                    System.out.printf( "FIXME: BREAKING no more results: %s vs %s\n",
-                                       ISO8601DateParser.toString( last ),
-                                       ISO8601DateParser.toString( new Date( before ) ) );
                     break;
                 }
                 
@@ -530,6 +526,12 @@ public class Main {
         System.out.println();
         System.out.println( "    --memory              Print current memory settings and exit.  Useful or debugging.." );
         System.out.println();
+
+        System.out.println( "    --use_protobuf=true   Enable protocol buffer support for permalink client (performance)." );
+        System.out.println();
+
+
+
         //System.out.println( "    --spam_probability=NN Set the lower bound for spam probability filtering.  Default(0.0)" );
         System.out.println();
 

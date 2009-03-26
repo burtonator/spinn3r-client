@@ -580,8 +580,8 @@ public abstract class BaseItem extends BaseResult {
         buff.append( String.format(  "weblogTier: %s\n", weblogTier ) );
         buff.append( String.format(  "weblogIndegree: %s\n", weblogIndegree ) );
 
-        buff.append( String.format(  "pubDate: %s\n", pubDate ) );
-        buff.append( String.format(  "published: %s\n", published ) );
+        buff.append( String.format(  "pubDate: %s\n", ISO8601DateParser.toString( pubDate ) ) );
+        buff.append( String.format(  "published: %s\n", ISO8601DateParser.toString( published ) ) );
     
         buff.append( String.format(  "authorName: %s\n", authorName ) );
         buff.append( String.format(  "authorEmail: %s\n", authorEmail ) );

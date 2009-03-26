@@ -209,6 +209,9 @@ public class ISO8601DateParser {
 
     public static String toString( Date date ) {
 
+        if ( date == null )
+            return null;
+        
         TimeZone tz = TimeZone.getTimeZone( "UTC" );
         
         Calendar c = Calendar.getInstance( tz );

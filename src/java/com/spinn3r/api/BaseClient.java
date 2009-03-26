@@ -399,6 +399,9 @@ public abstract class BaseClient implements Client {
         long call_before = System.currentTimeMillis();
 
         URLConnection       conn = getConnection( resource );
+
+        //FIXME: assert that we received HTTP 200
+
         ContentApi.Response res  = ContentApi.Response.parseFrom( conn.getInputStream() );
 
         long call_after = System.currentTimeMillis();
@@ -420,6 +423,8 @@ public abstract class BaseClient implements Client {
 
             conn = getConnection( resource );
 
+            //FIXME: assert that we received HTTP 200
+            
             localInputStream = getLocalInputStream( conn.getInputStream() ); //BUG: this seems redunt
 
             if ( GZIP_ENCODING.equals( conn.getContentEncoding() ) )
