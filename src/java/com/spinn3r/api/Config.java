@@ -42,6 +42,12 @@ public class Config {
      */
     public static String   DEFAULT_VERSION     = "3.0.54";
 
+    /**
+     * Default value for useProtobuf.
+     *
+     */
+    public static boolean DEFAULT_USE_PROTOBUF = false;
+    
     private int            limit               = DEFAULT_LIMIT;
     private String         lang                = null;
     private String         version             = DEFAULT_VERSION;
@@ -50,7 +56,7 @@ public class Config {
     private String         firstRequestURL     = null;
     private boolean        skipDescription     = false;
     private String         api                 = null;
-    private boolean        useProtobuf         = false;
+    private boolean        useProtobuf         = DEFAULT_USE_PROTOBUF;
 
     /**
      * 

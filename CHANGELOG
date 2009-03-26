@@ -1,3 +1,8 @@
+
+# The latest version of this CHANGELOG is available here:
+#
+# http://code.google.com/p/spinn3r-client/source/browse/trunk/CHANGELOG
+
 3.0.54
 
 * Implemented new protocol buffer encoding for the API.  This has a performance
@@ -6,6 +11,16 @@
   changes on both the server and the client.  Now the client just sends the data
   as a protocol buffer with compressed fields.
 
+    - In order to use protocol buffers from code one would set
+      config.setUseProtobuf( true ) or set Config.DEFAULT_USE_PROTOBUF = true.
+
+    - To use protocol buffers from the command line one would run
+      --use_protobuf=true .
+
+    This is only available with the permalink.getDelta API.  The feed API will
+    eventually support protocol buffers as well but won't take advantage of most
+    of the speedups available from using a new wire protocol.
+  
 * XML End-Of-Line handling is not enabled for protocol buffers.  We decided to
   go down the path of preserving correctness and performance.
 
