@@ -48,6 +48,7 @@ public class Config {
      */
     public static boolean DEFAULT_USE_PROTOBUF = false;
     
+    private String         filter              = null;
     private int            limit               = DEFAULT_LIMIT;
     private String         lang                = null;
     private String         version             = DEFAULT_VERSION;
@@ -57,6 +58,29 @@ public class Config {
     private boolean        skipDescription     = false;
     private String         api                 = null;
     private boolean        useProtobuf         = DEFAULT_USE_PROTOBUF;
+
+
+
+
+    /**
+     * 
+     * Get the value of <code>filter</code>.
+     *
+     */
+    public String getFilter() { 
+        return this.filter;
+    }
+
+    /**
+     * 
+     * Set the value of <code>filter</code>.
+     *
+     */
+    public void setFilter( String filter ) { 
+        this.filter = filter;
+    }
+
+
 
     /**
      * 

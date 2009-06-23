@@ -595,6 +595,11 @@ public class Main {
                 continue;
             }
 
+            if ( v.startsWith( "--remote-filter" ) ) {
+                config.setFilter( getOpt( v ) );
+                continue;
+            }
+
             if ( v.startsWith( "--show_results" ) ) {
                 show_results = Integer.parseInt( getOpt( v ) );
                 continue;

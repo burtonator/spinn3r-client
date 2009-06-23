@@ -52,6 +52,9 @@ import com.spinn3r.api.util.CompressedBLOB;
  */
 public abstract class BaseClient implements Client {
 
+    private static String X_MORE_RESULTS = "X-More-Results";
+
+
     /**
      * Maximum number of retries.
      */
@@ -189,7 +192,8 @@ public abstract class BaseClient implements Client {
     BandwidthSampler bs5   = new BandwidthSampler( 5L  * 60L * 1000L );
     BandwidthSampler bs15  = new BandwidthSampler( 15L * 60L * 1000L );
 
-    private boolean hasMoreResults = true;
+    private boolean hasMoreResults        = true;
+    private boolean hasMoreResultsHeadder = false;
     
     // **** fetching support ****************************************************
 
@@ -320,7 +324,7 @@ public abstract class BaseClient implements Client {
             if ( resource == null )
                 resource = generateFirstRequestURL();
 
-        } else if ( results.size() < requestLimit ) {
+        } else if ( ! hasMoreResults ) {
 
             if ( ! DISABLE_PARSE ) {
             
@@ -329,9 +333,7 @@ public abstract class BaseClient implements Client {
                 //we've fetched before so determine if we need to spin.
                 Thread.sleep( sleepInterval );
                 setSleepDuration( sleepInterval );
-
             }
-            
         } 
 
         //apply the requestLimit to the current URL.  This needs to be done so
@@ -359,8 +361,8 @@ public abstract class BaseClient implements Client {
             throw new ParseException( e );
         }
 
-        hasMoreResults = results.size() == requestLimit;
-        
+        if ( ! hasMoreResultsHeadder )
+            hasMoreResults = results.size() == requestLimit;
     }
 
     private URLConnection getConnection ( String resource ) throws IOException {
@@ -394,11 +396,31 @@ public abstract class BaseClient implements Client {
         return conn;
     }
 
+    private void setMoreRsults( URLConnection conn ) {
+
+        String more = conn.getHeaderField( X_MORE_RESULTS );
+
+        if ( more == null )
+            hasMoreResultsHeadder = false;
+            
+        else {
+            hasMoreResultsHeadder = true;
+
+            if ( "true".equals( more ) ) 
+                hasMoreResults = true;
+            else
+                hasMoreResults = false;
+        }
+    }
+
+
     public ContentApi.Response doProtobufFetch( String resource ) throws IOException, InterruptedException {
  
         long call_before = System.currentTimeMillis();
 
         URLConnection       conn = getConnection( resource );
+
+        setMoreRsults( conn );
 
         //FIXME: assert that we received HTTP 200
 
@@ -423,6 +445,8 @@ public abstract class BaseClient implements Client {
 
             conn = getConnection( resource );
 
+            setMoreRsults( conn );
+            
             //FIXME: assert that we received HTTP 200
             
             localInputStream = getLocalInputStream( conn.getInputStream() ); //BUG: this seems redunt
@@ -596,6 +620,11 @@ public abstract class BaseClient implements Client {
         addParam( params, "limit",   limit );
         addParam( params, "vendor",  config.getVendor() );
         addParam( params, "version", config.getVersion() );
+
+        String filter = config.getFilter();
+
+        if ( filter != null )
+            addParam( params, "filter", filter );
 
         /*
         if ( config.getSpamProbability() != Config.DEFAULT_SPAM_PROBABILITY )
