@@ -8,7 +8,7 @@
 
     <property name="project"      value="spinn3r-client"/>
     <property name="javadocdir"   value="javadoc"/>
-    <property name="version"      value="3.0.54-rc6"/>
+    <property name="version"      value="3.1.14-rc7"/>
     <property name="vendor"       value="Tailrank Inc."/>
 
     <path id="project.classpath">
@@ -57,9 +57,9 @@
 
         <manifest file="compile/META-INF/MANIFEST.MF">
           <attribute name="Built-By"       value="${user.name}"/>
+          <attribute name="Main-Class"     value="com.spinn3r.api.Main"/>
 
           <!--
-          <attribute name="Main-Class"     value="com.spinn3r.api.Main"/>
           <attribute name="Class-Path"     value="lib/jzlib-1.0.7.jar lib/protobuf-java-2.0.3.jar"/>
           -->
 
@@ -196,14 +196,18 @@
     </property>
     <property name="title" value="Spinn3r Client Reference API">
     </property>
+    
+    <tstamp>
+      <format property="now" pattern="MM-dd-yyyy hh:mm:ss 'PST'" locale="PST"/>
+    </tstamp>
 
     <javadoc bottom="Copyright &amp;copy; Tailrank Inc. All Rights Reserved." 
-             windowtitle="Spinn3r Client API" 
+             windowtitle="Spinn3r Client API Version ${version}" 
              use="true" 
              private="false" 
              destdir="${javadocdir}" 
              author="true" 
-             doctitle="Spinn3r Client API" 
+             doctitle="Spinn3r Reference Client API ${version} (${now})" 
              version="true" 
              sourcepath="src/java" 
              packagenames="com.spinn3r.*">

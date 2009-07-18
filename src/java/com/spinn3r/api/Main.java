@@ -120,6 +120,10 @@ public class Main {
      */
     private static boolean dumpFields = false;
 
+    private static boolean csvNeedsHeaders = true;
+    
+    private static boolean csv = false;
+    
     /**
      * Sample performance times...
      */
@@ -167,6 +171,36 @@ public class Main {
                     if ( ! m.find() )
                         continue;
 
+                }
+
+                if ( csv ) {
+
+                    if ( csvNeedsHeaders ) {
+
+                        System.out.printf( "'%s'," , toCSV( "link" ) );
+                        System.out.printf( "'%s'," , toCSV( "guid" ) );
+                        System.out.printf( "'%s'," , toCSV( "feed" ) );
+                        System.out.printf( "'%s'," , toCSV( "source" ) );
+                        System.out.printf( "'%s',"  , toCSV( "lang" ) );
+                        System.out.printf( "'%s'"  , toCSV( "published" ) );
+                        System.out.println();
+
+                        csvNeedsHeaders = false;
+                    }
+
+                    String published = "";
+                    
+                    if ( item.getPublished() != null ) 
+                        published = ISO8601DateParser.toString( item.getPublished() );
+
+                    System.out.printf( "'%s'," , toCSV( item.getLink() ) );
+                    System.out.printf( "'%s'," , toCSV( item.getGuid() ) );
+                    System.out.printf( "'%s'," , toCSV( item.getFeedURL() ) );
+                    System.out.printf( "'%s'," , toCSV( item.getSource() ) );
+                    System.out.printf( "'%s',"  , toCSV( item.getLang() ) );
+                    System.out.printf( "'%s'"  , toCSV( published ) );
+                    System.out.println();
+                    continue;
                 }
 
                 if ( dump ) {
@@ -217,6 +251,16 @@ public class Main {
                     System.out.println( "lang:                   " + item.getLang() );
                     System.out.println( "tags:                   " + item.getTags() );
 
+                    String desc = item.getDescription();
+
+                    boolean hasDescription = false;
+
+                    if ( desc != null && ! desc.trim().equals( "" ) ) {
+                        hasDescription = true;
+                    }
+
+                    System.out.println( "has_description:        " + hasDescription );
+                    
                 }
                     
                 if ( show_results >= 3 ) {
@@ -225,7 +269,7 @@ public class Main {
                     System.out.println( "-" );
                     System.out.println( item.getDescription() );
                     System.out.println( "-" );
-
+                    
                     System.out.println( "content extract: " );
                     System.out.println( "-" );
                     System.out.println( item.getContentExtract() );
@@ -247,11 +291,23 @@ public class Main {
         
     }
 
+    public String toCSV( String data ) {
+
+        if ( data == null )
+            return "";
+
+        return data;
+        
+    }
+    
     /**
      * Print status of the API calls.
      */
     void progress() {
 
+        if ( csv )
+            return;
+        
         System.out.println( "-------------------------------------------" );
 
         long fetch_duration = fetch_after - fetch_before;
@@ -530,8 +586,6 @@ public class Main {
         System.out.println( "    --use_protobuf=true   Enable protocol buffer support for permalink client (performance)." );
         System.out.println();
 
-
-
         //System.out.println( "    --spam_probability=NN Set the lower bound for spam probability filtering.  Default(0.0)" );
         System.out.println();
 
@@ -669,6 +723,11 @@ public class Main {
 
             if ( v.startsWith( "--dump=" ) ) {
                 dump = Boolean.parseBoolean( getOpt( v ) );
+                continue;
+            }
+
+            if ( v.startsWith( "--csv=" ) ) {
+                csv = Boolean.parseBoolean( getOpt( v ) );
                 continue;
             }
 
