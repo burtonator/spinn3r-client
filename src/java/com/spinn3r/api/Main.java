@@ -610,7 +610,7 @@ public class Main {
         }
 
         if ( api == null )
-            api = "feed";
+            api = "permalink";
 
         //First. Determine which API you'd like to use.  
 
