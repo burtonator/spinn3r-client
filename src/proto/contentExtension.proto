@@ -18,7 +18,13 @@ message Twitter {
 
     //the twitter/user specified language.  This might be incorrect but we like
     //to preserve all metadata.
+
     optional string lang = 5;
+
+    //total number of status updates from this user.
+    optional uint31 statuses_count = 6;
+
+    optional boolean verified = 7;
     
 }
 

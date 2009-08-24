@@ -260,6 +260,16 @@ public class Main {
                     }
 
                     System.out.println( "has_description:        " + hasDescription );
+
+                    if ( item instanceof CommentItem ) {
+
+                        CommentItem comment = (CommentItem) item;
+
+                        System.out.printf( "comment permalink:       %s\n", comment.getCommentPermalink() );
+                        System.out.printf( "comment permalink title: %s\n", comment.getCommentPermalinkTitle() );
+                        System.out.printf( "comment permalink hash:  %s\n", comment.getCommentPermalinkHashcode() );
+                        
+                    }
                     
                 }
                     

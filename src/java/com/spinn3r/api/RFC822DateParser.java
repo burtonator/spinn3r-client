@@ -118,6 +118,12 @@ public class RFC822DateParser {
         return df;
         
     }
+
+    public static void main( String[] args ) throws Exception {
+
+        System.out.printf( "parsed as: %s\n", parse( args[0] ) );
+        
+    }
     
 }
 

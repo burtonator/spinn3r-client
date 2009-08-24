@@ -74,6 +74,8 @@ public abstract class BaseClient implements Client {
     public static final String NS_FEED    = "http://tailrank.com/ns/#feed" ;
     public static final String NS_LINK    = "http://spinn3r.com/ns/link" ;
     public static final String NS_TARGET  = "http://spinn3r.com/ns/#target" ;
+
+    public static final String NS_COMMENT = "http://tailrank.com/ns/#comment" ;
     
     public static final String USER_AGENT_HEADER       = "User-Agent";
     public static final String ACCEPT_ENCODING_HEADER  = "Accept-Encoding";
@@ -89,6 +91,8 @@ public abstract class BaseClient implements Client {
 
     // Would be nice to have this use String.format() but this isn't really
     // compatible back to Java 1.4.. are we requiring Java 1.5 now?
+    //
+    // TODO: include OS name, kernel version, etc.
 
     public static String USER_AGENT = String.format( "Spinn3r API Reference Client %s (Java %s, maxMemory=%s)",
                                                      Config.DEFAULT_VERSION,
@@ -255,7 +259,7 @@ public abstract class BaseClient implements Client {
                 
                 doFetch( config );
 
-                // we performed one HTTP fetch successfully, restore the limit.
+                //We performed one HTTP fetch successfully, restore the limit.
                 //NOTE: that if the user sets the limit to say 20, and then we
                 //break, it could revert to ten, and then revert to the optimal
                 //limit (which could be 100).  This is fine for now as I want to
@@ -358,7 +362,7 @@ public abstract class BaseClient implements Client {
         } 
 
         catch ( Exception e ) {
-            throw new ParseException( e );
+            throw new ParseException( e, "Unable to handle request: " + resource );
         }
 
         if ( ! hasMoreResultsHeadder )
@@ -623,8 +627,9 @@ public abstract class BaseClient implements Client {
 
         String filter = config.getFilter();
 
-        if ( filter != null )
-            addParam( params, "filter", filter );
+        if ( filter != null ) {
+            addParam( params, "filter", URLEncoder.encode( filter ) );
+        }
 
         /*
         if ( config.getSpamProbability() != Config.DEFAULT_SPAM_PROBABILITY )

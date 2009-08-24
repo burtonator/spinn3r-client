@@ -28,9 +28,13 @@ public class ParseException extends Exception {
         initCause( cause );
     }
 
+    public ParseException( Exception cause, String message ) {
+        super( message );
+        initCause( cause );
+    }
+
     public ParseException( String message ) {
         super( message );
     }
 
-    
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2007 Tailrank, Inc.
+ * Copyright 2007-2009 Tailrank, Inc.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
@@ -40,7 +40,7 @@ public class Config {
     /**
      * When fetching the API this specifies the default version to return.
      */
-    public static String   DEFAULT_VERSION     = "3.1.14";
+    public static String   DEFAULT_VERSION     = "3.1.27";
 
     /**
      * Default value for useProtobuf.

@@ -20,9 +20,85 @@ import java.util.*;
 import java.io.*;
 import java.net.*;
 
+import org.w3c.dom.*;
+
+import static com.spinn3r.api.BaseClient.NS_COMMENT;
+
 /**
  * Represents a comment item returned from the API.
  */
 public class CommentItem extends BaseItem {
+    
+    private String commentPermalinkHashcode = null;
+    
+    private String commentPermalinkTitle = null;
+    
+    private String commentPermalink = null;
+
+    /**
+     * 
+     * Get the value of <code>commentPermalink</code>.
+     *
+     */
+    public String getCommentPermalink() { 
+        return this.commentPermalink;
+    }
+
+    /**
+     * 
+     * Set the value of <code>commentPermalink</code>.
+     *
+     */
+    public void setCommentPermalink( String commentPermalink ) { 
+        this.commentPermalink = commentPermalink;
+    }
+
+    /**
+     * 
+     * Get the value of <code>commentPermalinkTitle</code>.
+     *
+     */
+    public String getCommentPermalinkTitle() { 
+        return this.commentPermalinkTitle;
+    }
+
+    /**
+     * 
+     * Set the value of <code>commentPermalinkTitle</code>.
+     *
+     */
+    public void setCommentPermalinkTitle( String commentPermalinkTitle ) { 
+        this.commentPermalinkTitle = commentPermalinkTitle;
+    }
+
+    /**
+     * 
+     * Get the value of <code>commentPermalinkHashcode</code>.
+     *
+     */
+    public String getCommentPermalinkHashcode() { 
+        return this.commentPermalinkHashcode;
+    }
+
+    /**
+     * 
+     * Set the value of <code>commentPermalinkHashcode</code>.
+mornin     *
+     */
+    public void setCommentPermalinkHashcode( String commentPermalinkHashcode ) { 
+        this.commentPermalinkHashcode = commentPermalinkHashcode;
+    }
+
+    protected void parse( Element current ) throws Exception {
+        
+        // <comment:permalink>http://www.techcrunch.com/2009/08/24/apple-will-approve-rhapsodys-iphone-app-but-it-will-still-be-a-dud/</comment:permalink>
+        // <comment:permalink_title>Apple Will Approve Rhapsody’s iPhone App, But It Will Still Be A Dud</comment:permalink_title>
+        // <comment:permalink_hashcode>6OQAltp-n-o</comment:permalink_hashcode>
+
+        setCommentPermalink( BaseClient.getElementCDATAByTagName( current, "permalink", NS_COMMENT ) );
+        setCommentPermalinkTitle( BaseClient.getElementCDATAByTagName( current, "permalink_title", NS_COMMENT ) );
+        setCommentPermalinkHashcode( BaseClient.getElementCDATAByTagName( current, "permalink_hashcode", NS_COMMENT ) );
+
+    }
 
 }

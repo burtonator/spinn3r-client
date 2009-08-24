@@ -39,9 +39,9 @@ public class PermalinkClient extends BaseClient implements Client {
      * The permalink API can only handle 10 items at once since each piece of
      * content is SO huge.
      */
-    public static int MAX_LIMIT            = 100;
-    public static int OPTIMAL_LIMIT        = 100;
-    public static int CONSERVATIVE_LIMIT   = 10;
+    public static int MAX_LIMIT            = 5000;
+    public static int OPTIMAL_LIMIT        = 500;
+    public static int CONSERVATIVE_LIMIT   = 500;
 
     public void fetch() throws IOException,
                                ParseException,
@@ -83,6 +83,7 @@ public class PermalinkClient extends BaseClient implements Client {
     }
 
     public String getRouter() {
+        
         String format_string = "http://%s/rss/%s.getDelta?"; 
  
         if ( config.getUseProtobuf() ) 

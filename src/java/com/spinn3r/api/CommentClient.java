@@ -47,7 +47,6 @@ public class CommentClient extends BaseClient implements Client {
         return (List<BaseItem>)super.results;
     }
 
-
     protected BaseResult parseItem( ContentApi.Entry current ) throws Exception {
         throw new UnimplementedException ("protobuf support not implmented for this client");
     }
@@ -56,7 +55,11 @@ public class CommentClient extends BaseClient implements Client {
 
         CommentItem item = new CommentItem();
 
-        return (BaseItem)super.parseItem( current, item );
+        super.parseItem( current, item );
+
+        item.parse( current );
+        
+        return item;
         
     }
 
