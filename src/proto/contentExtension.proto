@@ -9,7 +9,7 @@ SSH into repo and run:
 
 package extension;
 
-option java_package         = "com.spinn3r.api.proto";
+option java_package         = "com.spinn3r.api.protobuf";
 option java_outer_classname = "ContentExtension";
 
 message Wrapper {
