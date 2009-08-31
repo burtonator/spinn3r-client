@@ -13,11 +13,15 @@ option java_package         = "com.spinn3r.api.protobuf";
 option java_outer_classname = "ContentExtension";
 
 message Wrapper {
+
+    /*
     optional Twitter twitter = 1;
     optional LinkRankNode linkRankNode = 2;
     optional Timestamp timestamp = 3;
+    */
 }
 
+/*
 message Twitter {
 
     optional uint32 followers = 1;
@@ -58,3 +62,5 @@ message Timestamp {
     required string original = 1;
     
 }
+
+*/

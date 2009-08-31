@@ -239,10 +239,11 @@ public class Main {
                     System.out.println( "pubDate:                " + pubDate );
                     System.out.println( "published:              " + published );
                     
-                    System.out.println( "weblog title:           " + item.getWeblogTitle() );
-                    System.out.println( "weblog tier:            " + item.getWeblogTier() );
-                    System.out.println( "weblog publisher type:  " + item.getWeblogPublisherType() );
-                    System.out.println( "weblog indegree:        " + item.getWeblogIndegree() );
+                    System.out.println( "source title:           " + item.getWeblogTitle() );
+                    System.out.println( "source tier:            " + item.getWeblogTier() );
+                    System.out.println( "source publisher type:  " + item.getWeblogPublisherType() );
+                    System.out.println( "source indegree:        " + item.getWeblogIndegree() );
+                    System.out.println( "source resource:        " + item.getWeblogResource() );
                     
                     System.out.println( "author name:            " + item.getAuthorName() );
                     System.out.println( "author email:           " + item.getAuthorEmail() );
