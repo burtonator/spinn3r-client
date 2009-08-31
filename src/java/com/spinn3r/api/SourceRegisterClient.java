@@ -44,6 +44,7 @@ public class SourceRegisterClient {
         BaseClient.addParam( params, "force",            config.getForce() );
         BaseClient.addParam( params, "feed",             config.getFeed() );
         BaseClient.addParam( params, "publisher_type",   config.getPublisherType() );
+        BaseClient.addParam( params, "crawl_enabled" ,   "true" ); // BOOG
         
         String resource = String.format( "http://%s/rss/source.register?%s", config.getHost(), params );
 
@@ -63,15 +64,27 @@ public class SourceRegisterClient {
         SourceRegisterClient client = new SourceRegisterClient();
         SourceRegisterConfig config = new SourceRegisterConfig();
 
-        config.setVendor( "XXXX" );
+        if ( args.length < 2 )
+            System.out.printf( "usage: SourceRegisterClient vendor-id URL1 [ URL2 URL3 ... ]\n" );
 
-        client.setConfig( config );
+        else {
+            config.setVendor( args[0] );
 
-        String resource   = args[0];
+            client.setConfig( config );
 
-        System.out.printf( "register for %s\n", resource );
+            for ( int i = 1 ; i < args.length ; i++ ) {
+                String resource = args[i];
 
-        client.register( resource );
+                System.out.printf( "register for %s\n", resource );
+                try {
+                    client.register( resource );
+                }
+
+                catch ( java.io.IOException e ) {
+                    System.out.printf( "faild to register %s\n%s\n", resource, e );
+                }
+            }
+        }
             
     }
     
