@@ -26,29 +26,10 @@ public final class ContentExtension {
       return com.spinn3r.api.protobuf.ContentExtension.internal_static_contentExtension_Wrapper_descriptor;
     }
     
+    @Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.spinn3r.api.protobuf.ContentExtension.internal_static_contentExtension_Wrapper_fieldAccessorTable;
-    }
-    
-    public final boolean isInitialized() {
-      return true;
-    }
-    
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
     }
     
     public static com.spinn3r.api.protobuf.ContentExtension.Wrapper parseFrom(
@@ -58,7 +39,7 @@ public final class ContentExtension {
     }
     public static com.spinn3r.api.protobuf.ContentExtension.Wrapper parseFrom(
         com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -69,7 +50,7 @@ public final class ContentExtension {
     }
     public static com.spinn3r.api.protobuf.ContentExtension.Wrapper parseFrom(
         byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -80,20 +61,9 @@ public final class ContentExtension {
     }
     public static com.spinn3r.api.protobuf.ContentExtension.Wrapper parseFrom(
         java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static com.spinn3r.api.protobuf.ContentExtension.Wrapper parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input).buildParsed();
-    }
-    public static com.spinn3r.api.protobuf.ContentExtension.Wrapper parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
                .buildParsed();
     }
     public static com.spinn3r.api.protobuf.ContentExtension.Wrapper parseFrom(
@@ -103,49 +73,42 @@ public final class ContentExtension {
     }
     public static com.spinn3r.api.protobuf.ContentExtension.Wrapper parseFrom(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
     
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
     public static Builder newBuilder(com.spinn3r.api.protobuf.ContentExtension.Wrapper prototype) {
-      return newBuilder().mergeFrom(prototype);
+      return new Builder().mergeFrom(prototype);
     }
-    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private com.spinn3r.api.protobuf.ContentExtension.Wrapper result;
-      
       // Construct using com.spinn3r.api.protobuf.ContentExtension.Wrapper.newBuilder()
       private Builder() {}
       
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new com.spinn3r.api.protobuf.ContentExtension.Wrapper();
-        return builder;
-      }
+      com.spinn3r.api.protobuf.ContentExtension.Wrapper result = new com.spinn3r.api.protobuf.ContentExtension.Wrapper();
       
+      @Override
       protected com.spinn3r.api.protobuf.ContentExtension.Wrapper internalGetResult() {
         return result;
       }
       
+      @Override
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
         result = new com.spinn3r.api.protobuf.ContentExtension.Wrapper();
         return this;
       }
       
+      @Override
       public Builder clone() {
-        return create().mergeFrom(result);
+        return new Builder().mergeFrom(result);
       }
       
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.spinn3r.api.protobuf.ContentExtension.Wrapper.getDescriptor();
@@ -155,12 +118,10 @@ public final class ContentExtension {
         return com.spinn3r.api.protobuf.ContentExtension.Wrapper.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public com.spinn3r.api.protobuf.ContentExtension.Wrapper build() {
-        if (result != null && !isInitialized()) {
-          throw newUninitializedMessageException(result);
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
         }
         return buildPartial();
       }
@@ -168,70 +129,22 @@ public final class ContentExtension {
       private com.spinn3r.api.protobuf.ContentExtension.Wrapper buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
         if (!isInitialized()) {
-          throw newUninitializedMessageException(
+          throw new com.google.protobuf.UninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
         return buildPartial();
       }
       
       public com.spinn3r.api.protobuf.ContentExtension.Wrapper buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
-        }
         com.spinn3r.api.protobuf.ContentExtension.Wrapper returnMe = result;
         result = null;
         return returnMe;
-      }
-      
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.spinn3r.api.protobuf.ContentExtension.Wrapper) {
-          return mergeFrom((com.spinn3r.api.protobuf.ContentExtension.Wrapper)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(com.spinn3r.api.protobuf.ContentExtension.Wrapper other) {
-        if (other == com.spinn3r.api.protobuf.ContentExtension.Wrapper.getDefaultInstance()) return this;
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-          }
-        }
       }
       
     }
     
     static {
       com.spinn3r.api.protobuf.ContentExtension.getDescriptor();
-    }
-    
-    static {
-      com.spinn3r.api.protobuf.ContentExtension.internalForceInit();
     }
   }
   
@@ -248,11 +161,10 @@ public final class ContentExtension {
   private static com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    java.lang.String descriptorData =
       "\n\026contentExtension.proto\022\020contentExtensi" +
       "on\"\t\n\007WrapperB,\n\030com.spinn3r.api.protobu" +
-      "fB\020ContentExtension"
-    };
+      "fB\020ContentExtension";
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
@@ -274,6 +186,4 @@ public final class ContentExtension {
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
   }
-  
-  public static void internalForceInit() {}
 }
