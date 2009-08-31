@@ -32,6 +32,24 @@ public final class ContentExtension {
       return com.spinn3r.api.protobuf.ContentExtension.internal_static_contentExtension_Wrapper_fieldAccessorTable;
     }
     
+    // optional .contentExtension.Twitter twitter = 1;
+    private boolean hasTwitter;
+    private com.spinn3r.api.protobuf.ContentExtension.Twitter twitter_ = com.spinn3r.api.protobuf.ContentExtension.Twitter.getDefaultInstance();
+    public boolean hasTwitter() { return hasTwitter; }
+    public com.spinn3r.api.protobuf.ContentExtension.Twitter getTwitter() { return twitter_; }
+    
+    // optional .contentExtension.LinkRankNode linkRankNode = 2;
+    private boolean hasLinkRankNode;
+    private com.spinn3r.api.protobuf.ContentExtension.LinkRankNode linkRankNode_ = com.spinn3r.api.protobuf.ContentExtension.LinkRankNode.getDefaultInstance();
+    public boolean hasLinkRankNode() { return hasLinkRankNode; }
+    public com.spinn3r.api.protobuf.ContentExtension.LinkRankNode getLinkRankNode() { return linkRankNode_; }
+    
+    // optional .contentExtension.Timestamp timestamp = 3;
+    private boolean hasTimestamp;
+    private com.spinn3r.api.protobuf.ContentExtension.Timestamp timestamp_ = com.spinn3r.api.protobuf.ContentExtension.Timestamp.getDefaultInstance();
+    public boolean hasTimestamp() { return hasTimestamp; }
+    public com.spinn3r.api.protobuf.ContentExtension.Timestamp getTimestamp() { return timestamp_; }
+    
     public static com.spinn3r.api.protobuf.ContentExtension.Wrapper parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -141,6 +159,843 @@ public final class ContentExtension {
         return returnMe;
       }
       
+      
+      // optional .contentExtension.Twitter twitter = 1;
+      public boolean hasTwitter() {
+        return result.hasTwitter();
+      }
+      public com.spinn3r.api.protobuf.ContentExtension.Twitter getTwitter() {
+        return result.getTwitter();
+      }
+      public Builder setTwitter(com.spinn3r.api.protobuf.ContentExtension.Twitter value) {
+        result.hasTwitter = true;
+        result.twitter_ = value;
+        return this;
+      }
+      public Builder setTwitter(com.spinn3r.api.protobuf.ContentExtension.Twitter.Builder builderForValue) {
+        result.hasTwitter = true;
+        result.twitter_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeTwitter(com.spinn3r.api.protobuf.ContentExtension.Twitter value) {
+        if (result.hasTwitter() &&
+            result.twitter_ != com.spinn3r.api.protobuf.ContentExtension.Twitter.getDefaultInstance()) {
+          result.twitter_ =
+            com.spinn3r.api.protobuf.ContentExtension.Twitter.newBuilder(result.twitter_).mergeFrom(value).buildPartial();
+        } else {
+          result.twitter_ = value;
+        }
+        result.hasTwitter = true;
+        return this;
+      }
+      public Builder clearTwitter() {
+        result.hasTwitter = false;
+        result.twitter_ = com.spinn3r.api.protobuf.ContentExtension.Twitter.getDefaultInstance();
+        return this;
+      }
+      
+      // optional .contentExtension.LinkRankNode linkRankNode = 2;
+      public boolean hasLinkRankNode() {
+        return result.hasLinkRankNode();
+      }
+      public com.spinn3r.api.protobuf.ContentExtension.LinkRankNode getLinkRankNode() {
+        return result.getLinkRankNode();
+      }
+      public Builder setLinkRankNode(com.spinn3r.api.protobuf.ContentExtension.LinkRankNode value) {
+        result.hasLinkRankNode = true;
+        result.linkRankNode_ = value;
+        return this;
+      }
+      public Builder setLinkRankNode(com.spinn3r.api.protobuf.ContentExtension.LinkRankNode.Builder builderForValue) {
+        result.hasLinkRankNode = true;
+        result.linkRankNode_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeLinkRankNode(com.spinn3r.api.protobuf.ContentExtension.LinkRankNode value) {
+        if (result.hasLinkRankNode() &&
+            result.linkRankNode_ != com.spinn3r.api.protobuf.ContentExtension.LinkRankNode.getDefaultInstance()) {
+          result.linkRankNode_ =
+            com.spinn3r.api.protobuf.ContentExtension.LinkRankNode.newBuilder(result.linkRankNode_).mergeFrom(value).buildPartial();
+        } else {
+          result.linkRankNode_ = value;
+        }
+        result.hasLinkRankNode = true;
+        return this;
+      }
+      public Builder clearLinkRankNode() {
+        result.hasLinkRankNode = false;
+        result.linkRankNode_ = com.spinn3r.api.protobuf.ContentExtension.LinkRankNode.getDefaultInstance();
+        return this;
+      }
+      
+      // optional .contentExtension.Timestamp timestamp = 3;
+      public boolean hasTimestamp() {
+        return result.hasTimestamp();
+      }
+      public com.spinn3r.api.protobuf.ContentExtension.Timestamp getTimestamp() {
+        return result.getTimestamp();
+      }
+      public Builder setTimestamp(com.spinn3r.api.protobuf.ContentExtension.Timestamp value) {
+        result.hasTimestamp = true;
+        result.timestamp_ = value;
+        return this;
+      }
+      public Builder setTimestamp(com.spinn3r.api.protobuf.ContentExtension.Timestamp.Builder builderForValue) {
+        result.hasTimestamp = true;
+        result.timestamp_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeTimestamp(com.spinn3r.api.protobuf.ContentExtension.Timestamp value) {
+        if (result.hasTimestamp() &&
+            result.timestamp_ != com.spinn3r.api.protobuf.ContentExtension.Timestamp.getDefaultInstance()) {
+          result.timestamp_ =
+            com.spinn3r.api.protobuf.ContentExtension.Timestamp.newBuilder(result.timestamp_).mergeFrom(value).buildPartial();
+        } else {
+          result.timestamp_ = value;
+        }
+        result.hasTimestamp = true;
+        return this;
+      }
+      public Builder clearTimestamp() {
+        result.hasTimestamp = false;
+        result.timestamp_ = com.spinn3r.api.protobuf.ContentExtension.Timestamp.getDefaultInstance();
+        return this;
+      }
+    }
+    
+    static {
+      com.spinn3r.api.protobuf.ContentExtension.getDescriptor();
+    }
+  }
+  
+  public static final class Twitter extends
+      com.google.protobuf.GeneratedMessage {
+    // Use Twitter.newBuilder() to construct.
+    private Twitter() {}
+    
+    private static final Twitter defaultInstance = new Twitter();
+    public static Twitter getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Twitter getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.spinn3r.api.protobuf.ContentExtension.internal_static_contentExtension_Twitter_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.spinn3r.api.protobuf.ContentExtension.internal_static_contentExtension_Twitter_fieldAccessorTable;
+    }
+    
+    // optional uint32 followers = 1;
+    private boolean hasFollowers;
+    private int followers_ = 0;
+    public boolean hasFollowers() { return hasFollowers; }
+    public int getFollowers() { return followers_; }
+    
+    // optional uint32 friends = 2;
+    private boolean hasFriends;
+    private int friends_ = 0;
+    public boolean hasFriends() { return hasFriends; }
+    public int getFriends() { return friends_; }
+    
+    // optional string location = 3;
+    private boolean hasLocation;
+    private java.lang.String location_ = "";
+    public boolean hasLocation() { return hasLocation; }
+    public java.lang.String getLocation() { return location_; }
+    
+    // optional string profile_image_url = 4;
+    private boolean hasProfileImageUrl;
+    private java.lang.String profileImageUrl_ = "";
+    public boolean hasProfileImageUrl() { return hasProfileImageUrl; }
+    public java.lang.String getProfileImageUrl() { return profileImageUrl_; }
+    
+    // optional string lang = 5;
+    private boolean hasLang;
+    private java.lang.String lang_ = "";
+    public boolean hasLang() { return hasLang; }
+    public java.lang.String getLang() { return lang_; }
+    
+    // optional uint32 statuses_count = 6;
+    private boolean hasStatusesCount;
+    private int statusesCount_ = 0;
+    public boolean hasStatusesCount() { return hasStatusesCount; }
+    public int getStatusesCount() { return statusesCount_; }
+    
+    // optional bool verified = 7;
+    private boolean hasVerified;
+    private boolean verified_ = false;
+    public boolean hasVerified() { return hasVerified; }
+    public boolean getVerified() { return verified_; }
+    
+    public static com.spinn3r.api.protobuf.ContentExtension.Twitter parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentExtension.Twitter parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentExtension.Twitter parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentExtension.Twitter parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentExtension.Twitter parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentExtension.Twitter parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentExtension.Twitter parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentExtension.Twitter parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(com.spinn3r.api.protobuf.ContentExtension.Twitter prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using com.spinn3r.api.protobuf.ContentExtension.Twitter.newBuilder()
+      private Builder() {}
+      
+      com.spinn3r.api.protobuf.ContentExtension.Twitter result = new com.spinn3r.api.protobuf.ContentExtension.Twitter();
+      
+      @Override
+      protected com.spinn3r.api.protobuf.ContentExtension.Twitter internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new com.spinn3r.api.protobuf.ContentExtension.Twitter();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.spinn3r.api.protobuf.ContentExtension.Twitter.getDescriptor();
+      }
+      
+      public com.spinn3r.api.protobuf.ContentExtension.Twitter getDefaultInstanceForType() {
+        return com.spinn3r.api.protobuf.ContentExtension.Twitter.getDefaultInstance();
+      }
+      
+      public com.spinn3r.api.protobuf.ContentExtension.Twitter build() {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private com.spinn3r.api.protobuf.ContentExtension.Twitter buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.spinn3r.api.protobuf.ContentExtension.Twitter buildPartial() {
+        com.spinn3r.api.protobuf.ContentExtension.Twitter returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      
+      // optional uint32 followers = 1;
+      public boolean hasFollowers() {
+        return result.hasFollowers();
+      }
+      public int getFollowers() {
+        return result.getFollowers();
+      }
+      public Builder setFollowers(int value) {
+        result.hasFollowers = true;
+        result.followers_ = value;
+        return this;
+      }
+      public Builder clearFollowers() {
+        result.hasFollowers = false;
+        result.followers_ = 0;
+        return this;
+      }
+      
+      // optional uint32 friends = 2;
+      public boolean hasFriends() {
+        return result.hasFriends();
+      }
+      public int getFriends() {
+        return result.getFriends();
+      }
+      public Builder setFriends(int value) {
+        result.hasFriends = true;
+        result.friends_ = value;
+        return this;
+      }
+      public Builder clearFriends() {
+        result.hasFriends = false;
+        result.friends_ = 0;
+        return this;
+      }
+      
+      // optional string location = 3;
+      public boolean hasLocation() {
+        return result.hasLocation();
+      }
+      public java.lang.String getLocation() {
+        return result.getLocation();
+      }
+      public Builder setLocation(java.lang.String value) {
+        result.hasLocation = true;
+        result.location_ = value;
+        return this;
+      }
+      public Builder clearLocation() {
+        result.hasLocation = false;
+        result.location_ = "";
+        return this;
+      }
+      
+      // optional string profile_image_url = 4;
+      public boolean hasProfileImageUrl() {
+        return result.hasProfileImageUrl();
+      }
+      public java.lang.String getProfileImageUrl() {
+        return result.getProfileImageUrl();
+      }
+      public Builder setProfileImageUrl(java.lang.String value) {
+        result.hasProfileImageUrl = true;
+        result.profileImageUrl_ = value;
+        return this;
+      }
+      public Builder clearProfileImageUrl() {
+        result.hasProfileImageUrl = false;
+        result.profileImageUrl_ = "";
+        return this;
+      }
+      
+      // optional string lang = 5;
+      public boolean hasLang() {
+        return result.hasLang();
+      }
+      public java.lang.String getLang() {
+        return result.getLang();
+      }
+      public Builder setLang(java.lang.String value) {
+        result.hasLang = true;
+        result.lang_ = value;
+        return this;
+      }
+      public Builder clearLang() {
+        result.hasLang = false;
+        result.lang_ = "";
+        return this;
+      }
+      
+      // optional uint32 statuses_count = 6;
+      public boolean hasStatusesCount() {
+        return result.hasStatusesCount();
+      }
+      public int getStatusesCount() {
+        return result.getStatusesCount();
+      }
+      public Builder setStatusesCount(int value) {
+        result.hasStatusesCount = true;
+        result.statusesCount_ = value;
+        return this;
+      }
+      public Builder clearStatusesCount() {
+        result.hasStatusesCount = false;
+        result.statusesCount_ = 0;
+        return this;
+      }
+      
+      // optional bool verified = 7;
+      public boolean hasVerified() {
+        return result.hasVerified();
+      }
+      public boolean getVerified() {
+        return result.getVerified();
+      }
+      public Builder setVerified(boolean value) {
+        result.hasVerified = true;
+        result.verified_ = value;
+        return this;
+      }
+      public Builder clearVerified() {
+        result.hasVerified = false;
+        result.verified_ = false;
+        return this;
+      }
+    }
+    
+    static {
+      com.spinn3r.api.protobuf.ContentExtension.getDescriptor();
+    }
+  }
+  
+  public static final class LinkRankNode extends
+      com.google.protobuf.GeneratedMessage {
+    // Use LinkRankNode.newBuilder() to construct.
+    private LinkRankNode() {}
+    
+    private static final LinkRankNode defaultInstance = new LinkRankNode();
+    public static LinkRankNode getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public LinkRankNode getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.spinn3r.api.protobuf.ContentExtension.internal_static_contentExtension_LinkRankNode_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.spinn3r.api.protobuf.ContentExtension.internal_static_contentExtension_LinkRankNode_fieldAccessorTable;
+    }
+    
+    // required double rank = 1;
+    private boolean hasRank;
+    private double rank_ = 0D;
+    public boolean hasRank() { return hasRank; }
+    public double getRank() { return rank_; }
+    
+    // required uint32 indegree = 2;
+    private boolean hasIndegree;
+    private int indegree_ = 0;
+    public boolean hasIndegree() { return hasIndegree; }
+    public int getIndegree() { return indegree_; }
+    
+    // required uint32 outdegree = 3;
+    private boolean hasOutdegree;
+    private int outdegree_ = 0;
+    public boolean hasOutdegree() { return hasOutdegree; }
+    public int getOutdegree() { return outdegree_; }
+    
+    // required string resource = 4;
+    private boolean hasResource;
+    private java.lang.String resource_ = "";
+    public boolean hasResource() { return hasResource; }
+    public java.lang.String getResource() { return resource_; }
+    
+    // optional string name = 5;
+    private boolean hasName;
+    private java.lang.String name_ = "";
+    public boolean hasName() { return hasName; }
+    public java.lang.String getName() { return name_; }
+    
+    public static com.spinn3r.api.protobuf.ContentExtension.LinkRankNode parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentExtension.LinkRankNode parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentExtension.LinkRankNode parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentExtension.LinkRankNode parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentExtension.LinkRankNode parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentExtension.LinkRankNode parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentExtension.LinkRankNode parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentExtension.LinkRankNode parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(com.spinn3r.api.protobuf.ContentExtension.LinkRankNode prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using com.spinn3r.api.protobuf.ContentExtension.LinkRankNode.newBuilder()
+      private Builder() {}
+      
+      com.spinn3r.api.protobuf.ContentExtension.LinkRankNode result = new com.spinn3r.api.protobuf.ContentExtension.LinkRankNode();
+      
+      @Override
+      protected com.spinn3r.api.protobuf.ContentExtension.LinkRankNode internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new com.spinn3r.api.protobuf.ContentExtension.LinkRankNode();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.spinn3r.api.protobuf.ContentExtension.LinkRankNode.getDescriptor();
+      }
+      
+      public com.spinn3r.api.protobuf.ContentExtension.LinkRankNode getDefaultInstanceForType() {
+        return com.spinn3r.api.protobuf.ContentExtension.LinkRankNode.getDefaultInstance();
+      }
+      
+      public com.spinn3r.api.protobuf.ContentExtension.LinkRankNode build() {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private com.spinn3r.api.protobuf.ContentExtension.LinkRankNode buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.spinn3r.api.protobuf.ContentExtension.LinkRankNode buildPartial() {
+        com.spinn3r.api.protobuf.ContentExtension.LinkRankNode returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      
+      // required double rank = 1;
+      public boolean hasRank() {
+        return result.hasRank();
+      }
+      public double getRank() {
+        return result.getRank();
+      }
+      public Builder setRank(double value) {
+        result.hasRank = true;
+        result.rank_ = value;
+        return this;
+      }
+      public Builder clearRank() {
+        result.hasRank = false;
+        result.rank_ = 0D;
+        return this;
+      }
+      
+      // required uint32 indegree = 2;
+      public boolean hasIndegree() {
+        return result.hasIndegree();
+      }
+      public int getIndegree() {
+        return result.getIndegree();
+      }
+      public Builder setIndegree(int value) {
+        result.hasIndegree = true;
+        result.indegree_ = value;
+        return this;
+      }
+      public Builder clearIndegree() {
+        result.hasIndegree = false;
+        result.indegree_ = 0;
+        return this;
+      }
+      
+      // required uint32 outdegree = 3;
+      public boolean hasOutdegree() {
+        return result.hasOutdegree();
+      }
+      public int getOutdegree() {
+        return result.getOutdegree();
+      }
+      public Builder setOutdegree(int value) {
+        result.hasOutdegree = true;
+        result.outdegree_ = value;
+        return this;
+      }
+      public Builder clearOutdegree() {
+        result.hasOutdegree = false;
+        result.outdegree_ = 0;
+        return this;
+      }
+      
+      // required string resource = 4;
+      public boolean hasResource() {
+        return result.hasResource();
+      }
+      public java.lang.String getResource() {
+        return result.getResource();
+      }
+      public Builder setResource(java.lang.String value) {
+        result.hasResource = true;
+        result.resource_ = value;
+        return this;
+      }
+      public Builder clearResource() {
+        result.hasResource = false;
+        result.resource_ = "";
+        return this;
+      }
+      
+      // optional string name = 5;
+      public boolean hasName() {
+        return result.hasName();
+      }
+      public java.lang.String getName() {
+        return result.getName();
+      }
+      public Builder setName(java.lang.String value) {
+        result.hasName = true;
+        result.name_ = value;
+        return this;
+      }
+      public Builder clearName() {
+        result.hasName = false;
+        result.name_ = "";
+        return this;
+      }
+    }
+    
+    static {
+      com.spinn3r.api.protobuf.ContentExtension.getDescriptor();
+    }
+  }
+  
+  public static final class Timestamp extends
+      com.google.protobuf.GeneratedMessage {
+    // Use Timestamp.newBuilder() to construct.
+    private Timestamp() {}
+    
+    private static final Timestamp defaultInstance = new Timestamp();
+    public static Timestamp getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Timestamp getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.spinn3r.api.protobuf.ContentExtension.internal_static_contentExtension_Timestamp_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.spinn3r.api.protobuf.ContentExtension.internal_static_contentExtension_Timestamp_fieldAccessorTable;
+    }
+    
+    // required string original = 1;
+    private boolean hasOriginal;
+    private java.lang.String original_ = "";
+    public boolean hasOriginal() { return hasOriginal; }
+    public java.lang.String getOriginal() { return original_; }
+    
+    public static com.spinn3r.api.protobuf.ContentExtension.Timestamp parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentExtension.Timestamp parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentExtension.Timestamp parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentExtension.Timestamp parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentExtension.Timestamp parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentExtension.Timestamp parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentExtension.Timestamp parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentExtension.Timestamp parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(com.spinn3r.api.protobuf.ContentExtension.Timestamp prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using com.spinn3r.api.protobuf.ContentExtension.Timestamp.newBuilder()
+      private Builder() {}
+      
+      com.spinn3r.api.protobuf.ContentExtension.Timestamp result = new com.spinn3r.api.protobuf.ContentExtension.Timestamp();
+      
+      @Override
+      protected com.spinn3r.api.protobuf.ContentExtension.Timestamp internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new com.spinn3r.api.protobuf.ContentExtension.Timestamp();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.spinn3r.api.protobuf.ContentExtension.Timestamp.getDescriptor();
+      }
+      
+      public com.spinn3r.api.protobuf.ContentExtension.Timestamp getDefaultInstanceForType() {
+        return com.spinn3r.api.protobuf.ContentExtension.Timestamp.getDefaultInstance();
+      }
+      
+      public com.spinn3r.api.protobuf.ContentExtension.Timestamp build() {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private com.spinn3r.api.protobuf.ContentExtension.Timestamp buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.spinn3r.api.protobuf.ContentExtension.Timestamp buildPartial() {
+        com.spinn3r.api.protobuf.ContentExtension.Timestamp returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      
+      // required string original = 1;
+      public boolean hasOriginal() {
+        return result.hasOriginal();
+      }
+      public java.lang.String getOriginal() {
+        return result.getOriginal();
+      }
+      public Builder setOriginal(java.lang.String value) {
+        result.hasOriginal = true;
+        result.original_ = value;
+        return this;
+      }
+      public Builder clearOriginal() {
+        result.hasOriginal = false;
+        result.original_ = "";
+        return this;
+      }
     }
     
     static {
@@ -153,6 +1008,21 @@ public final class ContentExtension {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_contentExtension_Wrapper_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_contentExtension_Twitter_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_contentExtension_Twitter_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_contentExtension_LinkRankNode_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_contentExtension_LinkRankNode_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_contentExtension_Timestamp_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_contentExtension_Timestamp_fieldAccessorTable;
   
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -163,8 +1033,19 @@ public final class ContentExtension {
   static {
     java.lang.String descriptorData =
       "\n\026contentExtension.proto\022\020contentExtensi" +
-      "on\"\t\n\007WrapperB,\n\030com.spinn3r.api.protobu" +
-      "fB\020ContentExtension";
+      "on\"\233\001\n\007Wrapper\022*\n\007twitter\030\001 \001(\0132\031.conten" +
+      "tExtension.Twitter\0224\n\014linkRankNode\030\002 \001(\013" +
+      "2\036.contentExtension.LinkRankNode\022.\n\ttime" +
+      "stamp\030\003 \001(\0132\033.contentExtension.Timestamp" +
+      "\"\222\001\n\007Twitter\022\021\n\tfollowers\030\001 \001(\r\022\017\n\007frien" +
+      "ds\030\002 \001(\r\022\020\n\010location\030\003 \001(\t\022\031\n\021profile_im" +
+      "age_url\030\004 \001(\t\022\014\n\004lang\030\005 \001(\t\022\026\n\016statuses_" +
+      "count\030\006 \001(\r\022\020\n\010verified\030\007 \001(\010\"a\n\014LinkRan" +
+      "kNode\022\014\n\004rank\030\001 \002(\001\022\020\n\010indegree\030\002 \002(\r\022\021\n" +
+      "\toutdegree\030\003 \002(\r\022\020\n\010resource\030\004 \002(\t\022\014\n\004na" +
+      "me\030\005 \001(\t\"\035\n\tTimestamp\022\020\n\010original\030\001 \002(\tB" +
+      ",\n\030com.spinn3r.api.protobufB\020ContentExte" +
+      "nsion";
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
@@ -175,9 +1056,33 @@ public final class ContentExtension {
           internal_static_contentExtension_Wrapper_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_contentExtension_Wrapper_descriptor,
-              new java.lang.String[] { },
+              new java.lang.String[] { "Twitter", "LinkRankNode", "Timestamp", },
               com.spinn3r.api.protobuf.ContentExtension.Wrapper.class,
               com.spinn3r.api.protobuf.ContentExtension.Wrapper.Builder.class);
+          internal_static_contentExtension_Twitter_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_contentExtension_Twitter_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_contentExtension_Twitter_descriptor,
+              new java.lang.String[] { "Followers", "Friends", "Location", "ProfileImageUrl", "Lang", "StatusesCount", "Verified", },
+              com.spinn3r.api.protobuf.ContentExtension.Twitter.class,
+              com.spinn3r.api.protobuf.ContentExtension.Twitter.Builder.class);
+          internal_static_contentExtension_LinkRankNode_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_contentExtension_LinkRankNode_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_contentExtension_LinkRankNode_descriptor,
+              new java.lang.String[] { "Rank", "Indegree", "Outdegree", "Resource", "Name", },
+              com.spinn3r.api.protobuf.ContentExtension.LinkRankNode.class,
+              com.spinn3r.api.protobuf.ContentExtension.LinkRankNode.Builder.class);
+          internal_static_contentExtension_Timestamp_descriptor =
+            getDescriptor().getMessageTypes().get(3);
+          internal_static_contentExtension_Timestamp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_contentExtension_Timestamp_descriptor,
+              new java.lang.String[] { "Original", },
+              com.spinn3r.api.protobuf.ContentExtension.Timestamp.class,
+              com.spinn3r.api.protobuf.ContentExtension.Timestamp.Builder.class);
           return null;
         }
       };
