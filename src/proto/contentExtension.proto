@@ -7,7 +7,7 @@ SSH into repo and run:
     
 */
 
-package extension;
+package contentExtension;
 
 option java_package         = "com.spinn3r.api.protobuf";
 option java_outer_classname = "ContentExtension";
