@@ -729,6 +729,8 @@ public abstract class BaseClient implements Client {
         // weblog:description
         item.setWeblogTitle( getElementCDATAByTagName( current, "title", NS_WEBLOG ) );
 
+        item.setWeblogResource( getElementCDATAByTagName( current, "resource", NS_SOURCE ) );
+
         item.setWeblogDescription( getElementCDATAByTagName( current, "description", NS_WEBLOG ) );
 
         String str_tier = getElementCDATAByTagName( current, "tier", NS_WEBLOG );
@@ -742,6 +744,9 @@ public abstract class BaseClient implements Client {
         String atom_published = getElementCDATAByTagName( current, "published", NS_ATOM );
         if ( atom_published != null && ! atom_published.equals( "" ) )
             item.setPublished( ISO8601DateParser.parse( atom_published ) );
+
+        //FIXME: this stuff should NOT use the weblog namespace anymore as it is
+        //deprecated.
         
         //FIXME: weblog:iranking
 

@@ -40,6 +40,7 @@ public abstract class BaseItem extends BaseResult {
     protected String weblogTitle          = null;
     protected String weblogDescription    = null;
     protected String weblogPublisherType  = null;
+    protected String weblogResource       = null;
 
     protected int weblogTier              = -1;
     protected int weblogIndegree          = -1;
@@ -386,6 +387,24 @@ public abstract class BaseItem extends BaseResult {
      */
     public void setWeblogTitle( String weblogTitle ) { 
         this.weblogTitle = weblogTitle;
+    }
+
+    /**
+     * 
+     * Get the value of <code>weblogResource</code>.
+     *
+     */
+    public String getWeblogResource() { 
+        return this.weblogResource;
+    }
+
+    /**
+     * 
+     * Set the value of <code>weblogResource</code>.
+     *
+     */
+    public void setWeblogResource( String weblogResource ) { 
+        this.weblogResource = weblogResource;
     }
 
     /**
