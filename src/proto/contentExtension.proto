@@ -3,13 +3,13 @@
 http://code.google.com/p/spinn3r-client/source/checkout
 SSH into repo and run:
 
-    protoc --proto_path=src/proto --java_out=test.out src/proto/contentExtension.proto
-
+    protoc --proto_path=src/proto --java_out=src/java src/proto/contentExtension.proto
+    
 */
 
 package extension;
 
-option java_package         = "com.spinn3r.api.protobuf";
+option java_package         = "com.spinn3r.api.proto";
 option java_outer_classname = "ContentExtension";
 
 message Wrapper {
