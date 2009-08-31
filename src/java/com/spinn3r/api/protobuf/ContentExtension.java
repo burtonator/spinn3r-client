@@ -23,29 +23,29 @@ public final class ContentExtension {
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.spinn3r.api.protobuf.ContentExtension.internal_static_extension_Wrapper_descriptor;
+      return com.spinn3r.api.protobuf.ContentExtension.internal_static_contentExtension_Wrapper_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.spinn3r.api.protobuf.ContentExtension.internal_static_extension_Wrapper_fieldAccessorTable;
+      return com.spinn3r.api.protobuf.ContentExtension.internal_static_contentExtension_Wrapper_fieldAccessorTable;
     }
     
-    // optional .extension.Twitter twitter = 1;
+    // optional .contentExtension.Twitter twitter = 1;
     public static final int TWITTER_FIELD_NUMBER = 1;
     private boolean hasTwitter;
     private com.spinn3r.api.protobuf.ContentExtension.Twitter twitter_ = com.spinn3r.api.protobuf.ContentExtension.Twitter.getDefaultInstance();
     public boolean hasTwitter() { return hasTwitter; }
     public com.spinn3r.api.protobuf.ContentExtension.Twitter getTwitter() { return twitter_; }
     
-    // optional .extension.LinkRankNode linkRankNode = 2;
+    // optional .contentExtension.LinkRankNode linkRankNode = 2;
     public static final int LINKRANKNODE_FIELD_NUMBER = 2;
     private boolean hasLinkRankNode;
     private com.spinn3r.api.protobuf.ContentExtension.LinkRankNode linkRankNode_ = com.spinn3r.api.protobuf.ContentExtension.LinkRankNode.getDefaultInstance();
     public boolean hasLinkRankNode() { return hasLinkRankNode; }
     public com.spinn3r.api.protobuf.ContentExtension.LinkRankNode getLinkRankNode() { return linkRankNode_; }
     
-    // optional .extension.Timestamp timestamp = 3;
+    // optional .contentExtension.Timestamp timestamp = 3;
     public static final int TIMESTAMP_FIELD_NUMBER = 3;
     private boolean hasTimestamp;
     private com.spinn3r.api.protobuf.ContentExtension.Timestamp timestamp_ = com.spinn3r.api.protobuf.ContentExtension.Timestamp.getDefaultInstance();
@@ -309,7 +309,7 @@ public final class ContentExtension {
       }
       
       
-      // optional .extension.Twitter twitter = 1;
+      // optional .contentExtension.Twitter twitter = 1;
       public boolean hasTwitter() {
         return result.hasTwitter();
       }
@@ -346,7 +346,7 @@ public final class ContentExtension {
         return this;
       }
       
-      // optional .extension.LinkRankNode linkRankNode = 2;
+      // optional .contentExtension.LinkRankNode linkRankNode = 2;
       public boolean hasLinkRankNode() {
         return result.hasLinkRankNode();
       }
@@ -383,7 +383,7 @@ public final class ContentExtension {
         return this;
       }
       
-      // optional .extension.Timestamp timestamp = 3;
+      // optional .contentExtension.Timestamp timestamp = 3;
       public boolean hasTimestamp() {
         return result.hasTimestamp();
       }
@@ -446,12 +446,12 @@ public final class ContentExtension {
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.spinn3r.api.protobuf.ContentExtension.internal_static_extension_Twitter_descriptor;
+      return com.spinn3r.api.protobuf.ContentExtension.internal_static_contentExtension_Twitter_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.spinn3r.api.protobuf.ContentExtension.internal_static_extension_Twitter_fieldAccessorTable;
+      return com.spinn3r.api.protobuf.ContentExtension.internal_static_contentExtension_Twitter_fieldAccessorTable;
     }
     
     // optional uint32 followers = 1;
@@ -956,12 +956,12 @@ public final class ContentExtension {
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.spinn3r.api.protobuf.ContentExtension.internal_static_extension_LinkRankNode_descriptor;
+      return com.spinn3r.api.protobuf.ContentExtension.internal_static_contentExtension_LinkRankNode_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.spinn3r.api.protobuf.ContentExtension.internal_static_extension_LinkRankNode_fieldAccessorTable;
+      return com.spinn3r.api.protobuf.ContentExtension.internal_static_contentExtension_LinkRankNode_fieldAccessorTable;
     }
     
     // required double rank = 1;
@@ -1389,12 +1389,12 @@ public final class ContentExtension {
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.spinn3r.api.protobuf.ContentExtension.internal_static_extension_Timestamp_descriptor;
+      return com.spinn3r.api.protobuf.ContentExtension.internal_static_contentExtension_Timestamp_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.spinn3r.api.protobuf.ContentExtension.internal_static_extension_Timestamp_fieldAccessorTable;
+      return com.spinn3r.api.protobuf.ContentExtension.internal_static_contentExtension_Timestamp_fieldAccessorTable;
     }
     
     // required string original = 1;
@@ -1645,25 +1645,25 @@ public final class ContentExtension {
   }
   
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_extension_Wrapper_descriptor;
+    internal_static_contentExtension_Wrapper_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_extension_Wrapper_fieldAccessorTable;
+      internal_static_contentExtension_Wrapper_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_extension_Twitter_descriptor;
+    internal_static_contentExtension_Twitter_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_extension_Twitter_fieldAccessorTable;
+      internal_static_contentExtension_Twitter_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_extension_LinkRankNode_descriptor;
+    internal_static_contentExtension_LinkRankNode_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_extension_LinkRankNode_fieldAccessorTable;
+      internal_static_contentExtension_LinkRankNode_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_extension_Timestamp_descriptor;
+    internal_static_contentExtension_Timestamp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_extension_Timestamp_fieldAccessorTable;
+      internal_static_contentExtension_Timestamp_fieldAccessorTable;
   
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -1673,54 +1673,55 @@ public final class ContentExtension {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\026contentExtension.proto\022\textension\"\206\001\n\007" +
-      "Wrapper\022#\n\007twitter\030\001 \001(\0132\022.extension.Twi" +
-      "tter\022-\n\014linkRankNode\030\002 \001(\0132\027.extension.L" +
-      "inkRankNode\022\'\n\ttimestamp\030\003 \001(\0132\024.extensi" +
-      "on.Timestamp\"\222\001\n\007Twitter\022\021\n\tfollowers\030\001 " +
-      "\001(\r\022\017\n\007friends\030\002 \001(\r\022\020\n\010location\030\003 \001(\t\022\031" +
-      "\n\021profile_image_url\030\004 \001(\t\022\014\n\004lang\030\005 \001(\t\022" +
-      "\026\n\016statuses_count\030\006 \001(\r\022\020\n\010verified\030\007 \001(" +
-      "\010\"a\n\014LinkRankNode\022\014\n\004rank\030\001 \002(\001\022\020\n\010indeg" +
-      "ree\030\002 \002(\r\022\021\n\toutdegree\030\003 \002(\r\022\020\n\010resource",
-      "\030\004 \002(\t\022\014\n\004name\030\005 \001(\t\"\035\n\tTimestamp\022\020\n\010ori" +
-      "ginal\030\001 \002(\tB,\n\030com.spinn3r.api.protobufB" +
-      "\020ContentExtension"
+      "\n\026contentExtension.proto\022\020contentExtensi" +
+      "on\"\233\001\n\007Wrapper\022*\n\007twitter\030\001 \001(\0132\031.conten" +
+      "tExtension.Twitter\0224\n\014linkRankNode\030\002 \001(\013" +
+      "2\036.contentExtension.LinkRankNode\022.\n\ttime" +
+      "stamp\030\003 \001(\0132\033.contentExtension.Timestamp" +
+      "\"\222\001\n\007Twitter\022\021\n\tfollowers\030\001 \001(\r\022\017\n\007frien" +
+      "ds\030\002 \001(\r\022\020\n\010location\030\003 \001(\t\022\031\n\021profile_im" +
+      "age_url\030\004 \001(\t\022\014\n\004lang\030\005 \001(\t\022\026\n\016statuses_" +
+      "count\030\006 \001(\r\022\020\n\010verified\030\007 \001(\010\"a\n\014LinkRan" +
+      "kNode\022\014\n\004rank\030\001 \002(\001\022\020\n\010indegree\030\002 \002(\r\022\021\n",
+      "\toutdegree\030\003 \002(\r\022\020\n\010resource\030\004 \002(\t\022\014\n\004na" +
+      "me\030\005 \001(\t\"\035\n\tTimestamp\022\020\n\010original\030\001 \002(\tB" +
+      ",\n\030com.spinn3r.api.protobufB\020ContentExte" +
+      "nsion"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
             com.google.protobuf.Descriptors.FileDescriptor root) {
           descriptor = root;
-          internal_static_extension_Wrapper_descriptor =
+          internal_static_contentExtension_Wrapper_descriptor =
             getDescriptor().getMessageTypes().get(0);
-          internal_static_extension_Wrapper_fieldAccessorTable = new
+          internal_static_contentExtension_Wrapper_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_extension_Wrapper_descriptor,
+              internal_static_contentExtension_Wrapper_descriptor,
               new java.lang.String[] { "Twitter", "LinkRankNode", "Timestamp", },
               com.spinn3r.api.protobuf.ContentExtension.Wrapper.class,
               com.spinn3r.api.protobuf.ContentExtension.Wrapper.Builder.class);
-          internal_static_extension_Twitter_descriptor =
+          internal_static_contentExtension_Twitter_descriptor =
             getDescriptor().getMessageTypes().get(1);
-          internal_static_extension_Twitter_fieldAccessorTable = new
+          internal_static_contentExtension_Twitter_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_extension_Twitter_descriptor,
+              internal_static_contentExtension_Twitter_descriptor,
               new java.lang.String[] { "Followers", "Friends", "Location", "ProfileImageUrl", "Lang", "StatusesCount", "Verified", },
               com.spinn3r.api.protobuf.ContentExtension.Twitter.class,
               com.spinn3r.api.protobuf.ContentExtension.Twitter.Builder.class);
-          internal_static_extension_LinkRankNode_descriptor =
+          internal_static_contentExtension_LinkRankNode_descriptor =
             getDescriptor().getMessageTypes().get(2);
-          internal_static_extension_LinkRankNode_fieldAccessorTable = new
+          internal_static_contentExtension_LinkRankNode_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_extension_LinkRankNode_descriptor,
+              internal_static_contentExtension_LinkRankNode_descriptor,
               new java.lang.String[] { "Rank", "Indegree", "Outdegree", "Resource", "Name", },
               com.spinn3r.api.protobuf.ContentExtension.LinkRankNode.class,
               com.spinn3r.api.protobuf.ContentExtension.LinkRankNode.Builder.class);
-          internal_static_extension_Timestamp_descriptor =
+          internal_static_contentExtension_Timestamp_descriptor =
             getDescriptor().getMessageTypes().get(3);
-          internal_static_extension_Timestamp_fieldAccessorTable = new
+          internal_static_contentExtension_Timestamp_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_extension_Timestamp_descriptor,
+              internal_static_contentExtension_Timestamp_descriptor,
               new java.lang.String[] { "Original", },
               com.spinn3r.api.protobuf.ContentExtension.Timestamp.class,
               com.spinn3r.api.protobuf.ContentExtension.Timestamp.Builder.class);
