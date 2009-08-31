@@ -1,0 +1,122 @@
+package contentApi;
+
+option java_package         = "com.spinn3r.api.protobuf";
+option java_outer_classname = "ContentApi";
+
+
+message Link {
+  optional string href      = 1;
+  optional string resource  = 2;
+}
+
+
+message Lang {
+  optional string code        = 1;
+  optional float  probability = 2;
+}
+
+
+message Content {
+  required string mime_type = 1;
+  optional bytes  data      = 2;
+}
+
+
+message Author {
+  optional string name  = 1;
+  optional string email = 2;
+  repeated Link   link  = 3;
+}
+
+
+message Source {
+  repeated Link   link             = 1;
+  optional Link   canonical_link   = 2;
+  optional string title            = 3;
+  optional string hashcode         = 4;
+  repeated Lang   lang             = 5;
+  optional string generator        = 6;
+  optional string description      = 7;
+  optional int32  resource_status  = 8;
+  optional string last_posted      = 9;
+  optional string last_published   = 10;
+  optional string date_found       = 11;
+  optional string etag             = 12;
+  optional float  spam_probability = 13;
+
+  optional sint32 tier             = 14;
+  optional int32  indegree         = 15;
+  optional string publisher_type   = 16;
+  optional bool   disabled         = 17;
+}
+
+
+message Feed {
+  repeated Link   link             = 1;
+  optional Link   canonical_link   = 2;
+  optional string title            = 3;
+  optional string hashcode         = 4;
+  repeated Lang   lang             = 5;
+  optional string generator        = 6;
+  optional string description      = 7;
+  optional int32  resource_status  = 8;
+  optional string last_posted      = 9;
+  optional string last_published   = 10;
+  optional string date_found       = 11;
+  optional string etag             = 12;
+  optional float  spam_probability = 13;
+
+  optional Link   channel_link     = 14;
+}
+
+
+message PermalinkEntry {
+  repeated Link    link             = 1;
+  optional Link    canonical_link   = 2;
+  optional string  title            = 3;
+  optional string  hashcode         = 4;
+  repeated Lang    lang             = 5;
+  repeated Author  author           = 6;
+  repeated string  category         = 7;
+  optional float   spam_probability = 8;
+  optional string  last_published   = 9;
+  optional string  date_found       = 10;
+  optional int64   identifier       = 11;
+  optional Content content          = 12;
+
+  optional Content content_extract  = 13;
+  optional string  generator        = 14;
+}
+
+
+message FeedEntry {
+  repeated Link    link             = 1;
+  optional Link    canonical_link   = 2;
+  optional string  title            = 3;
+  optional string  hashcode         = 4;
+  repeated Lang    lang             = 5;
+  repeated Author  author           = 6;
+  repeated string  category         = 7;
+  optional float   spam_probability = 8;
+  optional string  last_published   = 9;
+  optional string  date_found       = 10;
+  optional int64   identifier       = 11;
+  optional Content content          = 12;
+}
+
+
+message Entry {
+  optional Source         source          = 1;
+  optional Feed           feed            = 2;
+  optional FeedEntry      feed_entry      = 3;
+  optional PermalinkEntry permalink_entry = 4;
+}
+
+
+message Response {
+  optional string request_url          = 1;
+  optional string previous_request_url = 2;
+  optional string next_request_url     = 3;
+  repeated Entry  entry                = 4;
+}
+
