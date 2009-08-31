@@ -1,3 +1,12 @@
+/*
+
+http://code.google.com/p/spinn3r-client/source/checkout
+SSH into repo and run:
+
+    protoc --proto_path=src/proto --java_out=test.out src/proto/contentExtension.proto
+
+*/
+
 package extension;
 
 option java_package         = "com.spinn3r.api.protobuf";
@@ -22,9 +31,9 @@ message Twitter {
     optional string lang = 5;
 
     //total number of status updates from this user.
-    optional uint31 statuses_count = 6;
+    optional uint32 statuses_count = 6;
 
-    optional boolean verified = 7;
+    optional bool verified = 7;
     
 }
 
