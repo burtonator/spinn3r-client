@@ -44,6 +44,18 @@ public final class ContentApi {
     public boolean hasResource() { return hasResource; }
     public java.lang.String getResource() { return resource_; }
     
+    // optional string mime_type = 3;
+    private boolean hasMimeType;
+    private java.lang.String mimeType_ = "";
+    public boolean hasMimeType() { return hasMimeType; }
+    public java.lang.String getMimeType() { return mimeType_; }
+    
+    // optional string rel = 4;
+    private boolean hasRel;
+    private java.lang.String rel_ = "";
+    public boolean hasRel() { return hasRel; }
+    public java.lang.String getRel() { return rel_; }
+    
     public static com.spinn3r.api.protobuf.ContentApi.Link parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -187,6 +199,42 @@ public final class ContentApi {
       public Builder clearResource() {
         result.hasResource = false;
         result.resource_ = "";
+        return this;
+      }
+      
+      // optional string mime_type = 3;
+      public boolean hasMimeType() {
+        return result.hasMimeType();
+      }
+      public java.lang.String getMimeType() {
+        return result.getMimeType();
+      }
+      public Builder setMimeType(java.lang.String value) {
+        result.hasMimeType = true;
+        result.mimeType_ = value;
+        return this;
+      }
+      public Builder clearMimeType() {
+        result.hasMimeType = false;
+        result.mimeType_ = "";
+        return this;
+      }
+      
+      // optional string rel = 4;
+      public boolean hasRel() {
+        return result.hasRel();
+      }
+      public java.lang.String getRel() {
+        return result.getRel();
+      }
+      public Builder setRel(java.lang.String value) {
+        result.hasRel = true;
+        result.rel_ = value;
+        return this;
+      }
+      public Builder clearRel() {
+        result.hasRel = false;
+        result.rel_ = "";
         return this;
       }
     }
@@ -2170,6 +2218,12 @@ public final class ContentApi {
     public boolean hasGenerator() { return hasGenerator; }
     public java.lang.String getGenerator() { return generator_; }
     
+    // optional string raw_published = 15;
+    private boolean hasRawPublished;
+    private java.lang.String rawPublished_ = "";
+    public boolean hasRawPublished() { return hasRawPublished; }
+    public java.lang.String getRawPublished() { return rawPublished_; }
+    
     public static com.spinn3r.api.protobuf.ContentApi.PermalinkEntry parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -2690,6 +2744,24 @@ public final class ContentApi {
       public Builder clearGenerator() {
         result.hasGenerator = false;
         result.generator_ = "";
+        return this;
+      }
+      
+      // optional string raw_published = 15;
+      public boolean hasRawPublished() {
+        return result.hasRawPublished();
+      }
+      public java.lang.String getRawPublished() {
+        return result.getRawPublished();
+      }
+      public Builder setRawPublished(java.lang.String value) {
+        result.hasRawPublished = true;
+        result.rawPublished_ = value;
+        return this;
+      }
+      public Builder clearRawPublished() {
+        result.hasRawPublished = false;
+        result.rawPublished_ = "";
         return this;
       }
     }
@@ -3926,22 +3998,13 @@ public final class ContentApi {
       descriptor;
   static {
     java.lang.String descriptorData =
-      "\n\020spinn3rApi.proto\022\ncontentApi\"&\n\004Link\022\014" +
-      "\n\004href\030\001 \001(\t\022\020\n\010resource\030\002 \001(\t\")\n\004Lang\022\014" +
-      "\n\004code\030\001 \001(\t\022\023\n\013probability\030\002 \001(\002\"*\n\007Con" +
-      "tent\022\021\n\tmime_type\030\001 \002(\t\022\014\n\004data\030\002 \001(\014\"E\n" +
-      "\006Author\022\014\n\004name\030\001 \001(\t\022\r\n\005email\030\002 \001(\t\022\036\n\004" +
-      "link\030\003 \003(\0132\020.contentApi.Link\"\207\003\n\006Source\022" +
-      "\036\n\004link\030\001 \003(\0132\020.contentApi.Link\022(\n\016canon" +
-      "ical_link\030\002 \001(\0132\020.contentApi.Link\022\r\n\005tit" +
-      "le\030\003 \001(\t\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030\005 \003(\013" +
-      "2\020.contentApi.Lang\022\021\n\tgenerator\030\006 \001(\t\022\023\n" +
-      "\013description\030\007 \001(\t\022\027\n\017resource_status\030\010 " +
-      "\001(\005\022\023\n\013last_posted\030\t \001(\t\022\026\n\016last_publish" +
-      "ed\030\n \001(\t\022\022\n\ndate_found\030\013 \001(\t\022\014\n\004etag\030\014 \001" +
-      "(\t\022\030\n\020spam_probability\030\r \001(\002\022\014\n\004tier\030\016 \001" +
-      "(\021\022\020\n\010indegree\030\017 \001(\005\022\026\n\016publisher_type\030\020" +
-      " \001(\t\022\020\n\010disabled\030\021 \001(\010\"\343\002\n\004Feed\022\036\n\004link\030" +
+      "\n\020spinn3rApi.proto\022\ncontentApi\"F\n\004Link\022\014" +
+      "\n\004href\030\001 \001(\t\022\020\n\010resource\030\002 \001(\t\022\021\n\tmime_t" +
+      "ype\030\003 \001(\t\022\013\n\003rel\030\004 \001(\t\")\n\004Lang\022\014\n\004code\030\001" +
+      " \001(\t\022\023\n\013probability\030\002 \001(\002\"*\n\007Content\022\021\n\t" +
+      "mime_type\030\001 \002(\t\022\014\n\004data\030\002 \001(\014\"E\n\006Author\022" +
+      "\014\n\004name\030\001 \001(\t\022\r\n\005email\030\002 \001(\t\022\036\n\004link\030\003 \003" +
+      "(\0132\020.contentApi.Link\"\207\003\n\006Source\022\036\n\004link\030" +
       "\001 \003(\0132\020.contentApi.Link\022(\n\016canonical_lin" +
       "k\030\002 \001(\0132\020.contentApi.Link\022\r\n\005title\030\003 \001(\t" +
       "\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030\005 \003(\0132\020.conte" +
@@ -3949,35 +4012,45 @@ public final class ContentApi {
       "tion\030\007 \001(\t\022\027\n\017resource_status\030\010 \001(\005\022\023\n\013l" +
       "ast_posted\030\t \001(\t\022\026\n\016last_published\030\n \001(\t" +
       "\022\022\n\ndate_found\030\013 \001(\t\022\014\n\004etag\030\014 \001(\t\022\030\n\020sp" +
-      "am_probability\030\r \001(\002\022&\n\014channel_link\030\016 \001" +
-      "(\0132\020.contentApi.Link\"\222\003\n\016PermalinkEntry\022" +
-      "\036\n\004link\030\001 \003(\0132\020.contentApi.Link\022(\n\016canon" +
-      "ical_link\030\002 \001(\0132\020.contentApi.Link\022\r\n\005tit" +
-      "le\030\003 \001(\t\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030\005 \003(\013" +
-      "2\020.contentApi.Lang\022\"\n\006author\030\006 \003(\0132\022.con" +
-      "tentApi.Author\022\020\n\010category\030\007 \003(\t\022\030\n\020spam" +
-      "_probability\030\010 \001(\002\022\026\n\016last_published\030\t \001" +
-      "(\t\022\022\n\ndate_found\030\n \001(\t\022\022\n\nidentifier\030\013 \001" +
-      "(\003\022$\n\007content\030\014 \001(\0132\023.contentApi.Content" +
-      "\022,\n\017content_extract\030\r \001(\0132\023.contentApi.C" +
-      "ontent\022\021\n\tgenerator\030\016 \001(\t\"\314\002\n\tFeedEntry\022" +
-      "\036\n\004link\030\001 \003(\0132\020.contentApi.Link\022(\n\016canon" +
-      "ical_link\030\002 \001(\0132\020.contentApi.Link\022\r\n\005tit" +
-      "le\030\003 \001(\t\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030\005 \003(\013" +
-      "2\020.contentApi.Lang\022\"\n\006author\030\006 \003(\0132\022.con" +
-      "tentApi.Author\022\020\n\010category\030\007 \003(\t\022\030\n\020spam" +
-      "_probability\030\010 \001(\002\022\026\n\016last_published\030\t \001" +
-      "(\t\022\022\n\ndate_found\030\n \001(\t\022\022\n\nidentifier\030\013 \001" +
-      "(\003\022$\n\007content\030\014 \001(\0132\023.contentApi.Content" +
-      "\"\253\001\n\005Entry\022\"\n\006source\030\001 \001(\0132\022.contentApi." +
-      "Source\022\036\n\004feed\030\002 \001(\0132\020.contentApi.Feed\022)" +
-      "\n\nfeed_entry\030\003 \001(\0132\025.contentApi.FeedEntr" +
-      "y\0223\n\017permalink_entry\030\004 \001(\0132\032.contentApi." +
-      "PermalinkEntry\"y\n\010Response\022\023\n\013request_ur" +
-      "l\030\001 \001(\t\022\034\n\024previous_request_url\030\002 \001(\t\022\030\n" +
-      "\020next_request_url\030\003 \001(\t\022 \n\005entry\030\004 \003(\0132\021" +
-      ".contentApi.EntryB&\n\030com.spinn3r.api.pro" +
-      "tobufB\nContentApi";
+      "am_probability\030\r \001(\002\022\014\n\004tier\030\016 \001(\021\022\020\n\010in" +
+      "degree\030\017 \001(\005\022\026\n\016publisher_type\030\020 \001(\t\022\020\n\010" +
+      "disabled\030\021 \001(\010\"\343\002\n\004Feed\022\036\n\004link\030\001 \003(\0132\020." +
+      "contentApi.Link\022(\n\016canonical_link\030\002 \001(\0132" +
+      "\020.contentApi.Link\022\r\n\005title\030\003 \001(\t\022\020\n\010hash" +
+      "code\030\004 \001(\t\022\036\n\004lang\030\005 \003(\0132\020.contentApi.La" +
+      "ng\022\021\n\tgenerator\030\006 \001(\t\022\023\n\013description\030\007 \001" +
+      "(\t\022\027\n\017resource_status\030\010 \001(\005\022\023\n\013last_post" +
+      "ed\030\t \001(\t\022\026\n\016last_published\030\n \001(\t\022\022\n\ndate" +
+      "_found\030\013 \001(\t\022\014\n\004etag\030\014 \001(\t\022\030\n\020spam_proba" +
+      "bility\030\r \001(\002\022&\n\014channel_link\030\016 \001(\0132\020.con" +
+      "tentApi.Link\"\251\003\n\016PermalinkEntry\022\036\n\004link\030" +
+      "\001 \003(\0132\020.contentApi.Link\022(\n\016canonical_lin" +
+      "k\030\002 \001(\0132\020.contentApi.Link\022\r\n\005title\030\003 \001(\t" +
+      "\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030\005 \003(\0132\020.conte" +
+      "ntApi.Lang\022\"\n\006author\030\006 \003(\0132\022.contentApi." +
+      "Author\022\020\n\010category\030\007 \003(\t\022\030\n\020spam_probabi" +
+      "lity\030\010 \001(\002\022\026\n\016last_published\030\t \001(\t\022\022\n\nda" +
+      "te_found\030\n \001(\t\022\022\n\nidentifier\030\013 \001(\003\022$\n\007co" +
+      "ntent\030\014 \001(\0132\023.contentApi.Content\022,\n\017cont" +
+      "ent_extract\030\r \001(\0132\023.contentApi.Content\022\021" +
+      "\n\tgenerator\030\016 \001(\t\022\025\n\rraw_published\030\017 \001(\t" +
+      "\"\314\002\n\tFeedEntry\022\036\n\004link\030\001 \003(\0132\020.contentAp" +
+      "i.Link\022(\n\016canonical_link\030\002 \001(\0132\020.content" +
+      "Api.Link\022\r\n\005title\030\003 \001(\t\022\020\n\010hashcode\030\004 \001(" +
+      "\t\022\036\n\004lang\030\005 \003(\0132\020.contentApi.Lang\022\"\n\006aut" +
+      "hor\030\006 \003(\0132\022.contentApi.Author\022\020\n\010categor" +
+      "y\030\007 \003(\t\022\030\n\020spam_probability\030\010 \001(\002\022\026\n\016las" +
+      "t_published\030\t \001(\t\022\022\n\ndate_found\030\n \001(\t\022\022\n" +
+      "\nidentifier\030\013 \001(\003\022$\n\007content\030\014 \001(\0132\023.con" +
+      "tentApi.Content\"\253\001\n\005Entry\022\"\n\006source\030\001 \001(" +
+      "\0132\022.contentApi.Source\022\036\n\004feed\030\002 \001(\0132\020.co" +
+      "ntentApi.Feed\022)\n\nfeed_entry\030\003 \001(\0132\025.cont" +
+      "entApi.FeedEntry\0223\n\017permalink_entry\030\004 \001(" +
+      "\0132\032.contentApi.PermalinkEntry\"y\n\010Respons" +
+      "e\022\023\n\013request_url\030\001 \001(\t\022\034\n\024previous_reque" +
+      "st_url\030\002 \001(\t\022\030\n\020next_request_url\030\003 \001(\t\022 " +
+      "\n\005entry\030\004 \003(\0132\021.contentApi.EntryB&\n\030com." +
+      "spinn3r.api.protobufB\nContentApi";
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
@@ -3988,7 +4061,7 @@ public final class ContentApi {
           internal_static_contentApi_Link_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_contentApi_Link_descriptor,
-              new java.lang.String[] { "Href", "Resource", },
+              new java.lang.String[] { "Href", "Resource", "MimeType", "Rel", },
               com.spinn3r.api.protobuf.ContentApi.Link.class,
               com.spinn3r.api.protobuf.ContentApi.Link.Builder.class);
           internal_static_contentApi_Lang_descriptor =
@@ -4036,7 +4109,7 @@ public final class ContentApi {
           internal_static_contentApi_PermalinkEntry_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_contentApi_PermalinkEntry_descriptor,
-              new java.lang.String[] { "Link", "CanonicalLink", "Title", "Hashcode", "Lang", "Author", "Category", "SpamProbability", "LastPublished", "DateFound", "Identifier", "Content", "ContentExtract", "Generator", },
+              new java.lang.String[] { "Link", "CanonicalLink", "Title", "Hashcode", "Lang", "Author", "Category", "SpamProbability", "LastPublished", "DateFound", "Identifier", "Content", "ContentExtract", "Generator", "RawPublished", },
               com.spinn3r.api.protobuf.ContentApi.PermalinkEntry.class,
               com.spinn3r.api.protobuf.ContentApi.PermalinkEntry.Builder.class);
           internal_static_contentApi_FeedEntry_descriptor =
