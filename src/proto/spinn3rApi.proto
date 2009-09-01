@@ -1,3 +1,15 @@
+/*
+
+http://code.google.com/p/spinn3r-client/source/checkout
+SSH into repo and run:
+
+    svn up
+    protoc --proto_path=src/proto --java_out=src/java src/proto/spinn3rApi.proto
+    ant compile
+    svn commit -m "new protobufs"
+    
+*/
+
 package contentApi;
 
 option java_package         = "com.spinn3r.api.protobuf";
@@ -7,7 +19,7 @@ message Link {
   optional string href      = 1;
   optional string resource  = 2;
   optional string mime_type = 3;
-  optioanl string rel       = 4;
+  optional string rel       = 4;
 }
 
 message Lang {
