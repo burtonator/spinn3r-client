@@ -3,7 +3,10 @@
 http://code.google.com/p/spinn3r-client/source/checkout
 SSH into repo and run:
 
+    svn up
     protoc --proto_path=src/proto --java_out=src/java src/proto/contentExtension.proto
+    ant compile
+    svn commit -m "new protobufs"
     
 */
 
@@ -14,9 +17,13 @@ option java_outer_classname = "ContentExtension";
 
 message Wrapper {
 
-    optional Twitter twitter = 1;
-    optional LinkRankNode linkRankNode = 2;
-    optional Timestamp timestamp = 3;
+    optional Twitter twitter              = 1;
+    optional LinkRankNode linkRankNode    = 2;
+    optional Timestamp timestamp          = 3;
+
+    optional string redirect              = 4;
+    optional string canonical             = 5;
+
 }
 
 message Twitter {

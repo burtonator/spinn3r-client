@@ -3,31 +3,28 @@ package contentApi;
 option java_package         = "com.spinn3r.api.protobuf";
 option java_outer_classname = "ContentApi";
 
-
 message Link {
   optional string href      = 1;
   optional string resource  = 2;
+  optional string mime_type = 3;
+  optioanl string rel       = 4;
 }
-
 
 message Lang {
   optional string code        = 1;
   optional float  probability = 2;
 }
 
-
 message Content {
   required string mime_type = 1;
   optional bytes  data      = 2;
 }
-
 
 message Author {
   optional string name  = 1;
   optional string email = 2;
   repeated Link   link  = 3;
 }
-
 
 message Source {
   repeated Link   link             = 1;
@@ -50,7 +47,6 @@ message Source {
   optional bool   disabled         = 17;
 }
 
-
 message Feed {
   repeated Link   link             = 1;
   optional Link   canonical_link   = 2;
@@ -69,8 +65,18 @@ message Feed {
   optional Link   channel_link     = 14;
 }
 
-
+/**
+ * raw_published:
+ * 
+ * The raw and opaque string specified by the entry, often in the HTML, which
+ * represents the time the user/site thinks this story was published.  Although
+ * this MAY be parsable by algorithsm like ISO 8601 or RFC 822, it may not be
+ * parsable and internalized into a date model.  One example is if the site
+ * omits a timezone.  Another is if they only use the day (Jan 1, 1970) and not
+ * a time.
+ */
 message PermalinkEntry {
+
   repeated Link    link             = 1;
   optional Link    canonical_link   = 2;
   optional string  title            = 3;
@@ -86,8 +92,10 @@ message PermalinkEntry {
 
   optional Content content_extract  = 13;
   optional string  generator        = 14;
-}
 
+  optional string  raw_published    = 15;
+
+}
 
 message FeedEntry {
   repeated Link    link             = 1;
@@ -104,14 +112,12 @@ message FeedEntry {
   optional Content content          = 12;
 }
 
-
 message Entry {
   optional Source         source          = 1;
   optional Feed           feed            = 2;
   optional FeedEntry      feed_entry      = 3;
   optional PermalinkEntry permalink_entry = 4;
 }
-
 
 message Response {
   optional string request_url          = 1;
@@ -120,3 +126,34 @@ message Response {
   repeated Entry  entry                = 4;
 }
 
+/**
+ * 
+ * lang: 
+ * 
+ * The twitter/user specified language.  This might be incorrect but we like to
+ * preserve all metadata.
+ *
+ * statuses_count:
+ * 
+ * total number of status updates from this user.
+ * 
+ */
+
+/*
+
+Tue Sep 01 2009 10:32 AM (burton@tailrank.com): NOTE: this is still in
+development but I wanted to preserve this message signature as I believe we're
+90% of the way there to supporting this extension.
+
+message TwitterEntry {
+
+  optional uint32 followers          = 1;
+  optional uint32 friends            = 2;
+  optional string location           = 3;
+  optional string profile_image_url  = 4;
+  optional string lang               = 5;
+  optional uint32 statuses_count     = 6;
+  optional bool   verified           = 7;
+  
+}
+*/
