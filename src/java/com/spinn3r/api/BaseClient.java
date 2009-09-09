@@ -855,7 +855,7 @@ public abstract class BaseClient implements Client {
         }
 
         // dc:source
-        item.setSource( source.getCanonicalLink().getHref() );
+        item.setSource( source.getLink(0).getHref() );
         
         // weblog:title
         // weblog:description
