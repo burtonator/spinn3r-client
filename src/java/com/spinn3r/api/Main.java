@@ -49,7 +49,7 @@ public class Main {
     /**
      * Determines how long we should wait between retries.
      */
-    public static long RETRY_INTERVAL = 10L * 1000L;
+    public static long RETRY_INTERVAL = 1L * 1000L;
 
     /**
      * Default for show_results
@@ -146,6 +146,33 @@ public class Main {
     public Main( BaseClient client ) {
         this.client = client;
     }
+
+    /**
+     * Parse the 'after' param from a request URL as a timestamp.
+     *
+     */
+    long parseAfterTimestampFromRequestURL( String request ) {
+
+        if ( request != null ) {
+        
+            Pattern p = Pattern.compile( "after=([0-9]+)" );
+            Matcher m = p.matcher( request );
+
+            if ( m.find() ) {
+
+                long ts = Long.parseLong( m.group( 1 ) );
+
+                ts = (ts / 1000000000) * 1000;
+
+                return ts;
+                
+            }
+
+        }
+            
+        return -1;
+        
+    }
     
     /**
      * Process results, handling them as necessary.
@@ -159,24 +186,15 @@ public class Main {
 
             String next_request_url = client.getNextRequestURL();
 
-            if ( next_request_url != null ) {
-            
-                Pattern p = Pattern.compile( "after=([0-9]+)" );
-                Matcher m = p.matcher( next_request_url );
+            long ts = parseAfterTimestampFromRequestURL( next_request_url );
 
-                if ( m.find() ) {
+            if ( ts != -1 ) {
 
-                    long ts = Long.parseLong( m.group( 1 ) );
+                last = new Date( ts );
 
-                    ts = (ts / 1000000000) * 1000;
-
-                    last = new Date( ts );
-
-                    sampler1.sample( last );
-                    sampler5.sample( last );
-                    sampler15.sample( last );
-
-                }
+                sampler1.sample( last );
+                sampler5.sample( last );
+                sampler15.sample( last );
 
             }
                 
@@ -511,21 +529,18 @@ public class Main {
             
             if ( "hierarchical".equals( save_method ) ) {
 
-                //FIXME: use the time stamp from the after param in the URL.
-                
+                long ts = parseAfterTimestampFromRequestURL( client.getLastRequestURL() );
+
                 TimeZone tz = TimeZone.getTimeZone( "UTC" );
                 Calendar c = Calendar.getInstance( tz );
-                c.setTime( new Date( now ) );
+                c.setTime( new Date( ts ) );
 
-                //FIXME: should be %0d for day of month and month I think.
-                //FIXME: swap in the new file, don't expose it until it's fully
-                //written.
-                String path = String.format( "%s/%s/%s/%s/%s.xml",
+                String path = String.format( "%s/%s/%02d/%02d/%s.xml",
                                              config.getApi(),
                                              c.get( c.YEAR ),
-                                             c.get( c.MONTH ),
+                                             c.get( c.MONTH ) + 1,
                                              c.get( c.DAY_OF_MONTH ),
-                                             now );
+                                             ts );
 
                 file = new File( root, path );
 
@@ -551,7 +566,10 @@ public class Main {
             if ( client.isCompressed ) {
                file = new File( file.getPath() + ".gz" ) ;
             }
-            
+
+            //swap in the new file, don't expose it until it's fully written.
+            file = new File( file.getPath() + ".tmp" ) ;
+
             InputStream is = client.getInputStream();
 
             FileOutputStream os = new FileOutputStream( file );
@@ -567,6 +585,15 @@ public class Main {
             is.close();
             os.close();
 
+            //now perform the final rename.
+            File dest = new File( file.getPath().replaceAll( ".tmp" , "" ) );
+
+            if ( dest.exists() ) {
+                dest.delete();
+            }
+            
+            file.renameTo( dest );
+            
         }
         
         //get the results found from the last fetch.
