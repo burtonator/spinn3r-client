@@ -8,7 +8,7 @@
 
     <property name="project"      value="spinn3r-client"/>
     <property name="javadocdir"   value="javadoc"/>
-    <property name="version"      value="3.1.27"/>
+    <property name="version"      value="3.1.31-beta1"/>
     <property name="vendor"       value="Tailrank Inc."/>
 
     <path id="project.classpath">

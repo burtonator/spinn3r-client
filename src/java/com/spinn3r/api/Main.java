@@ -1,5 +1,5 @@
 /*
- * Copyright 2007 Tailrank, Inc.
+ * Copyright 2009 Tailrank, Inc (Spinn3r).
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
@@ -33,6 +33,18 @@ import com.spinn3r.api.util.*;
  * 
  */
 public class Main {
+
+    /**
+     * When true, do not parse the document, just save it to disk.
+     */
+    public static boolean ENABLE_FAST_SAVE = true;
+
+    public static boolean ENABLE_NO_PARSE_ON_SAVE = true;
+    
+    /**
+     * Minimum amount of memory required to run the client.
+     */
+    public static long REQUIRED_MEMORY = 2000L * 1000L * 1000L;
 
     /**
      * Determines how long we should wait between retries.
@@ -139,6 +151,39 @@ public class Main {
      * Process results, handling them as necessary.
      */
     void process( List<BaseResult> results ) throws Exception {
+
+        if ( ENABLE_FAST_SAVE && save != null ) {
+
+            //NOTE: this is a bit of a hack to obtain a time sampling from the
+            //Spinn3r API as it executes.
+
+            String next_request_url = client.getNextRequestURL();
+
+            if ( next_request_url != null ) {
+            
+                Pattern p = Pattern.compile( "after=([0-9]+)" );
+                Matcher m = p.matcher( next_request_url );
+
+                if ( m.find() ) {
+
+                    long ts = Long.parseLong( m.group( 1 ) );
+
+                    ts = (ts / 1000000000) * 1000;
+
+                    last = new Date( ts );
+
+                    sampler1.sample( last );
+                    sampler5.sample( last );
+                    sampler15.sample( last );
+
+                }
+
+            }
+                
+            //right now the client doesn't support saving to disk.
+            return;
+
+        }
 
         for( BaseResult result : results ) {
 
@@ -318,7 +363,12 @@ public class Main {
 
         if ( csv )
             return;
-        
+
+        System.out.println( "--" );
+
+        System.out.println( "Last request URL:         " + client.getLastRequestURL() );
+        System.out.println( "Next request URL:         " + client.getNextRequestURL() );
+
         System.out.println( "-------------------------------------------" );
 
         long fetch_duration = fetch_after - fetch_before;
@@ -331,6 +381,7 @@ public class Main {
             System.out.println( "--" );
             
             System.out.println( "API call duration:        " + client.getCallDuration() );
+            System.out.println( "API parse duration:       " + client.getParseDuration() );
             System.out.println( "API sleep duration:       " + client.getSleepDuration() );
 
             System.out.print( "API performance:          " );
@@ -344,9 +395,11 @@ public class Main {
 
             /*
 
-              This won't really work because gzip number are hidden and I can't
-              use the raw number of characters in the string because this might
-              be a multi-byte UTC sequence.
+            TODO: the client SHOULD compute effective bandwidth.
+              
+            This won't really work because gzip number are hidden and I can't
+            use the raw number of characters in the string because this might
+            be a multi-byte UTC sequence.
               
             System.out.print( "Effective bandwidth:    " );
             System.out.print( client.bs1.getBandwidthAsHumanMetric() );
@@ -354,32 +407,39 @@ public class Main {
             System.out.print( client.bs5.getBandwidthAsHumanMetric() );
             System.out.print( "    " );
             System.out.print( client.bs15.getBandwidthAsHumanMetric() );
+
             */
+
             System.out.println();
+
+            if ( last != null ) {
             
+                long diff = System.currentTimeMillis() - last.getTime();
+                
+                System.out.println( "Seconds behind present:   " + ( diff / 1000 ) );
+
+            }
+                
         }
-            
+
+        if ( ENABLE_FAST_SAVE && save != null ) {
+            //right now the client doesn't support saving to disk.
+            return;
+        }
+
         System.out.println( "--" );
 
         System.out.println( "Number items returned:    " + results.size() );
-        System.out.println( "Last request URL:         " + client.getLastRequestURL() );
-        System.out.println( "Next request URL:         " + client.getNextRequestURL() );
-
-        if ( last == null )
-            return;
-            
-        long diff = System.currentTimeMillis() - last.getTime();
-
-        if ( timing ) {
-
-            System.out.println( "Seconds behind present:   " + ( diff / 1000 ) );
-        }
 
     }
 
     public void exec() throws Exception {
 
         Config  config       = client.getConfig();
+
+        if ( ENABLE_NO_PARSE_ON_SAVE && save != null ) {
+            client.disable_parse = true;
+        }
         
         while( true ) {
 
@@ -428,15 +488,15 @@ public class Main {
 
         //fetch the most recent results.  This will block if necessary.
 
-        long fetch_before = System.currentTimeMillis();
+        fetch_before = System.currentTimeMillis();
 
         client.fetch();
 
-        long fetch_after  = System.currentTimeMillis();
+        fetch_after  = System.currentTimeMillis();
 
         List<BaseResult> results = client.getResults();
 
-        if ( save != null && results.size() != 0 ) {
+        if ( save != null ) {
 
             //save the results to disk if necessary.
 
@@ -447,12 +507,19 @@ public class Main {
             
             File file = null;
 
+            //TODO: use .gz if the XML is compressed from the server directly.  
+            
             if ( "hierarchical".equals( save_method ) ) {
 
+                //FIXME: use the time stamp from the after param in the URL.
+                
                 TimeZone tz = TimeZone.getTimeZone( "UTC" );
                 Calendar c = Calendar.getInstance( tz );
                 c.setTime( new Date( now ) );
 
+                //FIXME: should be %0d for day of month and month I think.
+                //FIXME: swap in the new file, don't expose it until it's fully
+                //written.
                 String path = String.format( "%s/%s/%s/%s/%s.xml",
                                              config.getApi(),
                                              c.get( c.YEAR ),
@@ -480,10 +547,14 @@ public class Main {
                 file = new File( root, path );
                 
             }
+
+            if ( client.isCompressed ) {
+               file = new File( file.getPath() + ".gz" ) ;
+            }
             
             InputStream is = client.getInputStream();
-            FileOutputStream os =
-                new FileOutputStream( file );
+
+            FileOutputStream os = new FileOutputStream( file );
 
             byte[] data = new byte[ 2048 ];
 
@@ -780,13 +851,12 @@ public class Main {
         }
 
         long maxMemory = Runtime.getRuntime().maxMemory();
-        long requiredMemory = 384L * 1000L * 1000L;
         
-        if ( maxMemory < requiredMemory ) {
+        if ( maxMemory < REQUIRED_MEMORY ) {
 
             System.out.printf( "ERROR: Reference client requires at least 384MB of memory.\n" );
             System.out.printf( "\n" );
-            System.out.printf( "Now running with: %s vs %s required\n", maxMemory, requiredMemory );
+            System.out.printf( "Now running with: %s vs %s required\n", maxMemory, REQUIRED_MEMORY );
             System.out.printf( "\n" );
             System.out.printf( "Add -Xmx384M to your command line and run again.\n" );
             

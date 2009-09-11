@@ -54,7 +54,6 @@ public abstract class BaseClient implements Client {
 
     private static String X_MORE_RESULTS = "X-More-Results";
 
-
     /**
      * Maximum number of retries.
      */
@@ -86,8 +85,6 @@ public abstract class BaseClient implements Client {
     public static String LINK_HANDLER       = "link3";
     
     public static final String GZIP_ENCODING = "gzip";
-
-    public static boolean DISABLE_PARSE = false;
 
     // Would be nice to have this use String.format() but this isn't really
     // compatible back to Java 1.4.. are we requiring Java 1.5 now?
@@ -156,6 +153,8 @@ public abstract class BaseClient implements Client {
      */
     public static boolean DEFAULT_HTTP_KEEPALIVE = true;
 
+    protected boolean disable_parse = false;
+
     private String lastRequestURL = null;
     private String nextRequestURL = null;
 
@@ -168,7 +167,9 @@ public abstract class BaseClient implements Client {
      * How long actually we slept (duration) while performing the last API call.
      */
     private long sleepDuration = -1;
-    
+
+    private long parseDuration = -1;
+
     protected List results = new ArrayList();
 
     protected Config config = null;
@@ -176,7 +177,7 @@ public abstract class BaseClient implements Client {
     /**
      * True if the last API call was compressed.
      */
-    boolean isCompressed = false;
+    protected boolean isCompressed = false;
 
     /**
      * Get the last localInputStream we're using.  This is a
@@ -223,18 +224,23 @@ public abstract class BaseClient implements Client {
             //content.  The GZIPInputStream class will first attempt to read the
             //gzip magic number in its constructor.  If the magic number is
             //incorrect then it will throw an exception.
-            try {
-                InputStream gz = new GZIPInputStream( is );
-                is = gz;
-            } catch ( IOException e ) {
 
-                //TODO: are we going to add log4j support?
-                //log.warn( "Detected invalid gzip stream.  Using uncompressed stream.", e );
-                //reset since GZIPInputStream might have read some content
-                is.reset();
-                
+            if ( disable_parse == false ) {
+
+                try {
+                    InputStream gz = new GZIPInputStream( is );
+                    is = gz;
+                } catch ( IOException e ) {
+
+                    //TODO: are we going to add log4j support?
+                    //log.warn( "Detected invalid gzip stream.  Using uncompressed stream.", e );
+                    //reset since GZIPInputStream might have read some content
+                    is.reset();
+                    
+                }
+
             }
-            
+                
         }
 
         return is;
@@ -330,14 +336,16 @@ public abstract class BaseClient implements Client {
 
         } else if ( ! hasMoreResults ) {
 
-            if ( ! DISABLE_PARSE ) {
+            if ( ! disable_parse ) {
             
                 long sleepInterval = config.getSleepInterval();
                 
                 //we've fetched before so determine if we need to spin.
                 Thread.sleep( sleepInterval );
                 setSleepDuration( sleepInterval );
+                
             }
+            
         } 
 
         //apply the requestLimit to the current URL.  This needs to be done so
@@ -354,11 +362,24 @@ public abstract class BaseClient implements Client {
 
         try {
 
-            if ( config.getUseProtobuf() )
-                protobufParse( doProtobufFetch( resource ) );
-            else
-                xmlParse( doXmlFetch( resource ) );
+            long before = System.currentTimeMillis();
 
+            if ( config.getUseProtobuf() ) {
+                protobufParse( doProtobufFetch( resource ) );
+            } else {
+
+                Document doc = doXmlFetch( resource );
+
+                if ( doc != null ) {
+                    xmlParse( doc );
+                }
+                
+            }
+
+            long after = System.currentTimeMillis();
+
+            setParseDuration( after - before );
+            
         } 
 
         catch ( Exception e ) {
@@ -417,7 +438,6 @@ public abstract class BaseClient implements Client {
         }
     }
 
-
     public ContentApi.Response doProtobufFetch( String resource ) throws IOException, InterruptedException {
  
         long call_before = System.currentTimeMillis();
@@ -455,8 +475,9 @@ public abstract class BaseClient implements Client {
             
             localInputStream = getLocalInputStream( conn.getInputStream() ); //BUG: this seems redunt
 
-            if ( GZIP_ENCODING.equals( conn.getContentEncoding() ) )
+            if ( GZIP_ENCODING.equals( conn.getContentEncoding() ) ) {
                 isCompressed = true;
+            }
 
             String content_type = conn.getContentType();
 
@@ -466,7 +487,7 @@ public abstract class BaseClient implements Client {
 
             setCallDuration( call_after - call_before );
 
-            if ( DISABLE_PARSE ) {
+            if ( disable_parse ) {
                 //use the X-Next-Requested-URL if known.
                 setNextRequestURL( conn.getHeaderField( "X-Next-Request-URL" ) );
                 return null;
@@ -1273,6 +1294,24 @@ public abstract class BaseClient implements Client {
      */
     public void setSleepDuration( long sleepDuration ) { 
         this.sleepDuration = sleepDuration;
+    }
+
+    /**
+     * 
+     * Get the value of <code>parseDuration</code>.
+     *
+     */
+    public long getParseDuration() { 
+        return this.parseDuration;
+    }
+
+    /**
+     * 
+     * Set the value of <code>parseDuration</code>.
+     *
+     */
+    public void setParseDuration( long parseDuration ) { 
+        this.parseDuration = parseDuration;
     }
 
     /**

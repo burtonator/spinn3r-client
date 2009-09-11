@@ -65,5 +65,10 @@ public interface Client {
      * Get the router URL for API calls.
      */
     public String getRouter();
-    
+
+    public long getParseDuration();
+
+    public void setParseDuration( long v );
+
 }
+

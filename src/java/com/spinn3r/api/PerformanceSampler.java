@@ -57,7 +57,6 @@ public class PerformanceSampler {
     }
     
     public double getPerformance() {
-        update();
         return performance;
     } 
 
@@ -67,7 +66,7 @@ public class PerformanceSampler {
         
         if ( duration >= interval ) {
             
-            performance = (content_end - content_start) / (double)duration ;
+            performance = (double)(content_end - content_start) / (double)duration ;
             
             //reset for next sample...
             start = 0;
