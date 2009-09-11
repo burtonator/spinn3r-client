@@ -40,8 +40,11 @@ public class PermalinkClient extends BaseClient implements Client {
      * content is SO huge.
      */
     public static int MAX_LIMIT            = 5000;
-    public static int OPTIMAL_LIMIT        = 500;
-    public static int CONSERVATIVE_LIMIT   = 500;
+    
+    //NOTE: with the protobuff client using 5k was a big performance boost!  Like 3x.
+    public static int OPTIMAL_LIMIT        = 1500;
+
+    public static int CONSERVATIVE_LIMIT   = 100;
 
     public void fetch() throws IOException,
                                ParseException,
@@ -53,14 +56,12 @@ public class PermalinkClient extends BaseClient implements Client {
         return (List<BaseItem>)super.results;
     }
 
-    
     protected BaseResult parseItem( ContentApi.Entry current ) throws Exception {
     
         PermalinkItem item = new PermalinkItem();
 
         return (BaseItem)super.parseItem( current, item );
     }
-
 
     protected BaseItem parseItem( Element current ) throws Exception {
 
