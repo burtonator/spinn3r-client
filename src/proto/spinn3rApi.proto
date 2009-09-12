@@ -124,11 +124,19 @@ message FeedEntry {
   optional Content content          = 12;
 }
 
+message CommentEntry {
+    optional string permalink           = 1;
+    optional string permalink_title     = 2;
+    optional string permalink_hashcode  = 3;
+    optional string raw_published       = 4;
+}
+
 message Entry {
   optional Source         source          = 1;
   optional Feed           feed            = 2;
   optional FeedEntry      feed_entry      = 3;
   optional PermalinkEntry permalink_entry = 4;
+  optional CommentEntry   comment_entry   = 5;
 }
 
 message Response {
