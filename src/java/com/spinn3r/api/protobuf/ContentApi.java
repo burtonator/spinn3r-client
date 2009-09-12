@@ -3365,6 +3365,243 @@ public final class ContentApi {
     }
   }
   
+  public static final class CommentEntry extends
+      com.google.protobuf.GeneratedMessage {
+    // Use CommentEntry.newBuilder() to construct.
+    private CommentEntry() {}
+    
+    private static final CommentEntry defaultInstance = new CommentEntry();
+    public static CommentEntry getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public CommentEntry getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.spinn3r.api.protobuf.ContentApi.internal_static_contentApi_CommentEntry_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.spinn3r.api.protobuf.ContentApi.internal_static_contentApi_CommentEntry_fieldAccessorTable;
+    }
+    
+    // optional string permalink = 1;
+    private boolean hasPermalink;
+    private java.lang.String permalink_ = "";
+    public boolean hasPermalink() { return hasPermalink; }
+    public java.lang.String getPermalink() { return permalink_; }
+    
+    // optional string permalink_title = 2;
+    private boolean hasPermalinkTitle;
+    private java.lang.String permalinkTitle_ = "";
+    public boolean hasPermalinkTitle() { return hasPermalinkTitle; }
+    public java.lang.String getPermalinkTitle() { return permalinkTitle_; }
+    
+    // optional string permalink_hashcode = 3;
+    private boolean hasPermalinkHashcode;
+    private java.lang.String permalinkHashcode_ = "";
+    public boolean hasPermalinkHashcode() { return hasPermalinkHashcode; }
+    public java.lang.String getPermalinkHashcode() { return permalinkHashcode_; }
+    
+    // optional string raw_published = 4;
+    private boolean hasRawPublished;
+    private java.lang.String rawPublished_ = "";
+    public boolean hasRawPublished() { return hasRawPublished; }
+    public java.lang.String getRawPublished() { return rawPublished_; }
+    
+    public static com.spinn3r.api.protobuf.ContentApi.CommentEntry parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.CommentEntry parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.CommentEntry parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.CommentEntry parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.CommentEntry parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.CommentEntry parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.CommentEntry parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.CommentEntry parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(com.spinn3r.api.protobuf.ContentApi.CommentEntry prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using com.spinn3r.api.protobuf.ContentApi.CommentEntry.newBuilder()
+      private Builder() {}
+      
+      com.spinn3r.api.protobuf.ContentApi.CommentEntry result = new com.spinn3r.api.protobuf.ContentApi.CommentEntry();
+      
+      @Override
+      protected com.spinn3r.api.protobuf.ContentApi.CommentEntry internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new com.spinn3r.api.protobuf.ContentApi.CommentEntry();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.spinn3r.api.protobuf.ContentApi.CommentEntry.getDescriptor();
+      }
+      
+      public com.spinn3r.api.protobuf.ContentApi.CommentEntry getDefaultInstanceForType() {
+        return com.spinn3r.api.protobuf.ContentApi.CommentEntry.getDefaultInstance();
+      }
+      
+      public com.spinn3r.api.protobuf.ContentApi.CommentEntry build() {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private com.spinn3r.api.protobuf.ContentApi.CommentEntry buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.spinn3r.api.protobuf.ContentApi.CommentEntry buildPartial() {
+        com.spinn3r.api.protobuf.ContentApi.CommentEntry returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      
+      // optional string permalink = 1;
+      public boolean hasPermalink() {
+        return result.hasPermalink();
+      }
+      public java.lang.String getPermalink() {
+        return result.getPermalink();
+      }
+      public Builder setPermalink(java.lang.String value) {
+        result.hasPermalink = true;
+        result.permalink_ = value;
+        return this;
+      }
+      public Builder clearPermalink() {
+        result.hasPermalink = false;
+        result.permalink_ = "";
+        return this;
+      }
+      
+      // optional string permalink_title = 2;
+      public boolean hasPermalinkTitle() {
+        return result.hasPermalinkTitle();
+      }
+      public java.lang.String getPermalinkTitle() {
+        return result.getPermalinkTitle();
+      }
+      public Builder setPermalinkTitle(java.lang.String value) {
+        result.hasPermalinkTitle = true;
+        result.permalinkTitle_ = value;
+        return this;
+      }
+      public Builder clearPermalinkTitle() {
+        result.hasPermalinkTitle = false;
+        result.permalinkTitle_ = "";
+        return this;
+      }
+      
+      // optional string permalink_hashcode = 3;
+      public boolean hasPermalinkHashcode() {
+        return result.hasPermalinkHashcode();
+      }
+      public java.lang.String getPermalinkHashcode() {
+        return result.getPermalinkHashcode();
+      }
+      public Builder setPermalinkHashcode(java.lang.String value) {
+        result.hasPermalinkHashcode = true;
+        result.permalinkHashcode_ = value;
+        return this;
+      }
+      public Builder clearPermalinkHashcode() {
+        result.hasPermalinkHashcode = false;
+        result.permalinkHashcode_ = "";
+        return this;
+      }
+      
+      // optional string raw_published = 4;
+      public boolean hasRawPublished() {
+        return result.hasRawPublished();
+      }
+      public java.lang.String getRawPublished() {
+        return result.getRawPublished();
+      }
+      public Builder setRawPublished(java.lang.String value) {
+        result.hasRawPublished = true;
+        result.rawPublished_ = value;
+        return this;
+      }
+      public Builder clearRawPublished() {
+        result.hasRawPublished = false;
+        result.rawPublished_ = "";
+        return this;
+      }
+    }
+    
+    static {
+      com.spinn3r.api.protobuf.ContentApi.getDescriptor();
+    }
+  }
+  
   public static final class Entry extends
       com.google.protobuf.GeneratedMessage {
     // Use Entry.newBuilder() to construct.
@@ -3413,6 +3650,12 @@ public final class ContentApi {
     private com.spinn3r.api.protobuf.ContentApi.PermalinkEntry permalinkEntry_ = com.spinn3r.api.protobuf.ContentApi.PermalinkEntry.getDefaultInstance();
     public boolean hasPermalinkEntry() { return hasPermalinkEntry; }
     public com.spinn3r.api.protobuf.ContentApi.PermalinkEntry getPermalinkEntry() { return permalinkEntry_; }
+    
+    // optional .contentApi.CommentEntry comment_entry = 5;
+    private boolean hasCommentEntry;
+    private com.spinn3r.api.protobuf.ContentApi.CommentEntry commentEntry_ = com.spinn3r.api.protobuf.ContentApi.CommentEntry.getDefaultInstance();
+    public boolean hasCommentEntry() { return hasCommentEntry; }
+    public com.spinn3r.api.protobuf.ContentApi.CommentEntry getCommentEntry() { return commentEntry_; }
     
     public static com.spinn3r.api.protobuf.ContentApi.Entry parseFrom(
         com.google.protobuf.ByteString data)
@@ -3657,6 +3900,40 @@ public final class ContentApi {
       public Builder clearPermalinkEntry() {
         result.hasPermalinkEntry = false;
         result.permalinkEntry_ = com.spinn3r.api.protobuf.ContentApi.PermalinkEntry.getDefaultInstance();
+        return this;
+      }
+      
+      // optional .contentApi.CommentEntry comment_entry = 5;
+      public boolean hasCommentEntry() {
+        return result.hasCommentEntry();
+      }
+      public com.spinn3r.api.protobuf.ContentApi.CommentEntry getCommentEntry() {
+        return result.getCommentEntry();
+      }
+      public Builder setCommentEntry(com.spinn3r.api.protobuf.ContentApi.CommentEntry value) {
+        result.hasCommentEntry = true;
+        result.commentEntry_ = value;
+        return this;
+      }
+      public Builder setCommentEntry(com.spinn3r.api.protobuf.ContentApi.CommentEntry.Builder builderForValue) {
+        result.hasCommentEntry = true;
+        result.commentEntry_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeCommentEntry(com.spinn3r.api.protobuf.ContentApi.CommentEntry value) {
+        if (result.hasCommentEntry() &&
+            result.commentEntry_ != com.spinn3r.api.protobuf.ContentApi.CommentEntry.getDefaultInstance()) {
+          result.commentEntry_ =
+            com.spinn3r.api.protobuf.ContentApi.CommentEntry.newBuilder(result.commentEntry_).mergeFrom(value).buildPartial();
+        } else {
+          result.commentEntry_ = value;
+        }
+        result.hasCommentEntry = true;
+        return this;
+      }
+      public Builder clearCommentEntry() {
+        result.hasCommentEntry = false;
+        result.commentEntry_ = com.spinn3r.api.protobuf.ContentApi.CommentEntry.getDefaultInstance();
         return this;
       }
     }
@@ -3980,6 +4257,11 @@ public final class ContentApi {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_contentApi_FeedEntry_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_contentApi_CommentEntry_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_contentApi_CommentEntry_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_contentApi_Entry_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -4042,11 +4324,15 @@ public final class ContentApi {
       "y\030\007 \003(\t\022\030\n\020spam_probability\030\010 \001(\002\022\026\n\016las" +
       "t_published\030\t \001(\t\022\022\n\ndate_found\030\n \001(\t\022\022\n" +
       "\nidentifier\030\013 \001(\003\022$\n\007content\030\014 \001(\0132\023.con" +
-      "tentApi.Content\"\253\001\n\005Entry\022\"\n\006source\030\001 \001(" +
-      "\0132\022.contentApi.Source\022\036\n\004feed\030\002 \001(\0132\020.co" +
-      "ntentApi.Feed\022)\n\nfeed_entry\030\003 \001(\0132\025.cont" +
-      "entApi.FeedEntry\0223\n\017permalink_entry\030\004 \001(" +
-      "\0132\032.contentApi.PermalinkEntry\"y\n\010Respons" +
+      "tentApi.Content\"m\n\014CommentEntry\022\021\n\tperma" +
+      "link\030\001 \001(\t\022\027\n\017permalink_title\030\002 \001(\t\022\032\n\022p" +
+      "ermalink_hashcode\030\003 \001(\t\022\025\n\rraw_published" +
+      "\030\004 \001(\t\"\334\001\n\005Entry\022\"\n\006source\030\001 \001(\0132\022.conte" +
+      "ntApi.Source\022\036\n\004feed\030\002 \001(\0132\020.contentApi." +
+      "Feed\022)\n\nfeed_entry\030\003 \001(\0132\025.contentApi.Fe" +
+      "edEntry\0223\n\017permalink_entry\030\004 \001(\0132\032.conte" +
+      "ntApi.PermalinkEntry\022/\n\rcomment_entry\030\005 " +
+      "\001(\0132\030.contentApi.CommentEntry\"y\n\010Respons" +
       "e\022\023\n\013request_url\030\001 \001(\t\022\034\n\024previous_reque" +
       "st_url\030\002 \001(\t\022\030\n\020next_request_url\030\003 \001(\t\022 " +
       "\n\005entry\030\004 \003(\0132\021.contentApi.EntryB&\n\030com." +
@@ -4120,16 +4406,24 @@ public final class ContentApi {
               new java.lang.String[] { "Link", "CanonicalLink", "Title", "Hashcode", "Lang", "Author", "Category", "SpamProbability", "LastPublished", "DateFound", "Identifier", "Content", },
               com.spinn3r.api.protobuf.ContentApi.FeedEntry.class,
               com.spinn3r.api.protobuf.ContentApi.FeedEntry.Builder.class);
-          internal_static_contentApi_Entry_descriptor =
+          internal_static_contentApi_CommentEntry_descriptor =
             getDescriptor().getMessageTypes().get(8);
+          internal_static_contentApi_CommentEntry_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_contentApi_CommentEntry_descriptor,
+              new java.lang.String[] { "Permalink", "PermalinkTitle", "PermalinkHashcode", "RawPublished", },
+              com.spinn3r.api.protobuf.ContentApi.CommentEntry.class,
+              com.spinn3r.api.protobuf.ContentApi.CommentEntry.Builder.class);
+          internal_static_contentApi_Entry_descriptor =
+            getDescriptor().getMessageTypes().get(9);
           internal_static_contentApi_Entry_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_contentApi_Entry_descriptor,
-              new java.lang.String[] { "Source", "Feed", "FeedEntry", "PermalinkEntry", },
+              new java.lang.String[] { "Source", "Feed", "FeedEntry", "PermalinkEntry", "CommentEntry", },
               com.spinn3r.api.protobuf.ContentApi.Entry.class,
               com.spinn3r.api.protobuf.ContentApi.Entry.Builder.class);
           internal_static_contentApi_Response_descriptor =
-            getDescriptor().getMessageTypes().get(9);
+            getDescriptor().getMessageTypes().get(10);
           internal_static_contentApi_Response_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_contentApi_Response_descriptor,
