@@ -29,6 +29,8 @@ import static com.spinn3r.api.BaseClient.NS_COMMENT;
  */
 public class CommentItem extends BaseItem {
     
+    private String commentRawPublished = null;
+    
     private String commentPermalinkHashcode = null;
     
     private String commentPermalinkTitle = null;
@@ -89,6 +91,24 @@ mornin     *
         this.commentPermalinkHashcode = commentPermalinkHashcode;
     }
 
+    /**
+     * 
+     * Get the value of <code>commentRawPublished</code>.
+     *
+     */
+    public String getCommentRawPublished() { 
+        return this.commentRawPublished;
+    }
+
+    /**
+     * 
+     * Set the value of <code>commentRawPublished</code>.
+     *
+     */
+    public void setCommentRawPublished( String commentRawPublished ) { 
+        this.commentRawPublished = commentRawPublished;
+    }
+
     protected void parse( Element current ) throws Exception {
         
         // <comment:permalink>http://www.techcrunch.com/2009/08/24/apple-will-approve-rhapsodys-iphone-app-but-it-will-still-be-a-dud/</comment:permalink>
@@ -98,7 +118,9 @@ mornin     *
         setCommentPermalink( BaseClient.getElementCDATAByTagName( current, "permalink", NS_COMMENT ) );
         setCommentPermalinkTitle( BaseClient.getElementCDATAByTagName( current, "permalink_title", NS_COMMENT ) );
         setCommentPermalinkHashcode( BaseClient.getElementCDATAByTagName( current, "permalink_hashcode", NS_COMMENT ) );
+        setCommentRawPublished( BaseClient.getElementCDATAByTagName( current, "raw_published", NS_COMMENT ) );
 
+        
     }
 
 }

@@ -40,7 +40,7 @@ public class Config {
     /**
      * When fetching the API this specifies the default version to return.
      */
-    public static String   DEFAULT_VERSION     = "3.1.31";
+    public static String   DEFAULT_VERSION     = "3.1.33";
 
     /**
      * Default value for useProtobuf.
