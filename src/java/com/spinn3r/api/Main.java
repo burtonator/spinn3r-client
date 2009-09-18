@@ -881,11 +881,11 @@ public class Main {
         
         if ( maxMemory < REQUIRED_MEMORY ) {
 
-            System.out.printf( "ERROR: Reference client requires at least 384MB of memory.\n" );
+            System.out.printf( "ERROR: Reference client requires at least 2GB of memory.\n" );
             System.out.printf( "\n" );
             System.out.printf( "Now running with: %s vs %s required\n", maxMemory, REQUIRED_MEMORY );
             System.out.printf( "\n" );
-            System.out.printf( "Add -Xmx384M to your command line and run again.\n" );
+            System.out.printf( "Add -Xmx2200M to your command line and run again.\n" );
             
             System.exit( 1 );
             
