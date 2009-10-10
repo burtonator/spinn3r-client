@@ -211,8 +211,8 @@ public abstract class BaseClient implements Client {
 
         InputStream is = localInputStream;
 
-        //the first item we don't need this but we do need it for additional
-        //calls.
+        //TODO: why do we need to reset?  I don't think we need reset and I
+        //think this was added for gzip detection which we don't use.
         is.reset();
         
         //wrap the downloaded input stream with a gzip input stream when
@@ -442,13 +442,21 @@ public abstract class BaseClient implements Client {
  
         long call_before = System.currentTimeMillis();
 
-        URLConnection       conn = getConnection( resource );
+        URLConnection conn = getConnection( resource );
 
         setMoreRsults( conn );
 
-        //FIXME: assert that we received HTTP 200
-
-        ContentApi.Response res  = ContentApi.Response.parseFrom( conn.getInputStream() );
+        if ( disable_parse ) {
+            
+            // Only use a local input stream if we're about to write to disk.  I
+            // think we can stream parse.  needed for --save to persist output to
+            // disk.
+            
+            localInputStream = getLocalInputStream( conn.getInputStream() );
+            
+        }
+        
+        ContentApi.Response res  = ContentApi.Response.parseFrom( localInputStream );
 
         long call_after = System.currentTimeMillis();
 
@@ -470,10 +478,10 @@ public abstract class BaseClient implements Client {
             conn = getConnection( resource );
 
             setMoreRsults( conn );
-            
-            //FIXME: assert that we received HTTP 200
-            
-            localInputStream = getLocalInputStream( conn.getInputStream() ); //BUG: this seems redunt
+
+            //TODO: clean up the naming here.  getLocalInputStream actually
+            //reads everything into a byte array in memory.
+            localInputStream = getLocalInputStream( conn.getInputStream() ); 
 
             if ( GZIP_ENCODING.equals( conn.getContentEncoding() ) ) {
                 isCompressed = true;
@@ -949,8 +957,9 @@ public abstract class BaseClient implements Client {
 
         String feed_entry_content = feed_entry_content_blob.decompress();
         
-        if ( ! empty( feed_entry_content ) )
+        if ( ! empty( feed_entry_content ) ) {
             item.setPostBody ( feed_entry_content );
+        }
 
         item.setPostHashcode  ( feed_entry.getHashcode() );
         item.setSourceHashcode( source.getHashcode()     );

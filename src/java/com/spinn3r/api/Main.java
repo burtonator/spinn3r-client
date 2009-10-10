@@ -1,3 +1,4 @@
+
 /*
  * Copyright 2009 Tailrank, Inc (Spinn3r).
  * 
@@ -334,7 +335,7 @@ public class Main {
                         System.out.printf( "comment permalink hash:  %s\n", comment.getCommentPermalinkHashcode() );
                         
                     }
-                    
+
                 }
                     
                 if ( show_results >= 3 ) {
@@ -347,6 +348,11 @@ public class Main {
                     System.out.println( "content extract: " );
                     System.out.println( "-" );
                     System.out.println( item.getContentExtract() );
+                    System.out.println( "-" );
+
+                    System.out.println( "post body: " );
+                    System.out.println( "-" );
+                    System.out.println( item.getPostBody() );
                     System.out.println( "-" );
 
                 }
@@ -522,11 +528,17 @@ public class Main {
             root.mkdirs();
 
             long now = System.currentTimeMillis();
-            
+
             File file = null;
 
             //TODO: use .gz if the XML is compressed from the server directly.  
-            
+
+            String extension = "xml";
+
+            //do not use .xml if the user is using protobuffer encoding
+            if ( config.getUseProtobuf() ) 
+                extension = "protobuf";
+
             if ( "hierarchical".equals( save_method ) ) {
 
                 long ts = parseAfterTimestampFromRequestURL( client.getLastRequestURL() );
@@ -535,12 +547,13 @@ public class Main {
                 Calendar c = Calendar.getInstance( tz );
                 c.setTime( new Date( ts ) );
 
-                String path = String.format( "%s/%s/%02d/%02d/%s.xml",
+                String path = String.format( "%s/%s/%02d/%02d/%s.%s",
                                              config.getApi(),
                                              c.get( c.YEAR ),
                                              c.get( c.MONTH ) + 1,
                                              c.get( c.DAY_OF_MONTH ),
-                                             ts );
+                                             ts,
+                                             extension );
 
                 file = new File( root, path );
 
@@ -548,7 +561,7 @@ public class Main {
                 
             } else {
 
-                String path = now + ".xml";
+                String path = now + "." + extension;
 
                 String lastRequestURL = client.getLastRequestURL();
 
@@ -556,7 +569,7 @@ public class Main {
                                                            lastRequestURL.length() );
 
                 path = Base64.encodeFilesafe( MD5.encode( lastRequestURL ) );
-                path += ".xml";
+                path += "." + extension;
                 path = path.replaceAll( "-", "=" );
                 
                 file = new File( root, path );
@@ -567,6 +580,8 @@ public class Main {
                file = new File( file.getPath() + ".gz" ) ;
             }
 
+            System.out.printf( "Writing file to disk: %s\n", file.getPath() );
+            
             //swap in the new file, don't expose it until it's fully written.
             file = new File( file.getPath() + ".tmp" ) ;
 
@@ -586,7 +601,7 @@ public class Main {
             os.close();
 
             //now perform the final rename.
-            File dest = new File( file.getPath().replaceAll( ".tmp" , "" ) );
+            File dest = new File( file.getPath().replaceAll( "\\.tmp$" , "" ) );
 
             if ( dest.exists() ) {
                 dest.delete();
@@ -868,8 +883,6 @@ public class Main {
             syntax();
             System.exit( 1 );
 
-
-            
         }
 
         //assert that we have all required options.
