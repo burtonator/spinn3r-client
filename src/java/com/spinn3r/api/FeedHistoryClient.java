@@ -123,7 +123,7 @@ public class FeedHistoryClient extends BaseClient implements Client {
         config.setVendor( args[0] );
         config.setFeedHashcode( args[1] );
 
-        client.setHost( "dev.api.spinn3r.com" );
+        client.setHost( "api.spinn3r.com" );
         client.setConfig( config );
 
         List results;

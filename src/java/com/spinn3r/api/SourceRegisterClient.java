@@ -44,7 +44,6 @@ public class SourceRegisterClient {
         BaseClient.addParam( params, "force",            config.getForce() );
         BaseClient.addParam( params, "feed",             config.getFeed() );
         BaseClient.addParam( params, "publisher_type",   config.getPublisherType() );
-        BaseClient.addParam( params, "crawl_enabled" ,   "true" ); // BOOG
         
         String resource = String.format( "http://%s/rss/source.register?%s", config.getHost(), params );
 

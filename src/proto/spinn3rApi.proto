@@ -38,6 +38,10 @@ message Author {
   repeated Link   link  = 3;
 }
 
+/**
+ * TODO: geographic information for this blog.  Note that this might need to be
+ * tied to an author.
+ */
 message Source {
   repeated Link   link             = 1;
   optional Link   canonical_link   = 2;
@@ -106,6 +110,31 @@ message PermalinkEntry {
   optional string  generator        = 14;
 
   optional string  raw_published    = 15;
+
+}
+
+message CrawlEntry {
+
+  repeated Link    link                 = 1;
+  optional Link    canonical_link       = 2;
+  optional string  title                = 3;
+  optional string  hashcode             = 4;
+  repeated Lang    lang                 = 5;
+  repeated Author  author               = 6;
+  repeated string  category             = 7;
+  optional float   spam_probability     = 8;
+  optional string  last_published       = 9;
+  optional string  date_found           = 10;
+  optional int64   identifier           = 11;
+  optional Content content              = 12;
+
+  optional Content content_extract      = 13;
+  optional string  generator            = 14;
+
+  optional string  raw_published        = 15;
+
+  optional string  domain_hashcode      = 16;
+  optional string  subdomain_hashcode   = 17;
 
 }
 
