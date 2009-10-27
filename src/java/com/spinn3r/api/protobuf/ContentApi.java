@@ -1008,6 +1008,12 @@ public final class ContentApi {
     public boolean hasDisabled() { return hasDisabled; }
     public boolean getDisabled() { return disabled_; }
     
+    // optional string registered_by_vendor = 18;
+    private boolean hasRegisteredByVendor;
+    private java.lang.String registeredByVendor_ = "";
+    public boolean hasRegisteredByVendor() { return hasRegisteredByVendor; }
+    public java.lang.String getRegisteredByVendor() { return registeredByVendor_; }
+    
     public static com.spinn3r.api.protobuf.ContentApi.Source parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1499,6 +1505,24 @@ public final class ContentApi {
       public Builder clearDisabled() {
         result.hasDisabled = false;
         result.disabled_ = false;
+        return this;
+      }
+      
+      // optional string registered_by_vendor = 18;
+      public boolean hasRegisteredByVendor() {
+        return result.hasRegisteredByVendor();
+      }
+      public java.lang.String getRegisteredByVendor() {
+        return result.getRegisteredByVendor();
+      }
+      public Builder setRegisteredByVendor(java.lang.String value) {
+        result.hasRegisteredByVendor = true;
+        result.registeredByVendor_ = value;
+        return this;
+      }
+      public Builder clearRegisteredByVendor() {
+        result.hasRegisteredByVendor = false;
+        result.registeredByVendor_ = "";
         return this;
       }
     }
@@ -2762,6 +2786,736 @@ public final class ContentApi {
       public Builder clearRawPublished() {
         result.hasRawPublished = false;
         result.rawPublished_ = "";
+        return this;
+      }
+    }
+    
+    static {
+      com.spinn3r.api.protobuf.ContentApi.getDescriptor();
+    }
+  }
+  
+  public static final class CrawlEntry extends
+      com.google.protobuf.GeneratedMessage {
+    // Use CrawlEntry.newBuilder() to construct.
+    private CrawlEntry() {}
+    
+    private static final CrawlEntry defaultInstance = new CrawlEntry();
+    public static CrawlEntry getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public CrawlEntry getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.spinn3r.api.protobuf.ContentApi.internal_static_contentApi_CrawlEntry_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.spinn3r.api.protobuf.ContentApi.internal_static_contentApi_CrawlEntry_fieldAccessorTable;
+    }
+    
+    // repeated .contentApi.Link link = 1;
+    private java.util.List<com.spinn3r.api.protobuf.ContentApi.Link> link_ =
+      java.util.Collections.emptyList();
+    public java.util.List<com.spinn3r.api.protobuf.ContentApi.Link> getLinkList() {
+      return link_;
+    }
+    public int getLinkCount() { return link_.size(); }
+    public com.spinn3r.api.protobuf.ContentApi.Link getLink(int index) {
+      return link_.get(index);
+    }
+    
+    // optional .contentApi.Link canonical_link = 2;
+    private boolean hasCanonicalLink;
+    private com.spinn3r.api.protobuf.ContentApi.Link canonicalLink_ = com.spinn3r.api.protobuf.ContentApi.Link.getDefaultInstance();
+    public boolean hasCanonicalLink() { return hasCanonicalLink; }
+    public com.spinn3r.api.protobuf.ContentApi.Link getCanonicalLink() { return canonicalLink_; }
+    
+    // optional string title = 3;
+    private boolean hasTitle;
+    private java.lang.String title_ = "";
+    public boolean hasTitle() { return hasTitle; }
+    public java.lang.String getTitle() { return title_; }
+    
+    // optional string hashcode = 4;
+    private boolean hasHashcode;
+    private java.lang.String hashcode_ = "";
+    public boolean hasHashcode() { return hasHashcode; }
+    public java.lang.String getHashcode() { return hashcode_; }
+    
+    // repeated .contentApi.Lang lang = 5;
+    private java.util.List<com.spinn3r.api.protobuf.ContentApi.Lang> lang_ =
+      java.util.Collections.emptyList();
+    public java.util.List<com.spinn3r.api.protobuf.ContentApi.Lang> getLangList() {
+      return lang_;
+    }
+    public int getLangCount() { return lang_.size(); }
+    public com.spinn3r.api.protobuf.ContentApi.Lang getLang(int index) {
+      return lang_.get(index);
+    }
+    
+    // repeated .contentApi.Author author = 6;
+    private java.util.List<com.spinn3r.api.protobuf.ContentApi.Author> author_ =
+      java.util.Collections.emptyList();
+    public java.util.List<com.spinn3r.api.protobuf.ContentApi.Author> getAuthorList() {
+      return author_;
+    }
+    public int getAuthorCount() { return author_.size(); }
+    public com.spinn3r.api.protobuf.ContentApi.Author getAuthor(int index) {
+      return author_.get(index);
+    }
+    
+    // repeated string category = 7;
+    private java.util.List<java.lang.String> category_ =
+      java.util.Collections.emptyList();
+    public java.util.List<java.lang.String> getCategoryList() {
+      return category_;
+    }
+    public int getCategoryCount() { return category_.size(); }
+    public java.lang.String getCategory(int index) {
+      return category_.get(index);
+    }
+    
+    // optional float spam_probability = 8;
+    private boolean hasSpamProbability;
+    private float spamProbability_ = 0F;
+    public boolean hasSpamProbability() { return hasSpamProbability; }
+    public float getSpamProbability() { return spamProbability_; }
+    
+    // optional string last_published = 9;
+    private boolean hasLastPublished;
+    private java.lang.String lastPublished_ = "";
+    public boolean hasLastPublished() { return hasLastPublished; }
+    public java.lang.String getLastPublished() { return lastPublished_; }
+    
+    // optional string date_found = 10;
+    private boolean hasDateFound;
+    private java.lang.String dateFound_ = "";
+    public boolean hasDateFound() { return hasDateFound; }
+    public java.lang.String getDateFound() { return dateFound_; }
+    
+    // optional int64 identifier = 11;
+    private boolean hasIdentifier;
+    private long identifier_ = 0L;
+    public boolean hasIdentifier() { return hasIdentifier; }
+    public long getIdentifier() { return identifier_; }
+    
+    // optional .contentApi.Content content = 12;
+    private boolean hasContent;
+    private com.spinn3r.api.protobuf.ContentApi.Content content_ = com.spinn3r.api.protobuf.ContentApi.Content.getDefaultInstance();
+    public boolean hasContent() { return hasContent; }
+    public com.spinn3r.api.protobuf.ContentApi.Content getContent() { return content_; }
+    
+    // optional .contentApi.Content content_extract = 13;
+    private boolean hasContentExtract;
+    private com.spinn3r.api.protobuf.ContentApi.Content contentExtract_ = com.spinn3r.api.protobuf.ContentApi.Content.getDefaultInstance();
+    public boolean hasContentExtract() { return hasContentExtract; }
+    public com.spinn3r.api.protobuf.ContentApi.Content getContentExtract() { return contentExtract_; }
+    
+    // optional string generator = 14;
+    private boolean hasGenerator;
+    private java.lang.String generator_ = "";
+    public boolean hasGenerator() { return hasGenerator; }
+    public java.lang.String getGenerator() { return generator_; }
+    
+    // optional string raw_published = 15;
+    private boolean hasRawPublished;
+    private java.lang.String rawPublished_ = "";
+    public boolean hasRawPublished() { return hasRawPublished; }
+    public java.lang.String getRawPublished() { return rawPublished_; }
+    
+    // optional string domain_hashcode = 16;
+    private boolean hasDomainHashcode;
+    private java.lang.String domainHashcode_ = "";
+    public boolean hasDomainHashcode() { return hasDomainHashcode; }
+    public java.lang.String getDomainHashcode() { return domainHashcode_; }
+    
+    // optional string subdomain_hashcode = 17;
+    private boolean hasSubdomainHashcode;
+    private java.lang.String subdomainHashcode_ = "";
+    public boolean hasSubdomainHashcode() { return hasSubdomainHashcode; }
+    public java.lang.String getSubdomainHashcode() { return subdomainHashcode_; }
+    
+    public static com.spinn3r.api.protobuf.ContentApi.CrawlEntry parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.CrawlEntry parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.CrawlEntry parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.CrawlEntry parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.CrawlEntry parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.CrawlEntry parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.CrawlEntry parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.CrawlEntry parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(com.spinn3r.api.protobuf.ContentApi.CrawlEntry prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using com.spinn3r.api.protobuf.ContentApi.CrawlEntry.newBuilder()
+      private Builder() {}
+      
+      com.spinn3r.api.protobuf.ContentApi.CrawlEntry result = new com.spinn3r.api.protobuf.ContentApi.CrawlEntry();
+      
+      @Override
+      protected com.spinn3r.api.protobuf.ContentApi.CrawlEntry internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new com.spinn3r.api.protobuf.ContentApi.CrawlEntry();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.spinn3r.api.protobuf.ContentApi.CrawlEntry.getDescriptor();
+      }
+      
+      public com.spinn3r.api.protobuf.ContentApi.CrawlEntry getDefaultInstanceForType() {
+        return com.spinn3r.api.protobuf.ContentApi.CrawlEntry.getDefaultInstance();
+      }
+      
+      public com.spinn3r.api.protobuf.ContentApi.CrawlEntry build() {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private com.spinn3r.api.protobuf.ContentApi.CrawlEntry buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.spinn3r.api.protobuf.ContentApi.CrawlEntry buildPartial() {
+        if (result.link_ != java.util.Collections.EMPTY_LIST) {
+          result.link_ =
+            java.util.Collections.unmodifiableList(result.link_);
+        }
+        if (result.lang_ != java.util.Collections.EMPTY_LIST) {
+          result.lang_ =
+            java.util.Collections.unmodifiableList(result.lang_);
+        }
+        if (result.author_ != java.util.Collections.EMPTY_LIST) {
+          result.author_ =
+            java.util.Collections.unmodifiableList(result.author_);
+        }
+        if (result.category_ != java.util.Collections.EMPTY_LIST) {
+          result.category_ =
+            java.util.Collections.unmodifiableList(result.category_);
+        }
+        com.spinn3r.api.protobuf.ContentApi.CrawlEntry returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      
+      // repeated .contentApi.Link link = 1;
+      public java.util.List<com.spinn3r.api.protobuf.ContentApi.Link> getLinkList() {
+        return java.util.Collections.unmodifiableList(result.link_);
+      }
+      public int getLinkCount() {
+        return result.getLinkCount();
+      }
+      public com.spinn3r.api.protobuf.ContentApi.Link getLink(int index) {
+        return result.getLink(index);
+      }
+      public Builder setLink(int index, com.spinn3r.api.protobuf.ContentApi.Link value) {
+        result.link_.set(index, value);
+        return this;
+      }
+      public Builder setLink(int index, com.spinn3r.api.protobuf.ContentApi.Link.Builder builderForValue) {
+        result.link_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addLink(com.spinn3r.api.protobuf.ContentApi.Link value) {
+        if (result.link_.isEmpty()) {
+          result.link_ = new java.util.ArrayList<com.spinn3r.api.protobuf.ContentApi.Link>();
+        }
+        result.link_.add(value);
+        return this;
+      }
+      public Builder addLink(com.spinn3r.api.protobuf.ContentApi.Link.Builder builderForValue) {
+        if (result.link_.isEmpty()) {
+          result.link_ = new java.util.ArrayList<com.spinn3r.api.protobuf.ContentApi.Link>();
+        }
+        result.link_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllLink(
+          java.lang.Iterable<? extends com.spinn3r.api.protobuf.ContentApi.Link> values) {
+        if (result.link_.isEmpty()) {
+          result.link_ = new java.util.ArrayList<com.spinn3r.api.protobuf.ContentApi.Link>();
+        }
+        super.addAll(values, result.link_);
+        return this;
+      }
+      public Builder clearLink() {
+        result.link_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // optional .contentApi.Link canonical_link = 2;
+      public boolean hasCanonicalLink() {
+        return result.hasCanonicalLink();
+      }
+      public com.spinn3r.api.protobuf.ContentApi.Link getCanonicalLink() {
+        return result.getCanonicalLink();
+      }
+      public Builder setCanonicalLink(com.spinn3r.api.protobuf.ContentApi.Link value) {
+        result.hasCanonicalLink = true;
+        result.canonicalLink_ = value;
+        return this;
+      }
+      public Builder setCanonicalLink(com.spinn3r.api.protobuf.ContentApi.Link.Builder builderForValue) {
+        result.hasCanonicalLink = true;
+        result.canonicalLink_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeCanonicalLink(com.spinn3r.api.protobuf.ContentApi.Link value) {
+        if (result.hasCanonicalLink() &&
+            result.canonicalLink_ != com.spinn3r.api.protobuf.ContentApi.Link.getDefaultInstance()) {
+          result.canonicalLink_ =
+            com.spinn3r.api.protobuf.ContentApi.Link.newBuilder(result.canonicalLink_).mergeFrom(value).buildPartial();
+        } else {
+          result.canonicalLink_ = value;
+        }
+        result.hasCanonicalLink = true;
+        return this;
+      }
+      public Builder clearCanonicalLink() {
+        result.hasCanonicalLink = false;
+        result.canonicalLink_ = com.spinn3r.api.protobuf.ContentApi.Link.getDefaultInstance();
+        return this;
+      }
+      
+      // optional string title = 3;
+      public boolean hasTitle() {
+        return result.hasTitle();
+      }
+      public java.lang.String getTitle() {
+        return result.getTitle();
+      }
+      public Builder setTitle(java.lang.String value) {
+        result.hasTitle = true;
+        result.title_ = value;
+        return this;
+      }
+      public Builder clearTitle() {
+        result.hasTitle = false;
+        result.title_ = "";
+        return this;
+      }
+      
+      // optional string hashcode = 4;
+      public boolean hasHashcode() {
+        return result.hasHashcode();
+      }
+      public java.lang.String getHashcode() {
+        return result.getHashcode();
+      }
+      public Builder setHashcode(java.lang.String value) {
+        result.hasHashcode = true;
+        result.hashcode_ = value;
+        return this;
+      }
+      public Builder clearHashcode() {
+        result.hasHashcode = false;
+        result.hashcode_ = "";
+        return this;
+      }
+      
+      // repeated .contentApi.Lang lang = 5;
+      public java.util.List<com.spinn3r.api.protobuf.ContentApi.Lang> getLangList() {
+        return java.util.Collections.unmodifiableList(result.lang_);
+      }
+      public int getLangCount() {
+        return result.getLangCount();
+      }
+      public com.spinn3r.api.protobuf.ContentApi.Lang getLang(int index) {
+        return result.getLang(index);
+      }
+      public Builder setLang(int index, com.spinn3r.api.protobuf.ContentApi.Lang value) {
+        result.lang_.set(index, value);
+        return this;
+      }
+      public Builder setLang(int index, com.spinn3r.api.protobuf.ContentApi.Lang.Builder builderForValue) {
+        result.lang_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addLang(com.spinn3r.api.protobuf.ContentApi.Lang value) {
+        if (result.lang_.isEmpty()) {
+          result.lang_ = new java.util.ArrayList<com.spinn3r.api.protobuf.ContentApi.Lang>();
+        }
+        result.lang_.add(value);
+        return this;
+      }
+      public Builder addLang(com.spinn3r.api.protobuf.ContentApi.Lang.Builder builderForValue) {
+        if (result.lang_.isEmpty()) {
+          result.lang_ = new java.util.ArrayList<com.spinn3r.api.protobuf.ContentApi.Lang>();
+        }
+        result.lang_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllLang(
+          java.lang.Iterable<? extends com.spinn3r.api.protobuf.ContentApi.Lang> values) {
+        if (result.lang_.isEmpty()) {
+          result.lang_ = new java.util.ArrayList<com.spinn3r.api.protobuf.ContentApi.Lang>();
+        }
+        super.addAll(values, result.lang_);
+        return this;
+      }
+      public Builder clearLang() {
+        result.lang_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // repeated .contentApi.Author author = 6;
+      public java.util.List<com.spinn3r.api.protobuf.ContentApi.Author> getAuthorList() {
+        return java.util.Collections.unmodifiableList(result.author_);
+      }
+      public int getAuthorCount() {
+        return result.getAuthorCount();
+      }
+      public com.spinn3r.api.protobuf.ContentApi.Author getAuthor(int index) {
+        return result.getAuthor(index);
+      }
+      public Builder setAuthor(int index, com.spinn3r.api.protobuf.ContentApi.Author value) {
+        result.author_.set(index, value);
+        return this;
+      }
+      public Builder setAuthor(int index, com.spinn3r.api.protobuf.ContentApi.Author.Builder builderForValue) {
+        result.author_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addAuthor(com.spinn3r.api.protobuf.ContentApi.Author value) {
+        if (result.author_.isEmpty()) {
+          result.author_ = new java.util.ArrayList<com.spinn3r.api.protobuf.ContentApi.Author>();
+        }
+        result.author_.add(value);
+        return this;
+      }
+      public Builder addAuthor(com.spinn3r.api.protobuf.ContentApi.Author.Builder builderForValue) {
+        if (result.author_.isEmpty()) {
+          result.author_ = new java.util.ArrayList<com.spinn3r.api.protobuf.ContentApi.Author>();
+        }
+        result.author_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllAuthor(
+          java.lang.Iterable<? extends com.spinn3r.api.protobuf.ContentApi.Author> values) {
+        if (result.author_.isEmpty()) {
+          result.author_ = new java.util.ArrayList<com.spinn3r.api.protobuf.ContentApi.Author>();
+        }
+        super.addAll(values, result.author_);
+        return this;
+      }
+      public Builder clearAuthor() {
+        result.author_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // repeated string category = 7;
+      public java.util.List<java.lang.String> getCategoryList() {
+        return java.util.Collections.unmodifiableList(result.category_);
+      }
+      public int getCategoryCount() {
+        return result.getCategoryCount();
+      }
+      public java.lang.String getCategory(int index) {
+        return result.getCategory(index);
+      }
+      public Builder setCategory(int index, java.lang.String value) {
+        result.category_.set(index, value);
+        return this;
+      }
+      public Builder addCategory(java.lang.String value) {
+        if (result.category_.isEmpty()) {
+          result.category_ = new java.util.ArrayList<java.lang.String>();
+        }
+        result.category_.add(value);
+        return this;
+      }
+      public Builder addAllCategory(
+          java.lang.Iterable<? extends java.lang.String> values) {
+        if (result.category_.isEmpty()) {
+          result.category_ = new java.util.ArrayList<java.lang.String>();
+        }
+        super.addAll(values, result.category_);
+        return this;
+      }
+      public Builder clearCategory() {
+        result.category_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // optional float spam_probability = 8;
+      public boolean hasSpamProbability() {
+        return result.hasSpamProbability();
+      }
+      public float getSpamProbability() {
+        return result.getSpamProbability();
+      }
+      public Builder setSpamProbability(float value) {
+        result.hasSpamProbability = true;
+        result.spamProbability_ = value;
+        return this;
+      }
+      public Builder clearSpamProbability() {
+        result.hasSpamProbability = false;
+        result.spamProbability_ = 0F;
+        return this;
+      }
+      
+      // optional string last_published = 9;
+      public boolean hasLastPublished() {
+        return result.hasLastPublished();
+      }
+      public java.lang.String getLastPublished() {
+        return result.getLastPublished();
+      }
+      public Builder setLastPublished(java.lang.String value) {
+        result.hasLastPublished = true;
+        result.lastPublished_ = value;
+        return this;
+      }
+      public Builder clearLastPublished() {
+        result.hasLastPublished = false;
+        result.lastPublished_ = "";
+        return this;
+      }
+      
+      // optional string date_found = 10;
+      public boolean hasDateFound() {
+        return result.hasDateFound();
+      }
+      public java.lang.String getDateFound() {
+        return result.getDateFound();
+      }
+      public Builder setDateFound(java.lang.String value) {
+        result.hasDateFound = true;
+        result.dateFound_ = value;
+        return this;
+      }
+      public Builder clearDateFound() {
+        result.hasDateFound = false;
+        result.dateFound_ = "";
+        return this;
+      }
+      
+      // optional int64 identifier = 11;
+      public boolean hasIdentifier() {
+        return result.hasIdentifier();
+      }
+      public long getIdentifier() {
+        return result.getIdentifier();
+      }
+      public Builder setIdentifier(long value) {
+        result.hasIdentifier = true;
+        result.identifier_ = value;
+        return this;
+      }
+      public Builder clearIdentifier() {
+        result.hasIdentifier = false;
+        result.identifier_ = 0L;
+        return this;
+      }
+      
+      // optional .contentApi.Content content = 12;
+      public boolean hasContent() {
+        return result.hasContent();
+      }
+      public com.spinn3r.api.protobuf.ContentApi.Content getContent() {
+        return result.getContent();
+      }
+      public Builder setContent(com.spinn3r.api.protobuf.ContentApi.Content value) {
+        result.hasContent = true;
+        result.content_ = value;
+        return this;
+      }
+      public Builder setContent(com.spinn3r.api.protobuf.ContentApi.Content.Builder builderForValue) {
+        result.hasContent = true;
+        result.content_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeContent(com.spinn3r.api.protobuf.ContentApi.Content value) {
+        if (result.hasContent() &&
+            result.content_ != com.spinn3r.api.protobuf.ContentApi.Content.getDefaultInstance()) {
+          result.content_ =
+            com.spinn3r.api.protobuf.ContentApi.Content.newBuilder(result.content_).mergeFrom(value).buildPartial();
+        } else {
+          result.content_ = value;
+        }
+        result.hasContent = true;
+        return this;
+      }
+      public Builder clearContent() {
+        result.hasContent = false;
+        result.content_ = com.spinn3r.api.protobuf.ContentApi.Content.getDefaultInstance();
+        return this;
+      }
+      
+      // optional .contentApi.Content content_extract = 13;
+      public boolean hasContentExtract() {
+        return result.hasContentExtract();
+      }
+      public com.spinn3r.api.protobuf.ContentApi.Content getContentExtract() {
+        return result.getContentExtract();
+      }
+      public Builder setContentExtract(com.spinn3r.api.protobuf.ContentApi.Content value) {
+        result.hasContentExtract = true;
+        result.contentExtract_ = value;
+        return this;
+      }
+      public Builder setContentExtract(com.spinn3r.api.protobuf.ContentApi.Content.Builder builderForValue) {
+        result.hasContentExtract = true;
+        result.contentExtract_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeContentExtract(com.spinn3r.api.protobuf.ContentApi.Content value) {
+        if (result.hasContentExtract() &&
+            result.contentExtract_ != com.spinn3r.api.protobuf.ContentApi.Content.getDefaultInstance()) {
+          result.contentExtract_ =
+            com.spinn3r.api.protobuf.ContentApi.Content.newBuilder(result.contentExtract_).mergeFrom(value).buildPartial();
+        } else {
+          result.contentExtract_ = value;
+        }
+        result.hasContentExtract = true;
+        return this;
+      }
+      public Builder clearContentExtract() {
+        result.hasContentExtract = false;
+        result.contentExtract_ = com.spinn3r.api.protobuf.ContentApi.Content.getDefaultInstance();
+        return this;
+      }
+      
+      // optional string generator = 14;
+      public boolean hasGenerator() {
+        return result.hasGenerator();
+      }
+      public java.lang.String getGenerator() {
+        return result.getGenerator();
+      }
+      public Builder setGenerator(java.lang.String value) {
+        result.hasGenerator = true;
+        result.generator_ = value;
+        return this;
+      }
+      public Builder clearGenerator() {
+        result.hasGenerator = false;
+        result.generator_ = "";
+        return this;
+      }
+      
+      // optional string raw_published = 15;
+      public boolean hasRawPublished() {
+        return result.hasRawPublished();
+      }
+      public java.lang.String getRawPublished() {
+        return result.getRawPublished();
+      }
+      public Builder setRawPublished(java.lang.String value) {
+        result.hasRawPublished = true;
+        result.rawPublished_ = value;
+        return this;
+      }
+      public Builder clearRawPublished() {
+        result.hasRawPublished = false;
+        result.rawPublished_ = "";
+        return this;
+      }
+      
+      // optional string domain_hashcode = 16;
+      public boolean hasDomainHashcode() {
+        return result.hasDomainHashcode();
+      }
+      public java.lang.String getDomainHashcode() {
+        return result.getDomainHashcode();
+      }
+      public Builder setDomainHashcode(java.lang.String value) {
+        result.hasDomainHashcode = true;
+        result.domainHashcode_ = value;
+        return this;
+      }
+      public Builder clearDomainHashcode() {
+        result.hasDomainHashcode = false;
+        result.domainHashcode_ = "";
+        return this;
+      }
+      
+      // optional string subdomain_hashcode = 17;
+      public boolean hasSubdomainHashcode() {
+        return result.hasSubdomainHashcode();
+      }
+      public java.lang.String getSubdomainHashcode() {
+        return result.getSubdomainHashcode();
+      }
+      public Builder setSubdomainHashcode(java.lang.String value) {
+        result.hasSubdomainHashcode = true;
+        result.subdomainHashcode_ = value;
+        return this;
+      }
+      public Builder clearSubdomainHashcode() {
+        result.hasSubdomainHashcode = false;
+        result.subdomainHashcode_ = "";
         return this;
       }
     }
@@ -4252,6 +5006,11 @@ public final class ContentApi {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_contentApi_PermalinkEntry_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_contentApi_CrawlEntry_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_contentApi_CrawlEntry_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_contentApi_FeedEntry_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -4286,7 +5045,7 @@ public final class ContentApi {
       " \001(\t\022\023\n\013probability\030\002 \001(\002\"*\n\007Content\022\021\n\t" +
       "mime_type\030\001 \002(\t\022\014\n\004data\030\002 \001(\014\"E\n\006Author\022" +
       "\014\n\004name\030\001 \001(\t\022\r\n\005email\030\002 \001(\t\022\036\n\004link\030\003 \003" +
-      "(\0132\020.contentApi.Link\"\207\003\n\006Source\022\036\n\004link\030" +
+      "(\0132\020.contentApi.Link\"\245\003\n\006Source\022\036\n\004link\030" +
       "\001 \003(\0132\020.contentApi.Link\022(\n\016canonical_lin" +
       "k\030\002 \001(\0132\020.contentApi.Link\022\r\n\005title\030\003 \001(\t" +
       "\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030\005 \003(\0132\020.conte" +
@@ -4296,47 +5055,60 @@ public final class ContentApi {
       "\022\022\n\ndate_found\030\013 \001(\t\022\014\n\004etag\030\014 \001(\t\022\030\n\020sp" +
       "am_probability\030\r \001(\002\022\014\n\004tier\030\016 \001(\021\022\020\n\010in" +
       "degree\030\017 \001(\005\022\026\n\016publisher_type\030\020 \001(\t\022\020\n\010" +
-      "disabled\030\021 \001(\010\"\343\002\n\004Feed\022\036\n\004link\030\001 \003(\0132\020." +
-      "contentApi.Link\022(\n\016canonical_link\030\002 \001(\0132" +
-      "\020.contentApi.Link\022\r\n\005title\030\003 \001(\t\022\020\n\010hash" +
-      "code\030\004 \001(\t\022\036\n\004lang\030\005 \003(\0132\020.contentApi.La" +
-      "ng\022\021\n\tgenerator\030\006 \001(\t\022\023\n\013description\030\007 \001" +
-      "(\t\022\027\n\017resource_status\030\010 \001(\005\022\023\n\013last_post" +
-      "ed\030\t \001(\t\022\026\n\016last_published\030\n \001(\t\022\022\n\ndate" +
-      "_found\030\013 \001(\t\022\014\n\004etag\030\014 \001(\t\022\030\n\020spam_proba" +
-      "bility\030\r \001(\002\022&\n\014channel_link\030\016 \001(\0132\020.con" +
-      "tentApi.Link\"\251\003\n\016PermalinkEntry\022\036\n\004link\030" +
-      "\001 \003(\0132\020.contentApi.Link\022(\n\016canonical_lin" +
-      "k\030\002 \001(\0132\020.contentApi.Link\022\r\n\005title\030\003 \001(\t" +
-      "\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030\005 \003(\0132\020.conte" +
-      "ntApi.Lang\022\"\n\006author\030\006 \003(\0132\022.contentApi." +
-      "Author\022\020\n\010category\030\007 \003(\t\022\030\n\020spam_probabi" +
-      "lity\030\010 \001(\002\022\026\n\016last_published\030\t \001(\t\022\022\n\nda" +
-      "te_found\030\n \001(\t\022\022\n\nidentifier\030\013 \001(\003\022$\n\007co" +
-      "ntent\030\014 \001(\0132\023.contentApi.Content\022,\n\017cont" +
-      "ent_extract\030\r \001(\0132\023.contentApi.Content\022\021" +
-      "\n\tgenerator\030\016 \001(\t\022\025\n\rraw_published\030\017 \001(\t" +
-      "\"\314\002\n\tFeedEntry\022\036\n\004link\030\001 \003(\0132\020.contentAp" +
-      "i.Link\022(\n\016canonical_link\030\002 \001(\0132\020.content" +
-      "Api.Link\022\r\n\005title\030\003 \001(\t\022\020\n\010hashcode\030\004 \001(" +
-      "\t\022\036\n\004lang\030\005 \003(\0132\020.contentApi.Lang\022\"\n\006aut" +
-      "hor\030\006 \003(\0132\022.contentApi.Author\022\020\n\010categor" +
-      "y\030\007 \003(\t\022\030\n\020spam_probability\030\010 \001(\002\022\026\n\016las" +
-      "t_published\030\t \001(\t\022\022\n\ndate_found\030\n \001(\t\022\022\n" +
-      "\nidentifier\030\013 \001(\003\022$\n\007content\030\014 \001(\0132\023.con" +
-      "tentApi.Content\"m\n\014CommentEntry\022\021\n\tperma" +
-      "link\030\001 \001(\t\022\027\n\017permalink_title\030\002 \001(\t\022\032\n\022p" +
-      "ermalink_hashcode\030\003 \001(\t\022\025\n\rraw_published" +
-      "\030\004 \001(\t\"\334\001\n\005Entry\022\"\n\006source\030\001 \001(\0132\022.conte" +
-      "ntApi.Source\022\036\n\004feed\030\002 \001(\0132\020.contentApi." +
-      "Feed\022)\n\nfeed_entry\030\003 \001(\0132\025.contentApi.Fe" +
-      "edEntry\0223\n\017permalink_entry\030\004 \001(\0132\032.conte" +
-      "ntApi.PermalinkEntry\022/\n\rcomment_entry\030\005 " +
-      "\001(\0132\030.contentApi.CommentEntry\"y\n\010Respons" +
-      "e\022\023\n\013request_url\030\001 \001(\t\022\034\n\024previous_reque" +
-      "st_url\030\002 \001(\t\022\030\n\020next_request_url\030\003 \001(\t\022 " +
-      "\n\005entry\030\004 \003(\0132\021.contentApi.EntryB&\n\030com." +
-      "spinn3r.api.protobufB\nContentApi";
+      "disabled\030\021 \001(\010\022\034\n\024registered_by_vendor\030\022" +
+      " \001(\t\"\343\002\n\004Feed\022\036\n\004link\030\001 \003(\0132\020.contentApi" +
+      ".Link\022(\n\016canonical_link\030\002 \001(\0132\020.contentA" +
+      "pi.Link\022\r\n\005title\030\003 \001(\t\022\020\n\010hashcode\030\004 \001(\t" +
+      "\022\036\n\004lang\030\005 \003(\0132\020.contentApi.Lang\022\021\n\tgene" +
+      "rator\030\006 \001(\t\022\023\n\013description\030\007 \001(\t\022\027\n\017reso" +
+      "urce_status\030\010 \001(\005\022\023\n\013last_posted\030\t \001(\t\022\026" +
+      "\n\016last_published\030\n \001(\t\022\022\n\ndate_found\030\013 \001" +
+      "(\t\022\014\n\004etag\030\014 \001(\t\022\030\n\020spam_probability\030\r \001" +
+      "(\002\022&\n\014channel_link\030\016 \001(\0132\020.contentApi.Li" +
+      "nk\"\251\003\n\016PermalinkEntry\022\036\n\004link\030\001 \003(\0132\020.co" +
+      "ntentApi.Link\022(\n\016canonical_link\030\002 \001(\0132\020." +
+      "contentApi.Link\022\r\n\005title\030\003 \001(\t\022\020\n\010hashco" +
+      "de\030\004 \001(\t\022\036\n\004lang\030\005 \003(\0132\020.contentApi.Lang" +
+      "\022\"\n\006author\030\006 \003(\0132\022.contentApi.Author\022\020\n\010" +
+      "category\030\007 \003(\t\022\030\n\020spam_probability\030\010 \001(\002" +
+      "\022\026\n\016last_published\030\t \001(\t\022\022\n\ndate_found\030\n" +
+      " \001(\t\022\022\n\nidentifier\030\013 \001(\003\022$\n\007content\030\014 \001(" +
+      "\0132\023.contentApi.Content\022,\n\017content_extrac" +
+      "t\030\r \001(\0132\023.contentApi.Content\022\021\n\tgenerato" +
+      "r\030\016 \001(\t\022\025\n\rraw_published\030\017 \001(\t\"\332\003\n\nCrawl" +
+      "Entry\022\036\n\004link\030\001 \003(\0132\020.contentApi.Link\022(\n" +
+      "\016canonical_link\030\002 \001(\0132\020.contentApi.Link\022" +
+      "\r\n\005title\030\003 \001(\t\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang" +
+      "\030\005 \003(\0132\020.contentApi.Lang\022\"\n\006author\030\006 \003(\013" +
+      "2\022.contentApi.Author\022\020\n\010category\030\007 \003(\t\022\030" +
+      "\n\020spam_probability\030\010 \001(\002\022\026\n\016last_publish" +
+      "ed\030\t \001(\t\022\022\n\ndate_found\030\n \001(\t\022\022\n\nidentifi" +
+      "er\030\013 \001(\003\022$\n\007content\030\014 \001(\0132\023.contentApi.C" +
+      "ontent\022,\n\017content_extract\030\r \001(\0132\023.conten" +
+      "tApi.Content\022\021\n\tgenerator\030\016 \001(\t\022\025\n\rraw_p" +
+      "ublished\030\017 \001(\t\022\027\n\017domain_hashcode\030\020 \001(\t\022" +
+      "\032\n\022subdomain_hashcode\030\021 \001(\t\"\314\002\n\tFeedEntr" +
+      "y\022\036\n\004link\030\001 \003(\0132\020.contentApi.Link\022(\n\016can" +
+      "onical_link\030\002 \001(\0132\020.contentApi.Link\022\r\n\005t" +
+      "itle\030\003 \001(\t\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030\005 \003" +
+      "(\0132\020.contentApi.Lang\022\"\n\006author\030\006 \003(\0132\022.c" +
+      "ontentApi.Author\022\020\n\010category\030\007 \003(\t\022\030\n\020sp" +
+      "am_probability\030\010 \001(\002\022\026\n\016last_published\030\t" +
+      " \001(\t\022\022\n\ndate_found\030\n \001(\t\022\022\n\nidentifier\030\013" +
+      " \001(\003\022$\n\007content\030\014 \001(\0132\023.contentApi.Conte" +
+      "nt\"m\n\014CommentEntry\022\021\n\tpermalink\030\001 \001(\t\022\027\n" +
+      "\017permalink_title\030\002 \001(\t\022\032\n\022permalink_hash" +
+      "code\030\003 \001(\t\022\025\n\rraw_published\030\004 \001(\t\"\334\001\n\005En" +
+      "try\022\"\n\006source\030\001 \001(\0132\022.contentApi.Source\022" +
+      "\036\n\004feed\030\002 \001(\0132\020.contentApi.Feed\022)\n\nfeed_" +
+      "entry\030\003 \001(\0132\025.contentApi.FeedEntry\0223\n\017pe" +
+      "rmalink_entry\030\004 \001(\0132\032.contentApi.Permali" +
+      "nkEntry\022/\n\rcomment_entry\030\005 \001(\0132\030.content" +
+      "Api.CommentEntry\"y\n\010Response\022\023\n\013request_" +
+      "url\030\001 \001(\t\022\034\n\024previous_request_url\030\002 \001(\t\022" +
+      "\030\n\020next_request_url\030\003 \001(\t\022 \n\005entry\030\004 \003(\013" +
+      "2\021.contentApi.EntryB&\n\030com.spinn3r.api.p" +
+      "rotobufB\nContentApi";
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
@@ -4379,7 +5151,7 @@ public final class ContentApi {
           internal_static_contentApi_Source_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_contentApi_Source_descriptor,
-              new java.lang.String[] { "Link", "CanonicalLink", "Title", "Hashcode", "Lang", "Generator", "Description", "ResourceStatus", "LastPosted", "LastPublished", "DateFound", "Etag", "SpamProbability", "Tier", "Indegree", "PublisherType", "Disabled", },
+              new java.lang.String[] { "Link", "CanonicalLink", "Title", "Hashcode", "Lang", "Generator", "Description", "ResourceStatus", "LastPosted", "LastPublished", "DateFound", "Etag", "SpamProbability", "Tier", "Indegree", "PublisherType", "Disabled", "RegisteredByVendor", },
               com.spinn3r.api.protobuf.ContentApi.Source.class,
               com.spinn3r.api.protobuf.ContentApi.Source.Builder.class);
           internal_static_contentApi_Feed_descriptor =
@@ -4398,8 +5170,16 @@ public final class ContentApi {
               new java.lang.String[] { "Link", "CanonicalLink", "Title", "Hashcode", "Lang", "Author", "Category", "SpamProbability", "LastPublished", "DateFound", "Identifier", "Content", "ContentExtract", "Generator", "RawPublished", },
               com.spinn3r.api.protobuf.ContentApi.PermalinkEntry.class,
               com.spinn3r.api.protobuf.ContentApi.PermalinkEntry.Builder.class);
-          internal_static_contentApi_FeedEntry_descriptor =
+          internal_static_contentApi_CrawlEntry_descriptor =
             getDescriptor().getMessageTypes().get(7);
+          internal_static_contentApi_CrawlEntry_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_contentApi_CrawlEntry_descriptor,
+              new java.lang.String[] { "Link", "CanonicalLink", "Title", "Hashcode", "Lang", "Author", "Category", "SpamProbability", "LastPublished", "DateFound", "Identifier", "Content", "ContentExtract", "Generator", "RawPublished", "DomainHashcode", "SubdomainHashcode", },
+              com.spinn3r.api.protobuf.ContentApi.CrawlEntry.class,
+              com.spinn3r.api.protobuf.ContentApi.CrawlEntry.Builder.class);
+          internal_static_contentApi_FeedEntry_descriptor =
+            getDescriptor().getMessageTypes().get(8);
           internal_static_contentApi_FeedEntry_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_contentApi_FeedEntry_descriptor,
@@ -4407,7 +5187,7 @@ public final class ContentApi {
               com.spinn3r.api.protobuf.ContentApi.FeedEntry.class,
               com.spinn3r.api.protobuf.ContentApi.FeedEntry.Builder.class);
           internal_static_contentApi_CommentEntry_descriptor =
-            getDescriptor().getMessageTypes().get(8);
+            getDescriptor().getMessageTypes().get(9);
           internal_static_contentApi_CommentEntry_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_contentApi_CommentEntry_descriptor,
@@ -4415,7 +5195,7 @@ public final class ContentApi {
               com.spinn3r.api.protobuf.ContentApi.CommentEntry.class,
               com.spinn3r.api.protobuf.ContentApi.CommentEntry.Builder.class);
           internal_static_contentApi_Entry_descriptor =
-            getDescriptor().getMessageTypes().get(9);
+            getDescriptor().getMessageTypes().get(10);
           internal_static_contentApi_Entry_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_contentApi_Entry_descriptor,
@@ -4423,7 +5203,7 @@ public final class ContentApi {
               com.spinn3r.api.protobuf.ContentApi.Entry.class,
               com.spinn3r.api.protobuf.ContentApi.Entry.Builder.class);
           internal_static_contentApi_Response_descriptor =
-            getDescriptor().getMessageTypes().get(10);
+            getDescriptor().getMessageTypes().get(11);
           internal_static_contentApi_Response_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_contentApi_Response_descriptor,
