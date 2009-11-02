@@ -75,6 +75,17 @@ public class DiskReader {
     }
 
 
+
+    public static String readContent ( ContentApi.Content content ) throws Exception {
+
+        CompressedBLOB content_blob =
+            new CompressedBLOB ( content.getData().toByteArray() );
+
+        return content_blob.decompress();
+    }
+
+
+
     public static void main( String[] args ) throws Exception {
 
         if ( args.length != 1 ) {
@@ -96,7 +107,14 @@ public class DiskReader {
                 System.out.printf( "" );
 
                 for ( ContentApi.Entry entry : result.getEntryList() ) {
-                    System.out.printf( "Found entry for item: %s\n", 
+
+                    String content = readContent( entry.getPermalinkEntry().getContent() );
+
+                    if ( content == null )
+                        content = "";
+
+                    System.out.printf( "Found entry for item length %s: %s\n",
+                                       content.length(),
                                        entry.getPermalinkEntry().getCanonicalLink().getHref() );
                 }
             }
