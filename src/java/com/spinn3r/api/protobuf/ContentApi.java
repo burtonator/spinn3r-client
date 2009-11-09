@@ -4411,6 +4411,12 @@ public final class ContentApi {
     public boolean hasCommentEntry() { return hasCommentEntry; }
     public com.spinn3r.api.protobuf.ContentApi.CommentEntry getCommentEntry() { return commentEntry_; }
     
+    // optional .contentApi.CrawlEntry crawl_entry = 6;
+    private boolean hasCrawlEntry;
+    private com.spinn3r.api.protobuf.ContentApi.CrawlEntry crawlEntry_ = com.spinn3r.api.protobuf.ContentApi.CrawlEntry.getDefaultInstance();
+    public boolean hasCrawlEntry() { return hasCrawlEntry; }
+    public com.spinn3r.api.protobuf.ContentApi.CrawlEntry getCrawlEntry() { return crawlEntry_; }
+    
     public static com.spinn3r.api.protobuf.ContentApi.Entry parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -4688,6 +4694,40 @@ public final class ContentApi {
       public Builder clearCommentEntry() {
         result.hasCommentEntry = false;
         result.commentEntry_ = com.spinn3r.api.protobuf.ContentApi.CommentEntry.getDefaultInstance();
+        return this;
+      }
+      
+      // optional .contentApi.CrawlEntry crawl_entry = 6;
+      public boolean hasCrawlEntry() {
+        return result.hasCrawlEntry();
+      }
+      public com.spinn3r.api.protobuf.ContentApi.CrawlEntry getCrawlEntry() {
+        return result.getCrawlEntry();
+      }
+      public Builder setCrawlEntry(com.spinn3r.api.protobuf.ContentApi.CrawlEntry value) {
+        result.hasCrawlEntry = true;
+        result.crawlEntry_ = value;
+        return this;
+      }
+      public Builder setCrawlEntry(com.spinn3r.api.protobuf.ContentApi.CrawlEntry.Builder builderForValue) {
+        result.hasCrawlEntry = true;
+        result.crawlEntry_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeCrawlEntry(com.spinn3r.api.protobuf.ContentApi.CrawlEntry value) {
+        if (result.hasCrawlEntry() &&
+            result.crawlEntry_ != com.spinn3r.api.protobuf.ContentApi.CrawlEntry.getDefaultInstance()) {
+          result.crawlEntry_ =
+            com.spinn3r.api.protobuf.ContentApi.CrawlEntry.newBuilder(result.crawlEntry_).mergeFrom(value).buildPartial();
+        } else {
+          result.crawlEntry_ = value;
+        }
+        result.hasCrawlEntry = true;
+        return this;
+      }
+      public Builder clearCrawlEntry() {
+        result.hasCrawlEntry = false;
+        result.crawlEntry_ = com.spinn3r.api.protobuf.ContentApi.CrawlEntry.getDefaultInstance();
         return this;
       }
     }
@@ -5098,17 +5138,18 @@ public final class ContentApi {
       " \001(\003\022$\n\007content\030\014 \001(\0132\023.contentApi.Conte" +
       "nt\"m\n\014CommentEntry\022\021\n\tpermalink\030\001 \001(\t\022\027\n" +
       "\017permalink_title\030\002 \001(\t\022\032\n\022permalink_hash" +
-      "code\030\003 \001(\t\022\025\n\rraw_published\030\004 \001(\t\"\334\001\n\005En" +
+      "code\030\003 \001(\t\022\025\n\rraw_published\030\004 \001(\t\"\211\002\n\005En" +
       "try\022\"\n\006source\030\001 \001(\0132\022.contentApi.Source\022" +
       "\036\n\004feed\030\002 \001(\0132\020.contentApi.Feed\022)\n\nfeed_" +
       "entry\030\003 \001(\0132\025.contentApi.FeedEntry\0223\n\017pe" +
       "rmalink_entry\030\004 \001(\0132\032.contentApi.Permali" +
       "nkEntry\022/\n\rcomment_entry\030\005 \001(\0132\030.content" +
-      "Api.CommentEntry\"y\n\010Response\022\023\n\013request_" +
-      "url\030\001 \001(\t\022\034\n\024previous_request_url\030\002 \001(\t\022" +
-      "\030\n\020next_request_url\030\003 \001(\t\022 \n\005entry\030\004 \003(\013" +
-      "2\021.contentApi.EntryB&\n\030com.spinn3r.api.p" +
-      "rotobufB\nContentApi";
+      "Api.CommentEntry\022+\n\013crawl_entry\030\006 \001(\0132\026." +
+      "contentApi.CrawlEntry\"y\n\010Response\022\023\n\013req" +
+      "uest_url\030\001 \001(\t\022\034\n\024previous_request_url\030\002" +
+      " \001(\t\022\030\n\020next_request_url\030\003 \001(\t\022 \n\005entry\030" +
+      "\004 \003(\0132\021.contentApi.EntryB&\n\030com.spinn3r." +
+      "api.protobufB\nContentApi";
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
@@ -5199,7 +5240,7 @@ public final class ContentApi {
           internal_static_contentApi_Entry_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_contentApi_Entry_descriptor,
-              new java.lang.String[] { "Source", "Feed", "FeedEntry", "PermalinkEntry", "CommentEntry", },
+              new java.lang.String[] { "Source", "Feed", "FeedEntry", "PermalinkEntry", "CommentEntry", "CrawlEntry", },
               com.spinn3r.api.protobuf.ContentApi.Entry.class,
               com.spinn3r.api.protobuf.ContentApi.Entry.Builder.class);
           internal_static_contentApi_Response_descriptor =

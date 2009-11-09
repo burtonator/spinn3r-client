@@ -167,6 +167,7 @@ message Entry {
   optional FeedEntry      feed_entry      = 3;
   optional PermalinkEntry permalink_entry = 4;
   optional CommentEntry   comment_entry   = 5;
+  optional CrawlEntry     crawl_entry     = 6;
 }
 
 message Response {

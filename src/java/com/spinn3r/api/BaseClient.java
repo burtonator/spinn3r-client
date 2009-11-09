@@ -446,6 +446,8 @@ public abstract class BaseClient implements Client {
 
         setMoreRsults( conn );
 
+        ContentApi.Response res = null;
+        
         if ( disable_parse ) {
             
             // Only use a local input stream if we're about to write to disk.  I
@@ -453,10 +455,11 @@ public abstract class BaseClient implements Client {
             // disk.
             
             localInputStream = getLocalInputStream( conn.getInputStream() );
+            res  = ContentApi.Response.parseFrom( localInputStream );
             
+        } else {
+            res  = ContentApi.Response.parseFrom( conn.getInputStream() );
         }
-        
-        ContentApi.Response res  = ContentApi.Response.parseFrom( localInputStream );
 
         long call_after = System.currentTimeMillis();
 
@@ -625,7 +628,7 @@ public abstract class BaseClient implements Client {
         //determine the next_request_url so that we can fetch the second page of
         //results.
         String next = response.getNextRequestUrl();
-        
+
         setNextRequestURL( next );
 
         List result = new ArrayList();
@@ -1226,8 +1229,10 @@ public abstract class BaseClient implements Client {
         //TODO: apply the correct hostname to the next request.
 
         if ( getHost() != null ) {
+
             String path = next.substring( next.indexOf( "/", "http://".length() ), next.length() );
             next = String.format( "http://%s%s", getHost(), path );
+            
         }
 
         this.nextRequestURL = next;

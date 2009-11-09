@@ -799,8 +799,18 @@ public class Main {
             }
 
             if ( v.startsWith( "--limit" ) ) {
-                config.setLimit( Integer.parseInt( getOpt( v ) ) );
-                continue;
+
+                //config.setLimit( Integer.parseInt( getOpt( v ) ) );
+                //continue;
+
+                System.err.printf( "Limit is no longer a supported configuration.  \n" );
+                System.err.printf( "\n" );
+                System.err.printf( "This was removed to improve performance and stability.\n" );
+                System.err.printf( "\n" );
+                System.err.printf( "Reference clients are tuned for optimum performance.\n" );
+                
+                System.exit( 1 );
+                
             }
 
             if ( v.startsWith( "--sleep_duration" ) ) {
