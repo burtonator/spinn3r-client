@@ -686,9 +686,6 @@ public class Main {
         System.out.println( "    --range=NNNN          Unix time duration (in millis) to terminate the API." );
         System.out.println( "                          Default: none" );        
         System.out.println();
-        System.out.println( "    --limit=xx            Number of items to return per iteration." );
-        System.out.println( "                          Default: 10 for permalink, 100 for feed" );        
-        System.out.println();
         System.out.println( "    --save=DIRECTORY      Save result XML to disk in the specified directory." );
         System.out.println( "                          Default: none" );        
         System.out.println();
@@ -800,9 +797,10 @@ public class Main {
 
             if ( v.startsWith( "--limit" ) ) {
 
-                //config.setLimit( Integer.parseInt( getOpt( v ) ) );
-                //continue;
+                config.setLimit( Integer.parseInt( getOpt( v ) ) );
+                continue;
 
+                /*
                 System.err.printf( "Limit is no longer a supported configuration.  \n" );
                 System.err.printf( "\n" );
                 System.err.printf( "This was removed to improve performance and stability.\n" );
@@ -810,6 +808,7 @@ public class Main {
                 System.err.printf( "Reference clients are tuned for optimum performance.\n" );
                 
                 System.exit( 1 );
+                */
                 
             }
 

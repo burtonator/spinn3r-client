@@ -30,20 +30,15 @@ import java.io.IOException;
 import com.spinn3r.api.protobuf.*;
 import com.spinn3r.api.util.CompressedBLOB;
 
-
-
 public class DiskReader {
 
     private static int SLEEP_TIME = 1000 * 5; // five seconds
 
     private final String watchDir;
 
-
     public DiskReader ( String watchDir_value ) {
         watchDir = watchDir_value;
     }
-
-
 
     public ContentApi.Response getNext () throws ParseException, FileNotFoundException, IOException  {
         
@@ -55,7 +50,6 @@ public class DiskReader {
             throw new ParseException 
                 ( String.format( "Watch directory path is not a directory: %s", watchDir ) );
 
-        
         File proto_file = null;
 
         for ( String name : dir.list() ) {
@@ -65,7 +59,6 @@ public class DiskReader {
                 proto_file = current;
         }
 
-
         if ( proto_file != null ) {
             res = ContentApi.Response.parseFrom( new FileInputStream ( proto_file.getAbsoluteFile() ) );
             proto_file.delete();
@@ -74,8 +67,6 @@ public class DiskReader {
         return res;
     }
 
-
-
     public static String readContent ( ContentApi.Content content ) throws Exception {
 
         CompressedBLOB content_blob =
@@ -83,8 +74,6 @@ public class DiskReader {
 
         return content_blob.decompress();
     }
-
-
 
     public static void main( String[] args ) throws Exception {
 
@@ -119,8 +108,6 @@ public class DiskReader {
                 }
             }
 
-
-            
         }
         
     }
