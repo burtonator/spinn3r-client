@@ -53,8 +53,8 @@ message Lang {
 message Content {
   required string mime_type         = 1;
   optional bytes  data              = 2;
-  optional string content_encoding  = 3; //gzip,compress,deflate,etc
-  optional string charset           = 4; //UTF-8, etc.
+  optional string content_encoding  = 3; 
+  optional string charset           = 4; 
 }
 
 message Author {
