@@ -27,9 +27,34 @@ message Lang {
   optional float  probability = 2;
 }
 
+/**
+ * Specify the content and include content encoding and other fields.
+ *
+ * content_encoding:
+ * 
+ * http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html
+ * 
+ * Content coding values indicate an encoding transformation that has been or
+ * can be applied to an entity. Content codings are primarily used to allow a
+ * document to be compressed or otherwise usefully transformed without losing
+ * the identity of its underlying media type and without loss of
+ * information. Frequently, the entity is stored in coded form, transmitted
+ * directly, and only decoded by the recipient.
+ *
+ * Acceptable values: gzip
+ *
+ * charset:
+ *
+ * The specific charset for the underlying document.
+ *
+ * Acceptable values: UTF-8
+ * 
+ */
 message Content {
-  required string mime_type = 1;
-  optional bytes  data      = 2;
+  required string mime_type         = 1;
+  optional bytes  data              = 2;
+  optional string content_encoding  = 3; //gzip,compress,deflate,etc
+  optional string charset           = 4; //UTF-8, etc.
 }
 
 message Author {
