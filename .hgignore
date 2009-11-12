@@ -4,6 +4,7 @@ syntax: glob
 *~
 compile/
 target/
+tmp/
 
 # switch to regexp syntax.
 syntax: regexp
