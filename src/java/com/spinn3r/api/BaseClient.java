@@ -436,6 +436,8 @@ public abstract class BaseClient implements Client {
 
         setMoreRsults( conn );
 
+        ContentApi.Response res = null;
+        
         if ( disable_parse ) {
             
             // Only use a local input stream if we're about to write to disk.  I
@@ -443,10 +445,14 @@ public abstract class BaseClient implements Client {
             // disk.
             
             localInputStream = getLocalInputStream( conn.getInputStream() );
+            res  = ContentApi.Response.parseFrom( localInputStream );
             
+        } 
+
+        else {
+            res  = ContentApi.Response.parseFrom( conn.getInputStream() );
         }
         
-        ContentApi.Response res  = ContentApi.Response.parseFrom( localInputStream );
 
         long call_after = System.currentTimeMillis();
 
@@ -1285,18 +1291,6 @@ public abstract class BaseClient implements Client {
         this.parseDuration = parseDuration;
     }
 
-    /**
-     * Set the host for API alls.
-     */
-    /* BOOG
-    public void setHost( String v ) {
-        this.host = v;
-    }
-
-    public String getHost() {
-        return host;
-    }
-    */
 
     /**
      * When the API needs to shutdown you need to call this method FIRST and

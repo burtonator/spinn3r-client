@@ -54,14 +54,6 @@ public interface Client {
 
     public Date getRestartPoint();
 
-
-    /* BOOG
-    public void setHost( String v );
-
-
-    public String getHost();
-    */
-
     public long getParseDuration();
 
     public void setParseDuration( long v );
