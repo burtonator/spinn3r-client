@@ -82,4 +82,9 @@ public class PermalinkEntryConfig extends Config {
         return sleepInterval;
     }
     
+    @Override
+    public String getRouter() {
+        return String.format( "http://%s/rss/%s.entry?", getHost(), "permalink3" );
+    }
+
 }

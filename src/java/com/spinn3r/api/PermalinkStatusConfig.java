@@ -63,4 +63,9 @@ public class PermalinkStatusConfig extends Config {
         return sleepInterval;
     }
     
+    @Override
+    public String getRouter() {
+        return String.format( "http://%s/rss/%s.status?", getHost(), BaseClient.PERMALINK_HANDLER );
+    }
+
 }

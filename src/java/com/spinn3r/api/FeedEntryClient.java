@@ -29,7 +29,7 @@ import com.spinn3r.api.protobuf.*;
 /**
  * 
  */
-public class FeedEntryClient extends BaseClient implements Client {
+public class FeedEntryClient extends LegacyWrapperClient implements Client {
 
     public static int MAX_LIMIT            = 100;
     public static int OPTIMAL_LIMIT        = 50;
@@ -66,7 +66,7 @@ public class FeedEntryClient extends BaseClient implements Client {
         if ( config.getId() != null )
             addParam( params, "id", config.getId() );
 
-        String result = getRouter() + params.toString();
+        String result = config.getRouter() + params.toString();
 
         //System.out.printf( "\n%s\n", result );
         
@@ -102,10 +102,6 @@ public class FeedEntryClient extends BaseClient implements Client {
 
     protected int getConservativeLimit() {
         return CONSERVATIVE_LIMIT;
-    }
-
-    public String getRouter() {
-        return String.format( "http://%s/rss/%s.entry?", getHost(), "feed3" );
     }
 
     public static void main( String[] args ) throws Exception {

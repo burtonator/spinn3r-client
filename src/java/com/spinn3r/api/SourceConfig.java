@@ -1,5 +1,5 @@
 /*
- * Copyright 2007 Tailrank, Inc.
+ * Copyright 2009 Tailrank, Inc.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
@@ -22,34 +22,11 @@ import java.util.*;
  * Used to startup the API and specify defaults for limits, where to start
  * indexing, tiers, language, etc.
  */
-public class LinkConfig extends Config {
-    
-    private Date after = null;
-
-    /**
-     * 
-     * Set the value of <code>after</code>.
-     *
-     */
-    public void setAfter( Date after ) { 
-        this.after = after;
-    }
-
-    /**
-     * 
-     * Get the value of <code>after</code>.
-     *
-     */
-    public Date getAfter() { 
-        return this.after;
-    }
+public class SourceConfig extends Config {
 
     @Override
     public String getRouter() {
-
-        String router = String.format( "http://%s/rss/%s.getDelta?", getHost(), BaseClient.LINK_HANDLER );
-
-        return router;
-
+        return "http://" + getHost() + "/rss/source.status?";
     }
+
 }

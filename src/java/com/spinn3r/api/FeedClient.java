@@ -33,7 +33,7 @@ import com.spinn3r.api.protobuf.*;
  * thread safety by using <code>synchronized</code> or
  * <code>java.util.concurrent</code> constructs.
  */
-public class FeedClient extends BaseClient implements Client {
+public class FeedClient extends LegacyWrapperClient implements Client {
 
     public static int MAX_LIMIT            = 100;
     public static int OPTIMAL_LIMIT        = 100;
@@ -61,9 +61,9 @@ public class FeedClient extends BaseClient implements Client {
             addParam( params, "version", config.getVersion() );
 
             String resource = String.format( "http://%s/rss/%s.status?%s",
-                                             getHost(), BaseClient.FEED_HANDLER, params );
+                                             config.getHost(), BaseClient.FEED_HANDLER, params );
 
-            Document doc = doXmlFetch( resource );
+            Document doc = doXmlFetch( resource, config );
 
             Element root = (Element)doc.getFirstChild();
 
@@ -107,15 +107,11 @@ public class FeedClient extends BaseClient implements Client {
         return CONSERVATIVE_LIMIT;
     }
 
-    public String getRouter() {
-        return String.format( "http://%s/rss/%s.getDelta?", getHost(), BaseClient.FEED_HANDLER );
-    }
-
     public static void main( String[] args ) throws Exception {
 
         FeedClient client = new FeedClient();
 
-        Config config = new Config();
+        Config config = new FeedConfig();
         config.setVendor( "XXXX" );
 
         client.setConfig( config );

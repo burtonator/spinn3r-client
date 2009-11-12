@@ -24,4 +24,14 @@ import java.util.*;
  */
 public class CommentConfig extends PermalinkConfig {
 
+    @Override
+    public String getRouter() {
+        
+        String router = String.format( "http://%s/rss/%s.getDelta?", getHost(), BaseClient.COMMENT_HANDLER );
+
+        return router;
+
+    }
+
+
 }

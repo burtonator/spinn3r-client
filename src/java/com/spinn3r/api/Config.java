@@ -22,7 +22,13 @@ import java.util.*;
  * Used to startup the API and specify defaults for limits, where to start
  * indexing, tiers, language, etc.
  */
-public class Config {
+public abstract class Config {
+
+    /**
+     * Default hostname for building the router URL.  This can be changed to
+     * use an additional dedicated host if necessary.
+     */
+    public static String DEFAULT_HOST = "api.spinn3r.com";
 
     /**
      * When we've ran out of results (because the client is up to date) then we
@@ -58,8 +64,28 @@ public class Config {
     private boolean        skipDescription     = false;
     private String         api                 = null;
     private boolean        useProtobuf         = DEFAULT_USE_PROTOBUF;
+    private String         host                = DEFAULT_HOST;
 
 
+    /**
+     * Get the router URL for API calls.
+     */
+    abstract public String getRouter();
+
+    /**
+     * Get the host for this request
+     */
+    public String getHost () {
+        return this.host;
+    }
+
+
+    /**
+     * Set the host for this request.
+     */ 
+    public void setHost ( String value ) {
+        this.host = value;
+    }
 
 
     /**

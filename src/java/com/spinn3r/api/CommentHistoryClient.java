@@ -29,7 +29,7 @@ import com.spinn3r.api.protobuf.*;
 /**
  * 
  */
-public class CommentHistoryClient extends BaseClient implements Client {
+public class CommentHistoryClient extends LegacyWrapperClient implements Client {
 
     public static int MAX_LIMIT            = 100;
     public static int OPTIMAL_LIMIT        = 50;
@@ -79,7 +79,7 @@ public class CommentHistoryClient extends BaseClient implements Client {
         if ( config.getFeedHashcode() != null )
             addParam( params, "feed_hashcode",  URLEncoder.encode( config.getFeedHashcode() ) );
 
-        String result = getRouter() + params.toString();
+        String result = config.getRouter() + params.toString();
 
         return result;
         
@@ -107,10 +107,6 @@ public class CommentHistoryClient extends BaseClient implements Client {
 
     protected int getConservativeLimit() {
         return CONSERVATIVE_LIMIT;
-    }
-
-    public String getRouter() {
-        return String.format( "http://%s/rss/%s.history?", getHost(), BaseClient.COMMENT_HANDLER );
     }
 
     public static void dump( List<BaseItem> results ) {

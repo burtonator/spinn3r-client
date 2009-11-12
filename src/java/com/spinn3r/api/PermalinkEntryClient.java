@@ -28,7 +28,7 @@ import com.spinn3r.api.protobuf.*;
 /**
  * 
  */
-public class PermalinkEntryClient extends BaseClient implements Client {
+public class PermalinkEntryClient extends LegacyWrapperClient implements Client {
 
     public static int MAX_LIMIT            = 100;
     public static int OPTIMAL_LIMIT        = 50;
@@ -65,7 +65,7 @@ public class PermalinkEntryClient extends BaseClient implements Client {
         if ( config.getId() != null )
             addParam( params, "id", config.getId() );
 
-        String result = getRouter() + params.toString();
+        String result = config.getRouter() + params.toString();
 
         return result;
         
@@ -100,10 +100,6 @@ public class PermalinkEntryClient extends BaseClient implements Client {
 
     protected int getConservativeLimit() {
         return CONSERVATIVE_LIMIT;
-    }
-
-    public String getRouter() {
-        return String.format( "http://%s/rss/%s.entry?", getHost(), "permalink3" );
     }
 
     public static void main( String[] args ) throws Exception {

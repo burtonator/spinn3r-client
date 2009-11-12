@@ -31,7 +31,7 @@ import com.spinn3r.api.protobuf.*;
  * thread safety by using <code>synchronized</code> or
  * <code>java.util.concurrent</code> constructs.
  */
-public class LinkClient extends BaseClient implements Client {
+public class LinkClient extends LegacyWrapperClient implements Client {
     
     public static int MAX_LIMIT            = 100;
     public static int OPTIMAL_LIMIT        = 50;
@@ -72,12 +72,5 @@ public class LinkClient extends BaseClient implements Client {
         return CONSERVATIVE_LIMIT;
     }
 
-    public String getRouter() {
-
-        String router = String.format( "http://%s/rss/%s.getDelta?", getHost(), BaseClient.LINK_HANDLER );
-
-        return router;
-
-    }
 
 }

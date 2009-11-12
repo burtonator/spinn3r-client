@@ -54,17 +54,13 @@ public interface Client {
 
     public Date getRestartPoint();
 
+
+    /* BOOG
     public void setHost( String v );
 
-    /**
-     * Get the host name for API calls.
-     */
-    public String getHost();
 
-    /**
-     * Get the router URL for API calls.
-     */
-    public String getRouter();
+    public String getHost();
+    */
 
     public long getParseDuration();
 

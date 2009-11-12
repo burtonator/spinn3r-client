@@ -33,7 +33,7 @@ import com.spinn3r.api.protobuf.*;
  * thread safety by using <code>synchronized</code> or
  * <code>java.util.concurrent</code> constructs.
  */
-public class PermalinkClient extends BaseClient implements Client {
+public class PermalinkClient extends LegacyWrapperClient implements Client {
     
     /**
      * The permalink API can only handle 10 items at once since each piece of
@@ -83,17 +83,5 @@ public class PermalinkClient extends BaseClient implements Client {
         return CONSERVATIVE_LIMIT;
     }
 
-    public String getRouter() {
-        
-        String format_string = "http://%s/rss/%s.getDelta?"; 
- 
-        if ( config.getUseProtobuf() ) 
-            format_string = "http://%s/protobuf/%s.getDelta?";
-       
-       String result = String.format( format_string, getHost(), BaseClient.PERMALINK_HANDLER );
-
-       return result;
-       
-    }
 
 }

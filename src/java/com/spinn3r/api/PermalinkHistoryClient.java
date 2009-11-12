@@ -29,7 +29,7 @@ import com.spinn3r.api.protobuf.*;
 /**
  * 
  */
-public class PermalinkHistoryClient extends BaseClient implements Client {
+public class PermalinkHistoryClient extends LegacyWrapperClient implements Client {
 
     public static int MAX_LIMIT            = 100;
     public static int OPTIMAL_LIMIT        = 50;
@@ -61,7 +61,7 @@ public class PermalinkHistoryClient extends BaseClient implements Client {
         addParam( params, "version", config.getVersion() );
         addParam( params, "source",  URLEncoder.encode( config.getSource() ) );
 
-        String result = getRouter() + params.toString();
+        String result = config.getRouter() + params.toString();
 
         System.out.printf( "%s\n", result );
         
@@ -96,9 +96,6 @@ public class PermalinkHistoryClient extends BaseClient implements Client {
         return CONSERVATIVE_LIMIT;
     }
 
-    public String getRouter() {
-        return String.format( "http://%s/rss/%s.history?", getHost(), BaseClient.PERMALINK_HANDLER );
-    }
 
     public static void dump( List<BaseItem> results ) {
 
@@ -121,7 +118,7 @@ public class PermalinkHistoryClient extends BaseClient implements Client {
         config.setVendor( args[0] );
         config.setSource( args[1] );
 
-        client.setHost( "dev.api.spinn3r.com" );
+        config.setHost( "dev.api.spinn3r.com" );
         client.setConfig( config );
 
         List results;

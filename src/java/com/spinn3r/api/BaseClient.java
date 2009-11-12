@@ -96,11 +96,6 @@ public abstract class BaseClient implements Client {
                                                      System.getProperty( "java.version" ),
                                                      Runtime.getRuntime().maxMemory() );
         
-    /**
-     * Default hostname for building the router URL.  This can be changed to
-     * use an additional dedicated host if necessary.
-     */
-    public static String DEFAULT_HOST = "api.spinn3r.com";
     
     /**
      * Specified in java.security to indicate the caching policy for successful
@@ -172,7 +167,6 @@ public abstract class BaseClient implements Client {
 
     protected List results = new ArrayList();
 
-    protected Config config = null;
 
     /**
      * True if the last API call was compressed.
@@ -185,10 +179,6 @@ public abstract class BaseClient implements Client {
      */
     InputStream localInputStream = null;
 
-    /**
-     * The host for calling API methods.
-     */
-    String host = DEFAULT_HOST;
 
     /**
      * Sample performance times...
@@ -259,7 +249,7 @@ public abstract class BaseClient implements Client {
 
                 // set the optimal limit if necessary
                 if ( retry_ctr == 0 )
-                    config.setLimit( getLimit() );
+                    config.setLimit( getLimit( config ) );
                 else
                     config.setLimit( getConservativeLimit() );
                 
@@ -332,7 +322,7 @@ public abstract class BaseClient implements Client {
             // if the API has NEVER been used before then generate the first
             // request URL from the config parameters.
             if ( resource == null )
-                resource = generateFirstRequestURL();
+                resource = generateFirstRequestURL( config );
 
         } else if ( ! hasMoreResults ) {
 
@@ -365,13 +355,13 @@ public abstract class BaseClient implements Client {
             long before = System.currentTimeMillis();
 
             if ( config.getUseProtobuf() ) {
-                protobufParse( doProtobufFetch( resource ) );
+                protobufParse( doProtobufFetch( resource ), config );
             } else {
 
-                Document doc = doXmlFetch( resource );
+                Document doc = doXmlFetch( resource, config );
 
                 if ( doc != null ) {
-                    xmlParse( doc );
+                    xmlParse( doc, config );
                 }
                 
             }
@@ -465,7 +455,7 @@ public abstract class BaseClient implements Client {
         return res;
     }
 
-    public Document doXmlFetch( String resource ) throws IOException,
+    public Document doXmlFetch( String resource, Config config  ) throws IOException,
                                                       ParseException,
                                                       InterruptedException {
 
@@ -497,7 +487,7 @@ public abstract class BaseClient implements Client {
 
             if ( disable_parse ) {
                 //use the X-Next-Requested-URL if known.
-                setNextRequestURL( conn.getHeaderField( "X-Next-Request-URL" ) );
+                setNextRequestURL( conn.getHeaderField( "X-Next-Request-URL" ), config );
                 return null;
             }
 
@@ -588,7 +578,7 @@ public abstract class BaseClient implements Client {
      * We've received a response from the API so parse it out.
      *
      */
-    protected void xmlParse( Document doc ) throws Exception {
+    protected void xmlParse( Document doc, Config config ) throws Exception {
 
         Element root = (Element)doc.getFirstChild();
 
@@ -598,7 +588,7 @@ public abstract class BaseClient implements Client {
         //results.
         String next = getElementCDATAByTagName( channel, "next_request_url", NS_API );
         
-        setNextRequestURL( next );
+        setNextRequestURL( next, config );
 
         List result = new ArrayList();
 
@@ -620,13 +610,13 @@ public abstract class BaseClient implements Client {
      * We've received a response from the API so parse it out.
      *
      */
-    protected void protobufParse( ContentApi.Response response ) throws Exception {
+    protected void protobufParse( ContentApi.Response response, Config config ) throws Exception {
 
         //determine the next_request_url so that we can fetch the second page of
         //results.
         String next = response.getNextRequestUrl();
         
-        setNextRequestURL( next );
+        setNextRequestURL( next, config );
 
         List result = new ArrayList();
 
@@ -641,11 +631,11 @@ public abstract class BaseClient implements Client {
     /**
      * Generate the first request URL based just on configuration directives.
      */
-    protected String generateFirstRequestURL() {
+    protected String generateFirstRequestURL( Config config ) {
 
         StringBuffer params = new StringBuffer( 1024 ) ;
 
-        int limit = config.getLimit();
+        int limit = config.getLimit( );
         
         if ( limit > getMaxLimit() )
             limit = getMaxLimit();
@@ -683,7 +673,7 @@ public abstract class BaseClient implements Client {
             addParam( params, "skip_description", "true" );
         }
 
-        String result = getRouter() + params.toString();
+        String result = config.getRouter() + params.toString();
         
         return result;
         
@@ -715,17 +705,6 @@ public abstract class BaseClient implements Client {
         return 10;
     }
     
-    /**
-     * Return the router for this client.  Right now this is either:
-     * 
-     * http://api.spinn3r.com/rss/feed.getDelta?
-     * 
-     * or
-     * 
-     * http://api.spinn3r.com/rss/permalink.getDelta?
-     * 
-     */
-    public abstract String getRouter();
     
     /**
      * Parse an individual item which might be specific to this client.
@@ -1221,13 +1200,13 @@ public abstract class BaseClient implements Client {
      * Set the value of <code>nextRequestURL</code>.
      *
      */
-    public void setNextRequestURL( String next ) { 
+    public void setNextRequestURL( String next, Config config ) { 
 
         //TODO: apply the correct hostname to the next request.
 
-        if ( getHost() != null ) {
+        if ( config.getHost() != null ) {
             String path = next.substring( next.indexOf( "/", "http://".length() ), next.length() );
-            next = String.format( "http://%s%s", getHost(), path );
+            next = String.format( "http://%s%s", config.getHost(), path );
         }
 
         this.nextRequestURL = next;
@@ -1251,23 +1230,6 @@ public abstract class BaseClient implements Client {
 //         this.results = results;
 //     }
 
-    /**
-     * 
-     * Get the value of <code>config</code>.
-     *
-     */
-    public Config getConfig() { 
-        return this.config;
-    }
-
-    /**
-     * 
-     * Set the value of <code>config</code>.
-     *
-     */
-    public void setConfig( Config config ) { 
-        this.config = config;
-    }
 
     /**
      * 
@@ -1326,6 +1288,7 @@ public abstract class BaseClient implements Client {
     /**
      * Set the host for API alls.
      */
+    /* BOOG
     public void setHost( String v ) {
         this.host = v;
     }
@@ -1333,7 +1296,8 @@ public abstract class BaseClient implements Client {
     public String getHost() {
         return host;
     }
-    
+    */
+
     /**
      * When the API needs to shutdown you need to call this method FIRST and
      * persist it.  Then when the API starts you need to call config.setAfter()
@@ -1354,7 +1318,7 @@ public abstract class BaseClient implements Client {
      * Return the correct limit, factoring in the limit set by the user. 
      *
      */
-    public int getLimit() {
+    public int getLimit( Config config ) {
 
         int limit = config.getLimit();
 

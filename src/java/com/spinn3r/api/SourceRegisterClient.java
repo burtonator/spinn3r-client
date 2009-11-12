@@ -44,13 +44,13 @@ public class SourceRegisterClient {
         BaseClient.addParam( params, "force",            config.getForce() );
         BaseClient.addParam( params, "feed",             config.getFeed() );
         BaseClient.addParam( params, "publisher_type",   config.getPublisherType() );
-        
+
         String resource = String.format( "http://%s/rss/source.register?%s", config.getHost(), params );
 
         // This is kind of a hack but mostly acceptable.  We should refactor at
         // some point though.
         SourceClient client = new SourceClient();
-        Document doc = client.doXmlFetch( resource );
+        Document doc = client.doXmlFetch( resource, config );
 
     }
 

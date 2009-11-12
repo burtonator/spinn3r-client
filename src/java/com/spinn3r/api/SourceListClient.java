@@ -28,7 +28,7 @@ import com.spinn3r.api.protobuf.*;
 /**
  * 
  */
-public class SourceListClient extends BaseClient implements Client {
+public class SourceListClient extends LegacyWrapperClient implements Client {
 
     /**
      * When we've ran out of results (because the client is up to date) then we
@@ -87,7 +87,7 @@ public class SourceListClient extends BaseClient implements Client {
         if ( config.getFoundAfter() != null )
             addParam( params, "found_after",   toISO8601( config.getFoundAfter() ) );
 
-        return getRouter() + params.toString();
+        return config.getRouter() + params.toString();
         
     }
 
@@ -114,10 +114,6 @@ public class SourceListClient extends BaseClient implements Client {
 
     protected int getConservativeLimit() {
         return CONSERVATIVE_LIMIT;
-    }
-
-    public String getRouter() {
-        return "http://" + getHost() + "/rss/source.list?";
     }
 
     public long getSleepInterval() {

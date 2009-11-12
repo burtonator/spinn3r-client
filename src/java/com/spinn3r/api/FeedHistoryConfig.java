@@ -101,4 +101,9 @@ public class FeedHistoryConfig extends Config {
         this.source = source;
     }
 
+    @Override
+    public String getRouter() {
+        return String.format( "http://%s/rss/%s.history?", getHost(), BaseClient.FEED_HANDLER );
+    }
+
 }

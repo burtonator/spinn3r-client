@@ -184,4 +184,8 @@ public class LinkHistoryConfig extends Config {
         this.targetHashcode = targetHashcode;
     }
 
+    @Override
+    public String getRouter() {
+        return String.format( "http://%s/rss/%s.history?", getHost(), BaseClient.LINK_HANDLER );
+    }
 }

@@ -24,4 +24,9 @@ import java.util.*;
  */
 public class FeedConfig extends Config {
 
+    @Override
+    public String getRouter() {
+        return String.format( "http://%s/rss/%s.getDelta?", getHost(), BaseClient.FEED_HANDLER );
+    }
+
 }

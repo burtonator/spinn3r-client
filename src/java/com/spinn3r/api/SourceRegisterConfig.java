@@ -22,7 +22,7 @@ import java.util.*;
  * Used to startup the API and specify defaults for limits, where to start
  * indexing, tiers, language, etc.
  */
-public class SourceRegisterConfig {
+public class SourceRegisterConfig extends Config {
 
     private String         vendor           = null;
 
@@ -145,4 +145,8 @@ public class SourceRegisterConfig {
         this.force = force;
     }
 
+    @Override
+    public String getRouter () {
+        throw new RuntimeException ( "error not supporter" );
+    }
 }

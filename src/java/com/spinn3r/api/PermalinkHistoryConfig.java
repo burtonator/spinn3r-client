@@ -44,4 +44,10 @@ public class PermalinkHistoryConfig extends Config {
         this.source = source;
     }
 
+
+    @Override
+    public String getRouter() {
+        return String.format( "http://%s/rss/%s.history?", getHost(), BaseClient.PERMALINK_HANDLER );
+    }
+
 }

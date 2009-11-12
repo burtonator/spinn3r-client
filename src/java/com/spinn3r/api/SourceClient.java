@@ -29,7 +29,7 @@ import com.spinn3r.api.protobuf.*;
 /**
  * API client that implements Spinn3r's source registration API.
  */
-public class SourceClient extends BaseClient implements Client {
+public class SourceClient extends LegacyWrapperClient implements Client {
 
     public void fetch() throws IOException,
                                ParseException,
@@ -87,9 +87,9 @@ public class SourceClient extends BaseClient implements Client {
             addParam( params, "vendor",  config.getVendor() );
             addParam( params, "version", config.getVersion() );
 
-            String resource = String.format( "http://%s/rss/source.status?%s", getHost(), params );
+            String resource = String.format( "http://%s/rss/source.status?%s", config.getHost(), params );
 
-            Document doc = doXmlFetch( resource );
+            Document doc = doXmlFetch( resource, config );
 
             Element root = (Element)doc.getFirstChild();
 
@@ -105,15 +105,12 @@ public class SourceClient extends BaseClient implements Client {
         
     }
 
-    public String getRouter() {
-        return "http://" + getHost() + "/rss/source.status?";
-    }
 
     public static void main( String[] args ) throws Exception {
 
         SourceClient client = new SourceClient();
 
-        Config config = new Config();
+        Config config = new SourceConfig();
         config.setVendor( "XXXX" );
                 
         client.setConfig( config );

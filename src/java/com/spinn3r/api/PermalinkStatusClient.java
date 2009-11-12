@@ -30,7 +30,7 @@ import com.spinn3r.api.protobuf.*;
  *
  * @deprecated This code is deprecated and will be removed after 2008-11-01.
  */
-public class PermalinkStatusClient extends BaseClient implements Client {
+public class PermalinkStatusClient extends LegacyWrapperClient implements Client {
 
     public static int MAX_LIMIT            = 100;
     public static int OPTIMAL_LIMIT        = 50;
@@ -62,7 +62,7 @@ public class PermalinkStatusClient extends BaseClient implements Client {
         addParam( params, "version", config.getVersion() );
         addParam( params, "resource",  config.getResource() );
 
-        String result = getRouter() + params.toString();
+        String result = config.getRouter() + params.toString();
         
         return result;
         
@@ -98,9 +98,6 @@ public class PermalinkStatusClient extends BaseClient implements Client {
         return CONSERVATIVE_LIMIT;
     }
 
-    public String getRouter() {
-        return String.format( "http://%s/rss/%s.status?", getHost(), BaseClient.PERMALINK_HANDLER );
-    }
 
     public static void main( String[] args ) throws Exception {
 

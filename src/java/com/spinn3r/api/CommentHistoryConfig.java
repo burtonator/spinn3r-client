@@ -144,4 +144,9 @@ public class CommentHistoryConfig extends Config {
         this.permalinkHashcode = permalinkHashcode;
     }
 
+    @Override
+    public String getRouter() {
+        return String.format( "http://%s/rss/%s.history?", getHost(), BaseClient.COMMENT_HANDLER );
+    }
+
 }

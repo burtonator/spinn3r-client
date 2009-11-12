@@ -28,7 +28,7 @@ import com.spinn3r.api.protobuf.*;
 /**
  * 
  */
-public class FeedHistoryClient extends BaseClient implements Client {
+public class FeedHistoryClient extends LegacyWrapperClient implements Client {
 
     public static int MAX_LIMIT            = 100;
     public static int OPTIMAL_LIMIT        = 50;
@@ -64,7 +64,7 @@ public class FeedHistoryClient extends BaseClient implements Client {
         addParam( params, "feed_hashcode",    config.getFeedHashcode() , true );
         addParam( params, "source_hashcode",  config.getSourceHashcode() , true );
 
-        String result = getRouter() + params.toString();
+        String result = config.getRouter() + params.toString();
 
         System.out.printf( "%s\n", result );
         
@@ -96,10 +96,6 @@ public class FeedHistoryClient extends BaseClient implements Client {
         return CONSERVATIVE_LIMIT;
     }
 
-    public String getRouter() {
-        return String.format( "http://%s/rss/%s.history?", getHost(), BaseClient.FEED_HANDLER );
-    }
-
     public static void dump( List<BaseItem> results ) {
 
         for( BaseItem item : results ) {
@@ -123,7 +119,7 @@ public class FeedHistoryClient extends BaseClient implements Client {
         config.setVendor( args[0] );
         config.setFeedHashcode( args[1] );
 
-        client.setHost( "api.spinn3r.com" );
+        config.setHost( "api.spinn3r.com" );
         client.setConfig( config );
 
         List results;

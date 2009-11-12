@@ -82,4 +82,8 @@ public class SourceListConfig extends Config {
         this.postedAfter = postedAfter;
     }
 
+    @Override
+    public String getRouter() {
+        return "http://" + getHost() + "/rss/source.list?";
+    }
 }

@@ -79,12 +79,6 @@ public class Main {
     private long fetch_after = -1;
 
     /**
-     * Keeps track of the client that the user wants to use from the command
-     * line.
-     */
-    private BaseClient client = null;
-
-    /**
      * Results from the last call.
      */
     private List<BaseResult> results = null;
@@ -144,9 +138,8 @@ public class Main {
     private static PerformanceSampler sampler5   = new PerformanceSampler( 5L  * 60L * 1000L );
     private static PerformanceSampler sampler15  = new PerformanceSampler( 15L * 60L * 1000L );
     
-    public Main( BaseClient client ) {
-        this.client = client;
-    }
+
+    public Main () {}
 
     /**
      * Parse the 'after' param from a request URL as a timestamp.
@@ -178,7 +171,7 @@ public class Main {
     /**
      * Process results, handling them as necessary.
      */
-    void process( List<BaseResult> results ) throws Exception {
+    void process( List<BaseResult> results, BaseClient client ) throws Exception {
 
         if ( ENABLE_FAST_SAVE && save != null ) {
 
@@ -383,7 +376,7 @@ public class Main {
     /**
      * Print status of the API calls.
      */
-    void progress() {
+    void progress( BaseClient client ) {
 
         if ( csv )
             return;
@@ -457,9 +450,7 @@ public class Main {
 
     }
 
-    public void exec() throws Exception {
-
-        Config  config       = client.getConfig();
+    public void exec( BaseClient client, Config  config ) throws Exception {
 
         if ( ENABLE_NO_PARSE_ON_SAVE && save != null ) {
             client.disable_parse = true;
@@ -469,13 +460,13 @@ public class Main {
 
             try {
 
-                results = doFetch();
+                results = doFetch( client, config );
 
                 System.out.println( "Found N results: " + results.size() );
 
-                process( results );
+                process( results, client );
 
-                progress();
+                progress( client );
 
                 if ( last == null )
                     continue;
@@ -506,15 +497,13 @@ public class Main {
     /**
      * Perform a fetch of the next API call.  
      */
-    private List<BaseResult> doFetch() throws Exception {
-
-        Config config = client.getConfig();
+    private List<BaseResult> doFetch( BaseClient client, Config config ) throws Exception {
 
         //fetch the most recent results.  This will block if necessary.
 
         fetch_before = System.currentTimeMillis();
 
-        client.fetch();
+        client.fetch( config );
 
         fetch_after  = System.currentTimeMillis();
 
@@ -862,7 +851,7 @@ public class Main {
             }
 
             if ( v.startsWith( "--host" ) ) {
-                client.setHost( getOpt( v ) );
+                config.setHost( getOpt( v ) );
                 continue;
             }
 
@@ -930,9 +919,7 @@ public class Main {
 
         config.setAfter( new Date( after ) );
         
-        client.setConfig( config );
-
-        new Main( client ).exec();
+        new Main().exec( client, config );
         
     }
     
