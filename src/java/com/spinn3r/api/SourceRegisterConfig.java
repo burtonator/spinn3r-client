@@ -28,7 +28,7 @@ public class SourceRegisterConfig extends Config {
 
     private String         version          = Config.DEFAULT_VERSION;
 
-    private String         host             = BaseClient.DEFAULT_HOST;
+    private String         host             = Config.DEFAULT_HOST;
 
     private boolean        force            = false;
 
