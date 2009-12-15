@@ -24,7 +24,9 @@ import javax.xml.parsers.*;
 
 import org.w3c.dom.*;
 
-import com.spinn3r.api.protobuf.*;
+import com.spinn3r.api.protobuf.ContentApi;
+
+import static com.spinn3r.api.XMLUtils.*;
 
 /**
  * <p> Reference API implementation for fetching Feed content form Spinn3r.
@@ -33,17 +35,8 @@ import com.spinn3r.api.protobuf.*;
  * thread safety by using <code>synchronized</code> or
  * <code>java.util.concurrent</code> constructs.
  */
-public class FeedClient extends LegacyWrapperClient implements Client {
+public class FeedClient extends LegacyWrapperClient {
 
-    public static int MAX_LIMIT            = 100;
-    public static int OPTIMAL_LIMIT        = 100;
-    public static int CONSERVATIVE_LIMIT   = 10;
-
-    public void fetch() throws IOException,
-                               ParseException,
-                               InterruptedException {
-        super.fetch( config );
-    }
 
     /**
      * Check on the status of a weblog within Spinn3r.
@@ -56,9 +49,9 @@ public class FeedClient extends LegacyWrapperClient implements Client {
 
             StringBuffer params = new StringBuffer();
 
-            addParam( params, "link",    link );
-            addParam( params, "vendor",  config.getVendor() );
-            addParam( params, "version", config.getVersion() );
+            Config.addParam( params, "link",    link );
+            Config.addParam( params, "vendor",  config.getVendor() );
+            Config.addParam( params, "version", config.getVersion() );
 
             String resource = String.format( "http://%s/rss/%s.status?%s",
                                              config.getHost(), BaseClient.FEED_HANDLER, params );
@@ -73,39 +66,15 @@ public class FeedClient extends LegacyWrapperClient implements Client {
 
             return feed;
 
-        } catch ( FileNotFoundException e ) {
+        } 
+
+        catch ( FileNotFoundException e ) {
             return null;
         }
         
     }
 
-    public List<BaseItem> getResults() { 
-        return (List<BaseItem>)super.results;
-    }
 
-    protected BaseResult parseItem( ContentApi.Entry current ) throws Exception {
-        throw new UnimplementedException ("protobuf support not implmented for this client");
-    }
-
-    protected BaseItem parseItem( Element current ) throws Exception {
-
-        FeedItem item = new FeedItem();
-
-        return (BaseItem)super.parseItem( current, item );
-        
-    }
-
-    protected int getMaxLimit() {
-        return MAX_LIMIT;
-    }
-
-    protected int getOptimalLimit() {
-        return OPTIMAL_LIMIT;
-    }
-
-    protected int getConservativeLimit() {
-        return CONSERVATIVE_LIMIT;
-    }
 
     public static void main( String[] args ) throws Exception {
 

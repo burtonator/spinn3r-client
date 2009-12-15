@@ -17,13 +17,23 @@
 package com.spinn3r.api;
 
 import java.util.*;
+import java.net.URLEncoder;
+
+import org.w3c.dom.Element;
+
+import com.spinn3r.api.protobuf.ContentApi;
+
 
 /**
  * Used to startup the API and specify defaults for limits, where to start
  * indexing, tiers, language, etc.
  */
-public class CommentHistoryConfig extends Config {
+public class CommentHistoryConfig extends Config<Source> {
     
+    public static int MAX_LIMIT            = 100;
+    public static int OPTIMAL_LIMIT        = 50;
+    public static int CONSERVATIVE_LIMIT   = 10;
+
     private String permalinkHashcode = null;
     
     private String feedHashcode = null;
@@ -35,6 +45,29 @@ public class CommentHistoryConfig extends Config {
     private String permalink = null;
 
     private String source = null; 
+
+
+    protected int getMaxLimit() {
+        return MAX_LIMIT;
+    }
+
+    protected int getOptimalLimit() {
+        return OPTIMAL_LIMIT;
+    }
+
+    protected int getConservativeLimit() {
+        return CONSERVATIVE_LIMIT;
+    }
+
+
+    public Source createResultObject ( ContentApi.Entry entry ) {
+        return new Source ( entry );
+    }
+
+    public Source createResultObject ( Element current ) {
+        return new Source ( current );
+    }
+
 
     /**
      * 
@@ -149,4 +182,47 @@ public class CommentHistoryConfig extends Config {
         return String.format( "http://%s/rss/%s.history?", getHost(), BaseClient.COMMENT_HANDLER );
     }
 
+
+
+    /**
+     * Generate the first request URL based just on configuration directives.
+     */
+    @Override
+    public String generateFirstRequestURL() {
+
+        StringBuffer params = new StringBuffer( 1024 ) ;
+
+        int limit = getLimit();
+        
+        if ( limit > getMaxLimit() )
+            limit = getMaxLimit();
+        
+        addParam( params, "limit",   limit );
+        addParam( params, "vendor",  getVendor() );
+        addParam( params, "version", getVersion() );
+
+        if ( getSource() != null )
+            addParam( params, "source",  URLEncoder.encode( getSource() ) );
+
+        if ( getPermalink() != null )
+            addParam( params, "permalink",  URLEncoder.encode( getPermalink() ) );
+
+        if ( getFeed() != null )
+            addParam( params, "feed",  URLEncoder.encode( getFeed() ) );
+
+        //hashcodes
+        if ( getSourceHashcode() != null )
+            addParam( params, "source_hashcode",  URLEncoder.encode( getSourceHashcode() ) );
+
+        if ( getPermalinkHashcode() != null )
+            addParam( params, "permalink_hashcode",  URLEncoder.encode( getPermalinkHashcode() ) );
+
+        if ( getFeedHashcode() != null )
+            addParam( params, "feed_hashcode",  URLEncoder.encode( getFeedHashcode() ) );
+
+        String result = getRouter() + params.toString();
+
+        return result;
+        
+    }
 }

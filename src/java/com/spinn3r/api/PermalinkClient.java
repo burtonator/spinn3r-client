@@ -16,15 +16,9 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
-import java.io.*;
-import java.net.*;
+import org.w3c.dom.Element;
 
-import javax.xml.parsers.*;
-
-import org.w3c.dom.*;
-
-import com.spinn3r.api.protobuf.*;
+import com.spinn3r.api.protobuf.ContentApi;
 
 /**
  * <p> Reference API implementation for fetching Permalink content form Spinn3r.
@@ -33,55 +27,6 @@ import com.spinn3r.api.protobuf.*;
  * thread safety by using <code>synchronized</code> or
  * <code>java.util.concurrent</code> constructs.
  */
-public class PermalinkClient extends LegacyWrapperClient implements Client {
-    
-    /**
-     * The permalink API can only handle 10 items at once since each piece of
-     * content is SO huge.
-     */
-    public static int MAX_LIMIT            = 5000;
-    
-    //NOTE: with the protobuff client using 5k was a big performance boost!  Like 3x.
-    public static int OPTIMAL_LIMIT        = 1500;
-
-    public static int CONSERVATIVE_LIMIT   = 100;
-
-    public void fetch() throws IOException,
-                               ParseException,
-                               InterruptedException {
-        super.fetch( config );
-    }
-
-    public List<BaseItem> getResults() { 
-        return (List<BaseItem>)super.results;
-    }
-
-    protected BaseResult parseItem( ContentApi.Entry current ) throws Exception {
-    
-        PermalinkItem item = new PermalinkItem();
-
-        return (BaseItem)super.parseItem( current, item );
-    }
-
-    protected BaseItem parseItem( Element current ) throws Exception {
-
-        PermalinkItem item = new PermalinkItem();
-
-        return (BaseItem)super.parseItem( current, item );
-        
-    }
-
-    protected int getMaxLimit() {
-        return MAX_LIMIT;
-    }
-
-     protected int getOptimalLimit() {
-        return OPTIMAL_LIMIT;
-    }
-
-    protected int getConservativeLimit() {
-        return CONSERVATIVE_LIMIT;
-    }
-
+public class PermalinkClient extends LegacyWrapperClient<BaseItem> {
 
 }

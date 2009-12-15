@@ -29,75 +29,10 @@ import com.spinn3r.api.protobuf.*;
 /**
  * 
  */
-public class PermalinkHistoryClient extends LegacyWrapperClient implements Client {
-
-    public static int MAX_LIMIT            = 100;
-    public static int OPTIMAL_LIMIT        = 50;
-    public static int CONSERVATIVE_LIMIT   = 10;
-
-    public void fetch() throws IOException,
-                               ParseException,
-                               InterruptedException {
-        
-        super.fetch( config );
-    }
-
-    /**
-     * Generate the first request URL based just on configuration directives.
-     */
-    protected String generateFirstRequestURL() {
-
-        PermalinkHistoryConfig config = (PermalinkHistoryConfig)super.getConfig();
-        
-        StringBuffer params = new StringBuffer( 1024 ) ;
-
-        int limit = config.getLimit();
-        
-        if ( limit > getMaxLimit() )
-            limit = getMaxLimit();
-        
-        addParam( params, "limit",   limit );
-        addParam( params, "vendor",  config.getVendor() );
-        addParam( params, "version", config.getVersion() );
-        addParam( params, "source",  URLEncoder.encode( config.getSource() ) );
-
-        String result = config.getRouter() + params.toString();
-
-        System.out.printf( "%s\n", result );
-        
-        return result;
-        
-    }
-
-    public List<BaseItem> getResults() { 
-        return (List<BaseItem>)super.results;
-    }
+public class PermalinkHistoryClient extends LegacyWrapperClient<Source> {
 
 
-    protected BaseResult parseItem( ContentApi.Entry current ) throws Exception {
-        return new Source( current );
-    }
-
-
-
-    protected BaseItem parseItem( Element current ) throws Exception {
-        return new Source( current );
-    }
-
-    protected int getMaxLimit() {
-        return MAX_LIMIT;
-    }
-
-    protected int getOptimalLimit() {
-        return OPTIMAL_LIMIT;
-    }
-
-    protected int getConservativeLimit() {
-        return CONSERVATIVE_LIMIT;
-    }
-
-
-    public static void dump( List<BaseItem> results ) {
+    public static void dump( List<Source> results ) {
 
         for( BaseItem item : results ) {
             System.out.println( "link:                   " + item.getLink() );
@@ -121,7 +56,7 @@ public class PermalinkHistoryClient extends LegacyWrapperClient implements Clien
         config.setHost( "dev.api.spinn3r.com" );
         client.setConfig( config );
 
-        List results;
+        List<Source> results;
         
         client.fetch();
         results = client.getResults();

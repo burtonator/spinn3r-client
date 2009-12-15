@@ -16,61 +16,11 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
-import java.io.*;
-import java.net.*;
-
-import javax.xml.parsers.*;
-
-import org.w3c.dom.*;
-
-import com.spinn3r.api.protobuf.*;
-
 /**
  * <p> This class is <b>NOT</b> threadsafe.  Implementations need to ensure
  * thread safety by using <code>synchronized</code> or
  * <code>java.util.concurrent</code> constructs.
  */
-public class LinkClient extends LegacyWrapperClient implements Client {
+public class LinkClient extends LegacyWrapperClient<LinkItem> {
     
-    public static int MAX_LIMIT            = 100;
-    public static int OPTIMAL_LIMIT        = 50;
-    public static int CONSERVATIVE_LIMIT   = 10;
-
-    public void fetch() throws IOException,
-                               ParseException,
-                               InterruptedException {
-        super.fetch( config );
-    }
-
-    public List<LinkItem> getResults() { 
-        return (List<LinkItem>)super.results;
-    }
-
-    protected BaseResult parseItem( ContentApi.Entry current ) throws Exception {
-        throw new UnimplementedException ("protobuf support not implmented for this client");
-    }
-
-    protected LinkItem parseItem( Element current ) throws Exception {
-
-        LinkItem item = new LinkItem();
-        item.parse( current );
-
-        return item;
-        
-    }
-
-    protected int getMaxLimit() {
-        return MAX_LIMIT;
-    }
-
-     protected int getOptimalLimit() {
-        return OPTIMAL_LIMIT;
-    }
-
-    protected int getConservativeLimit() {
-        return CONSERVATIVE_LIMIT;
-    }
-
-
 }

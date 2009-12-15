@@ -28,13 +28,13 @@ import org.w3c.dom.*;
 /**
  * Base interface for interacting with clients.
  */
-public interface Client {
+public interface Client<T> {
 
     public void fetch() throws IOException,
                                ParseException,
                                InterruptedException;
 
-    public List getResults();
+    public List<T> getResults();
 
     public void setConfig( Config config );
 

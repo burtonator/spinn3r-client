@@ -31,37 +31,11 @@ import com.spinn3r.api.protobuf.*;
  * thread safety by using <code>synchronized</code> or
  * <code>java.util.concurrent</code> constructs.
  */
-public class CommentClient extends LegacyWrapperClient implements Client {
+public class CommentClient extends LegacyWrapperClient<CommentItem> {
     
     public static int MAX_LIMIT            = 100;
     public static int OPTIMAL_LIMIT        = 50;
     public static int CONSERVATIVE_LIMIT   = 10;
-
-    public void fetch() throws IOException,
-                               ParseException,
-                               InterruptedException {
-        super.fetch( config );
-    }
-
-    public List<BaseItem> getResults() { 
-        return (List<BaseItem>)super.results;
-    }
-
-    protected BaseResult parseItem( ContentApi.Entry current ) throws Exception {
-        throw new UnimplementedException ("protobuf support not implmented for this client");
-    }
-
-    protected BaseItem parseItem( Element current ) throws Exception {
-
-        CommentItem item = new CommentItem();
-
-        super.parseItem( current, item );
-
-        item.parse( current );
-        
-        return item;
-        
-    }
 
     protected int getMaxLimit() {
         return MAX_LIMIT;

@@ -18,12 +18,23 @@ package com.spinn3r.api;
 
 import java.util.*;
 
+import org.w3c.dom.Element;
+
+import com.spinn3r.api.protobuf.ContentApi;
+
+
 /**
  * Used to startup the API and specify defaults for limits, where to start
  * indexing, tiers, language, etc.
  */
-public class PermalinkConfig extends Config {
+public class PermalinkConfig extends Config<PermalinkItem> {
     
+    private static int MAX_LIMIT            = 5000;
+    
+    private static int OPTIMAL_LIMIT        = 1500;
+
+    private static int CONSERVATIVE_LIMIT   = 100;
+
     private Date after = null;
 
     /**
@@ -45,6 +56,16 @@ public class PermalinkConfig extends Config {
     }
 
 
+    @Override
+    public PermalinkItem createResultObject ( ContentApi.Entry entry ) throws ParseException {
+        return new PermalinkItem ( entry );
+    }
+
+    @Override
+    public PermalinkItem createResultObject ( Element current ) throws ParseException {
+        return new PermalinkItem ( current );
+    }
+
 
     @Override
     public String getRouter() {
@@ -58,6 +79,19 @@ public class PermalinkConfig extends Config {
 
        return result;
        
+    }
+
+
+    public int getMaxLimit() {
+        return MAX_LIMIT;
+    }
+
+    public int getOptimalLimit() {
+        return OPTIMAL_LIMIT;
+    }
+
+    public int getConservativeLimit() {
+        return CONSERVATIVE_LIMIT;
     }
 
 }

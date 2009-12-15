@@ -26,22 +26,18 @@ import org.w3c.dom.*;
 
 import com.spinn3r.api.protobuf.*;
 
+import static com.spinn3r.api.XMLUtils.*;
+
+/*
+ * BUG: This class is UGLY as it really is not much like a base client
+ *      but we still derive form it. Once Base client is cleand up and
+ *      is functional it may be that we can clean this up.
+ */
+
 /**
  * API client that implements Spinn3r's source registration API.
  */
-public class SourceClient extends LegacyWrapperClient implements Client {
-
-    public void fetch() throws IOException,
-                               ParseException,
-                               InterruptedException {
-
-        super.fetch( config );
-
-    }
-
-    public List<BaseItem> getResults() { 
-        return (List<BaseItem>)super.results;
-    }
+public class SourceClient extends LegacyWrapperClient<Source> {
 
     /**
      * Register a new weblog within Spinn3r.
@@ -83,9 +79,9 @@ public class SourceClient extends LegacyWrapperClient implements Client {
 
             StringBuffer params = new StringBuffer();
 
-            addParam( params, "link", link );
-            addParam( params, "vendor",  config.getVendor() );
-            addParam( params, "version", config.getVersion() );
+            Config.addParam( params, "link", link );
+            Config.addParam( params, "vendor",  config.getVendor() );
+            Config.addParam( params, "version", config.getVersion() );
 
             String resource = String.format( "http://%s/rss/source.status?%s", config.getHost(), params );
 

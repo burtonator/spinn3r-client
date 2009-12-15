@@ -17,12 +17,18 @@
 package com.spinn3r.api;
 
 import java.util.*;
+import java.net.URLEncoder;
+
+import org.w3c.dom.Element;
+
+import com.spinn3r.api.protobuf.ContentApi;
+
 
 /**
  * Used to startup the API and specify defaults for limits, where to start
  * indexing, tiers, language, etc.
  */
-public class PermalinkStatusConfig extends Config {
+public class PermalinkStatusConfig extends Config<PermalinkItem> {
 
     /**
      * When we've ran out of results (because the client is up to date) then we
@@ -34,12 +40,44 @@ public class PermalinkStatusConfig extends Config {
      */
     public static final long DEFAULT_SLEEP_INTERVAL = 0L;
 
+    public static int MAX_LIMIT            = 100;
+    public static int OPTIMAL_LIMIT        = 50;
+    public static int CONSERVATIVE_LIMIT   = 10;
+
     private String           resource               = null; 
 
     /**
      * How long we should sleep if an API call doesn't return enough values.
      */
     private long sleepInterval = DEFAULT_SLEEP_INTERVAL;
+
+
+    @Override
+    public PermalinkItem createResultObject ( ContentApi.Entry entry ) throws ParseException {
+        return new PermalinkItem ( entry );
+    }
+
+    @Override
+    public PermalinkItem createResultObject ( Element current ) throws ParseException {
+        return new PermalinkItem ( current );
+    }
+
+
+    @Override
+    protected int getMaxLimit() {
+        return MAX_LIMIT;
+    }
+
+    @Override
+    protected int getOptimalLimit() {
+        return OPTIMAL_LIMIT;
+    }
+
+    @Override
+    protected int getConservativeLimit() {
+        return CONSERVATIVE_LIMIT;
+    }
+
 
     /**
      * 
@@ -66,6 +104,31 @@ public class PermalinkStatusConfig extends Config {
     @Override
     public String getRouter() {
         return String.format( "http://%s/rss/%s.status?", getHost(), BaseClient.PERMALINK_HANDLER );
+    }
+
+
+    /**
+     * Generate the first request URL based just on configuration directives.
+     */
+    @Override
+    public String generateFirstRequestURL() {
+
+        StringBuffer params = new StringBuffer( 1024 ) ;
+
+        int limit = getLimit();
+        
+        if ( limit > getMaxLimit() )
+            limit = getMaxLimit();
+        
+        addParam( params, "limit",   limit );
+        addParam( params, "vendor",  getVendor() );
+        addParam( params, "version", getVersion() );
+        addParam( params, "resource",  getResource() );
+
+        String result = getRouter() + params.toString();
+        
+        return result;
+        
     }
 
 }

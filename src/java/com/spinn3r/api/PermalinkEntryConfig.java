@@ -17,12 +17,17 @@
 package com.spinn3r.api;
 
 import java.util.*;
+import java.net.URLEncoder;
+
+import org.w3c.dom.Element;
+
+import com.spinn3r.api.protobuf.ContentApi;
 
 /**
  * Used to startup the API and specify defaults for limits, where to start
  * indexing, tiers, language, etc.
  */
-public class PermalinkEntryConfig extends Config {
+public class PermalinkEntryConfig extends Config<PermalinkItem> {
 
     /**
      * When we've ran out of results (because the client is up to date) then we
@@ -34,6 +39,10 @@ public class PermalinkEntryConfig extends Config {
      */
     public static final long DEFAULT_SLEEP_INTERVAL = 0L;
 
+    public static int MAX_LIMIT            = 100;
+    public static int OPTIMAL_LIMIT        = 50;
+    public static int CONSERVATIVE_LIMIT   = 10;
+
     private String           resource               = null; 
     private String           id                     = null;
 
@@ -41,6 +50,34 @@ public class PermalinkEntryConfig extends Config {
      * How long we should sleep if an API call doesn't return enough values.
      */
     private long sleepInterval = DEFAULT_SLEEP_INTERVAL;
+
+
+    @Override
+    public PermalinkItem createResultObject ( ContentApi.Entry entry ) throws ParseException {
+        return new PermalinkItem ( entry );
+    }
+
+    @Override
+    public PermalinkItem createResultObject ( Element current ) throws ParseException {
+        return new PermalinkItem ( current );
+    }
+
+
+    @Override
+    protected int getMaxLimit() {
+        return MAX_LIMIT;
+    }
+
+    @Override
+    protected int getOptimalLimit() {
+        return OPTIMAL_LIMIT;
+    }
+
+    @Override
+    protected int getConservativeLimit() {
+        return CONSERVATIVE_LIMIT;
+    }
+
 
     /**
      * 
@@ -87,4 +124,33 @@ public class PermalinkEntryConfig extends Config {
         return String.format( "http://%s/rss/%s.entry?", getHost(), "permalink3" );
     }
 
+
+    /**
+     * Generate the first request URL based just on configuration directives.
+     */
+    @Override
+    public String generateFirstRequestURL() {
+
+        StringBuffer params = new StringBuffer( 1024 ) ;
+
+        int limit = getLimit();
+        
+        if ( limit > getMaxLimit() )
+            limit = getMaxLimit();
+        
+        addParam( params, "limit",     limit );
+        addParam( params, "vendor",    getVendor() );
+        addParam( params, "version",   getVersion() );
+
+        if ( getResource() != null )
+            addParam( params, "resource", URLEncoder.encode( getResource() ) );
+
+        if ( getId() != null )
+            addParam( params, "id", getId() );
+
+        String result = getRouter() + params.toString();
+
+        return result;
+        
+    }
 }

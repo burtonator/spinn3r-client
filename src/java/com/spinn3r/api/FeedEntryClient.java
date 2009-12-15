@@ -29,80 +29,8 @@ import com.spinn3r.api.protobuf.*;
 /**
  * 
  */
-public class FeedEntryClient extends LegacyWrapperClient implements Client {
+public class FeedEntryClient extends LegacyWrapperClient<FeedItem> {
 
-    public static int MAX_LIMIT            = 100;
-    public static int OPTIMAL_LIMIT        = 50;
-    public static int CONSERVATIVE_LIMIT   = 10;
-
-    public void fetch() throws IOException,
-                               ParseException,
-                               InterruptedException {
-        
-        super.fetch( config );
-    }
-
-    /**
-     * Generate the first request URL based just on configuration directives.
-     */
-    protected String generateFirstRequestURL() {
-
-        FeedEntryConfig config = (FeedEntryConfig)super.getConfig();
-        
-        StringBuffer params = new StringBuffer( 1024 ) ;
-
-        int limit = config.getLimit();
-        
-        if ( limit > getMaxLimit() )
-            limit = getMaxLimit();
-        
-        addParam( params, "limit",     limit );
-        addParam( params, "vendor",    config.getVendor() );
-        addParam( params, "version",   config.getVersion() );
-
-        if ( config.getResource() != null )
-            addParam( params, "resource", URLEncoder.encode( config.getResource() ) );
-
-        if ( config.getId() != null )
-            addParam( params, "id", config.getId() );
-
-        String result = config.getRouter() + params.toString();
-
-        //System.out.printf( "\n%s\n", result );
-        
-        return result;
-        
-    }
-
-
-    protected BaseResult parseItem( ContentApi.Entry current ) throws Exception {
-        throw new UnimplementedException ("protobuf support not implmented for this client");
-    }
-
-
-    protected BaseItem parseItem( Element current ) throws Exception {
-
-        FeedItem item = new FeedItem();
-
-        return (BaseItem)super.parseItem( current, item );
-        
-    }
-
-    public List<BaseItem> getResults() { 
-        return (List<BaseItem>)this.results;
-    }
-
-    protected int getMaxLimit() {
-        return MAX_LIMIT;
-    }
-
-    protected int getOptimalLimit() {
-        return OPTIMAL_LIMIT;
-    }
-
-    protected int getConservativeLimit() {
-        return CONSERVATIVE_LIMIT;
-    }
 
     public static void main( String[] args ) throws Exception {
 
@@ -123,12 +51,12 @@ public class FeedEntryClient extends LegacyWrapperClient implements Client {
         client.setConfig( config );
 
         client.fetch();
-        List<BaseItem> results = client.getResults();
+        List<FeedItem> results = client.getResults();
 
         System.out.printf( "%s\n", client.getLastRequestURL() );
         System.out.printf( "DUMP: Found %d items\n" , results.size() );
 
-        for( BaseItem item : results ) {
+        for( FeedItem item : results ) {
 
             System.out.println( "----" );
             System.out.println( "hashcode:               " + item.getPostHashcode() );

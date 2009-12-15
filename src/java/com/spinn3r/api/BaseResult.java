@@ -45,4 +45,6 @@ public abstract class BaseResult {
         this.pubDate = pubDate;
     }
 
+
+
 }

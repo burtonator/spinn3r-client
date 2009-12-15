@@ -625,4 +625,6 @@ public abstract class BaseItem extends BaseResult {
 
     }
 
+
+
 }

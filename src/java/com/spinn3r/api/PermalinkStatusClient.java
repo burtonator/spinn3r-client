@@ -30,73 +30,7 @@ import com.spinn3r.api.protobuf.*;
  *
  * @deprecated This code is deprecated and will be removed after 2008-11-01.
  */
-public class PermalinkStatusClient extends LegacyWrapperClient implements Client {
-
-    public static int MAX_LIMIT            = 100;
-    public static int OPTIMAL_LIMIT        = 50;
-    public static int CONSERVATIVE_LIMIT   = 10;
-
-    public void fetch() throws IOException,
-                               ParseException,
-                               InterruptedException {
-        
-        super.fetch( config );
-    }
-
-    /**
-     * Generate the first request URL based just on configuration directives.
-     */
-    protected String generateFirstRequestURL() {
-
-        PermalinkStatusConfig config = (PermalinkStatusConfig)super.getConfig();
-        
-        StringBuffer params = new StringBuffer( 1024 ) ;
-
-        int limit = config.getLimit();
-        
-        if ( limit > getMaxLimit() )
-            limit = getMaxLimit();
-        
-        addParam( params, "limit",   limit );
-        addParam( params, "vendor",  config.getVendor() );
-        addParam( params, "version", config.getVersion() );
-        addParam( params, "resource",  config.getResource() );
-
-        String result = config.getRouter() + params.toString();
-        
-        return result;
-        
-    }
-
-    public List<BaseItem> getResults() { 
-        return (List<BaseItem>)super.results;
-    }
-
-
-    protected BaseResult parseItem( ContentApi.Entry current ) throws Exception {
-        throw new UnimplementedException ("protobuf support not implmented for this client");
-    }
-
-
-    protected BaseItem parseItem( Element current ) throws Exception {
-
-        PermalinkItem item = new PermalinkItem();
-
-        return (BaseItem)super.parseItem( current, item );
-        
-    }
-
-    protected int getMaxLimit() {
-        return MAX_LIMIT;
-    }
-
-    protected int getOptimalLimit() {
-        return OPTIMAL_LIMIT;
-    }
-
-    protected int getConservativeLimit() {
-        return CONSERVATIVE_LIMIT;
-    }
+public class PermalinkStatusClient extends LegacyWrapperClient<PermalinkItem> {
 
 
     public static void main( String[] args ) throws Exception {
@@ -113,12 +47,12 @@ public class PermalinkStatusClient extends LegacyWrapperClient implements Client
         client.setConfig( config );
 
         client.fetch();
-        List<BaseItem> results = client.getResults();
+        List<PermalinkItem> results = client.getResults();
 
         System.out.printf( "%s\n", client.getLastRequestURL() );
         System.out.printf( "DUMP: Found %d items\n" , results.size() );
 
-        for( BaseItem item : results ) {
+        for( PermalinkItem item : results ) {
 
             System.out.println( "----" );
             System.out.println( "link:                   " + item.getLink() );
