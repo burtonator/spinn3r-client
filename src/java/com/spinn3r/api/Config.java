@@ -17,12 +17,17 @@
 package com.spinn3r.api;
 
 import java.util.*;
+import java.net.URLEncoder;
+
+import org.w3c.dom.Element;
+
+import com.spinn3r.api.protobuf.ContentApi;
 
 /**
  * Used to startup the API and specify defaults for limits, where to start
  * indexing, tiers, language, etc.
  */
-public abstract class Config {
+public abstract class Config <ResultType> {
 
     /**
      * Default hostname for building the router URL.  This can be changed to
@@ -71,6 +76,14 @@ public abstract class Config {
      * Get the router URL for API calls.
      */
     abstract public String getRouter();
+
+
+    /**
+     * Factory methoud for a result object
+     */
+    abstract public ResultType createResultObject ( ContentApi.Entry entry   ) throws ParseException;
+
+    abstract public ResultType createResultObject ( Element          current ) throws ParseException;
 
     /**
      * Get the host for this request
@@ -250,6 +263,28 @@ public abstract class Config {
         return result;
     }
 
+
+    /**
+     * Return the maximum number of request per call.  If the API has more
+     * content this might cause an error on our end if the limit is more than 10
+     * or so.
+     */
+    abstract int getMaxLimit();
+
+    /**
+     * Return the optimal limit for fetches. This is used to boost performance
+     * in some situations.  We have to resort to the conservative limit if the
+     * HTTP server can't handle the result set size.
+     */
+    abstract int getOptimalLimit();
+    
+    /**
+     * Conservative limit for items which should work in all situations (but
+     * might be slower)
+     */
+    abstract int getConservativeLimit();
+
+
     /**
      * 
      * Get the value of <code>skipDescription</code>.
@@ -284,6 +319,141 @@ public abstract class Config {
      */
     public void setApi( String api ) { 
         this.api = api;
+    }
+
+
+
+    /**
+     * Generate the first request URL based just on configuration directives.
+     */
+    public String generateFirstRequestURL( ) {
+
+        StringBuffer params = new StringBuffer( 1024 ) ;
+
+        int limit = getLimit( );
+        
+        if ( limit > getMaxLimit() )
+            limit = getMaxLimit();
+        
+        addParam( params, "limit",   limit );
+        addParam( params, "vendor",  getVendor() );
+        addParam( params, "version", getVersion() );
+
+        String filter = getFilter();
+
+        if ( filter != null ) {
+            addParam( params, "filter", URLEncoder.encode( filter ) );
+        }
+
+        /*
+        if ( getSpamProbability() != DEFAULT_SPAM_PROBABILITY )
+            addParam( params, "spam_probability", getSpamProbability() );
+        */
+            
+        //AFTER param needs to be added which should be ISO8601
+        addParam( params, "after",   toISO8601( getAfter() ) );
+
+        //add optional params
+        //OBSOLETE/REMOVED
+        //addParam( params, "lang", getLang(), true );
+
+        /*
+        if ( getTierStart() >= 0 ) {
+            String param_tier = "" + getTierStart() + ":" + getTierEnd();
+            addParam( params, "tier", param_tier );
+        }
+        */
+
+        if ( getSkipDescription() ) {
+            addParam( params, "skip_description", "true" );
+        }
+
+        String result = getRouter() + params.toString();
+        
+        return result;
+        
+    }
+
+
+    /**
+     * Return a date to an ISO 8601 value for specifying to the URL with an
+     * 'after' param.
+     */
+    public static String toISO8601( Date date ) {
+
+        TimeZone tz = TimeZone.getTimeZone( "UTC" );
+        
+        Calendar c = Calendar.getInstance( tz );
+
+        c.setTime( date );
+        c.setTimeZone( tz );
+        
+        StringBuffer buff = new StringBuffer();
+
+        buff.append( c.get( Calendar.YEAR ) );
+        buff.append( "-" );
+        padd( c.get( Calendar.MONTH ) + 1, buff );
+        buff.append( "-" );
+        padd( c.get( Calendar.DAY_OF_MONTH ), buff );
+        buff.append( "T" );
+        padd( c.get( Calendar.HOUR_OF_DAY ), buff );
+        buff.append( ":" );
+        padd( c.get( Calendar.MINUTE ), buff );
+        buff.append( ":" );
+        padd( c.get( Calendar.SECOND ), buff );
+        buff.append( "Z" );
+
+        return buff.toString();
+        
+    }
+
+
+    protected static void padd( int v, StringBuffer buff ) {
+        if ( v < 10 )
+            buff.append( "0" );
+
+        buff.append( v );
+        
+    }
+
+    // **** URL request handling ************************************************
+
+    public static void addParam( StringBuffer buff,
+                                 String name,
+                                 Object value ) {
+        addParam( buff, name, value, false );
+    }
+
+    public static void addParam( StringBuffer buff,
+                                 String name,
+                                 Object value,
+                                 boolean optional ) {
+        addParam( buff, name, value, false, false );
+    }
+    
+    /**
+     * Add a parameter to the first request URL.  After the first call this is
+     * no longer needed. 
+     */
+    public static void addParam( StringBuffer buff,
+                                 String name,
+                                 Object value,
+                                 boolean optional,
+                                 boolean urlencode ) {
+
+        if ( optional && value == null )
+            return;             
+
+        if ( value != null && urlencode )
+            value = URLEncoder.encode( value.toString() );
+        
+        if ( buff.length() > 0 )
+            buff.append( "&" );
+        
+        buff.append( name );
+        buff.append( "=" );
+        buff.append( value );
+
     }
 
 }

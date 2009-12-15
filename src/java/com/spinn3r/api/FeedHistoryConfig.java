@@ -17,17 +17,52 @@
 package com.spinn3r.api;
 
 import java.util.*;
+import java.net.URLEncoder;
+
+import org.w3c.dom.Element;
+
+import com.spinn3r.api.protobuf.ContentApi;
 
 /**
  * Used to startup the API and specify defaults for limits, where to start
  * indexing, tiers, language, etc.
  */
 public class FeedHistoryConfig extends Config {
+
+    public static int MAX_LIMIT            = 100;
+    public static int OPTIMAL_LIMIT        = 50;
+    public static int CONSERVATIVE_LIMIT   = 10;
     
     private String sourceHashcode = null;
     private String feedHashcode = null;
     private String feed = null;
     private String source = null; 
+
+    @Override
+    protected int getMaxLimit() {
+        return MAX_LIMIT;
+    }
+
+    @Override
+    protected int getOptimalLimit() {
+        return OPTIMAL_LIMIT;
+    }
+
+    @Override
+    protected int getConservativeLimit() {
+        return CONSERVATIVE_LIMIT;
+    }
+
+
+    @Override
+    public Source createResultObject ( ContentApi.Entry entry ) {
+        return new Source ( entry );
+    }
+
+    @Override
+    public Source createResultObject ( Element current ) {
+        return new Source ( current );
+    }
 
     /**
      * 
@@ -104,6 +139,36 @@ public class FeedHistoryConfig extends Config {
     @Override
     public String getRouter() {
         return String.format( "http://%s/rss/%s.history?", getHost(), BaseClient.FEED_HANDLER );
+    }
+
+    /**
+     * Generate the first request URL based just on configuration directives.
+     */
+    @Override
+    public String generateFirstRequestURL() {
+
+        StringBuffer params = new StringBuffer( 1024 ) ;
+
+        int limit = getLimit();
+        
+        if ( limit > getMaxLimit() )
+            limit = getMaxLimit();
+
+        addParam( params, "limit",   limit );
+        addParam( params, "vendor",  getVendor() );
+        addParam( params, "version", getVersion() );
+
+        addParam( params, "source",           URLEncoder.encode( getSource() ) , true );
+        addParam( params, "feed",             URLEncoder.encode( getFeed() ) , true );
+        addParam( params, "feed_hashcode",    getFeedHashcode() , true );
+        addParam( params, "source_hashcode",  getSourceHashcode() , true );
+
+        String result = getRouter() + params.toString();
+
+        System.out.printf( "%s\n", result );
+        
+        return result;
+        
     }
 
 }

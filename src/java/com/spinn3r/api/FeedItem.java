@@ -16,13 +16,23 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
-import java.io.*;
-import java.net.*;
+import org.w3c.dom.Element;
+
+import com.spinn3r.api.protobuf.ContentApi;
 
 /**
  * Represents a feed item returned from the API.
  */
-public class FeedItem extends BaseItem {
+public class FeedItem extends PermalinkItem {
+
+
+    public FeedItem ( ContentApi.Entry entry ) throws ParseException {
+        super( entry );
+    }
+
+
+    public FeedItem ( Element current ) throws ParseException {
+        super( current );
+    }
 
 }

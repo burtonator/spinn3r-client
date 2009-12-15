@@ -22,7 +22,11 @@ import java.net.*;
 
 import org.w3c.dom.*;
 
-import static com.spinn3r.api.BaseClient.*;
+import org.w3c.dom.*;
+
+import com.spinn3r.api.protobuf.*;
+
+import static com.spinn3r.api.XMLUtils.*;
 
 /**
  */
@@ -65,6 +69,16 @@ public class LinkItem extends BaseResult {
     private String linkXml = null;
     
     private String linkTitle = null;
+
+
+    public LinkItem ( ContentApi.Entry entry ) throws ParseException {
+        throw new UnimplementedException ("protobuf support not implmented for this client");     
+    }
+
+    public LinkItem ( Element current ) throws ParseException {
+        parse( current );
+    }
+
 
     /**
      * 
@@ -408,7 +422,7 @@ public class LinkItem extends BaseResult {
         this.sourceTier = sourceTier;
     }
 
-    public void parse( Element current ) throws Exception {
+    private void parse( Element current ) throws ParseException {
 
         // <item>
         // <title>Larry Lessig Defends Copyright, Loves Charlie Rose Remixes</title>

@@ -34,6 +34,8 @@ import org.w3c.dom.*;
 import com.spinn3r.api.protobuf.*;
 import com.spinn3r.api.util.CompressedBLOB;
 
+import static com.spinn3r.api.XMLUtils.*;
+
 /**
  * Generic client support used which need to be in all APIs.
  *
@@ -50,7 +52,7 @@ import com.spinn3r.api.util.CompressedBLOB;
  * 
  * 
  */
-public abstract class BaseClient implements Client {
+public abstract class BaseClient<ResultType extends BaseResult> implements Client<ResultType> {
 
     private static String X_MORE_RESULTS = "X-More-Results";
 
@@ -64,17 +66,6 @@ public abstract class BaseClient implements Client {
      */
     public static final int RESTART_BUFFER = 30 * 1000;
 
-    public static final String NS_API     = "http://tailrank.com/ns/#api";
-    public static final String NS_DC      = "http://purl.org/dc/elements/1.1/" ;
-    public static final String NS_ATOM    = "http://www.w3.org/2005/Atom" ;
-    public static final String NS_WEBLOG  = "http://tailrank.com/ns/#weblog" ;
-    public static final String NS_SOURCE  = "http://tailrank.com/ns/#source" ;
-    public static final String NS_POST    = "http://tailrank.com/ns/#post" ;
-    public static final String NS_FEED    = "http://tailrank.com/ns/#feed" ;
-    public static final String NS_LINK    = "http://spinn3r.com/ns/link" ;
-    public static final String NS_TARGET  = "http://spinn3r.com/ns/#target" ;
-
-    public static final String NS_COMMENT = "http://tailrank.com/ns/#comment" ;
     
     public static final String USER_AGENT_HEADER       = "User-Agent";
     public static final String ACCEPT_ENCODING_HEADER  = "Accept-Encoding";
@@ -165,7 +156,7 @@ public abstract class BaseClient implements Client {
 
     private long parseDuration = -1;
 
-    protected List results = new ArrayList();
+    protected List<ResultType> results = new ArrayList<ResultType>();
 
 
     /**
@@ -237,7 +228,7 @@ public abstract class BaseClient implements Client {
 
     }
 
-    public void fetch( Config config ) throws IOException,
+    public void fetch( Config<ResultType> config ) throws IOException,
                                               ParseException,
                                               InterruptedException {
 
@@ -251,7 +242,7 @@ public abstract class BaseClient implements Client {
                 if ( retry_ctr == 0 )
                     config.setLimit( getLimit( config ) );
                 else
-                    config.setLimit( getConservativeLimit() );
+                    config.setLimit( config.getConservativeLimit() );
                 
                 doFetch( config );
 
@@ -260,7 +251,7 @@ public abstract class BaseClient implements Client {
                 //break, it could revert to ten, and then revert to the optimal
                 //limit (which could be 100).  This is fine for now as I want to
                 //totally remove the ability for customers to change the limit.
-                config.setLimit( getOptimalLimit() );
+                config.setLimit( config.getOptimalLimit() );
                 
                 break;
                 
@@ -298,7 +289,7 @@ public abstract class BaseClient implements Client {
      * @throws IOException if there's an error with network transport.
      * @throws ParserException if there's a problem parsing the resulting XML.
      */
-    private void doFetch( Config config ) throws IOException,
+    private void doFetch( Config<ResultType> config ) throws IOException,
                                                  ParseException,
                                                  InterruptedException {
 
@@ -312,8 +303,8 @@ public abstract class BaseClient implements Client {
         int requestLimit = config.getLimit();
 
         //enforce max limit so that we don't generate runtime exceptions.
-        if ( requestLimit > getMaxLimit() )
-            requestLimit = getMaxLimit();
+        if ( requestLimit > config.getMaxLimit() )
+            requestLimit = config.getMaxLimit();
         
         if ( resource == null ) {
 
@@ -322,7 +313,7 @@ public abstract class BaseClient implements Client {
             // if the API has NEVER been used before then generate the first
             // request URL from the config parameters.
             if ( resource == null )
-                resource = generateFirstRequestURL( config );
+                resource = config.generateFirstRequestURL( );
 
         } else if ( ! hasMoreResults ) {
 
@@ -461,7 +452,7 @@ public abstract class BaseClient implements Client {
         return res;
     }
 
-    public Document doXmlFetch( String resource, Config config  ) throws IOException,
+    public Document doXmlFetch( String resource, Config<ResultType> config  ) throws IOException,
                                                       ParseException,
                                                       InterruptedException {
 
@@ -491,11 +482,11 @@ public abstract class BaseClient implements Client {
 
             setCallDuration( call_after - call_before );
 
-            if ( disable_parse ) {
-                //use the X-Next-Requested-URL if known.
-                setNextRequestURL( conn.getHeaderField( "X-Next-Request-URL" ), config );
+            setNextRequestURL( conn.getHeaderField( "X-Next-Request-URL" ), config );
+
+            if ( disable_parse )
                 return null;
-            }
+            
 
             // now get the system XML parser using JAXP
 
@@ -584,19 +575,13 @@ public abstract class BaseClient implements Client {
      * We've received a response from the API so parse it out.
      *
      */
-    protected void xmlParse( Document doc, Config config ) throws Exception {
+    protected void xmlParse( Document doc, Config<ResultType> config ) throws Exception {
 
         Element root = (Element)doc.getFirstChild();
 
         Element channel = getElementByTagName( root, "channel" );
 
-        //determine the next_request_url so that we can fetch the second page of
-        //results.
-        String next = getElementCDATAByTagName( channel, "next_request_url", NS_API );
-        
-        setNextRequestURL( next, config );
-
-        List result = new ArrayList();
+        List<ResultType> result = new ArrayList<ResultType>();
 
         NodeList items = root.getElementsByTagName( "item" );
 
@@ -604,7 +589,7 @@ public abstract class BaseClient implements Client {
 
             Element current = (Element)items.item( i );
             
-            result.add( parseItem( current ) );
+            result.add( config.createResultObject( current ) );
             
         }
 
@@ -616,535 +601,19 @@ public abstract class BaseClient implements Client {
      * We've received a response from the API so parse it out.
      *
      */
-    protected void protobufParse( ContentApi.Response response, Config config ) throws Exception {
+    protected void protobufParse( ContentApi.Response response, Config<ResultType> config ) throws Exception {
 
-        //determine the next_request_url so that we can fetch the second page of
-        //results.
-        String next = response.getNextRequestUrl();
-        
-        setNextRequestURL( next, config );
-
-        List result = new ArrayList();
+        List<ResultType> result = new ArrayList<ResultType>();
 
         for ( ContentApi.Entry entry : response.getEntryList() ) {
-            result.add( parseItem( entry ) );
+            result.add( config.createResultObject( entry ) );
         }
 
         this.results = result;
         
     }
-
-    /**
-     * Generate the first request URL based just on configuration directives.
-     */
-    protected String generateFirstRequestURL( Config config ) {
-
-        StringBuffer params = new StringBuffer( 1024 ) ;
-
-        int limit = config.getLimit( );
-        
-        if ( limit > getMaxLimit() )
-            limit = getMaxLimit();
-        
-        addParam( params, "limit",   limit );
-        addParam( params, "vendor",  config.getVendor() );
-        addParam( params, "version", config.getVersion() );
-
-        String filter = config.getFilter();
-
-        if ( filter != null ) {
-            addParam( params, "filter", URLEncoder.encode( filter ) );
-        }
-
-        /*
-        if ( config.getSpamProbability() != Config.DEFAULT_SPAM_PROBABILITY )
-            addParam( params, "spam_probability", config.getSpamProbability() );
-        */
             
-        //AFTER param needs to be added which should be ISO8601
-        addParam( params, "after",   toISO8601( config.getAfter() ) );
 
-        //add optional params
-        //OBSOLETE/REMOVED
-        //addParam( params, "lang", config.getLang(), true );
-
-        /*
-        if ( config.getTierStart() >= 0 ) {
-            String param_tier = "" + config.getTierStart() + ":" + config.getTierEnd();
-            addParam( params, "tier", param_tier );
-        }
-        */
-
-        if ( config.getSkipDescription() ) {
-            addParam( params, "skip_description", "true" );
-        }
-
-        String result = config.getRouter() + params.toString();
-        
-        return result;
-        
-    }
-
-    /**
-     * Return the maximum number of request per call.  If the API has more
-     * content this might cause an error on our end if the limit is more than 10
-     * or so.
-     */
-    protected int getMaxLimit() {
-        return 10;
-    }
-
-    /**
-     * Return the optimal limit for fetches. This is used to boost performance
-     * in some situations.  We have to resort to the conservative limit if the
-     * HTTP server can't handle the result set size.
-     */
-    protected int getOptimalLimit() {
-        return 10;
-    }
-    
-    /**
-     * Conservative limit for items which should work in all situations (but
-     * might be slower)
-     */
-    protected int getConservativeLimit() {
-        return 10;
-    }
-    
-    
-    /**
-     * Parse an individual item which might be specific to this client.
-     */
-    protected BaseResult parseItem( Element current ) throws Exception {
-        throw new Exception( "Not implemented" );
-    }
-
-    abstract protected BaseResult parseItem( ContentApi.Entry current ) throws Exception;
-
-    protected BaseResult parseItem( Element current, BaseResult result ) throws Exception {
-        
-        BaseItem item = (BaseItem)result;
-        
-        //base elements.
-        item.setTitle( getElementCDATAByTagName( current, "title" ) );
-
-        item.setDescription( getElementCDATAByTagName( current, "description" ) );
-
-        item.setLink( getElementCDATAByTagName( current, "link" )  );
-        item.setGuid( getElementCDATAByTagName( current, "guid" )  );
-
-        // dc:lang
-        item.setLang( getElementCDATAByTagName( current, "lang", NS_DC ) );
-
-        // dc:source
-        item.setSource( getElementCDATAByTagName( current, "source", NS_DC ) );
-        
-        // weblog:title
-        // weblog:description
-        item.setWeblogTitle( getElementCDATAByTagName( current, "title", NS_WEBLOG ) );
-
-        item.setWeblogResource( getElementCDATAByTagName( current, "resource", NS_SOURCE ) );
-
-        item.setWeblogDescription( getElementCDATAByTagName( current, "description", NS_WEBLOG ) );
-
-        String str_tier = getElementCDATAByTagName( current, "tier", NS_WEBLOG );
-        
-        if ( str_tier != null )
-            item.setWeblogTier( Integer.parseInt( str_tier ) );
-
-        String pubDate = getElementCDATAByTagName( current, "pubDate" );
-        item.setPubDate( RFC822DateParser.parse( pubDate ) );
-
-        String atom_published = getElementCDATAByTagName( current, "published", NS_ATOM );
-        if ( atom_published != null && ! atom_published.equals( "" ) )
-            item.setPublished( ISO8601DateParser.parse( atom_published ) );
-
-        //FIXME: this stuff should NOT use the weblog namespace anymore as it is
-        //deprecated.
-        
-        //FIXME: weblog:iranking
-
-        String weblog_indegree = getElementCDATAByTagName( current, "indegree", NS_WEBLOG );
-        if ( weblog_indegree != null )
-            item.setWeblogIndegree( Integer.parseInt( weblog_indegree ) );
-        
-        String publisher_type = getElementCDATAByTagName( current, "publisher_type", NS_WEBLOG );
-        if ( publisher_type != null )
-            publisher_type = publisher_type.trim();
-        
-        item.setWeblogPublisherType( publisher_type );
-
-        item.setTags( parseTags( current ) );
-
-        Element author = getElementByTagName( current, "author", NS_ATOM );
-        
-        if ( author != null ) {
-
-            item.setAuthorName(  getElementCDATAByTagName( author, "name",  NS_ATOM ) );
-            item.setAuthorEmail( getElementCDATAByTagName( author, "email", NS_ATOM ) );
-            item.setAuthorLink(  getElementCDATAByTagName( author, "link",  NS_ATOM ) );
-
-        }
-
-        // Spinn3r 2.1 post content.
-
-        item.setContentExtract( getElementCDATAByTagName( current,
-                                                          "content_extract",
-                                                          NS_POST ) );
-
-        item.setCommentExtract( getElementCDATAByTagName( current,
-                                                          "comment_extract",
-                                                          NS_POST ) );
-
-        item.setFeedURL( getElementCDATAByTagName( current, "url", NS_FEED ) );
-        item.setFeedResource( getElementCDATAByTagName( current, "resource", NS_FEED ) );
-
-        item.setResourceGUID( getElementCDATAByTagName( current, "resource_guid", NS_POST ) );
-
-        //spinn3r 3.x values
-
-        //FIXME: post:timestamp, feed:link
-        
-        item.setPostTitle( getElementCDATAByTagName( current, "title", NS_POST ) );
-        item.setPostBody( getElementCDATAByTagName( current, "body", NS_POST ) );
-
-        item.setPostHashcode( getElementCDATAByTagName( current,   "hashcode", NS_POST ) );
-        item.setSourceHashcode( getElementCDATAByTagName( current, "hashcode", NS_SOURCE ) );
-        item.setFeedHashcode( getElementCDATAByTagName( current,   "hashcode", NS_FEED ) );
-
-        return item;
-        
-    }
-
-    protected BaseResult parseItem( ContentApi.Entry entry, BaseResult result ) throws Exception {
-        
-        //System.out.printf( "FIXME: entry is:\n%s\n", entry.toString() );
-
-        if ( ! entry.hasSource() )
-            throw new MissingRequiredFieldException ( "missing source" );
-
-        ContentApi.Source source = entry.getSource();
-
-        if ( ! entry.hasFeed() )
-            throw new MissingRequiredFieldException ( "missing feed" );
-
-        ContentApi.Feed feed = entry.getFeed();
-
-        if ( ! entry.hasPermalinkEntry() )
-            throw new MissingRequiredFieldException ( "missing PermalinkEntry" );
-
-        ContentApi.PermalinkEntry permalink_entry = entry.getPermalinkEntry();
-
-        if ( ! entry.hasFeedEntry() )
-            throw new MissingRequiredFieldException ( "missing feedEntry" );
-
-        ContentApi.FeedEntry feed_entry  = entry.getFeedEntry();
-
-        BaseItem item = (BaseItem)result;
-
-        //FIXME FIXME FIXME
-        //FIXME: when using the feed API we need to use feed_entry for this data.
-
-        //base elements.
-        if ( ! empty( permalink_entry.getTitle() ) )
-            item.setTitle( permalink_entry.getTitle() );
-
-        CompressedBLOB content_blob =
-            new CompressedBLOB ( permalink_entry.getContent().getData().toByteArray() );
-
-        String content = content_blob.decompress();
-        
-        if ( ! empty(  content ) )
-             item.setDescription( content );
-        
-        item.setLink( permalink_entry.getCanonicalLink().getHref() );
-        item.setGuid( permalink_entry.getCanonicalLink().getResource() );
-
-        // dc:lang
-
-        if ( empty( source.getLang(0).getCode() ) ) {
-            item.setLang( "U" );
-        } else {
-            item.setLang( source.getLang(0).getCode() );
-        }
-
-        // dc:source
-        item.setSource( source.getLink(0).getHref() );
-        
-        // weblog:title
-        // weblog:description
-
-        if ( ! empty( source.getTitle() ) )
-            item.setWeblogTitle( source.getTitle() );
-
-        if ( ! empty( source.getDescription() ) )
-            item.setWeblogDescription( source.getDescription() );
-
-        item.setWeblogTier( source.getTier() );
-
-        item.setPubDate( ISO8601DateParser.parse( permalink_entry.getDateFound() ) );
-
-        //FIXME: this is wrog.
-        String last_published = permalink_entry.getLastPublished();
-        if ( ! empty( last_published ) )
-            item.setPublished( ISO8601DateParser.parse( last_published ) );
-
-        if ( source.hasIndegree() )
-            item.setWeblogIndegree( source.getIndegree() );        
-        
-        item.setWeblogPublisherType( source.getPublisherType().trim() );
-
-        item.setTags( feed_entry.getCategoryList() );
-
-        //TODO: support more than one author in a future version.
-        if ( permalink_entry.getAuthorCount() > 0 ) {
-            
-            ContentApi.Author author = permalink_entry.getAuthor( 0 );
-
-            if ( ! empty( author.getName() ) )
-                item.setAuthorName( author.getName() );
-            
-            if ( ! empty( author.getEmail() ) )
-                item.setAuthorEmail( author.getEmail() );
-
-            if ( ! empty( author.getLink(0).getHref() ) )
-                item.setAuthorLink ( author.getLink(0).getHref() );
-
-        }
-
-        // Spinn3r 2.1 post content.
-
-        CompressedBLOB content_extract_blob =
-            new CompressedBLOB ( permalink_entry.getContentExtract().getData().toByteArray() );
-
-        String content_extract = content_extract_blob.decompress();
-
-        if ( ! empty( content_extract ) )
-            item.setContentExtract( content_extract );
-
-        if ( ! empty( feed.getCanonicalLink().getHref() ) )
-            item.setFeedURL( feed.getCanonicalLink().getHref() );
-
-        if ( ! empty( feed.getCanonicalLink().getResource() ) )
-            item.setFeedResource( feed.getCanonicalLink().getResource() );
-
-        item.setResourceGUID( permalink_entry.getHashcode() );
-
-        //spinn3r 3.x values
-
-        //FIXME: post:timestamp, feed:link
-
-        if ( ! empty( feed_entry.getTitle() ) )
-            item.setPostTitle( feed_entry.getTitle() );
-
-        CompressedBLOB feed_entry_content_blob =
-            new CompressedBLOB ( feed_entry.getContent().getData().toByteArray() );
-
-        String feed_entry_content = feed_entry_content_blob.decompress();
-        
-        if ( ! empty( feed_entry_content ) ) {
-            item.setPostBody ( feed_entry_content );
-        }
-
-        item.setPostHashcode  ( feed_entry.getHashcode() );
-        item.setSourceHashcode( source.getHashcode()     );
-
-        if ( ! empty( feed.getHashcode() ) )
-            item.setFeedHashcode ( feed.getHashcode() );
-
-        return item;
-        
-    }
-
-    public boolean empty( String value ) {
-
-        return value == null || "".equals( value );
-        
-    }
-        
-    // **** XML parsing utilities ***********************************************
-
-    public static int parseInt( String v ) {
-
-        if ( v == null || v.equals( "" ) )
-            return 0;
-
-        return Integer.parseInt( v );
-        
-    }
-
-    public static long parseLong( String v ) {
-
-        if ( v == null || v.equals( "" ) )
-            return 0L;
-
-        return Long.parseLong( v );
-        
-    }
-
-    public static float parseFloat( String v, float _default ) {
-
-        if ( v == null || v.equals( "" ) )
-            return _default;
-
-        return Float.parseFloat( v );
-
-    }
-    
-    public static List parseTags( Element current ) {
-        return parseChildNodesAsList( current, "category" );
-    }
-
-    public static List parseChildNodesAsList( Element current, String name ) {
-
-        List result = new ArrayList();
-        
-        NodeList nodes = current.getElementsByTagName( name );
-        
-        for( int i = 0; i < nodes.getLength(); ++i ) {
-
-            Element e = (Element)nodes.item( i );
-
-            Node child = e.getFirstChild();
-            
-            if ( child == null )
-                continue;
-        
-            result.add( child.getNodeValue() );
-
-        }
-
-        return result;
-    }
-
-    public static Element getElementByTagName( Element current,
-                                               String name ) {
-        return getElementByTagName( current, name, null );
-    }
-    
-    public static Element getElementByTagName( Element current,
-                                               String name,
-                                               String namespace ) {
-
-        NodeList elements = null;
-
-        if ( namespace == null )
-            elements = current.getElementsByTagName( name );
-        else 
-            elements = current.getElementsByTagNameNS( namespace, name );
-
-        if ( elements == null )
-            return null;
-        
-        if ( elements.getLength() != 1 )
-            return null;
-
-        return (Element)elements.item( 0 );
-
-    }
-    
-    public static String getElementCDATAByTagName( Element current, String name ) {
-
-        return getElementCDATAByTagName( current, name, null );
-    }
-
-    public static String getElementCDATAByTagName( Element current,
-                                                   String name,
-                                                   String namespace ) {
-
-        Element e = getElementByTagName( current, name, namespace );
-
-        if ( e == null )
-            return null;
-
-        Node child = e.getFirstChild();
-
-        if ( child == null )
-            return null;
-        
-        return child.getNodeValue();
-
-    }
-
-    /**
-     * Return a date to an ISO 8601 value for specifying to the URL with an
-     * 'after' param.
-     */
-    public static String toISO8601( Date date ) {
-
-        TimeZone tz = TimeZone.getTimeZone( "UTC" );
-        
-        Calendar c = Calendar.getInstance( tz );
-
-        c.setTime( date );
-        c.setTimeZone( tz );
-        
-        StringBuffer buff = new StringBuffer();
-
-        buff.append( c.get( Calendar.YEAR ) );
-        buff.append( "-" );
-        padd( c.get( Calendar.MONTH ) + 1, buff );
-        buff.append( "-" );
-        padd( c.get( Calendar.DAY_OF_MONTH ), buff );
-        buff.append( "T" );
-        padd( c.get( Calendar.HOUR_OF_DAY ), buff );
-        buff.append( ":" );
-        padd( c.get( Calendar.MINUTE ), buff );
-        buff.append( ":" );
-        padd( c.get( Calendar.SECOND ), buff );
-        buff.append( "Z" );
-
-        return buff.toString();
-        
-    }
-
-    protected static void padd( int v, StringBuffer buff ) {
-        if ( v < 10 )
-            buff.append( "0" );
-
-        buff.append( v );
-        
-    }
-
-    // **** URL request handling ************************************************
-
-    public static void addParam( StringBuffer buff,
-                                 String name,
-                                 Object value ) {
-        addParam( buff, name, value, false );
-    }
-
-    public static void addParam( StringBuffer buff,
-                                 String name,
-                                 Object value,
-                                 boolean optional ) {
-        addParam( buff, name, value, false, false );
-    }
-    
-    /**
-     * Add a parameter to the first request URL.  After the first call this is
-     * no longer needed. 
-     */
-    public static void addParam( StringBuffer buff,
-                                 String name,
-                                 Object value,
-                                 boolean optional,
-                                 boolean urlencode ) {
-
-        if ( optional && value == null )
-            return;             
-
-        if ( value != null && urlencode )
-            value = URLEncoder.encode( value.toString() );
-        
-        if ( buff.length() > 0 )
-            buff.append( "&" );
-        
-        buff.append( name );
-        buff.append( "=" );
-        buff.append( value );
-
-    }
 
     /**
      * Set a parameter in the HTTP URL.
@@ -1206,7 +675,7 @@ public abstract class BaseClient implements Client {
      * Set the value of <code>nextRequestURL</code>.
      *
      */
-    public void setNextRequestURL( String next, Config config ) { 
+    public void setNextRequestURL( String next, Config<ResultType> config ) { 
 
         //TODO: apply the correct hostname to the next request.
 
@@ -1218,16 +687,16 @@ public abstract class BaseClient implements Client {
         this.nextRequestURL = next;
     }
 
-//     /**
-//      * 
-//      * Get the value of <code>result</code>.
-//      *
-//      */
-//     public List<BaseResult> getResults() { 
-//         return this.results;
-//     }
+     /**
+      * 
+      * Get the value of <code>result</code>.
+      *
+      */
+     public List<ResultType> getResults() { 
+         return this.results;
+     }
 
-//     /**
+//BOOG     /**
 //      * 
 //      * Set the value of <code>result</code>.
 //      *
@@ -1312,12 +781,12 @@ public abstract class BaseClient implements Client {
      * Return the correct limit, factoring in the limit set by the user. 
      *
      */
-    public int getLimit( Config config ) {
+    public int getLimit( Config<ResultType> config ) {
 
         int limit = config.getLimit();
 
         if ( limit == -1 )
-            return getOptimalLimit();
+            return config.getOptimalLimit();
 
         return limit;
         

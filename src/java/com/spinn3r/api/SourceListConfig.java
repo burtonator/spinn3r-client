@@ -18,15 +18,53 @@ package com.spinn3r.api;
 
 import java.util.*;
 
+import org.w3c.dom.Element;
+
+import com.spinn3r.api.protobuf.ContentApi;
+
 /**
  * Used to startup the API and specify defaults for limits, where to start
  * indexing, tiers, language, etc.
  */
 public class SourceListConfig extends Config {
     
+    public static int  MAX_LIMIT              = 250;
+    public static int  OPTIMAL_LIMIT          = 250;
+    public static int  CONSERVATIVE_LIMIT     = 10;
+    public static long DEFAULT_SLEEP_INTERVAL = 0L;
+
     private Date           postedAfter                  = null;
     private Date           publishedAfter               = null; 
     private Date           foundAfter                   = null; 
+
+
+    @Override
+    public Source createResultObject ( ContentApi.Entry entry ) throws ParseException {
+        return new Source ( entry );
+    }
+
+    @Override
+    public Source createResultObject ( Element current ) throws ParseException {
+        return new Source ( current );
+    }
+
+
+    protected int getMaxLimit() {
+        return MAX_LIMIT;
+    }
+
+    protected int getOptimalLimit() {
+        return OPTIMAL_LIMIT;
+    }
+
+    protected int getConservativeLimit() {
+        return CONSERVATIVE_LIMIT;
+    }
+
+
+    public long getSleepInterval() {
+        return DEFAULT_SLEEP_INTERVAL;
+    }
 
     /**
      * 
@@ -86,4 +124,32 @@ public class SourceListConfig extends Config {
     public String getRouter() {
         return "http://" + getHost() + "/rss/source.list?";
     }
+
+
+    /**
+     * Generate the first request URL based just on configuration directives.
+     */
+    public String generateFirstRequestURL() {
+        
+        StringBuffer params = new StringBuffer( 1024 ) ;
+
+        addParam( params, "limit",   getOptimalLimit() );
+        addParam( params, "vendor",  getVendor() );
+        addParam( params, "version", getVersion() );
+
+        //AFTER param needs to be added which should be ISO8601
+
+        if ( getPublishedAfter() != null )
+            addParam( params, "published_after",   toISO8601( getPublishedAfter() ) );
+
+        if ( getPostedAfter() != null )
+            addParam( params, "posted_after",   toISO8601( getPostedAfter() ) );
+
+        if ( getFoundAfter() != null )
+            addParam( params, "found_after",   toISO8601( getFoundAfter() ) );
+
+        return getRouter() + params.toString();
+        
+    }
+
 }

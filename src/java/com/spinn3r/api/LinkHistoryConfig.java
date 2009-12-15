@@ -18,12 +18,20 @@ package com.spinn3r.api;
 
 import java.util.*;
 
+import org.w3c.dom.*;
+
+import com.spinn3r.api.protobuf.*;
+
 /**
  * Used to startup the API and specify defaults for limits, where to start
  * indexing, tiers, language, etc.
  */
-public class LinkHistoryConfig extends Config {
+public class LinkHistoryConfig extends Config<LinkItem> {
     
+    public static int MAX_LIMIT            = 100;
+    public static int OPTIMAL_LIMIT        = 100;
+    public static int CONSERVATIVE_LIMIT   = 10;
+
     private String targetHashcode = null;
     
     private String permalinkHashcode = null;
@@ -39,6 +47,33 @@ public class LinkHistoryConfig extends Config {
     private String target = null;
 
     private String           source               = null; 
+
+
+    @Override
+    public LinkItem createResultObject ( ContentApi.Entry entry ) throws ParseException {
+        return new LinkItem ( entry );
+    }
+
+    @Override
+    public LinkItem createResultObject ( Element current ) throws ParseException {
+        return new LinkItem ( current );
+    }
+
+
+    @Override
+    protected int getMaxLimit() {
+        return MAX_LIMIT;
+    }
+
+    @Override
+    protected int getOptimalLimit() {
+        return OPTIMAL_LIMIT;
+    }
+
+    @Override
+    protected int getConservativeLimit() {
+        return CONSERVATIVE_LIMIT;
+    }
 
     /**
      * 
@@ -188,4 +223,40 @@ public class LinkHistoryConfig extends Config {
     public String getRouter() {
         return String.format( "http://%s/rss/%s.history?", getHost(), BaseClient.LINK_HANDLER );
     }
+
+    /**
+     * Generate the first request URL based just on configuration directives.
+     */
+    @Override
+    public String generateFirstRequestURL() {
+
+        StringBuffer params = new StringBuffer( 1024 ) ;
+
+        int limit = getLimit();
+        
+        if ( limit > getMaxLimit() )
+            limit = getMaxLimit();
+        
+        addParam( params, "limit",      limit );
+        addParam( params, "vendor",     getVendor() );
+        addParam( params, "version",    getVersion() );
+
+        addParam( params, "source",     getSource(), true, true );
+        addParam( params, "feed",       getFeed(), true, true );
+        addParam( params, "permalink",  getPermalink(), true, true );
+        addParam( params, "target",     getTarget(), true, true );
+
+        addParam( params, "source_hashcode",     getSourceHashcode(),      true );
+        addParam( params, "feed_hashcode",       getFeedHashcode(),        true );
+        addParam( params, "permalink_hashcode",  getPermalinkHashcode(),   true );
+        addParam( params, "target_hashcode",     getTargetHashcode(),      true );
+
+        String result = getRouter() + params.toString();
+
+        System.out.printf( "%s\n", result );
+        
+        return result;
+        
+    }
+
 }

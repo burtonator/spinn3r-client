@@ -22,7 +22,7 @@ import java.net.*;
 
 import org.w3c.dom.*;
 
-import static com.spinn3r.api.BaseClient.*;
+import static com.spinn3r.api.XMLUtils.*;
 
 import com.spinn3r.api.protobuf.*;
 

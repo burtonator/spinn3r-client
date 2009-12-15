@@ -22,7 +22,9 @@ import java.net.*;
 
 import org.w3c.dom.*;
 
-import static com.spinn3r.api.BaseClient.NS_COMMENT;
+import com.spinn3r.api.protobuf.ContentApi;
+
+import static com.spinn3r.api.XMLUtils.*;
 
 /**
  * Represents a comment item returned from the API.
@@ -36,6 +38,17 @@ public class CommentItem extends BaseItem {
     private String commentPermalinkTitle = null;
     
     private String commentPermalink = null;
+
+
+    public CommentItem ( ContentApi.Entry entry ) {
+        throw new UnimplementedException ("protobuf support not implmented for this client");
+    }
+
+
+    public CommentItem ( Element current ) throws Exception {
+        parseItem( current );
+    }
+
 
     /**
      * 
@@ -109,16 +122,16 @@ mornin     *
         this.commentRawPublished = commentRawPublished;
     }
 
-    protected void parse( Element current ) throws Exception {
+    protected void parseItem ( Element current ) throws Exception {
         
         // <comment:permalink>http://www.techcrunch.com/2009/08/24/apple-will-approve-rhapsodys-iphone-app-but-it-will-still-be-a-dud/</comment:permalink>
         // <comment:permalink_title>Apple Will Approve Rhapsody’s iPhone App, But It Will Still Be A Dud</comment:permalink_title>
         // <comment:permalink_hashcode>6OQAltp-n-o</comment:permalink_hashcode>
 
-        setCommentPermalink( BaseClient.getElementCDATAByTagName( current, "permalink", NS_COMMENT ) );
-        setCommentPermalinkTitle( BaseClient.getElementCDATAByTagName( current, "permalink_title", NS_COMMENT ) );
-        setCommentPermalinkHashcode( BaseClient.getElementCDATAByTagName( current, "permalink_hashcode", NS_COMMENT ) );
-        setCommentRawPublished( BaseClient.getElementCDATAByTagName( current, "raw_published", NS_COMMENT ) );
+        setCommentPermalink( getElementCDATAByTagName( current, "permalink", NS_COMMENT ) );
+        setCommentPermalinkTitle( getElementCDATAByTagName( current, "permalink_title", NS_COMMENT ) );
+        setCommentPermalinkHashcode( getElementCDATAByTagName( current, "permalink_hashcode", NS_COMMENT ) );
+        setCommentRawPublished( getElementCDATAByTagName( current, "raw_published", NS_COMMENT ) );
 
         
     }

@@ -18,11 +18,45 @@ package com.spinn3r.api;
 
 import java.util.*;
 
+import org.w3c.dom.Element;
+
+import com.spinn3r.api.protobuf.ContentApi;
+
 /**
  * Used to startup the API and specify defaults for limits, where to start
  * indexing, tiers, language, etc.
  */
 public class FeedConfig extends Config {
+
+    public static int MAX_LIMIT            = 100;
+    public static int OPTIMAL_LIMIT        = 100;
+    public static int CONSERVATIVE_LIMIT   = 10;
+
+
+    protected int getMaxLimit() {
+        return MAX_LIMIT;
+    }
+
+    protected int getOptimalLimit() {
+        return OPTIMAL_LIMIT;
+    }
+
+    protected int getConservativeLimit() {
+        return CONSERVATIVE_LIMIT;
+    }
+
+
+
+
+    @Override
+    public PermalinkItem createResultObject ( ContentApi.Entry entry ) throws ParseException {
+        return new PermalinkItem ( entry );
+    }
+
+    @Override
+    public PermalinkItem createResultObject ( Element current ) throws ParseException {
+        return new PermalinkItem ( current );
+    }
 
     @Override
     public String getRouter() {

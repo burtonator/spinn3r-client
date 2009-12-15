@@ -18,11 +18,16 @@ package com.spinn3r.api;
 
 import java.util.*;
 
+import org.w3c.dom.Element;
+
+import com.spinn3r.api.protobuf.ContentApi;
+
 /**
  * Used to startup the API and specify defaults for limits, where to start
  * indexing, tiers, language, etc.
  */
-public class SourceRegisterConfig extends Config {
+public class SourceRegisterConfig extends SourceConfig {
+
 
     private String         vendor           = null;
 
@@ -35,6 +40,26 @@ public class SourceRegisterConfig extends Config {
     private String         feed             = null;
 
     private String         publisherType    = null;
+
+
+    private static int MAX_LIMIT            = 5000;
+    
+    private static int OPTIMAL_LIMIT        = 1500;
+
+    private static int CONSERVATIVE_LIMIT   = 100;
+
+
+    public int getMaxLimit() {
+        return MAX_LIMIT;
+    }
+
+    public int getOptimalLimit() {
+        return OPTIMAL_LIMIT;
+    }
+
+    public int getConservativeLimit() {
+        return CONSERVATIVE_LIMIT;
+    }
 
     /**
      * 
@@ -149,4 +174,6 @@ public class SourceRegisterConfig extends Config {
     public String getRouter () {
         throw new RuntimeException ( "error not supporter" );
     }
+
+
 }

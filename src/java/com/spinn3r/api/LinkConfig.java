@@ -18,13 +18,50 @@ package com.spinn3r.api;
 
 import java.util.*;
 
+import org.w3c.dom.*;
+
+import com.spinn3r.api.protobuf.*;
+
 /**
  * Used to startup the API and specify defaults for limits, where to start
  * indexing, tiers, language, etc.
  */
-public class LinkConfig extends Config {
+public class LinkConfig extends Config<LinkItem> {
     
+    public static int MAX_LIMIT            = 100;
+    public static int OPTIMAL_LIMIT        = 50;
+    public static int CONSERVATIVE_LIMIT   = 10;
+
+
     private Date after = null;
+
+
+    @Override
+    protected int getMaxLimit() {
+        return MAX_LIMIT;
+    }
+
+    @Override
+    protected int getOptimalLimit() {
+        return OPTIMAL_LIMIT;
+    }
+
+    @Override
+    protected int getConservativeLimit() {
+        return CONSERVATIVE_LIMIT;
+    }
+
+    @Override
+    public LinkItem createResultObject ( ContentApi.Entry entry ) throws ParseException {
+        return new LinkItem ( entry );
+    }
+
+    @Override
+    public LinkItem createResultObject ( Element current ) throws ParseException {
+        return new LinkItem ( current );
+    }
+
+
 
     /**
      * 

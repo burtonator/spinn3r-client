@@ -28,77 +28,12 @@ import com.spinn3r.api.protobuf.*;
 /**
  * 
  */
-public class FeedHistoryClient extends LegacyWrapperClient implements Client {
+public class FeedHistoryClient extends LegacyWrapperClient<Source> {
 
-    public static int MAX_LIMIT            = 100;
-    public static int OPTIMAL_LIMIT        = 50;
-    public static int CONSERVATIVE_LIMIT   = 10;
 
-    public void fetch() throws IOException,
-                               ParseException,
-                               InterruptedException {
-        
-        super.fetch( config );
-    }
+    public static void dump( List<Source> results ) {
 
-    /**
-     * Generate the first request URL based just on configuration directives.
-     */
-    protected String generateFirstRequestURL() {
-
-        FeedHistoryConfig config = (FeedHistoryConfig)super.getConfig();
-        
-        StringBuffer params = new StringBuffer( 1024 ) ;
-
-        int limit = config.getLimit();
-        
-        if ( limit > getMaxLimit() )
-            limit = getMaxLimit();
-
-        addParam( params, "limit",   limit );
-        addParam( params, "vendor",  config.getVendor() );
-        addParam( params, "version", config.getVersion() );
-
-        addParam( params, "source",           URLEncoder.encode( config.getSource() ) , true );
-        addParam( params, "feed",             URLEncoder.encode( config.getFeed() ) , true );
-        addParam( params, "feed_hashcode",    config.getFeedHashcode() , true );
-        addParam( params, "source_hashcode",  config.getSourceHashcode() , true );
-
-        String result = config.getRouter() + params.toString();
-
-        System.out.printf( "%s\n", result );
-        
-        return result;
-        
-    }
-
-    public List<BaseItem> getResults() { 
-        return (List<BaseItem>)super.results;
-    }
-
-    protected BaseResult parseItem( ContentApi.Entry current ) throws Exception {
-        throw new UnimplementedException ("protobuf support not implmented for this client");
-    }
-
-    protected BaseItem parseItem( Element current ) throws Exception {
-        return new Source( current );
-    }
-
-    protected int getMaxLimit() {
-        return MAX_LIMIT;
-    }
-
-    protected int getOptimalLimit() {
-        return OPTIMAL_LIMIT;
-    }
-
-    protected int getConservativeLimit() {
-        return CONSERVATIVE_LIMIT;
-    }
-
-    public static void dump( List<BaseItem> results ) {
-
-        for( BaseItem item : results ) {
+        for( Source item : results ) {
             System.out.println( "link:                   " + item.getLink() );
             System.out.println( "title:                  " + item.getTitle() );
             System.out.println( "pubDate:                " + item.getPubDate() );
@@ -107,6 +42,7 @@ public class FeedHistoryClient extends LegacyWrapperClient implements Client {
         }
 
     }
+
     
     public static void main( String[] args ) throws Exception {
 
@@ -122,7 +58,7 @@ public class FeedHistoryClient extends LegacyWrapperClient implements Client {
         config.setHost( "api.spinn3r.com" );
         client.setConfig( config );
 
-        List results;
+        List<Source> results;
         
         client.fetch();
         results = client.getResults();
