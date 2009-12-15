@@ -856,8 +856,7 @@ public class Main {
             }
 
             if ( v.startsWith( "--enable3" ) ) {
-                BaseClient.FEED_HANDLER       = "feed3";
-                BaseClient.PERMALINK_HANDLER  = "permalink3";
+                // is now default
                 continue;
             }
             
