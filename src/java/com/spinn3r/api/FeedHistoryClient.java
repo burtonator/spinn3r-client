@@ -46,8 +46,6 @@ public class FeedHistoryClient extends LegacyWrapperClient<Source> {
     
     public static void main( String[] args ) throws Exception {
 
-        BaseClient.FEED_HANDLER = "feed3";
-        
         FeedHistoryConfig config = new FeedHistoryConfig();
         FeedHistoryClient client = new FeedHistoryClient();
 

@@ -54,12 +54,12 @@ import static com.spinn3r.api.XMLUtils.*;
  */
 public abstract class BaseClient<ResultType extends BaseResult> implements Client<ResultType> {
 
-    private static String X_MORE_RESULTS = "X-More-Results";
+    private static final String X_MORE_RESULTS = "X-More-Results";
 
     /**
      * Maximum number of retries.
      */
-    public static long RETRY_MAX = 1;
+    public static final long RETRY_MAX = 1;
 
     /**
      * Go back in time to make sure we recrawl everything.
@@ -70,10 +70,10 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
     public static final String USER_AGENT_HEADER       = "User-Agent";
     public static final String ACCEPT_ENCODING_HEADER  = "Accept-Encoding";
 
-    public static String FEED_HANDLER       = "feed3";
-    public static String PERMALINK_HANDLER  = "permalink3";
-    public static String COMMENT_HANDLER    = "comment3";
-    public static String LINK_HANDLER       = "link3";
+    public static final String FEED_HANDLER       = "feed3";
+    public static final String PERMALINK_HANDLER  = "permalink3";
+    public static final String COMMENT_HANDLER    = "comment3";
+    public static final String LINK_HANDLER       = "link3";
     
     public static final String GZIP_ENCODING = "gzip";
 
@@ -82,7 +82,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
     //
     // TODO: include OS name, kernel version, etc.
 
-    public static String USER_AGENT = String.format( "Spinn3r API Reference Client %s (Java %s, maxMemory=%s)",
+    public static final String USER_AGENT = String.format( "Spinn3r API Reference Client %s (Java %s, maxMemory=%s)",
                                                      Config.DEFAULT_VERSION,
                                                      System.getProperty( "java.version" ),
                                                      Runtime.getRuntime().maxMemory() );
@@ -103,7 +103,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
      * 
      * A value of -1 indicates "cache forever".
      */
-    public static int NETWORKADDRESS_CACHE_TTL = 5 * 60;
+    public static final int NETWORKADDRESS_CACHE_TTL = 5 * 60;
 
     /**
      * These properties specify the default connect and read timeout (resp.) for
@@ -119,25 +119,25 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
      * when reading from input stream when a connection is established to a
      * resource.
      */
-    public static int DEFAULT_CONNECT_TIMEOUT = 5 * 60 * 1000;
+    public static final int DEFAULT_CONNECT_TIMEOUT = 5 * 60 * 1000;
 
     /**
      * Lower read timeout.  Makes NO sense to wait for five minutes to read a
      * byte from spinn3r.
      */
-    public static int DEFAULT_READ_TIMEOUT = DEFAULT_CONNECT_TIMEOUT;
+    public static final int DEFAULT_READ_TIMEOUT = DEFAULT_CONNECT_TIMEOUT;
 
     /**
      * Specify the maximum number of redirects to use.
      */
-    public static int DEFAULT_MAX_REDIRECTS = 5;
+    public static final int DEFAULT_MAX_REDIRECTS = 5;
 
     /**
      * Whether we should use HTTP Keep Alive in java.net.URL.  We default to
      * true here because MOST of our TCP connections WILL be used again since
      * everything is to spinn3r.com.
      */
-    public static boolean DEFAULT_HTTP_KEEPALIVE = true;
+    public static final boolean DEFAULT_HTTP_KEEPALIVE = true;
 
     protected boolean disable_parse = false;
 
