@@ -453,7 +453,7 @@ public class Main {
     public void exec( BaseClient client, Config  config ) throws Exception {
 
         if ( ENABLE_NO_PARSE_ON_SAVE && save != null ) {
-            client.disable_parse = true;
+            config.setDisableParse( true );
         }
         
         while( true ) {
