@@ -139,7 +139,9 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
      */
     public static final boolean DEFAULT_HTTP_KEEPALIVE = true;
 
-    protected boolean disable_parse = false;
+
+
+
 
     private String lastRequestURL = null;
     private String nextRequestURL = null;
@@ -188,7 +190,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
      * is a LOCAL input stream so once fetch() has been called you can call this
      * API multiple times and you're reading from a local buffer.
      */
-    public InputStream getInputStream() throws IOException {
+    public InputStream getInputStream( Config config ) throws IOException {
 
         InputStream is = localInputStream;
 
@@ -206,7 +208,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
             //gzip magic number in its constructor.  If the magic number is
             //incorrect then it will throw an exception.
 
-            if ( disable_parse == false ) {
+            if ( config.getDisableParse() == false ) {
 
                 try {
                     InputStream gz = new GZIPInputStream( is );
@@ -317,7 +319,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
 
         } else if ( ! hasMoreResults ) {
 
-            if ( ! disable_parse ) {
+            if ( ! config.getDisableParse() ) {
             
                 long sleepInterval = config.getSleepInterval();
                 
@@ -345,16 +347,47 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
 
             long before = System.currentTimeMillis();
 
-            if ( config.getUseProtobuf() ) {
-                protobufParse( doProtobufFetch( resource ), config );
-            } else {
 
-                Document doc = doXmlFetch( resource, config );
+            long call_before = System.currentTimeMillis();
 
-                if ( doc != null ) {
-                    xmlParse( doc, config );
-                }
+            URLConnection conn = getConnection( resource );
+
+            setMoreRsults( conn );
+
+            //TODO: clean up the naming here.  getLocalInputStream actually
+            //reads everything into a byte array in memory.
+            localInputStream = getLocalInputStream( conn.getInputStream() ); 
+
+            if ( GZIP_ENCODING.equals( conn.getContentEncoding() ) ) {
+                isCompressed = true;
+            }
+
+            String content_type = conn.getContentType();
+
+            InputStream is = getInputStream();
+            
+            long call_after = System.currentTimeMillis();
+
+            setCallDuration( call_after - call_before );
+
+            setNextRequestURL( conn.getHeaderField( "X-Next-Request-URL" ), config );
+
+
+            if ( ! config.getDisableParse() ) {
+
+                if ( config.getUseProtobuf() ) {
+                    protobufParse( doProtobufFetch( localInputStream, config ), config );
+                } 
+
+                else {
+
+                    Document doc = doXmlFetch( localInputStream, config );
+
+                    if ( doc != null ) {
+                        xmlParse( doc, config );
+                    }
                 
+                }
             }
 
             long after = System.currentTimeMillis();
@@ -371,7 +404,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
             hasMoreResults = results.size() == requestLimit;
     }
 
-    private URLConnection getConnection ( String resource ) throws IOException {
+    protected URLConnection getConnection ( String resource ) throws IOException {
 
         URLConnection conn = null;
         
@@ -419,75 +452,15 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         }
     }
 
-    public ContentApi.Response doProtobufFetch( String resource ) throws IOException, InterruptedException {
- 
-        long call_before = System.currentTimeMillis();
-
-        URLConnection conn = getConnection( resource );
-
-        setMoreRsults( conn );
-
-        ContentApi.Response res = null;
-        
-        if ( disable_parse ) {
-            
-            // Only use a local input stream if we're about to write to disk.  I
-            // think we can stream parse.  needed for --save to persist output to
-            // disk.
-            
-            localInputStream = getLocalInputStream( conn.getInputStream() );
-            res  = ContentApi.Response.parseFrom( localInputStream );
-            
-        } 
-
-        else {
-            res  = ContentApi.Response.parseFrom( conn.getInputStream() );
-        }
-        
-
-        long call_after = System.currentTimeMillis();
-
-        setCallDuration( call_after - call_before );
-        
-        return res;
+    public ContentApi.Response doProtobufFetch( InputStream inputStream, Config config ) throws IOException, InterruptedException {
+        return ContentApi.Response.parseFrom( inputStream );
     }
 
-    public Document doXmlFetch( String resource, Config<ResultType> config  ) throws IOException,
+    public Document doXmlFetch( InputStream inputStream, Config<ResultType> config  ) throws IOException,
                                                       ParseException,
                                                       InterruptedException {
 
-        URLConnection conn = null;
-        
         try {
-
-            long call_before = System.currentTimeMillis();
-
-            conn = getConnection( resource );
-
-            setMoreRsults( conn );
-
-            //TODO: clean up the naming here.  getLocalInputStream actually
-            //reads everything into a byte array in memory.
-            localInputStream = getLocalInputStream( conn.getInputStream() ); 
-
-            if ( GZIP_ENCODING.equals( conn.getContentEncoding() ) ) {
-                isCompressed = true;
-            }
-
-            String content_type = conn.getContentType();
-
-            InputStream is = getInputStream();
-            
-            long call_after = System.currentTimeMillis();
-
-            setCallDuration( call_after - call_before );
-
-            setNextRequestURL( conn.getHeaderField( "X-Next-Request-URL" ), config );
-
-            if ( disable_parse )
-                return null;
-            
-
             // now get the system XML parser using JAXP
 
             DocumentBuilderFactory docBuildFactory =
@@ -507,7 +480,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
 
             long before = System.currentTimeMillis();
             
-            Document doc = parser.parse( is );
+            Document doc = parser.parse( inputStream );
 
             long after = System.currentTimeMillis();
             

@@ -70,6 +70,7 @@ public abstract class Config <ResultType> {
     private String         api                 = null;
     private boolean        useProtobuf         = DEFAULT_USE_PROTOBUF;
     private String         host                = DEFAULT_HOST;
+    private boolean        disableParse        = false;
 
 
     /**
@@ -138,6 +139,23 @@ public abstract class Config <ResultType> {
     public void setUseProtobuf( boolean useProtobuf ) { 
         this.useProtobuf = useProtobuf;
     }
+
+
+    /**
+     * Get the falue of <code>disableParse</code>
+     */
+    public boolean getDisableParse() {
+        return this.disableParse;
+    }
+
+
+    /**
+     * Set the falue of <code>disableParse</code>
+     */
+    public void setDisableParse( boolean disableParse ) {
+        this.disableParse = disableParse;
+    }
+
 
     /**
      * How long we should sleep if an API call doesn't return enough values.
