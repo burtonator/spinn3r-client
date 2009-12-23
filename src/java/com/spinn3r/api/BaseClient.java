@@ -34,6 +34,8 @@ import org.w3c.dom.*;
 import com.spinn3r.api.protobuf.*;
 import com.spinn3r.api.util.CompressedBLOB;
 
+import com.google.protobuf.CodedInputStream;
+
 import static com.spinn3r.api.XMLUtils.*;
 
 /**
@@ -54,6 +56,8 @@ import static com.spinn3r.api.XMLUtils.*;
  */
 public abstract class BaseClient<ResultType extends BaseResult> implements Client<ResultType> {
 
+    public static int PROTOBUF_SIZE_LIMIT = 256 * 1024 * 1024;
+    
     private static final String X_MORE_RESULTS = "X-More-Results";
 
     /**
@@ -61,7 +65,6 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
      */
     public static final long RETRY_MAX = 1;
 
-    
     public static final String USER_AGENT_HEADER       = "User-Agent";
     public static final String ACCEPT_ENCODING_HEADER  = "Accept-Encoding";
 
@@ -81,8 +84,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
                                                      Config.DEFAULT_VERSION,
                                                      System.getProperty( "java.version" ),
                                                      Runtime.getRuntime().maxMemory() );
-        
-    
+
     /**
      * Specified in java.security to indicate the caching policy for successful
      * name lookups from the name service.. The value is specified as as integer
@@ -134,11 +136,9 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
      */
     public static final boolean DEFAULT_HTTP_KEEPALIVE = true;
 
-
     abstract public boolean getIsCompressed();
     
     // **** fetching support ****************************************************
-
 
     public BaseClientResult<ResultType> fetch( Config<ResultType> config ) throws IOException,
                                               ParseException,
@@ -240,7 +240,6 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
 
             long before = System.currentTimeMillis();
 
-
             long call_before = System.currentTimeMillis();
 
             URLConnection conn = getConnection( resource );
@@ -265,7 +264,6 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
             result.setCallDuration( call_after - call_before );
 
             result.setNextRequestURL( conn.getHeaderField( "X-Next-Request-URL" ) );
-
 
             if ( ! config.getDisableParse() ) {
 
@@ -300,7 +298,6 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         return result;
     }
 
-
     protected URLConnection getConnection ( String resource ) throws IOException {
 
         URLConnection conn = null;
@@ -332,7 +329,6 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         return conn;
     }
 
-
     private void setMoreRsults( URLConnection conn, BaseClientResult<ResultType> result ) {
 
         String more = conn.getHeaderField( X_MORE_RESULTS );
@@ -350,7 +346,6 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         }
     }
 
-
     /**
      * Return the correct limit, factoring in the limit set by the user. 
      *
@@ -366,9 +361,10 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         
     }
 
-
     public ContentApi.Response doProtobufFetch( InputStream inputStream, Config config ) throws IOException, InterruptedException {
-        return ContentApi.Response.parseFrom( inputStream );
+        CodedInputStream cis = CodedInputStream.newInstance( inputStream );
+        cis.setSizeLimit( PROTOBUF_SIZE_LIMIT );
+        return ContentApi.Response.parseFrom( cis );
     }
 
     public Document doXmlFetch( InputStream inputStream, Config<ResultType> config  ) throws IOException,
@@ -500,8 +496,6 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         return result;
         
     }
-            
-
 
     /**
      * Set a parameter in the HTTP URL.
@@ -529,7 +523,6 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         
     }
 
-    
     /**
      * Parse command line arguments like --foo=bar where foo is the key and bar
      * is the value.

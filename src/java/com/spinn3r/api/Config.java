@@ -51,7 +51,7 @@ public abstract class Config <ResultType> {
     /**
      * When fetching the API this specifies the default version to return.
      */
-    public static String   DEFAULT_VERSION     = "3.1.34";
+    public static String   DEFAULT_VERSION     = "3.1.69";
 
     /**
      * Default value for useProtobuf.
