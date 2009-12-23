@@ -46,7 +46,7 @@ public abstract class Config <ResultType> {
      * Default number of results to fetch.
      *
      */
-    public static int      DEFAULT_LIMIT       = 500;
+    public static int      DEFAULT_LIMIT       = -1;
 
     /**
      * When fetching the API this specifies the default version to return.
@@ -264,14 +264,7 @@ public abstract class Config <ResultType> {
      * turned out to be better for everyone involved and yielded much higher
      * performance.
      */
-    public void setLimit( int limit ) {
-
-        // NOTE: there are now LEGIT reasons to use a limit of 1 especially when
-        // using the .entry() API
-        
-        //if ( limit < 10 )
-        //    throw new IllegalArgumentException( "Minimum limit is 10." );
-        
+    public void setLimit( int limit ) {        
         this.limit = limit;
     }
 
@@ -362,16 +355,14 @@ public abstract class Config <ResultType> {
     /**
      * Generate the first request URL based just on configuration directives.
      */
-    public String generateFirstRequestURL( ) {
+    public String generateFirstRequestURL( int request_limit ) {
 
         StringBuffer params = new StringBuffer( 1024 ) ;
 
-        int limit = getLimit( );
+        if ( request_limit > getMaxLimit() )
+            request_limit = getMaxLimit();
         
-        if ( limit > getMaxLimit() )
-            limit = getMaxLimit();
-        
-        addParam( params, "limit",   limit );
+        addParam( params, "limit",   request_limit );
         addParam( params, "vendor",  getVendor() );
         addParam( params, "version", getVersion() );
 
