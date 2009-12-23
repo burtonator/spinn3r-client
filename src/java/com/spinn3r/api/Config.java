@@ -66,6 +66,7 @@ public abstract class Config <ResultType> {
     private String         vendor              = null;
     private Date           after               = new Date(); /* use epoch as default */
     private String         firstRequestURL     = null;
+    private String         nextRequestURL      = null;
     private boolean        skipDescription     = false;
     private String         api                 = null;
     private boolean        useProtobuf         = DEFAULT_USE_PROTOBUF;
@@ -180,6 +181,23 @@ public abstract class Config <ResultType> {
         return this.firstRequestURL;
     }
 
+    /**
+     * 
+     * Set the value of <code>firstRequestURL</code>.
+     *
+     */
+    public void setNextRequestURL( String nextRequestURL ) { 
+        this.nextRequestURL = nextRequestURL;
+    }
+
+    /**
+     * 
+     * Get the value of <code>nextRequestURL</code>.
+     *
+     */
+    public String getNextRequestURL() { 
+        return this.nextRequestURL;
+    }
     /**
      * 
      * Get the value of <code>after</code>.

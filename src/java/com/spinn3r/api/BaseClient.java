@@ -61,11 +61,6 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
      */
     public static final long RETRY_MAX = 1;
 
-    /**
-     * Go back in time to make sure we recrawl everything.
-     */
-    public static final int RESTART_BUFFER = 30 * 1000;
-
     
     public static final String USER_AGENT_HEADER       = "User-Agent";
     public static final String ACCEPT_ENCODING_HEADER  = "Accept-Encoding";
@@ -140,120 +135,29 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
     public static final boolean DEFAULT_HTTP_KEEPALIVE = true;
 
 
-
-
-
-    private String lastRequestURL = null;
-    private String nextRequestURL = null;
-
-    /**
-     * Total time we took calling a method.
-     */
-    private long callDuration = -1;
-
-    /**
-     * How long actually we slept (duration) while performing the last API call.
-     */
-    private long sleepDuration = -1;
-
-    private long parseDuration = -1;
-
-    protected List<ResultType> results = new ArrayList<ResultType>();
-
-
-    /**
-     * True if the last API call was compressed.
-     */
-    protected boolean isCompressed = false;
-
-    /**
-     * Get the last localInputStream we're using.  This is a
-     * ByteArrayInputStream based InputStream.
-     */
-    InputStream localInputStream = null;
-
-
-    /**
-     * Sample performance times...
-     */
-    BandwidthSampler bs1   = new BandwidthSampler( 1L  * 60L * 1000L );
-    BandwidthSampler bs5   = new BandwidthSampler( 5L  * 60L * 1000L );
-    BandwidthSampler bs15  = new BandwidthSampler( 15L * 60L * 1000L );
-
-    private boolean hasMoreResults        = true;
-    private boolean hasMoreResultsHeadder = false;
+    abstract public boolean getIsCompressed();
     
     // **** fetching support ****************************************************
 
-    /**
-     * Get the InputStream for dealing with the XML of the API directly.  This
-     * is a LOCAL input stream so once fetch() has been called you can call this
-     * API multiple times and you're reading from a local buffer.
-     */
-    public InputStream getInputStream( Config config ) throws IOException {
 
-        InputStream is = localInputStream;
-
-        //TODO: why do we need to reset?  I don't think we need reset and I
-        //think this was added for gzip detection which we don't use.
-        is.reset();
-        
-        //wrap the downloaded input stream with a gzip input stream when
-        //necessary.
-        if ( isCompressed ) {
-
-            //NOTE: this is a bug fix for Apache2.  If mod_compress is disabled
-            //during LIVE http connections the result won't be compressed
-            //content.  The GZIPInputStream class will first attempt to read the
-            //gzip magic number in its constructor.  If the magic number is
-            //incorrect then it will throw an exception.
-
-            if ( config.getDisableParse() == false ) {
-
-                try {
-                    InputStream gz = new GZIPInputStream( is );
-                    is = gz;
-                } catch ( IOException e ) {
-
-                    //TODO: are we going to add log4j support?
-                    //log.warn( "Detected invalid gzip stream.  Using uncompressed stream.", e );
-                    //reset since GZIPInputStream might have read some content
-                    is.reset();
-                    
-                }
-
-            }
-                
-        }
-
-        return is;
-
-    }
-
-    public void fetch( Config<ResultType> config ) throws IOException,
+    public BaseClientResult<ResultType> fetch( Config<ResultType> config ) throws IOException,
                                               ParseException,
                                               InterruptedException {
 
+        BaseClientResult<ResultType> res;
+
         int retry_ctr = 0;
+        int limit     = getLimit( config );
 
         while( true ) {
 
             try {
 
                 // set the optimal limit if necessary
-                if ( retry_ctr == 0 )
-                    config.setLimit( getLimit( config ) );
-                else
-                    config.setLimit( config.getConservativeLimit() );
+                if ( retry_ctr > 0 )
+                    limit = config.getConservativeLimit();
                 
-                doFetch( config );
-
-                //We performed one HTTP fetch successfully, restore the limit.
-                //NOTE: that if the user sets the limit to say 20, and then we
-                //break, it could revert to ten, and then revert to the optimal
-                //limit (which could be 100).  This is fine for now as I want to
-                //totally remove the ability for customers to change the limit.
-                config.setLimit( config.getOptimalLimit() );
+                res = doFetch( config, limit );
                 
                 break;
                 
@@ -283,6 +187,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
             
         }
         
+        return res;
     }
     
     /**
@@ -291,18 +196,17 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
      * @throws IOException if there's an error with network transport.
      * @throws ParserException if there's a problem parsing the resulting XML.
      */
-    private void doFetch( Config<ResultType> config ) throws IOException,
+    private BaseClientResult<ResultType> doFetch( Config<ResultType> config, int request_limit ) throws IOException,
                                                  ParseException,
                                                  InterruptedException {
+
+        BaseClientResult<ResultType> result = new BaseClientResult<ResultType> ( config );
 
         if ( config.getVendor() == null )
             throw new RuntimeException( "Vendor not specified" );
 
-        String resource = getNextRequestURL();
-
-        setSleepDuration( 0 );
-
-        int requestLimit = config.getLimit();
+        String resource     = config.getNextRequestURL();
+        int    requestLimit = config.getLimit();
 
         //enforce max limit so that we don't generate runtime exceptions.
         if ( requestLimit > config.getMaxLimit() )
@@ -317,18 +221,6 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
             if ( resource == null )
                 resource = config.generateFirstRequestURL( );
 
-        } else if ( ! hasMoreResults ) {
-
-            if ( ! config.getDisableParse() ) {
-            
-                long sleepInterval = config.getSleepInterval();
-                
-                //we've fetched before so determine if we need to spin.
-                Thread.sleep( sleepInterval );
-                setSleepDuration( sleepInterval );
-                
-            }
-            
         } 
 
         //apply the requestLimit to the current URL.  This needs to be done so
@@ -341,7 +233,8 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         // store the last requested URL so we can expose this to the caller for
         // debug purposes.
 
-        setLastRequestURL( resource );
+        result.setLastRequestURL( resource );
+        result.setRequestLimit( requestLimit );
 
         try {
 
@@ -352,31 +245,32 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
 
             URLConnection conn = getConnection( resource );
 
-            setMoreRsults( conn );
+            setMoreRsults( conn, result );
 
             //TODO: clean up the naming here.  getLocalInputStream actually
             //reads everything into a byte array in memory.
-            localInputStream = getLocalInputStream( conn.getInputStream() ); 
+            InputStream localInputStream = getLocalInputStream( conn.getInputStream(), result ); 
 
-            if ( GZIP_ENCODING.equals( conn.getContentEncoding() ) ) {
-                isCompressed = true;
-            }
+            result.setLocalInputStream( localInputStream );
+
+            if ( GZIP_ENCODING.equals( conn.getContentEncoding() ) )
+                result.setIsCompressed( true );
 
             String content_type = conn.getContentType();
 
-            InputStream is = getInputStream();
-            
+            InputStream is = result.getInputStream();
+
             long call_after = System.currentTimeMillis();
 
-            setCallDuration( call_after - call_before );
+            result.setCallDuration( call_after - call_before );
 
-            setNextRequestURL( conn.getHeaderField( "X-Next-Request-URL" ), config );
+            result.setNextRequestURL( conn.getHeaderField( "X-Next-Request-URL" ) );
 
 
             if ( ! config.getDisableParse() ) {
 
                 if ( config.getUseProtobuf() ) {
-                    protobufParse( doProtobufFetch( localInputStream, config ), config );
+                    result.setResults( protobufParse( doProtobufFetch( localInputStream, config ), config ) );
                 } 
 
                 else {
@@ -384,7 +278,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
                     Document doc = doXmlFetch( localInputStream, config );
 
                     if ( doc != null ) {
-                        xmlParse( doc, config );
+                        result.setResults( xmlParse( doc, config ) );
                     }
                 
                 }
@@ -392,7 +286,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
 
             long after = System.currentTimeMillis();
 
-            setParseDuration( after - before );
+            result.setParseDuration( after - before );
             
         } 
 
@@ -400,9 +294,12 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
             throw new ParseException( e, "Unable to handle request: " + resource );
         }
 
-        if ( ! hasMoreResultsHeadder )
-            hasMoreResults = results.size() == requestLimit;
+        if ( ! result.getHasMoreResultsHeadder() )
+            result.setHasMoreResults( result.getResults().size() == requestLimit );
+
+        return result;
     }
+
 
     protected URLConnection getConnection ( String resource ) throws IOException {
 
@@ -435,22 +332,40 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         return conn;
     }
 
-    private void setMoreRsults( URLConnection conn ) {
+
+    private void setMoreRsults( URLConnection conn, BaseClientResult<ResultType> result ) {
 
         String more = conn.getHeaderField( X_MORE_RESULTS );
 
         if ( more == null )
-            hasMoreResultsHeadder = false;
+            result.setHasMoreResultsHeadder( false );
             
         else {
-            hasMoreResultsHeadder = true;
+            result.setHasMoreResultsHeadder( true );
 
             if ( "true".equals( more ) ) 
-                hasMoreResults = true;
+                result.setHasMoreResults( true );
             else
-                hasMoreResults = false;
+                result.setHasMoreResults( false );
         }
     }
+
+
+    /**
+     * Return the correct limit, factoring in the limit set by the user. 
+     *
+     */
+    public int getLimit( Config<ResultType> config ) {
+
+        int limit = config.getLimit();
+
+        if ( limit == -1 )
+            return config.getOptimalLimit();
+
+        return limit;
+        
+    }
+
 
     public ContentApi.Response doProtobufFetch( InputStream inputStream, Config config ) throws IOException, InterruptedException {
         return ContentApi.Response.parseFrom( inputStream );
@@ -508,14 +423,14 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
      * Get a local copy of the input stream so we can benchmark the download
      * time.
      */
-    private InputStream getLocalInputStream( InputStream is ) throws IOException {
-        return new ByteArrayInputStream( getInputStreamAsByteArray( is ) );
+    private InputStream getLocalInputStream( InputStream is, BaseClientResult<ResultType> result ) throws IOException {
+        return new ByteArrayInputStream( getInputStreamAsByteArray( is, result ) );
     }
     
     /**
      * Get the input stream as a byte array.
      */
-    private byte[] getInputStreamAsByteArray( InputStream is ) throws IOException {
+    private byte[] getInputStreamAsByteArray( InputStream is, BaseClientResult<ResultType> result ) throws IOException {
 
         //include length of content from the original site with contentLength
 
@@ -533,9 +448,9 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
             total += readCount;
         }
 
-        bs1.sample( total );
-        bs5.sample( total );
-        bs15.sample( total );
+        result.getBs1().sample( total );
+        result.getBs5().sample( total );
+        result.getBs15().sample( total );
         
         is.close();
         bos.close();
@@ -548,7 +463,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
      * We've received a response from the API so parse it out.
      *
      */
-    protected void xmlParse( Document doc, Config<ResultType> config ) throws Exception {
+    protected List<ResultType> xmlParse( Document doc, Config<ResultType> config ) throws Exception {
 
         Element root = (Element)doc.getFirstChild();
 
@@ -566,7 +481,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
             
         }
 
-        this.results = result;
+        return result;
         
     }
 
@@ -574,7 +489,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
      * We've received a response from the API so parse it out.
      *
      */
-    protected void protobufParse( ContentApi.Response response, Config<ResultType> config ) throws Exception {
+    protected List<ResultType> protobufParse( ContentApi.Response response, Config<ResultType> config ) throws Exception {
 
         List<ResultType> result = new ArrayList<ResultType>();
 
@@ -582,7 +497,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
             result.add( config.createResultObject( entry ) );
         }
 
-        this.results = result;
+        return result;
         
     }
             
@@ -614,164 +529,6 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         
     }
 
-    // **** Getter and setters **************************************************
-
-    /**
-     * 
-     * Get the last requested URL for debug and logging purposes.
-     *
-     */
-    public String getLastRequestURL() { 
-        return this.lastRequestURL;
-    }
-
-    /**
-     * 
-     * Set the value of <code>lastRequestURL</code>.
-     *
-     */
-    public void setLastRequestURL( String lastRequestURL ) { 
-        this.lastRequestURL = lastRequestURL;
-    }
-
-    /**
-     * 
-     * Get the value of <code>nextRequestURL</code>.
-     *
-     */
-    public String getNextRequestURL() { 
-        return this.nextRequestURL;
-    }
-
-    /**
-     * 
-     * Set the value of <code>nextRequestURL</code>.
-     *
-     */
-    public void setNextRequestURL( String next, Config<ResultType> config ) { 
-
-        //TODO: apply the correct hostname to the next request.
-
-        if ( config.getHost() != null ) {
-            String path = next.substring( next.indexOf( "/", "http://".length() ), next.length() );
-            next = String.format( "http://%s%s", config.getHost(), path );
-        }
-
-        this.nextRequestURL = next;
-    }
-
-     /**
-      * 
-      * Get the value of <code>result</code>.
-      *
-      */
-     public List<ResultType> getResults() { 
-         return this.results;
-     }
-
-//BOOG     /**
-//      * 
-//      * Set the value of <code>result</code>.
-//      *
-//      */
-//     public void setResults( List<BaseResult> results ) { 
-//         this.results = results;
-//     }
-
-
-    /**
-     * 
-     * Get the value of <code>callDuration</code>.
-     *
-     */
-    public long getCallDuration() { 
-        return this.callDuration;
-    }
-
-    /**
-     * 
-     * Set the value of <code>callDuration</code>.
-     *
-     */
-    public void setCallDuration( long callDuration ) { 
-        this.callDuration = callDuration;
-    }
-
-    /**
-     * 
-     * Get the value of <code>sleepDuration</code>.
-     *
-     */
-    public long getSleepDuration() { 
-        return this.sleepDuration;
-    }
-
-    /**
-     * 
-     * Set the value of <code>sleepDuration</code>.
-     *
-     */
-    public void setSleepDuration( long sleepDuration ) { 
-        this.sleepDuration = sleepDuration;
-    }
-
-    /**
-     * 
-     * Get the value of <code>parseDuration</code>.
-     *
-     */
-    public long getParseDuration() { 
-        return this.parseDuration;
-    }
-
-    /**
-     * 
-     * Set the value of <code>parseDuration</code>.
-     *
-     */
-    public void setParseDuration( long parseDuration ) { 
-        this.parseDuration = parseDuration;
-    }
-
-
-    /**
-     * When the API needs to shutdown you need to call this method FIRST and
-     * persist it.  Then when the API starts you need to call config.setAfter()
-     * with this value.
-     */
-    public Date getRestartPoint() {
-
-        if ( results == null || results.size() == 0 )
-            return null;
-
-        BaseResult item = (BaseResult)results.get( results.size() - 1 );
-
-        return new Date( item.getPubDate().getTime() - RESTART_BUFFER );
-        
-    }
-
-    /**
-     * Return the correct limit, factoring in the limit set by the user. 
-     *
-     */
-    public int getLimit( Config<ResultType> config ) {
-
-        int limit = config.getLimit();
-
-        if ( limit == -1 )
-            return config.getOptimalLimit();
-
-        return limit;
-        
-    }
-
-    /**
-     * Return true if more results are available.
-     *
-     */
-    public boolean hasMoreResults() {
-        return hasMoreResults;
-    }
     
     /**
      * Parse command line arguments like --foo=bar where foo is the key and bar
