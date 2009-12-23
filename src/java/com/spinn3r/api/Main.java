@@ -502,8 +502,9 @@ public class Main {
         //fetch the most recent results.  This will block if necessary.
 
         fetch_before = System.currentTimeMillis();
-
-        client.fetch( config );
+        
+        client.setConfig( config );
+        client.fetch();
 
         fetch_after  = System.currentTimeMillis();
 
@@ -565,7 +566,7 @@ public class Main {
                 
             }
 
-            if ( client.isCompressed ) {
+            if ( client.getIsCompressed() ) {
                file = new File( file.getPath() + ".gz" ) ;
             }
 
