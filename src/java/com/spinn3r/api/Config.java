@@ -46,7 +46,7 @@ public abstract class Config <ResultType> {
      * Default number of results to fetch.
      *
      */
-    public static int      DEFAULT_LIMIT       = -1;
+    public static int      DEFAULT_LIMIT       = 500;
 
     /**
      * When fetching the API this specifies the default version to return.

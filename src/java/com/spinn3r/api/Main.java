@@ -734,6 +734,9 @@ public class Main {
         if ( api.startsWith( "feed" ) ) {
             config = new FeedConfig();
             client = new FeedClient();
+        } else if ( api.startsWith( "crawl" ) ) {
+            config = new CrawlConfig();
+            client = new CrawlClient();
         } else if ( api.startsWith( "comment" ) ) {
             config = new CommentConfig();
             client = new CommentClient();
