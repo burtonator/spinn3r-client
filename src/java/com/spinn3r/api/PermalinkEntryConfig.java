@@ -129,18 +129,16 @@ public class PermalinkEntryConfig extends Config<PermalinkItem> {
      * Generate the first request URL based just on configuration directives.
      */
     @Override
-    public String generateFirstRequestURL() {
+    public String generateFirstRequestURL( int request_limit ) {
 
         StringBuffer params = new StringBuffer( 1024 ) ;
 
-        int limit = getLimit();
+        if ( request_limit > getMaxLimit() )
+            request_limit = getMaxLimit();
         
-        if ( limit > getMaxLimit() )
-            limit = getMaxLimit();
-        
-        addParam( params, "limit",     limit );
-        addParam( params, "vendor",    getVendor() );
-        addParam( params, "version",   getVersion() );
+        addParam( params, "limit",   request_limit );
+        addParam( params, "vendor",  getVendor() );
+        addParam( params, "version", getVersion() );
 
         if ( getResource() != null )
             addParam( params, "resource", URLEncoder.encode( getResource() ) );

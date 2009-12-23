@@ -205,12 +205,11 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         if ( config.getVendor() == null )
             throw new RuntimeException( "Vendor not specified" );
 
-        String resource     = config.getNextRequestURL();
-        int    requestLimit = config.getLimit();
+        String resource = config.getNextRequestURL();
 
         //enforce max limit so that we don't generate runtime exceptions.
-        if ( requestLimit > config.getMaxLimit() )
-            requestLimit = config.getMaxLimit();
+        if ( request_limit > config.getMaxLimit() )
+            request_limit = config.getMaxLimit();
         
         if ( resource == null ) {
 
@@ -219,22 +218,22 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
             // if the API has NEVER been used before then generate the first
             // request URL from the config parameters.
             if ( resource == null )
-                resource = config.generateFirstRequestURL( );
+                resource = config.generateFirstRequestURL( request_limit );
 
         } 
 
-        //apply the requestLimit to the current URL.  This needs to be done so
+        //apply the request_limit to the current URL.  This needs to be done so
         //that we can change the limit at runtime.  When I originally designed
         //the client I didn't want to support introspecting and mutating the URL
         //on the client but with the optimial limit performance optimization
         //this is impossible.
-        resource = setParam( resource, "limit", requestLimit );
+        resource = setParam( resource, "limit", request_limit );
 
         // store the last requested URL so we can expose this to the caller for
         // debug purposes.
 
         result.setLastRequestURL( resource );
-        result.setRequestLimit( requestLimit );
+        result.setRequestLimit( request_limit );
 
         try {
 
@@ -293,7 +292,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         }
 
         if ( ! result.getHasMoreResultsHeadder() )
-            result.setHasMoreResults( result.getResults().size() == requestLimit );
+            result.setHasMoreResults( result.getResults().size() == request_limit );
 
         return result;
     }
