@@ -900,7 +900,7 @@ public class Main {
             System.out.printf( "\n" );
             System.out.printf( "Now running with: %s vs %s required\n", maxMemory, requiredMemory );
             System.out.printf( "\n" );
-            System.out.printf( String.format("Add -Xmx%dM to your command line and run again.\n" , requiredMemory / (1024 * 1024)));
+            System.out.printf("Add -Xmx%dM to your command line and run again.\n" , requiredMemory / (1024 * 1024));
             
             System.exit( 1 );
             
