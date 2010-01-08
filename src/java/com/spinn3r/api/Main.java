@@ -43,9 +43,16 @@ public class Main {
     public static boolean ENABLE_NO_PARSE_ON_SAVE = true;
     
     /**
-     * Minimum amount of memory required to run the client.
+     * Minimum amount of memory required to run the client if the user
+     * chooses to parse the data in memory.
      */
-    public static long REQUIRED_MEMORY = 2000L * 1000L * 1000L;
+    public static long PARSE_REQUIRED_MEMORY = 2000L * 1000L * 1000L;
+    
+    /**
+     * Minimum amount of memory required to run the client if the user
+     * chooses to save the data to disk.
+     */
+    public static long SAVE_REQUIRED_MEMORY = 0;
 
     /**
      * Determines how long we should wait between retries.
@@ -885,12 +892,13 @@ public class Main {
         }
 
         long maxMemory = Runtime.getRuntime().maxMemory();
+        long requiredMemory = (save == null) ? PARSE_REQUIRED_MEMORY : SAVE_REQUIRED_MEMORY;
         
-        if ( maxMemory < REQUIRED_MEMORY ) {
+        if ( maxMemory < requiredMemory ) {
 
             System.out.printf( "ERROR: Reference client requires at least 2GB of memory.\n" );
             System.out.printf( "\n" );
-            System.out.printf( "Now running with: %s vs %s required\n", maxMemory, REQUIRED_MEMORY );
+            System.out.printf( "Now running with: %s vs %s required\n", maxMemory, requiredMemory );
             System.out.printf( "\n" );
             System.out.printf( "Add -Xmx2200M to your command line and run again.\n" );
             
