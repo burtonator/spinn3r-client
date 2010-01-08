@@ -52,7 +52,7 @@ public class Main {
      * Minimum amount of memory required to run the client if the user
      * chooses to save the data to disk.
      */
-    public static long SAVE_REQUIRED_MEMORY = 0;
+    public static long SAVE_REQUIRED_MEMORY = 500L * 1000L * 1000L;
 
     /**
      * Determines how long we should wait between retries.
@@ -900,7 +900,7 @@ public class Main {
             System.out.printf( "\n" );
             System.out.printf( "Now running with: %s vs %s required\n", maxMemory, requiredMemory );
             System.out.printf( "\n" );
-            System.out.printf( "Add -Xmx2200M to your command line and run again.\n" );
+            System.out.printf( String.format("Add -Xmx%dM to your command line and run again.\n" , requiredMemory / (1024 * 1024)));
             
             System.exit( 1 );
             
