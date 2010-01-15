@@ -82,6 +82,8 @@ public class Source extends BaseItem {
         publisherType             = source.getPublisherType();
         dateFound                 = ISO8601DateParser.parse( source.getDateFound() );
         spamProbability           = source.getSpamProbability();
+        // TODO: Is this the correct field?
+        pubDate = published       = ISO8601DateParser.parse( source.getLastPublished());
         
     }
 
@@ -110,6 +112,7 @@ public class Source extends BaseItem {
                                                 -0.0f );
 
         publisherType             = getElementCDATAByTagName( e, "publisher_type",                            NS_SOURCE );
+        pubDate = published 	  = ISO8601DateParser.parse(getElementCDATAByTagName(e, "pubDate"));
 
     }
     

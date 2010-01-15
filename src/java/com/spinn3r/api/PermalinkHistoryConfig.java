@@ -85,7 +85,7 @@ public class PermalinkHistoryConfig extends Config<Source> {
 
     @Override
     public String getRouter() {
-        return String.format( "http://%s/rss/%s.history?", getHost(), BaseClient.PERMALINK_HANDLER );
+        return String.format( "http://%s/%s/%s.history?", getHost(), getUseProtobuf() ? "protobuf": "rss", BaseClient.PERMALINK_HANDLER );
     }
 
     /**
@@ -107,7 +107,7 @@ public class PermalinkHistoryConfig extends Config<Source> {
 
         String result = getRouter() + params.toString();
 
-        System.out.printf( "%s\n", result );
+        //System.out.printf( "%s\n", result );
         
         return result;
         

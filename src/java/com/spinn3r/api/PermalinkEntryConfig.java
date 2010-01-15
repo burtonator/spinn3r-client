@@ -121,7 +121,8 @@ public class PermalinkEntryConfig extends Config<PermalinkItem> {
     
     @Override
     public String getRouter() {
-        return String.format( "http://%s/rss/%s.entry?", getHost(), "permalink3" );
+        return String.format( "http://%s/%s/%s.entry?", getHost(), 
+        		this.getUseProtobuf() ? "protobuf" : "rss", "permalink3" );
     }
 
 
@@ -139,6 +140,7 @@ public class PermalinkEntryConfig extends Config<PermalinkItem> {
         addParam( params, "limit",   request_limit );
         addParam( params, "vendor",  getVendor() );
         addParam( params, "version", getVersion() );
+        addParam( params, "after", toISO8601(getAfter()));
 
         if ( getResource() != null )
             addParam( params, "resource", URLEncoder.encode( getResource() ) );
