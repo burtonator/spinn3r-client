@@ -150,6 +150,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         return result;
     }
 
+
     public PartailBaseClientResult<ResultType> partialFetch( Config<ResultType> config ) throws IOException,
                                               ParseException,
                                               InterruptedException {
@@ -167,7 +168,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
                 if ( retry_ctr > 0 )
                     limit = config.getConservativeLimit();
                 
-                res = doFetch( config, limit );
+                res = startFetch( config, limit );
                 
                 break;
                 
@@ -206,7 +207,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
      * @throws IOException if there's an error with network transport.
      * @throws ParserException if there's a problem parsing the resulting XML.
      */
-    private PartailBaseClientResult<ResultType> doFetch( Config<ResultType> config, int request_limit ) throws IOException,
+    private PartailBaseClientResult<ResultType> startFetch( Config<ResultType> config, int request_limit ) throws IOException,
                                                  InterruptedException {
 
         PartailBaseClientResult<ResultType> result = new PartailBaseClientResult<ResultType> ( config );
@@ -266,7 +267,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
      * @throws IOException if there's an error with network transport.
      * @throws ParserException if there's a problem parsing the resulting XML.
      */
-    private BaseClientResult<ResultType> compleatFetch( PartailBaseClientResult<ResultType> partial_result ) throws IOException,
+    public BaseClientResult<ResultType> compleatFetch( PartailBaseClientResult<ResultType> partial_result ) throws IOException,
                                                  ParseException,
                                                  InterruptedException {
 
