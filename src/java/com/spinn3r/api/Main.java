@@ -464,7 +464,7 @@ public class Main {
         }
         
         while( true ) {
-
+            // BUG: this restart all the way from the first request URL each time!!!!!
             try {
 
                 results = doFetch( client, config );
@@ -494,7 +494,7 @@ public class Main {
                 e.printStackTrace();
                 
                 Thread.sleep( RETRY_INTERVAL );
-                
+
             }
                 
         } 
