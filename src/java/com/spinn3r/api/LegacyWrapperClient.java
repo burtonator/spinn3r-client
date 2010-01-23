@@ -12,7 +12,7 @@ import org.w3c.dom.Document;
 public abstract class LegacyWrapperClient <ResultType extends BaseResult> extends BaseClient<ResultType> {
 
     private static int PARALLELISM        = 4;
-    private static int RESULT_BUFFER_SIZE = 100;
+    private static int RESULT_BUFFER_SIZE = 20;
 
     protected Config                       config        = null;
     private   BaseClientResult<ResultType> result        = null;
@@ -49,6 +49,10 @@ public abstract class LegacyWrapperClient <ResultType extends BaseResult> extend
         
         try {
             result = parallelFetcher.fetch();
+
+            setSleepDuration( sleep_interval );
+
+            config.setNextRequestURL( result.getNextRequestURL() );
         }
 
         catch ( Exception e ) {
@@ -70,9 +74,6 @@ public abstract class LegacyWrapperClient <ResultType extends BaseResult> extend
             throw ioe;
         }
 
-        setSleepDuration( sleep_interval );
-
-        config.setNextRequestURL( result.getNextRequestURL() );
     }
 
 
