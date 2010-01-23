@@ -47,7 +47,28 @@ public abstract class LegacyWrapperClient <ResultType extends BaseResult> extend
         } 
 
         
-        result = parallelFetcher.fetch();
+        try {
+            result = parallelFetcher.fetch();
+        }
+
+        catch ( Exception e ) {
+            // we do this cause it the caller retries we need a clean pipe line
+            parallelFetcher = null;
+
+            //this is slightly ugly but prevents nested exceptions.
+            if ( e instanceof IOException )
+                throw (IOException)e;
+
+            if ( e instanceof ParseException )
+                throw (ParseException)e;
+
+            if ( e instanceof InterruptedException )
+                throw (InterruptedException)e;
+
+            IOException ioe = new IOException();
+            ioe.initCause( e );
+            throw ioe;
+        }
 
         setSleepDuration( sleep_interval );
 

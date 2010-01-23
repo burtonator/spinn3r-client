@@ -9,6 +9,8 @@ import java.util.concurrent.ExecutionException;
 
 public class ParallelFetchHelper<ResultType extends BaseResult> {
 
+    private static int  MAX_RETRY_COUNT  = 10;
+    private static long QUEUE_WAIT_SLEEP = 1 * 1000; // three seconds
 
     private BaseClient<ResultType> client;
     private Config<ResultType>     config;
@@ -63,6 +65,10 @@ public class ParallelFetchHelper<ResultType extends BaseResult> {
     }
 
 
+    private boolean canEnqueue () {
+        return outQueue.remainingCapacity() > 0;
+    }
+
     ////////////// support class ///////////////
 
     private class WorkUnit implements Callable<BaseClientResult<ResultType>> {
@@ -81,19 +87,54 @@ public class ParallelFetchHelper<ResultType extends BaseResult> {
 
         public BaseClientResult<ResultType> call () throws Exception {
 
-            PartailBaseClientResult<ResultType> partial_result = client.partialFetch( config );
+            BaseClientResult<ResultType> result = null;
 
-            Config<ResultType> next_config = config.clone();
+            int     retry_count   = 0;
+            boolean enqueued_next = false;
 
-            next_config.setNextRequestURL( partial_result.getNextRequestURL() );
+            while ( true ) {
 
-            WorkUnit work = new WorkUnit( client, next_config, helper );
+                if ( ! helper.canEnqueue() ) {
+                    Thread.sleep( QUEUE_WAIT_SLEEP );
+                    continue;
+                }
 
-            // BUG: one bad thing about this is that we could stall the connection hear
-            //      if the client stopes taking out results.
-            helper.enqueue( work );
+                try {
 
-            BaseClientResult<ResultType> result  = client.compleatFetch( partial_result );
+                    PartailBaseClientResult<ResultType> partial_result = client.partialFetch( config );
+
+                    if ( enqueued_next == false ) {
+                        Config<ResultType> next_config = config.clone();
+
+                        next_config.setNextRequestURL( partial_result.getNextRequestURL() );
+
+                        WorkUnit work = new WorkUnit( client, next_config, helper );
+
+                        // BUG: one bad thing about this is that we could stall the connection hear
+                        //      if the client stopes taking out results.
+                        helper.enqueue( work );
+                    }
+
+                    enqueued_next = true;
+
+                    result = client.compleatFetch( partial_result );
+
+                    break;
+                }
+
+                catch ( Exception e ) {                    
+                    // BUG: should log hear
+                    if ( retry_count > MAX_RETRY_COUNT )
+                        throw e;
+                    else
+                        continue;
+                }
+
+                finally {
+                    retry_count++;
+                }
+
+            }
 
             return result;
         }
