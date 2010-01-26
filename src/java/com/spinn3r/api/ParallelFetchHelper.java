@@ -9,8 +9,8 @@ import java.util.concurrent.ExecutionException;
 
 public class ParallelFetchHelper<ResultType extends BaseResult> {
 
-    private static int  MAX_RETRY_COUNT  = 10;
-    private static long QUEUE_WAIT_SLEEP = 1 * 1000; // three seconds
+    private static int  MAX_RETRY_COUNT   = 10;
+    private static long QUEUE_WAIT_SLEEP        = 1 * 1000; // three seconds
 
     private BaseClient<ResultType> client;
     private Config<ResultType>     config;
@@ -30,7 +30,7 @@ public class ParallelFetchHelper<ResultType extends BaseResult> {
 
     public void start () throws InterruptedException {
         
-        WorkUnit work = new WorkUnit( client, config, this );
+        WorkUnit work = new WorkUnit( client, config, this, 0 );
 
         enqueue( work );
     }
@@ -77,11 +77,13 @@ public class ParallelFetchHelper<ResultType extends BaseResult> {
         private BaseClient<ResultType>          client;
         private Config<ResultType>              config;
         private ParallelFetchHelper<ResultType> helper;
+        private long                            sleep;
 
-        public WorkUnit (  BaseClient<ResultType> client_value, Config<ResultType> config_value, ParallelFetchHelper<ResultType> helper_value ) {
+        public WorkUnit (  BaseClient<ResultType> client_value, Config<ResultType> config_value, ParallelFetchHelper<ResultType> helper_value, long sleep_value ) {
             client = client_value;
             config = config_value;
             helper = helper_value;
+            sleep  = sleep_value;
         }
 
 
@@ -91,6 +93,11 @@ public class ParallelFetchHelper<ResultType extends BaseResult> {
 
             int     retry_count   = 0;
             boolean enqueued_next = false;
+
+            if ( sleep > 0 ) {
+                System.out.printf("caught up sleeping for %s\n", sleep ); //BOOG
+                Thread.sleep( sleep );
+            }
 
             while ( true ) {
 
@@ -108,7 +115,12 @@ public class ParallelFetchHelper<ResultType extends BaseResult> {
 
                         next_config.setNextRequestURL( partial_result.getNextRequestURL() );
 
-                        WorkUnit work = new WorkUnit( client, next_config, helper );
+                        long sleep = 0;
+
+                        if ( ! partial_result.getHasMoreResults() )
+                            sleep = next_config.getSleepInterval();
+
+                        WorkUnit work = new WorkUnit( client, next_config, helper, sleep );
 
                         // BUG: one bad thing about this is that we could stall the connection hear
                         //      if the client stopes taking out results.
