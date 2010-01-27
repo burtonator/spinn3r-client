@@ -16,6 +16,7 @@
 
 package com.spinn3r.api;
 
+import java.text.ParseException;
 import java.util.*;
 import java.io.*;
 import java.net.*;
@@ -112,7 +113,11 @@ public class Source extends BaseItem {
                                                 -0.0f );
 
         publisherType             = getElementCDATAByTagName( e, "publisher_type",                            NS_SOURCE );
-        pubDate = published 	  = ISO8601DateParser.parse(getElementCDATAByTagName(e, "pubDate"));
+        try {
+			pubDate = published 	  = RFC822DateParser.parse(getElementCDATAByTagName(e, "pubDate"));
+		} catch (ParseException e1) {
+			// Ignore exception
+		}
 
     }
     

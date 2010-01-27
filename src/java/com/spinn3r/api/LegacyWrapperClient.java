@@ -3,9 +3,9 @@ package com.spinn3r.api;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.Date;
-
+import java.util.List;
+import java.util.zip.GZIPInputStream;
 
 import org.w3c.dom.Document;
 
@@ -48,7 +48,7 @@ public abstract class LegacyWrapperClient <ResultType extends BaseResult> extend
     public Document doXmlFetch ( String resource, Config config ) throws IOException,
                                                       ParseException,
                                                       InterruptedException {
-        return doXmlFetch( getConnection( resource ).getInputStream(), config );
+        return doXmlFetch( new GZIPInputStream(getConnection( resource ).getInputStream()), config );
     }
  
     // **** Getter and setters **************************************************

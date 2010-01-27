@@ -272,7 +272,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
 
                 else {
 
-                    Document doc = doXmlFetch( localInputStream, config );
+                    Document doc = doXmlFetch( is, config );
 
                     if ( doc != null ) {
                         result.setResults( xmlParse( doc, config ) );
