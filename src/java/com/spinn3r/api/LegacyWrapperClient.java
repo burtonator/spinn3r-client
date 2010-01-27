@@ -12,7 +12,7 @@ import org.w3c.dom.Document;
 public abstract class LegacyWrapperClient <ResultType extends BaseResult> extends BaseClient<ResultType> {
 
     private static int PARALLELISM        = 4;
-    private static int RESULT_BUFFER_SIZE = 10;
+    private static int RESULT_BUFFER_SIZE = 8;
 
     protected Config                       config        = null;
     private   BaseClientResult<ResultType> result        = null;
@@ -233,8 +233,16 @@ public abstract class LegacyWrapperClient <ResultType extends BaseResult> extend
     /**
      * Return a copy of the input streem
      */
-    public InputStream getInputStream() throws IOException {
-        return result.getInputStream();
+    public InputStream getInputStream( ) throws IOException {
+        return getInputStream( true );
+    }
+
+
+    /**
+     * Return a copy of the input streem
+     */
+    public InputStream getInputStream( boolean decompress ) throws IOException {
+        return result.getInputStream( decompress );
     }
        
 

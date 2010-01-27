@@ -160,7 +160,7 @@ public abstract class Config <ResultType> implements Cloneable {
 
 
     /**
-     * Get the falue of <code>disableParse</code>
+     * Get the value of <code>disableParse</code>
      */
     public boolean getDisableParse() {
         return this.disableParse;
@@ -168,7 +168,7 @@ public abstract class Config <ResultType> implements Cloneable {
 
 
     /**
-     * Set the falue of <code>disableParse</code>
+     * Set the value of <code>disableParse</code>
      */
     public void setDisableParse( boolean disableParse ) {
         this.disableParse = disableParse;

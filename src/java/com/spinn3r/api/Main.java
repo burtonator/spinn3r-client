@@ -138,6 +138,9 @@ public class Main {
     
     private static boolean csv = false;
     
+
+    private static boolean saveCompressed = true;
+
     /**
      * Sample performance times...
      */
@@ -489,7 +492,7 @@ public class Main {
                 
             } catch ( Exception e ) {
 
-                System.out.println( "Caught exception while processing API:  " + client.getLastRequestURL() );
+                System.out.println( "Caught exception while processing API:  " + client.getNextRequestURL() );
                 System.out.println( e.getMessage() );
                 System.out.println( "Retrying in " + RETRY_INTERVAL + "ms" );
 
@@ -576,7 +579,7 @@ public class Main {
                 
             }
 
-            if ( client.getIsCompressed() ) {
+            if ( client.getIsCompressed() && saveCompressed) {
                file = new File( file.getPath() + ".gz" ) ;
             }
 
@@ -585,7 +588,9 @@ public class Main {
             //swap in the new file, don't expose it until it's fully written.
             file = new File( file.getPath() + ".tmp" ) ;
 
-            InputStream is = client.getInputStream();
+            // getInputStream takes a flag indecating if we want compressed
+            // data or not. So if want to save compressed don't decompress
+            InputStream is = client.getInputStream( !saveCompressed );
 
             FileOutputStream os = new FileOutputStream( file );
 
@@ -821,8 +826,13 @@ public class Main {
                 continue;
             }
 
-           if ( v.startsWith( "--skip_description=" ) ) {
+            if ( v.startsWith( "--skip_description=" ) ) {
                config.setSkipDescription( Boolean.parseBoolean( getOpt( v ) ) );
+                continue;
+            }
+
+            if ( v.startsWith( "--save_compressed=" ) ) {
+                saveCompressed = Boolean.parseBoolean( getOpt( v ) );
                 continue;
             }
 
