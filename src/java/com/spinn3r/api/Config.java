@@ -27,7 +27,7 @@ import com.spinn3r.api.protobuf.ContentApi;
  * Used to startup the API and specify defaults for limits, where to start
  * indexing, tiers, language, etc.
  */
-public abstract class Config <ResultType> {
+public abstract class Config <ResultType> implements Cloneable {
 
     /**
      * Default hostname for building the router URL.  This can be changed to
@@ -87,6 +87,23 @@ public abstract class Config <ResultType> {
 
     abstract public ResultType createResultObject ( Element          current ) throws ParseException;
 
+
+    public Config<ResultType> clone () {
+
+        Config<ResultType> res;
+
+        try {
+            res = (Config<ResultType>)super.clone();
+        }
+
+        catch ( CloneNotSupportedException e ) {
+            throw new UnsupportedOperationException ( e );
+        }
+
+        return res;
+    }
+
+
     /**
      * Get the host for this request
      */
@@ -143,7 +160,7 @@ public abstract class Config <ResultType> {
 
 
     /**
-     * Get the falue of <code>disableParse</code>
+     * Get the value of <code>disableParse</code>
      */
     public boolean getDisableParse() {
         return this.disableParse;
@@ -151,7 +168,7 @@ public abstract class Config <ResultType> {
 
 
     /**
-     * Set the falue of <code>disableParse</code>
+     * Set the value of <code>disableParse</code>
      */
     public void setDisableParse( boolean disableParse ) {
         this.disableParse = disableParse;
