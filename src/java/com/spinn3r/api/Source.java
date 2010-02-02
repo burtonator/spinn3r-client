@@ -16,6 +16,7 @@
 
 package com.spinn3r.api;
 
+import java.text.ParseException;
 import java.util.*;
 import java.io.*;
 import java.net.*;
@@ -82,6 +83,8 @@ public class Source extends BaseItem {
         publisherType             = source.getPublisherType();
         dateFound                 = ISO8601DateParser.parse( source.getDateFound() );
         spamProbability           = source.getSpamProbability();
+        // TODO: Is this the correct field?
+        pubDate = published       = ISO8601DateParser.parse( source.getLastPublished());
         
     }
 
@@ -110,6 +113,11 @@ public class Source extends BaseItem {
                                                 -0.0f );
 
         publisherType             = getElementCDATAByTagName( e, "publisher_type",                            NS_SOURCE );
+        try {
+			pubDate = published 	  = RFC822DateParser.parse(getElementCDATAByTagName(e, "pubDate"));
+		} catch (ParseException e1) {
+			// Ignore exception
+		}
 
     }
     

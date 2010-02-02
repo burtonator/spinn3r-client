@@ -20,15 +20,14 @@
 
 package com.spinn3r.api;
 
-import java.util.zip.*;
 import java.io.File;
-import java.io.InputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import com.spinn3r.api.protobuf.*;
+import com.spinn3r.api.protobuf.ContentApi;
 import com.spinn3r.api.util.CompressedBLOB;
+import com.spinn3r.api.util.CompressedBlob2;
 
 
 
@@ -77,11 +76,20 @@ public class DiskReader {
 
 
     public static String readContent ( ContentApi.Content content ) throws Exception {
+    	
+    	// If the content has an encoding field, assume the byte array is encoded using 
+    	// the scheme specified in that field. Otherwise, assume that the first two bytes
+    	// of the stream is a magic number that specified the encoding scheme
+    	if(content.hasEncoding()) 
+    	{
+    		return new CompressedBlob2(content.getData().toByteArray(), content.getEncoding()).decompress();
+    	}
+    	else 
+    	{
+    		CompressedBLOB content_blob = new CompressedBLOB ( content.getData().toByteArray());
 
-        CompressedBLOB content_blob =
-            new CompressedBLOB ( content.getData().toByteArray() );
-
-        return content_blob.decompress();
+    		return content_blob.decompress();
+    	}
     }
 
 
