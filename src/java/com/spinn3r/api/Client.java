@@ -52,6 +52,8 @@ public interface Client<T> {
 
     public InputStream getInputStream() throws IOException;
 
+    public InputStream getInputStream( boolean decompress ) throws IOException;
+
     public Date getRestartPoint();
 
     public long getParseDuration();
