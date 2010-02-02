@@ -17,14 +17,22 @@
 package com.spinn3r.api;
 
 
-import java.io.IOException;
+import static com.spinn3r.api.XMLUtils.NS_ATOM;
+import static com.spinn3r.api.XMLUtils.NS_DC;
+import static com.spinn3r.api.XMLUtils.NS_FEED;
+import static com.spinn3r.api.XMLUtils.NS_POST;
+import static com.spinn3r.api.XMLUtils.NS_SOURCE;
+import static com.spinn3r.api.XMLUtils.NS_WEBLOG;
+import static com.spinn3r.api.XMLUtils.empty;
+import static com.spinn3r.api.XMLUtils.getElementByTagName;
+import static com.spinn3r.api.XMLUtils.getElementCDATAByTagName;
+import static com.spinn3r.api.XMLUtils.parseTags;
 
 import org.w3c.dom.Element;
 
 import com.spinn3r.api.protobuf.ContentApi;
 import com.spinn3r.api.util.CompressedBLOB;
-
-import static com.spinn3r.api.XMLUtils.*;
+import com.spinn3r.api.util.CompressedBlob2;
 
 /**
  * Represents a single item returned from the API.
@@ -174,10 +182,21 @@ public class PermalinkItem extends BaseItem {
             if ( ! empty( permalink_entry.getTitle() ) )
                 setTitle( permalink_entry.getTitle() );
 
-            CompressedBLOB content_blob =
-                new CompressedBLOB ( permalink_entry.getContent().getData().toByteArray() );
+            String content; 
+            if(permalink_entry.getContent().hasEncoding())
+            {
+            	CompressedBlob2 content_blob =
+            		new CompressedBlob2 ( permalink_entry.getContent().getData().toByteArray(),
+            				permalink_entry.getContent().getEncoding());
+            	content = content_blob.decompress();
+            }
+            else
+            {
+            	CompressedBLOB content_blob =
+            		new CompressedBLOB ( permalink_entry.getContent().getData().toByteArray());
+            	content = content_blob.decompress();
+            }
 
-            String content = content_blob.decompress();
         
             if ( ! empty(  content ) )
                 setDescription( content );
@@ -239,10 +258,21 @@ public class PermalinkItem extends BaseItem {
 
             // Spinn3r 2.1 post content.
 
-            CompressedBLOB content_extract_blob =
-                new CompressedBLOB ( permalink_entry.getContentExtract().getData().toByteArray() );
-
-            String content_extract = content_extract_blob.decompress();
+            String content_extract; 
+            ContentApi.Content extract = permalink_entry.getContentExtract();
+            if(extract.hasEncoding())
+            {
+            	CompressedBlob2 content_blob =
+            		new CompressedBlob2 (extract.getData().toByteArray(),
+            				extract.getEncoding());
+            	content_extract = content_blob.decompress();
+            }
+            else
+            {
+            	CompressedBLOB content_blob =
+            		new CompressedBLOB ( extract.getData().toByteArray());
+            	content_extract = content_blob.decompress();
+            }
 
             if ( ! empty( content_extract ) )
                 setContentExtract( content_extract );
@@ -261,11 +291,23 @@ public class PermalinkItem extends BaseItem {
 
             if ( ! empty( feed_entry.getTitle() ) )
                 setPostTitle( feed_entry.getTitle() );
-
-            CompressedBLOB feed_entry_content_blob =
-                new CompressedBLOB ( feed_entry.getContent().getData().toByteArray() );
-
-            String feed_entry_content = feed_entry_content_blob.decompress();
+            
+            
+            String feed_entry_content = ""; 
+            ContentApi.Content feed_content = feed_entry.getContent();
+            if(feed_content.hasEncoding())
+            {
+            	CompressedBlob2 content_blob =
+            		new CompressedBlob2 (feed_content.getData().toByteArray(),
+            				feed_content.getEncoding());
+            	content_extract = content_blob.decompress();
+            }
+            else
+            {
+            	CompressedBLOB content_blob =
+            		new CompressedBLOB ( feed_content.getData().toByteArray());
+            	content_extract = content_blob.decompress();
+            }
         
             if ( ! empty( feed_entry_content ) ) {
                 setPostBody ( feed_entry_content );

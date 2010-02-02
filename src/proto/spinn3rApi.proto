@@ -30,6 +30,13 @@ message Lang {
 message Content {
   required string mime_type = 1;
   optional bytes  data      = 2;
+  enum Encoding {
+  	UNKNWON = 0;
+  	UTF_8 = 1;
+  	BASE64_ZLIB = 2;
+  	ZLIB = 4;
+  }
+  optional Encoding encoding  = 3;
 }
 
 message Author {
