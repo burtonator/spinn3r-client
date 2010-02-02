@@ -1,0 +1,69 @@
+#!/bin/sh
+
+NEW_CLASSPATH=$(find target -name "*.jar" -exec echo -n "{}": ";")
+NEW_CLASSPATH=$NEW_CLASSPATH:$(find lib -name "*.jar" -exec echo -n "{}": ";")
+
+ulimit -n 1000000 2> /dev/null
+
+CLASSNAME=$1
+
+if [ "$CLASSNAME" = "" ]; then
+    CLASSNAME="ksa.test.Test"
+fi
+
+if [ "$JAVA_HOME" = "" ]; then
+
+    if [ -d "/usr/local/java/jdk-LATEST" ]; then
+        export JAVA_HOME=/usr/local/java/jdk-LATEST
+    elif [ -d "/usr/local/jdk" ]; then
+        export JAVA_HOME=/opt/jdk
+    elif [ -d "/opt/jdk" ]; then
+        export JAVA_HOME=/opt/jdk
+    fi
+
+fi
+
+NEW_CLASSPATH="$JAVA_HOME/lib/tools.jar:./compile:./compile/classes:$NEW_CLASSPATH:"
+
+if [ -o "$BE_QUIET" ]; then
+  set -bx
+fi
+
+echo $2
+
+export CLASSPATH=$NEW_CLASSPATH
+
+# FIXME: Fri Jun 09 2006 10:22 PM (burton@tailrank.com): for some reason bash
+# has problem passing arguments with spaces.  I've never really been able to
+# figure this out.  Is it possible to roll these up into an array and then pass
+# the array?
+
+if [ "$JAVA" = "" ]; then
+    #use the default Java VM.
+    JAVA=java
+fi
+
+if [ "$1" != "" ]; then
+
+    shift
+    set -x
+    exec $JAVA -Djava.awt.headless=true \
+               -Xms32M -Xmx768M \
+               $JAVA_OPTS \
+               $CLASSNAME $@
+
+else
+
+    set -x
+    exec $JAVA -Djava.awt.headless=true \
+               -Xms32M -Xmx768M \
+               $JAVA_OPTS \
+               $CLASSNAME 
+
+fi
+
+result=$?
+
+set +bx
+
+exit $result
