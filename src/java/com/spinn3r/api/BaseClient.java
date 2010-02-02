@@ -144,7 +144,18 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
                                               ParseException,
                                               InterruptedException {
 
-        BaseClientResult<ResultType> res;
+        PartailBaseClientResult<ResultType> partial_result = partialFetch( config );
+        BaseClientResult<ResultType>        result         = compleatFetch( partial_result );
+        
+        return result;
+    }
+
+
+    public PartailBaseClientResult<ResultType> partialFetch( Config<ResultType> config ) throws IOException,
+                                              ParseException,
+                                              InterruptedException {
+
+        PartailBaseClientResult<ResultType> res;
 
         int retry_ctr = 0;
         int limit     = getLimit( config );
@@ -157,7 +168,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
                 if ( retry_ctr > 0 )
                     limit = config.getConservativeLimit();
                 
-                res = doFetch( config, limit );
+                res = startFetch( config, limit );
                 
                 break;
                 
@@ -196,11 +207,10 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
      * @throws IOException if there's an error with network transport.
      * @throws ParserException if there's a problem parsing the resulting XML.
      */
-    private BaseClientResult<ResultType> doFetch( Config<ResultType> config, int request_limit ) throws IOException,
-                                                 ParseException,
+    private PartailBaseClientResult<ResultType> startFetch( Config<ResultType> config, int request_limit ) throws IOException,
                                                  InterruptedException {
 
-        BaseClientResult<ResultType> result = new BaseClientResult<ResultType> ( config );
+        PartailBaseClientResult<ResultType> result = new PartailBaseClientResult<ResultType> ( config );
 
         if ( config.getVendor() == null )
             throw new RuntimeException( "Vendor not specified" );
@@ -235,15 +245,57 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         result.setLastRequestURL( resource );
         result.setRequestLimit( request_limit );
 
+
+        long before = System.currentTimeMillis();
+
+        long call_before = System.currentTimeMillis();
+
+        URLConnection conn = getConnection( resource );
+
+        result.setConnection( conn );
+
+        setMoreRsults( conn, result );
+
+        result.setNextRequestURL( conn.getHeaderField( "X-Next-Request-URL" ) );            
+
+        return result;
+    }
+
+    /**
+     * Fetch the API with the given FeedConfig
+     * 
+     * @throws IOException if there's an error with network transport.
+     * @throws ParserException if there's a problem parsing the resulting XML.
+     */
+    public BaseClientResult<ResultType> compleatFetch( PartailBaseClientResult<ResultType> partial_result ) throws IOException,
+                                                 ParseException,
+                                                 InterruptedException {
+
+        Config<ResultType> config             = partial_result.getConfig();
+        int                request_limit      = partial_result.getRequestLimit();
+        String             resource           = partial_result.getLastRequestURL();
+        boolean            has_results_header = partial_result.getHasMoreResultsHeadder();
+        boolean            has_more_results   = partial_result.getHasMoreResults();
+        String             next_request       = partial_result.getNextRequestURL();
+        
+        BaseClientResult<ResultType> result = new BaseClientResult<ResultType> ( config );
+
+
+
+        result.setLastRequestURL( resource );
+        result.setRequestLimit( request_limit );
+        result.setHasMoreResultsHeadder( has_results_header );
+        result.setHasMoreResults( has_more_results );
+        result.setNextRequestURL( next_request );
+
+
         try {
 
             long before = System.currentTimeMillis();
 
             long call_before = System.currentTimeMillis();
 
-            URLConnection conn = getConnection( resource );
-
-            setMoreRsults( conn, result );
+            URLConnection conn = partial_result.getConnection();
 
             //TODO: clean up the naming here.  getLocalInputStream actually
             //reads everything into a byte array in memory.
@@ -262,7 +314,6 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
 
             result.setCallDuration( call_after - call_before );
 
-            result.setNextRequestURL( conn.getHeaderField( "X-Next-Request-URL" ) );
 
             if ( ! config.getDisableParse() ) {
 
@@ -297,6 +348,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         return result;
     }
 
+
     protected URLConnection getConnection ( String resource ) throws IOException {
 
         URLConnection conn = null;
@@ -328,7 +380,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         return conn;
     }
 
-    private void setMoreRsults( URLConnection conn, BaseClientResult<ResultType> result ) {
+    private void setMoreRsults( URLConnection conn, PartailBaseClientResult<ResultType> result ) {
 
         String more = conn.getHeaderField( X_MORE_RESULTS );
 
