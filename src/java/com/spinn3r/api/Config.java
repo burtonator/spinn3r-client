@@ -51,7 +51,7 @@ public abstract class Config <ResultType> implements Cloneable {
     /**
      * When fetching the API this specifies the default version to return.
      */
-    public static String   DEFAULT_VERSION     = "3.1.69";
+    public static String   DEFAULT_VERSION     = "3.2.00";
 
     /**
      * Default value for useProtobuf.
