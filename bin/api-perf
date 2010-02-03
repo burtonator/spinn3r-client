@@ -1,0 +1,85 @@
+#!/bin/bash
+
+###
+#
+# Run the spinn3r API for a given time inteval, and benchmark the performance.
+#
+# 
+# 
+# The best way to set this up is to put a spinn3r-api-perf script in
+# /etc/cron.daily with the following:
+#
+# cd /usr/local/spinn3r-client
+#
+# ./bin/api-perf spinn3r-perf-feed3 feed3
+# ./bin/api-perf spinn3r-perf-permalink3 permalink3
+
+vendor=$1
+api=$2
+
+if [[ $api == "" || $vendor == "" ]] ; then 
+    echo "$0 vendor api"
+    exit 1
+fi
+
+## shift away the vendor and API
+shift 2
+
+# process the remaining command line args.
+while [[ $1 ]] 
+do
+
+    if [[ $1 =~ '^--([^=]+)(=([^=]+))?' ]]; then
+
+        name=${BASH_REMATCH[1]}
+        value=${BASH_REMATCH[3]}
+
+        if [ "$value" = "" ]; then
+            value=true
+        fi
+        
+        export $name=$value
+
+    fi
+    
+    shift
+    
+done
+
+if [[ $interval = "" ]]; then
+    interval=$(expr 6 \* 60 \* 60 \* 1000)
+fi
+
+if [[ $offset = "" ]]; then
+    offset=$(expr 20 \* 60 \* 1000)
+fi
+
+now=$(date +%s)
+now=$(expr $now \* 1000)
+
+before=$(expr $now - $offset)
+after=$(expr $before - $interval)
+
+# find the .jar
+
+jar=""
+
+if [[ $jar = "" ]]; then
+    jar=$(ls -1 spinn3r-client-*.jar 2> /dev/null | sort |tail -1)
+fi
+
+if [[ $jar = "" ]]; then
+    jar=$(ls -1 ./target/spinn3r-client-*.jar 2> /dev/null | sort |tail -1)
+fi
+
+if [[ $jar = "" ]]; then
+    jar=$(ls -1 ./lib/spinn3r-client-*.jar 2> /dev/null | sort |tail -1)
+fi
+
+time java -Xmx512M \
+          -jar $jar \
+          --vendor=$vendor \
+          --api=$api \
+          --before=$before \
+          --after=$after \
+          --show_results=0
