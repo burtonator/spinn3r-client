@@ -22,21 +22,33 @@
 
 package com.spinn3r.api;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import java.util.zip.*;
+import static com.spinn3r.api.XMLUtils.getElementByTagName;
 
-import javax.xml.parsers.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import org.w3c.dom.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
-import com.spinn3r.api.protobuf.*;
-import com.spinn3r.api.util.CompressedBLOB;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+import sun.tools.jstat.ParserException;
 
 import com.google.protobuf.CodedInputStream;
-
-import static com.spinn3r.api.XMLUtils.*;
+import com.spinn3r.api.protobuf.ContentApi;
+import com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader;
 
 /**
  * Generic client support used which need to be in all APIs.
@@ -267,7 +279,10 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
             if ( ! config.getDisableParse() ) {
 
                 if ( config.getUseProtobuf() ) {
-                    result.setResults( protobufParse( doProtobufFetch( localInputStream, config ), config ) );
+                	if(config.getVersion().compareTo("3.2.00") >= 0 )
+                		result.setResults(protobufParse( doProtoStreamFetch(localInputStream, config), config));
+                	else
+                		result.setResults( protobufParse( doProtobufFetch( localInputStream, config ), config ) );
                 } 
 
                 else {
@@ -358,6 +373,31 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
 
         return limit;
         
+    }
+    
+    public List<ContentApi.Entry> doProtoStreamFetch(InputStream inputStream, Config config) throws IOException
+    {
+    	CodedInputStream cis = CodedInputStream.newInstance( inputStream );
+        cis.setSizeLimit( PROTOBUF_SIZE_LIMIT );
+        
+    	List<ContentApi.Entry> entries;
+    	int size, numberOfEntries;;
+
+    	
+    	size = ByteBuffer.wrap(cis.readRawBytes(4)).getInt();
+    	
+    	ProtoStreamHeader header = ProtoStreamHeader.parseFrom(cis.readRawBytes(size));
+    	numberOfEntries = header.getNumberEntries();
+    	entries = new ArrayList<ContentApi.Entry>(numberOfEntries);
+    	
+    	for(int i = 0; i < numberOfEntries; i++)
+    	{
+    		byte[] data = cis.readRawBytes(4);
+    		size = ByteBuffer.wrap(data).getInt();
+        	entries.add(ContentApi.Entry.parseFrom(cis.readRawBytes(size)));
+    	}
+    	
+    	return entries;
     }
 
     public ContentApi.Response doProtobufFetch( InputStream inputStream, Config config ) throws IOException, InterruptedException {
@@ -486,14 +526,19 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
      */
     protected List<ResultType> protobufParse( ContentApi.Response response, Config<ResultType> config ) throws Exception {
 
-        List<ResultType> result = new ArrayList<ResultType>();
+        return protobufParse(response.getEntryList(), config);
+        
+    }
+    
+    protected List<ResultType> protobufParse(List<ContentApi.Entry> entries, Config<ResultType> config) throws Exception {
+    	
+    	List<ResultType> result = new ArrayList<ResultType>();
 
-        for ( ContentApi.Entry entry : response.getEntryList() ) {
+        for ( ContentApi.Entry entry : entries ) {
             result.add( config.createResultObject( entry ) );
         }
 
         return result;
-        
     }
 
     /**

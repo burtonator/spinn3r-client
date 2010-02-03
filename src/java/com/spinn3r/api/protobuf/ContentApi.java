@@ -8438,6 +8438,460 @@ public final class ContentApi {
     // @@protoc_insertion_point(class_scope:contentApi.Response)
   }
   
+  public static final class ProtoStreamHeader extends
+      com.google.protobuf.GeneratedMessage {
+    // Use ProtoStreamHeader.newBuilder() to construct.
+    private ProtoStreamHeader() {
+      initFields();
+    }
+    private ProtoStreamHeader(boolean noInit) {}
+    
+    private static final ProtoStreamHeader defaultInstance;
+    public static ProtoStreamHeader getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public ProtoStreamHeader getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.spinn3r.api.protobuf.ContentApi.internal_static_contentApi_ProtoStreamHeader_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.spinn3r.api.protobuf.ContentApi.internal_static_contentApi_ProtoStreamHeader_fieldAccessorTable;
+    }
+    
+    // required string version = 1;
+    public static final int VERSION_FIELD_NUMBER = 1;
+    private boolean hasVersion;
+    private java.lang.String version_ = "";
+    public boolean hasVersion() { return hasVersion; }
+    public java.lang.String getVersion() { return version_; }
+    
+    // optional string request_url = 2;
+    public static final int REQUEST_URL_FIELD_NUMBER = 2;
+    private boolean hasRequestUrl;
+    private java.lang.String requestUrl_ = "";
+    public boolean hasRequestUrl() { return hasRequestUrl; }
+    public java.lang.String getRequestUrl() { return requestUrl_; }
+    
+    // optional string previous_request_url = 3;
+    public static final int PREVIOUS_REQUEST_URL_FIELD_NUMBER = 3;
+    private boolean hasPreviousRequestUrl;
+    private java.lang.String previousRequestUrl_ = "";
+    public boolean hasPreviousRequestUrl() { return hasPreviousRequestUrl; }
+    public java.lang.String getPreviousRequestUrl() { return previousRequestUrl_; }
+    
+    // optional string next_request_url = 4;
+    public static final int NEXT_REQUEST_URL_FIELD_NUMBER = 4;
+    private boolean hasNextRequestUrl;
+    private java.lang.String nextRequestUrl_ = "";
+    public boolean hasNextRequestUrl() { return hasNextRequestUrl; }
+    public java.lang.String getNextRequestUrl() { return nextRequestUrl_; }
+    
+    // required int32 number_entries = 5;
+    public static final int NUMBER_ENTRIES_FIELD_NUMBER = 5;
+    private boolean hasNumberEntries;
+    private int numberEntries_ = 0;
+    public boolean hasNumberEntries() { return hasNumberEntries; }
+    public int getNumberEntries() { return numberEntries_; }
+    
+    private void initFields() {
+    }
+    public final boolean isInitialized() {
+      if (!hasVersion) return false;
+      if (!hasNumberEntries) return false;
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (hasVersion()) {
+        output.writeString(1, getVersion());
+      }
+      if (hasRequestUrl()) {
+        output.writeString(2, getRequestUrl());
+      }
+      if (hasPreviousRequestUrl()) {
+        output.writeString(3, getPreviousRequestUrl());
+      }
+      if (hasNextRequestUrl()) {
+        output.writeString(4, getNextRequestUrl());
+      }
+      if (hasNumberEntries()) {
+        output.writeInt32(5, getNumberEntries());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasVersion()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(1, getVersion());
+      }
+      if (hasRequestUrl()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(2, getRequestUrl());
+      }
+      if (hasPreviousRequestUrl()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(3, getPreviousRequestUrl());
+      }
+      if (hasNextRequestUrl()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(4, getNextRequestUrl());
+      }
+      if (hasNumberEntries()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, getNumberEntries());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader result;
+      
+      // Construct using com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader();
+        return builder;
+      }
+      
+      protected com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader.getDescriptor();
+      }
+      
+      public com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader getDefaultInstanceForType() {
+        return com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader) {
+          return mergeFrom((com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader other) {
+        if (other == com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader.getDefaultInstance()) return this;
+        if (other.hasVersion()) {
+          setVersion(other.getVersion());
+        }
+        if (other.hasRequestUrl()) {
+          setRequestUrl(other.getRequestUrl());
+        }
+        if (other.hasPreviousRequestUrl()) {
+          setPreviousRequestUrl(other.getPreviousRequestUrl());
+        }
+        if (other.hasNextRequestUrl()) {
+          setNextRequestUrl(other.getNextRequestUrl());
+        }
+        if (other.hasNumberEntries()) {
+          setNumberEntries(other.getNumberEntries());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              setVersion(input.readString());
+              break;
+            }
+            case 18: {
+              setRequestUrl(input.readString());
+              break;
+            }
+            case 26: {
+              setPreviousRequestUrl(input.readString());
+              break;
+            }
+            case 34: {
+              setNextRequestUrl(input.readString());
+              break;
+            }
+            case 40: {
+              setNumberEntries(input.readInt32());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // required string version = 1;
+      public boolean hasVersion() {
+        return result.hasVersion();
+      }
+      public java.lang.String getVersion() {
+        return result.getVersion();
+      }
+      public Builder setVersion(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasVersion = true;
+        result.version_ = value;
+        return this;
+      }
+      public Builder clearVersion() {
+        result.hasVersion = false;
+        result.version_ = getDefaultInstance().getVersion();
+        return this;
+      }
+      
+      // optional string request_url = 2;
+      public boolean hasRequestUrl() {
+        return result.hasRequestUrl();
+      }
+      public java.lang.String getRequestUrl() {
+        return result.getRequestUrl();
+      }
+      public Builder setRequestUrl(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasRequestUrl = true;
+        result.requestUrl_ = value;
+        return this;
+      }
+      public Builder clearRequestUrl() {
+        result.hasRequestUrl = false;
+        result.requestUrl_ = getDefaultInstance().getRequestUrl();
+        return this;
+      }
+      
+      // optional string previous_request_url = 3;
+      public boolean hasPreviousRequestUrl() {
+        return result.hasPreviousRequestUrl();
+      }
+      public java.lang.String getPreviousRequestUrl() {
+        return result.getPreviousRequestUrl();
+      }
+      public Builder setPreviousRequestUrl(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasPreviousRequestUrl = true;
+        result.previousRequestUrl_ = value;
+        return this;
+      }
+      public Builder clearPreviousRequestUrl() {
+        result.hasPreviousRequestUrl = false;
+        result.previousRequestUrl_ = getDefaultInstance().getPreviousRequestUrl();
+        return this;
+      }
+      
+      // optional string next_request_url = 4;
+      public boolean hasNextRequestUrl() {
+        return result.hasNextRequestUrl();
+      }
+      public java.lang.String getNextRequestUrl() {
+        return result.getNextRequestUrl();
+      }
+      public Builder setNextRequestUrl(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasNextRequestUrl = true;
+        result.nextRequestUrl_ = value;
+        return this;
+      }
+      public Builder clearNextRequestUrl() {
+        result.hasNextRequestUrl = false;
+        result.nextRequestUrl_ = getDefaultInstance().getNextRequestUrl();
+        return this;
+      }
+      
+      // required int32 number_entries = 5;
+      public boolean hasNumberEntries() {
+        return result.hasNumberEntries();
+      }
+      public int getNumberEntries() {
+        return result.getNumberEntries();
+      }
+      public Builder setNumberEntries(int value) {
+        result.hasNumberEntries = true;
+        result.numberEntries_ = value;
+        return this;
+      }
+      public Builder clearNumberEntries() {
+        result.hasNumberEntries = false;
+        result.numberEntries_ = 0;
+        return this;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:contentApi.ProtoStreamHeader)
+    }
+    
+    static {
+      defaultInstance = new ProtoStreamHeader(true);
+      com.spinn3r.api.protobuf.ContentApi.internalForceInit();
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:contentApi.ProtoStreamHeader)
+  }
+  
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_contentApi_Link_descriptor;
   private static
@@ -8498,6 +8952,11 @@ public final class ContentApi {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_contentApi_Response_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_contentApi_ProtoStreamHeader_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_contentApi_ProtoStreamHeader_fieldAccessorTable;
   
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -8579,8 +9038,11 @@ public final class ContentApi {
       "pi.CrawlEntry\"y\n\010Response\022\023\n\013request_url",
       "\030\001 \001(\t\022\034\n\024previous_request_url\030\002 \001(\t\022\030\n\020" +
       "next_request_url\030\003 \001(\t\022 \n\005entry\030\004 \003(\0132\021." +
-      "contentApi.EntryB&\n\030com.spinn3r.api.prot" +
-      "obufB\nContentApi"
+      "contentApi.Entry\"\211\001\n\021ProtoStreamHeader\022\017" +
+      "\n\007version\030\001 \002(\t\022\023\n\013request_url\030\002 \001(\t\022\034\n\024" +
+      "previous_request_url\030\003 \001(\t\022\030\n\020next_reque" +
+      "st_url\030\004 \001(\t\022\026\n\016number_entries\030\005 \002(\005B&\n\030" +
+      "com.spinn3r.api.protobufB\nContentApi"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -8683,6 +9145,14 @@ public final class ContentApi {
               new java.lang.String[] { "RequestUrl", "PreviousRequestUrl", "NextRequestUrl", "Entry", },
               com.spinn3r.api.protobuf.ContentApi.Response.class,
               com.spinn3r.api.protobuf.ContentApi.Response.Builder.class);
+          internal_static_contentApi_ProtoStreamHeader_descriptor =
+            getDescriptor().getMessageTypes().get(12);
+          internal_static_contentApi_ProtoStreamHeader_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_contentApi_ProtoStreamHeader_descriptor,
+              new java.lang.String[] { "Version", "RequestUrl", "PreviousRequestUrl", "NextRequestUrl", "NumberEntries", },
+              com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader.class,
+              com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader.Builder.class);
           return null;
         }
       };
