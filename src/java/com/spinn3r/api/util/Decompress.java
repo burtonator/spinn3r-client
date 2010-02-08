@@ -1,11 +1,13 @@
-
 package com.spinn3r.api.util;
 
-import java.io.*;
-import java.util.zip.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.IOException;
 
-import com.jcraft.jzlib.*;
+import java.util.zip.InflaterInputStream;
 
+import com.spinn3r.api.protobuf.ContentApi;
 
 /**
  * Facade which allows us to compress and decompress text easily and efficiently
@@ -16,18 +18,18 @@ import com.jcraft.jzlib.*;
  */
 public class Decompress {
 
-	public static int BUFFER_SIZE = 4096;
-
-	public static int DECOMPRESSION_RATIO = 5;
-    
-	public static String ENCODING = "UTF-8";
+	private static int    BUFFER_SIZE         = 4096;
+	private static int    DECOMPRESSION_RATIO = 5;
+	private static String ENCODING            = "UTF-8";
 
 	/**
      * Given the binary data, determine the external form, correctly parse it
      * and return the value as a String.
      */
-    public static String decompress(byte[] b) throws Exception {
+    public static String getContentAsString ( ContentApi.Content content ) throws IOException {
 
+
+        byte[] b = content.getData().toByteArray();
 
         // we don't have ANYTHING to decompress so don't do any work becuase we
         // would just throw an exception.
@@ -72,9 +74,9 @@ public class Decompress {
     /**
 	 * Get the correct stream from the correctly underlying compression library.
 	 */
-   public static InputStream getCompressedInputStream( InputStream is ) {
+    private static InputStream getCompressedInputStream( InputStream is ) throws IOException {
 
-		return new ZInputStream( is );
+		return new InflaterInputStream( is );
 
    }
 }

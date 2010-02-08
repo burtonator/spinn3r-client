@@ -49,7 +49,9 @@ public class ProtoContentDump {
 
         for ( ContentApi.Entry entry : response.getEntryList() ) {
 
-            String content = Decompress.decompress(entry.getPermalinkEntry().getContent().getData().toByteArray());
+            ContentApi.Content content_object = entry.getPermalinkEntry().getContent();
+
+            String content = Decompress.getContentAsString( content_object );
             String href    = entry.getPermalinkEntry().getCanonicalLink().getHref().toString();
 
             System.out.printf( "Link:%s\nContent:\n%s\n", href, content );
