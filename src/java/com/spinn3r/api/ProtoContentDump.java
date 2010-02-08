@@ -17,15 +17,14 @@
 
 package com.spinn3r.api;
 
-import com.spinn3r.api.protobuf.*;
+import com.spinn3r.api.protobuf.ContentApi;
 
-import java.util.*;
-import java.io.*;
-import java.util.regex.*;
+import java.io.File;
+import java.io.FileInputStream;
 
 import com.google.protobuf.CodedInputStream;
 
-import com.spinn3r.api.util.*;
+import com.spinn3r.api.util.Decompress;
 
 /**
  * Code to read a protobuff file off disk and print it out.
@@ -55,7 +54,6 @@ public class ProtoContentDump {
             String href    = entry.getPermalinkEntry().getCanonicalLink().getHref().toString();
 
             System.out.printf( "Link:%s\nContent:\n%s\n", href, content );
-
         }
 
 
