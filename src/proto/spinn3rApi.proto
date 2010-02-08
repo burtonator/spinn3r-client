@@ -184,6 +184,23 @@ message Response {
   repeated Entry  entry                = 4;
 }
 
+message ProtoStreamHeader {
+  required string version = 1;
+  optional string request_url = 2;
+  optional string previous_request_url = 3;
+  optional string next_request_url = 4;
+}
+
+message ProtoResultSetHeader {
+  required string version = 1;
+  required string queryID = 2;
+  required string resultSetID = 3;
+}
+
+message PullRequest {
+  
+}
+
 /**
  * 
  * lang: 

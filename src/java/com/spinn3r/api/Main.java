@@ -21,6 +21,7 @@ import java.util.*;
 import java.io.*;
 import java.util.regex.*;
 
+import com.spinn3r.api.Config.Format;
 import com.spinn3r.api.util.*;
 
 /**
@@ -539,7 +540,7 @@ public class Main {
             String extension = "xml";
 
             //do not use .xml if the user is using protobuffer encoding
-            if ( config.getUseProtobuf() ) 
+            if ( config.getFormat() == Format.PROTOBUF || config.getFormat() == Format.PROTOSTREAM) 
                 extension = "protobuf";
 
             if ( "hierarchical".equals( save_method ) ) {
@@ -851,6 +852,12 @@ public class Main {
             if ( v.startsWith( "--use_protobuf" ) ) {
                 config.setUseProtobuf( Boolean.parseBoolean( getOpt( v ) ) );
                 continue;
+            }
+            
+            if( v.startsWith("--use_protostream")) {
+            	if(Boolean.parseBoolean(getOpt(v)))
+            		config.setFormat(Format.PROTOSTREAM);
+            	continue;
             }
 
             if ( v.startsWith( "--dump_fields=" ) ) {

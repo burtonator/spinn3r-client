@@ -20,6 +20,14 @@
         </fileset>
 
     </path>
+	
+	<target name="compile-protobuf">
+	      <exec executable="protoc">
+	        <arg value="-I=src/proto/"/>
+	        <arg value="--java_out=src/java/"/>
+	        <arg value="src/proto/spinn3rApi.proto"/>
+	      </exec>
+	</target>
 
     <target name="compile">
 

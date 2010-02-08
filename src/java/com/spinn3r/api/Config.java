@@ -16,8 +16,11 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
 import java.net.URLEncoder;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Random;
+import java.util.TimeZone;
 
 import org.w3c.dom.Element;
 
@@ -53,11 +56,21 @@ public abstract class Config <ResultType> implements Cloneable {
      */
     public static String   DEFAULT_VERSION     = "3.2.00";
 
-    /**
-     * Default value for useProtobuf.
-     *
-     */
-    public static boolean DEFAULT_USE_PROTOBUF = false;
+
+    public static enum Format {
+    	RSS("rss"), PROTOBUF("protobuf"), PROTOSTREAM("protostream");
+    	
+    	private final String urlEntry;
+    	
+    	Format(String urlEntry) {
+    		this.urlEntry = urlEntry;
+    	}
+    	
+    	public String getURLEntry()
+    	{
+    		return urlEntry;
+    	}
+    }
     
     private String         filter              = null;
     private int            limit               = DEFAULT_LIMIT;
@@ -69,7 +82,7 @@ public abstract class Config <ResultType> implements Cloneable {
     private String         nextRequestURL      = null;
     private boolean        skipDescription     = false;
     private String         api                 = null;
-    private boolean        useProtobuf         = DEFAULT_USE_PROTOBUF;
+    private Format         format              = Format.RSS;
     private String         host                = DEFAULT_HOST;
     private boolean        disableParse        = false;
 
@@ -137,25 +150,59 @@ public abstract class Config <ResultType> implements Cloneable {
     public void setFilter( String filter ) { 
         this.filter = filter;
     }
+    
+    
+    /**
+     * Set the format for the server output
+     * 
+     * @param format
+     */
+    public void setFormat(Format format)
+    {
+    	this.format = format;
+    }
+    
+    /**
+     * Get the format of the server output
+     * 
+     * @return the format of the server output
+     */
+    public Format getFormat()
+    {
+    	return this.format; 
+    }
 
 
 
     /**
      * 
-     * Get the value of <code>useProtobuf</code>.
+     * Returns true if this configuration object is set to use protobuf.
+     * 
+     * @deprecated use getFormat instead
      *
      */
+    @Deprecated
     public boolean getUseProtobuf() { 
-        return this.useProtobuf;
+        return this.format == Format.PROTOBUF;
     }
 
     /**
      * 
      * Set the value of <code>useProtobuf</code>.
      *
+     * If <code>useProtobuf</code> is true, then get the
+     * response in the protobuf format. If <code>useProtobuf</code>
+     * is false, then get the reponse in rss format; 
+     * 
+     * @deprecated Use setFormat instead
+     * 
      */
+    @Deprecated
     public void setUseProtobuf( boolean useProtobuf ) { 
-        this.useProtobuf = useProtobuf;
+        if(useProtobuf)
+        	setFormat(Format.PROTOBUF);
+        else
+        	setFormat(Format.RSS);
     }
 
 

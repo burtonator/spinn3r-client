@@ -122,7 +122,7 @@ public class PermalinkEntryConfig extends Config<PermalinkItem> {
     @Override
     public String getRouter() {
         return String.format( "http://%s/%s/%s.entry?", getHost(), 
-        		this.getUseProtobuf() ? "protobuf" : "rss", "permalink3" );
+        		getFormat().getURLEntry(), "permalink3" );
     }
 
 
