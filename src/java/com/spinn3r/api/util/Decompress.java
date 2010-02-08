@@ -5,7 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.IOException;
 
-import java.util.zip.DeflaterInputStream;
+import java.util.zip.InflaterInputStream;
 
 import com.spinn3r.api.protobuf.ContentApi;
 
@@ -76,7 +76,7 @@ public class Decompress {
 	 */
     private static InputStream getCompressedInputStream( InputStream is ) throws IOException {
 
-		return new DeflaterInputStream( is );
+		return new InflaterInputStream( is );
 
    }
 }
