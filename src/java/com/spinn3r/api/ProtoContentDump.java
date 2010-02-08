@@ -53,8 +53,9 @@ public class ProtoContentDump {
                 new CompressedBLOB ( entry.getPermalinkEntry().getContent().getData().toByteArray() );
 
             String content = content_blob.decompress();
+            String href    = entry.getPermalinkEntry().getCanonicalLink().getHref().toString();
 
-            System.out.printf( "%s\n", content );
+            System.out.printf( "Link:%s\nContent:\n%s\n", href, content );
 
         }
 
