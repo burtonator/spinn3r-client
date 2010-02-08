@@ -21,6 +21,7 @@ import java.util.*;
 import java.io.*;
 import java.util.regex.*;
 
+import com.spinn3r.api.Config.Format;
 import com.spinn3r.api.util.*;
 
 /**
@@ -138,6 +139,9 @@ public class Main {
     
     private static boolean csv = false;
     
+
+    private static boolean saveCompressed = true;
+
     /**
      * Sample performance times...
      */
@@ -463,11 +467,13 @@ public class Main {
             config.setDisableParse( true );
         }
         
-        while( true ) {
+        client.setConfig( config );
 
+        while( true ) {
+            // BUG: this restart all the way from the first request URL each time!!!!!
             try {
 
-                results = doFetch( client, config );
+                results = doFetch( client );
 
                 System.out.println( "Found N results: " + results.size() );
 
@@ -478,7 +484,7 @@ public class Main {
                 if ( last == null )
                     continue;
                 
-                if ( range > 0 && last.getTime() > config.getAfter().getTime() + range )
+                if ( range > 0 && last.getTime() > client.getConfig().getAfter().getTime() + range )
                     break;
 
                 if ( before > 0 && last.getTime() >= before ) {
@@ -487,14 +493,14 @@ public class Main {
                 
             } catch ( Exception e ) {
 
-                System.out.println( "Caught exception while processing API:  " + client.getLastRequestURL() );
+                System.out.println( "Caught exception while processing API:  " + client.getNextRequestURL() );
                 System.out.println( e.getMessage() );
                 System.out.println( "Retrying in " + RETRY_INTERVAL + "ms" );
 
                 e.printStackTrace();
                 
                 Thread.sleep( RETRY_INTERVAL );
-                
+
             }
                 
         } 
@@ -504,14 +510,15 @@ public class Main {
     /**
      * Perform a fetch of the next API call.  
      */
-    private List<BaseResult> doFetch( BaseClient client, Config config ) throws Exception {
+    private List<BaseResult> doFetch( BaseClient client ) throws Exception {
 
         //fetch the most recent results.  This will block if necessary.
 
         fetch_before = System.currentTimeMillis();
         
-        client.setConfig( config );
         client.fetch();
+        
+        Config config = client.getConfig();
 
         fetch_after  = System.currentTimeMillis();
 
@@ -533,7 +540,7 @@ public class Main {
             String extension = "xml";
 
             //do not use .xml if the user is using protobuffer encoding
-            if ( config.getUseProtobuf() ) 
+            if ( config.getFormat() == Format.PROTOBUF || config.getFormat() == Format.PROTOSTREAM) 
                 extension = "protobuf";
 
             if ( "hierarchical".equals( save_method ) ) {
@@ -573,7 +580,7 @@ public class Main {
                 
             }
 
-            if ( client.getIsCompressed() ) {
+            if ( client.getIsCompressed() && saveCompressed) {
                file = new File( file.getPath() + ".gz" ) ;
             }
 
@@ -582,7 +589,9 @@ public class Main {
             //swap in the new file, don't expose it until it's fully written.
             file = new File( file.getPath() + ".tmp" ) ;
 
-            InputStream is = client.getInputStream();
+            // getInputStream takes a flag indecating if we want compressed
+            // data or not. So if want to save compressed don't decompress
+            InputStream is = client.getInputStream( !saveCompressed );
 
             FileOutputStream os = new FileOutputStream( file );
 
@@ -818,8 +827,13 @@ public class Main {
                 continue;
             }
 
-           if ( v.startsWith( "--skip_description=" ) ) {
+            if ( v.startsWith( "--skip_description=" ) ) {
                config.setSkipDescription( Boolean.parseBoolean( getOpt( v ) ) );
+                continue;
+            }
+
+            if ( v.startsWith( "--save_compressed=" ) ) {
+                saveCompressed = Boolean.parseBoolean( getOpt( v ) );
                 continue;
             }
 
@@ -838,6 +852,12 @@ public class Main {
             if ( v.startsWith( "--use_protobuf" ) ) {
                 config.setUseProtobuf( Boolean.parseBoolean( getOpt( v ) ) );
                 continue;
+            }
+            
+            if( v.startsWith("--use_protostream")) {
+            	if(Boolean.parseBoolean(getOpt(v)))
+            		config.setFormat(Format.PROTOSTREAM);
+            	continue;
             }
 
             if ( v.startsWith( "--dump_fields=" ) ) {

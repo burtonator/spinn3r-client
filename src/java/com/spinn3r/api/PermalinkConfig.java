@@ -69,13 +69,10 @@ public class PermalinkConfig extends Config<PermalinkItem> {
 
     @Override
     public String getRouter() {
-        
-        String format_string = "http://%s/rss/%s.getDelta?"; 
  
-        if ( getUseProtobuf() ) 
-            format_string = "http://%s/protobuf/%s.getDelta?";
        
-       String result = String.format( format_string, getHost(), BaseClient.PERMALINK_HANDLER );
+       String result = String.format( "http://%s/%s/%s.getDelta?", getHost(), getFormat().getURLEntry(),
+    		   BaseClient.PERMALINK_HANDLER );
 
        return result;
        

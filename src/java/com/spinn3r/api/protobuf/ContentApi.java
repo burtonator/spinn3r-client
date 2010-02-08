@@ -8493,18 +8493,10 @@ public final class ContentApi {
     public boolean hasNextRequestUrl() { return hasNextRequestUrl; }
     public java.lang.String getNextRequestUrl() { return nextRequestUrl_; }
     
-    // required int32 number_entries = 5;
-    public static final int NUMBER_ENTRIES_FIELD_NUMBER = 5;
-    private boolean hasNumberEntries;
-    private int numberEntries_ = 0;
-    public boolean hasNumberEntries() { return hasNumberEntries; }
-    public int getNumberEntries() { return numberEntries_; }
-    
     private void initFields() {
     }
     public final boolean isInitialized() {
       if (!hasVersion) return false;
-      if (!hasNumberEntries) return false;
       return true;
     }
     
@@ -8522,9 +8514,6 @@ public final class ContentApi {
       }
       if (hasNextRequestUrl()) {
         output.writeString(4, getNextRequestUrl());
-      }
-      if (hasNumberEntries()) {
-        output.writeInt32(5, getNumberEntries());
       }
       getUnknownFields().writeTo(output);
     }
@@ -8550,10 +8539,6 @@ public final class ContentApi {
       if (hasNextRequestUrl()) {
         size += com.google.protobuf.CodedOutputStream
           .computeStringSize(4, getNextRequestUrl());
-      }
-      if (hasNumberEntries()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(5, getNumberEntries());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -8725,9 +8710,6 @@ public final class ContentApi {
         if (other.hasNextRequestUrl()) {
           setNextRequestUrl(other.getNextRequestUrl());
         }
-        if (other.hasNumberEntries()) {
-          setNumberEntries(other.getNumberEntries());
-        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -8767,10 +8749,6 @@ public final class ContentApi {
             }
             case 34: {
               setNextRequestUrl(input.readString());
-              break;
-            }
-            case 40: {
-              setNumberEntries(input.readInt32());
               break;
             }
           }
@@ -8859,24 +8837,6 @@ public final class ContentApi {
       public Builder clearNextRequestUrl() {
         result.hasNextRequestUrl = false;
         result.nextRequestUrl_ = getDefaultInstance().getNextRequestUrl();
-        return this;
-      }
-      
-      // required int32 number_entries = 5;
-      public boolean hasNumberEntries() {
-        return result.hasNumberEntries();
-      }
-      public int getNumberEntries() {
-        return result.getNumberEntries();
-      }
-      public Builder setNumberEntries(int value) {
-        result.hasNumberEntries = true;
-        result.numberEntries_ = value;
-        return this;
-      }
-      public Builder clearNumberEntries() {
-        result.hasNumberEntries = false;
-        result.numberEntries_ = 0;
         return this;
       }
       
@@ -9038,11 +8998,11 @@ public final class ContentApi {
       "pi.CrawlEntry\"y\n\010Response\022\023\n\013request_url",
       "\030\001 \001(\t\022\034\n\024previous_request_url\030\002 \001(\t\022\030\n\020" +
       "next_request_url\030\003 \001(\t\022 \n\005entry\030\004 \003(\0132\021." +
-      "contentApi.Entry\"\211\001\n\021ProtoStreamHeader\022\017" +
-      "\n\007version\030\001 \002(\t\022\023\n\013request_url\030\002 \001(\t\022\034\n\024" +
-      "previous_request_url\030\003 \001(\t\022\030\n\020next_reque" +
-      "st_url\030\004 \001(\t\022\026\n\016number_entries\030\005 \002(\005B&\n\030" +
-      "com.spinn3r.api.protobufB\nContentApi"
+      "contentApi.Entry\"q\n\021ProtoStreamHeader\022\017\n" +
+      "\007version\030\001 \002(\t\022\023\n\013request_url\030\002 \001(\t\022\034\n\024p" +
+      "revious_request_url\030\003 \001(\t\022\030\n\020next_reques" +
+      "t_url\030\004 \001(\tB&\n\030com.spinn3r.api.protobufB" +
+      "\nContentApi"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -9150,7 +9110,7 @@ public final class ContentApi {
           internal_static_contentApi_ProtoStreamHeader_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_contentApi_ProtoStreamHeader_descriptor,
-              new java.lang.String[] { "Version", "RequestUrl", "PreviousRequestUrl", "NextRequestUrl", "NumberEntries", },
+              new java.lang.String[] { "Version", "RequestUrl", "PreviousRequestUrl", "NextRequestUrl", },
               com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader.class,
               com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader.Builder.class);
           return null;

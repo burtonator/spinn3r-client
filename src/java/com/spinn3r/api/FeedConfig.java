@@ -60,7 +60,7 @@ public class FeedConfig extends Config {
 
     @Override
     public String getRouter() {
-        return String.format( "http://%s/rss/%s.getDelta?", getHost(), BaseClient.FEED_HANDLER );
+        return String.format( "http://%s/%s/%s.getDelta?", getHost(), getFormat().toString(), BaseClient.FEED_HANDLER );
     }
 
 }

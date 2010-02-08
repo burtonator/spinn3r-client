@@ -65,6 +65,15 @@ public class BaseClientResult<ResultType> {
      * API multiple times and you're reading from a local buffer.
      */
     public InputStream getInputStream() throws IOException {
+        return getInputStream( true );
+    }
+
+    /**
+     * Get the InputStream for dealing with the XML of the API directly.  This
+     * is a LOCAL input stream so once fetch() has been called you can call this
+     * API multiple times and you're reading from a local buffer.
+     */
+    public InputStream getInputStream( boolean decompress ) throws IOException {
 
         InputStream is = getLocalInputStream();
 
@@ -82,7 +91,7 @@ public class BaseClientResult<ResultType> {
             //gzip magic number in its constructor.  If the magic number is
             //incorrect then it will throw an exception.
 
-            if ( getConfig().getDisableParse() == false ) {
+            if ( decompress ) {
 
                 try {
                     InputStream gz = new GZIPInputStream( is );

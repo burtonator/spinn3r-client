@@ -69,13 +69,8 @@ public class CrawlConfig extends Config<CrawlItem> {
 
     @Override
     public String getRouter() {
-        
-        String format_string = "http://%s/rss/%s.getDelta?"; 
- 
-        if ( getUseProtobuf() ) 
-            format_string = "http://%s/protobuf/%s.getDelta?";
        
-       String result = String.format( format_string, getHost(), "crawl3" );
+       String result = String.format( "http://%s/%s/%s.getDelta?", getHost(), getFormat().getURLEntry(), "crawl3" );
 
        return result;
        
