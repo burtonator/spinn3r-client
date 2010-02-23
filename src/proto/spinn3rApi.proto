@@ -112,7 +112,7 @@ message PermalinkEntry {
   optional string  last_published   = 9;
   optional string  date_found       = 10;
   optional int64   identifier       = 11;
-  optional Content content          = 12;
+  optional Content content          = 12; 
 
   optional Content content_extract  = 13;
   optional string  generator        = 14;
@@ -158,7 +158,7 @@ message FeedEntry {
   optional string  last_published   = 9;
   optional string  date_found       = 10;
   optional int64   identifier       = 11;
-  optional Content content          = 12;
+  optional Content content          = 12;  
 }
 
 message CommentEntry {
@@ -175,6 +175,9 @@ message Entry {
   optional PermalinkEntry permalink_entry = 4;
   optional CommentEntry   comment_entry   = 5;
   optional CrawlEntry     crawl_entry     = 6;
+  
+  optional Content		  content 		  = 7;
+  optional Content		  content_extract = 8;
 }
 
 message Response {
@@ -185,20 +188,11 @@ message Response {
 }
 
 message ProtoStreamHeader {
-  required string version = 1;
-  optional string request_url = 2;
-  optional string previous_request_url = 3;
-  optional string next_request_url = 4;
-}
-
-message ProtoResultSetHeader {
-  required string version = 1;
-  required string queryID = 2;
-  required string resultSetID = 3;
-}
-
-message PullRequest {
-  
+  required string version 		= 1;
+  required string requestId 	= 2;
+  required int32  item_count 	= 3;
+  optional string start_date 	= 4;
+  optional string end_date 		= 5;
 }
 
 /**

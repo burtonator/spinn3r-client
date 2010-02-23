@@ -138,7 +138,7 @@ public class FeedHistoryConfig extends Config {
 
     @Override
     public String getRouter() {
-        return String.format( "http://%s/rss/%s.history?", getHost(), BaseClient.FEED_HANDLER );
+        return String.format( "http://%s/%s/%s.history?", getHost(), getFormat().getURLEntry(), BaseClient.FEED_HANDLER );
     }
 
     /**
@@ -156,15 +156,15 @@ public class FeedHistoryConfig extends Config {
         addParam( params, "vendor",  getVendor() );
         addParam( params, "version", getVersion() );
 
-        addParam( params, "source",           URLEncoder.encode( getSource() ) , true );
-        addParam( params, "feed",             URLEncoder.encode( getFeed() ) , true );
-        addParam( params, "feed_hashcode",    getFeedHashcode() , true );
-        addParam( params, "source_hashcode",  getSourceHashcode() , true );
+        if(getSource() != null)
+        	addParam( params, "source",           URLEncoder.encode( getSource() ) , true );
+        if(getFeed() != null)
+        	addParam( params, "feed",             URLEncoder.encode( getFeed() ) , true );
+        //addParam( params, "feed_hashcode",    getFeedHashcode() , true );
+        //addParam( params, "source_hashcode",  getSourceHashcode() , true );
 
         String result = getRouter() + params.toString();
-
-        System.out.printf( "%s\n", result );
-        
+                
         return result;
         
     }
