@@ -124,7 +124,7 @@ public class ParallelFetchHelper<ResultType extends BaseResult> {
             boolean enqueued_next = false;
 
             if ( sleep > 0 ) {
-                System.out.printf("caught up sleeping for %s\n", sleep ); //BOOG
+                //System.out.printf("caught up sleeping for %s\n", sleep ); //BOOG
                 Thread.sleep( sleep );
             }
 

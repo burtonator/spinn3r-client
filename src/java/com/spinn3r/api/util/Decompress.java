@@ -18,9 +18,8 @@ package com.spinn3r.api.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.io.IOException;
-
+import java.io.InputStream;
 import java.util.zip.InflaterInputStream;
 
 import com.spinn3r.api.protobuf.ContentApi;

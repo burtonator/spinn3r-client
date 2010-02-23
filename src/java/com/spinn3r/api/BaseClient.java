@@ -81,7 +81,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
     public static final String USER_AGENT_HEADER       = "User-Agent";
     public static final String ACCEPT_ENCODING_HEADER  = "Accept-Encoding";
 
-    public static final String FEED_HANDLER       = "feed3";
+    public static final String FEED_HANDLER       = "feed";
     public static final String PERMALINK_HANDLER  = "permalink3";
     public static final String COMMENT_HANDLER    = "comment3";
     public static final String LINK_HANDLER       = "link3";
@@ -377,7 +377,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
             // set the UserAgent so Spinn3r know which client lib is calling.
             conn.setRequestProperty( USER_AGENT_HEADER, USER_AGENT );
             conn.setRequestProperty( ACCEPT_ENCODING_HEADER, GZIP_ENCODING );
-                        
+            conn.setConnectTimeout(20000);                        
             conn.connect();
 
         } 
@@ -427,26 +427,27 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         
     }
     
-    public List<ContentApi.Entry> doProtoStreamFetch(InputStream inputStream, Config config) throws IOException
+    public List<ContentApi.Entry> doProtoStreamFetch(InputStream inputStream, Config<?> config) throws IOException
     {
     	CodedInputStream cis = CodedInputStream.newInstance( inputStream );
         cis.setSizeLimit( PROTOBUF_SIZE_LIMIT );
+        ProtoStreamHeader header;
         
     	List<ContentApi.Entry> entries;
-    	int size;
+    	int size, numEntries;
 
     	
     	size = ByteBuffer.wrap(cis.readRawBytes(4)).getInt();
     	
-    	ProtoStreamHeader.parseFrom(cis.readRawBytes(size));
-    	entries = new ArrayList<ContentApi.Entry>();
+    	header = ProtoStreamHeader.parseFrom(cis.readRawBytes(size));
+    	numEntries = header.getItemCount();
+    	entries = new ArrayList<ContentApi.Entry>(numEntries);
     	
-    	while(true)
+    	for(int i = 0; i < numEntries; i++)
     	{
     		byte[] data = cis.readRawBytes(4);
     		size = ByteBuffer.wrap(data).getInt();
-    		if(size == 0)
-    			break;
+    		
         	entries.add(ContentApi.Entry.parseFrom(cis.readRawBytes(size)));
     	}
     	
