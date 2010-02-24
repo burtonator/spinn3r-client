@@ -774,77 +774,6 @@ public final class ContentApi {
       return com.spinn3r.api.protobuf.ContentApi.internal_static_contentApi_Content_fieldAccessorTable;
     }
     
-    public enum Encoding
-        implements com.google.protobuf.ProtocolMessageEnum {
-      UNKNWON(0, 0),
-      UTF_8(1, 1),
-      BASE64_ZLIB(2, 2),
-      ZLIB(3, 4),
-      ;
-      
-      
-      public final int getNumber() { return value; }
-      
-      public static Encoding valueOf(int value) {
-        switch (value) {
-          case 0: return UNKNWON;
-          case 1: return UTF_8;
-          case 2: return BASE64_ZLIB;
-          case 4: return ZLIB;
-          default: return null;
-        }
-      }
-      
-      public static com.google.protobuf.Internal.EnumLiteMap<Encoding>
-          internalGetValueMap() {
-        return internalValueMap;
-      }
-      private static com.google.protobuf.Internal.EnumLiteMap<Encoding>
-          internalValueMap =
-            new com.google.protobuf.Internal.EnumLiteMap<Encoding>() {
-              public Encoding findValueByNumber(int number) {
-                return Encoding.valueOf(number)
-      ;        }
-            };
-      
-      public final com.google.protobuf.Descriptors.EnumValueDescriptor
-          getValueDescriptor() {
-        return getDescriptor().getValues().get(index);
-      }
-      public final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptorForType() {
-        return getDescriptor();
-      }
-      public static final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptor() {
-        return com.spinn3r.api.protobuf.ContentApi.Content.getDescriptor().getEnumTypes().get(0);
-      }
-      
-      private static final Encoding[] VALUES = {
-        UNKNWON, UTF_8, BASE64_ZLIB, ZLIB, 
-      };
-      public static Encoding valueOf(
-          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-        if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException(
-            "EnumValueDescriptor is not for this type.");
-        }
-        return VALUES[desc.getIndex()];
-      }
-      private final int index;
-      private final int value;
-      private Encoding(int index, int value) {
-        this.index = index;
-        this.value = value;
-      }
-      
-      static {
-        com.spinn3r.api.protobuf.ContentApi.getDescriptor();
-      }
-      
-      // @@protoc_insertion_point(enum_scope:contentApi.Content.Encoding)
-    }
-    
     // required string mime_type = 1;
     public static final int MIME_TYPE_FIELD_NUMBER = 1;
     private boolean hasMimeType;
@@ -859,15 +788,14 @@ public final class ContentApi {
     public boolean hasData() { return hasData; }
     public com.google.protobuf.ByteString getData() { return data_; }
     
-    // optional .contentApi.Content.Encoding encoding = 3;
+    // optional string encoding = 3;
     public static final int ENCODING_FIELD_NUMBER = 3;
     private boolean hasEncoding;
-    private com.spinn3r.api.protobuf.ContentApi.Content.Encoding encoding_;
+    private java.lang.String encoding_ = "";
     public boolean hasEncoding() { return hasEncoding; }
-    public com.spinn3r.api.protobuf.ContentApi.Content.Encoding getEncoding() { return encoding_; }
+    public java.lang.String getEncoding() { return encoding_; }
     
     private void initFields() {
-      encoding_ = com.spinn3r.api.protobuf.ContentApi.Content.Encoding.UNKNWON;
     }
     public final boolean isInitialized() {
       if (!hasMimeType) return false;
@@ -884,7 +812,7 @@ public final class ContentApi {
         output.writeBytes(2, getData());
       }
       if (hasEncoding()) {
-        output.writeEnum(3, getEncoding().getNumber());
+        output.writeString(3, getEncoding());
       }
       getUnknownFields().writeTo(output);
     }
@@ -905,7 +833,7 @@ public final class ContentApi {
       }
       if (hasEncoding()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(3, getEncoding().getNumber());
+          .computeStringSize(3, getEncoding());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -1107,14 +1035,8 @@ public final class ContentApi {
               setData(input.readBytes());
               break;
             }
-            case 24: {
-              int rawValue = input.readEnum();
-              com.spinn3r.api.protobuf.ContentApi.Content.Encoding value = com.spinn3r.api.protobuf.ContentApi.Content.Encoding.valueOf(rawValue);
-              if (value == null) {
-                unknownFields.mergeVarintField(3, rawValue);
-              } else {
-                setEncoding(value);
-              }
+            case 26: {
+              setEncoding(input.readString());
               break;
             }
           }
@@ -1164,24 +1086,24 @@ public final class ContentApi {
         return this;
       }
       
-      // optional .contentApi.Content.Encoding encoding = 3;
+      // optional string encoding = 3;
       public boolean hasEncoding() {
         return result.hasEncoding();
       }
-      public com.spinn3r.api.protobuf.ContentApi.Content.Encoding getEncoding() {
+      public java.lang.String getEncoding() {
         return result.getEncoding();
       }
-      public Builder setEncoding(com.spinn3r.api.protobuf.ContentApi.Content.Encoding value) {
+      public Builder setEncoding(java.lang.String value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-        result.hasEncoding = true;
+    throw new NullPointerException();
+  }
+  result.hasEncoding = true;
         result.encoding_ = value;
         return this;
       }
       public Builder clearEncoding() {
         result.hasEncoding = false;
-        result.encoding_ = com.spinn3r.api.protobuf.ContentApi.Content.Encoding.UNKNWON;
+        result.encoding_ = getDefaultInstance().getEncoding();
         return this;
       }
       
@@ -9104,82 +9026,80 @@ public final class ContentApi {
       "\n\020spinn3rApi.proto\022\ncontentApi\"F\n\004Link\022\014" +
       "\n\004href\030\001 \001(\t\022\020\n\010resource\030\002 \001(\t\022\021\n\tmime_t" +
       "ype\030\003 \001(\t\022\013\n\003rel\030\004 \001(\t\")\n\004Lang\022\014\n\004code\030\001" +
-      " \001(\t\022\023\n\013probability\030\002 \001(\002\"\231\001\n\007Content\022\021\n" +
-      "\tmime_type\030\001 \002(\t\022\014\n\004data\030\002 \001(\014\022.\n\010encodi" +
-      "ng\030\003 \001(\0162\034.contentApi.Content.Encoding\"=" +
-      "\n\010Encoding\022\013\n\007UNKNWON\020\000\022\t\n\005UTF_8\020\001\022\017\n\013BA" +
-      "SE64_ZLIB\020\002\022\010\n\004ZLIB\020\004\"E\n\006Author\022\014\n\004name\030" +
-      "\001 \001(\t\022\r\n\005email\030\002 \001(\t\022\036\n\004link\030\003 \003(\0132\020.con" +
-      "tentApi.Link\"\245\003\n\006Source\022\036\n\004link\030\001 \003(\0132\020.",
+      " \001(\t\022\023\n\013probability\030\002 \001(\002\"<\n\007Content\022\021\n\t" +
+      "mime_type\030\001 \002(\t\022\014\n\004data\030\002 \001(\014\022\020\n\010encodin" +
+      "g\030\003 \001(\t\"E\n\006Author\022\014\n\004name\030\001 \001(\t\022\r\n\005email" +
+      "\030\002 \001(\t\022\036\n\004link\030\003 \003(\0132\020.contentApi.Link\"\245" +
+      "\003\n\006Source\022\036\n\004link\030\001 \003(\0132\020.contentApi.Lin" +
+      "k\022(\n\016canonical_link\030\002 \001(\0132\020.contentApi.L" +
+      "ink\022\r\n\005title\030\003 \001(\t\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004",
+      "lang\030\005 \003(\0132\020.contentApi.Lang\022\021\n\tgenerato" +
+      "r\030\006 \001(\t\022\023\n\013description\030\007 \001(\t\022\027\n\017resource" +
+      "_status\030\010 \001(\005\022\023\n\013last_posted\030\t \001(\t\022\026\n\016la" +
+      "st_published\030\n \001(\t\022\022\n\ndate_found\030\013 \001(\t\022\014" +
+      "\n\004etag\030\014 \001(\t\022\030\n\020spam_probability\030\r \001(\002\022\014" +
+      "\n\004tier\030\016 \001(\021\022\020\n\010indegree\030\017 \001(\005\022\026\n\016publis" +
+      "her_type\030\020 \001(\t\022\020\n\010disabled\030\021 \001(\010\022\034\n\024regi" +
+      "stered_by_vendor\030\022 \001(\t\"\343\002\n\004Feed\022\036\n\004link\030" +
+      "\001 \003(\0132\020.contentApi.Link\022(\n\016canonical_lin" +
+      "k\030\002 \001(\0132\020.contentApi.Link\022\r\n\005title\030\003 \001(\t",
+      "\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030\005 \003(\0132\020.conte" +
+      "ntApi.Lang\022\021\n\tgenerator\030\006 \001(\t\022\023\n\013descrip" +
+      "tion\030\007 \001(\t\022\027\n\017resource_status\030\010 \001(\005\022\023\n\013l" +
+      "ast_posted\030\t \001(\t\022\026\n\016last_published\030\n \001(\t" +
+      "\022\022\n\ndate_found\030\013 \001(\t\022\014\n\004etag\030\014 \001(\t\022\030\n\020sp" +
+      "am_probability\030\r \001(\002\022&\n\014channel_link\030\016 \001" +
+      "(\0132\020.contentApi.Link\"\251\003\n\016PermalinkEntry\022" +
+      "\036\n\004link\030\001 \003(\0132\020.contentApi.Link\022(\n\016canon" +
+      "ical_link\030\002 \001(\0132\020.contentApi.Link\022\r\n\005tit" +
+      "le\030\003 \001(\t\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030\005 \003(\013",
+      "2\020.contentApi.Lang\022\"\n\006author\030\006 \003(\0132\022.con" +
+      "tentApi.Author\022\020\n\010category\030\007 \003(\t\022\030\n\020spam" +
+      "_probability\030\010 \001(\002\022\026\n\016last_published\030\t \001" +
+      "(\t\022\022\n\ndate_found\030\n \001(\t\022\022\n\nidentifier\030\013 \001" +
+      "(\003\022$\n\007content\030\014 \001(\0132\023.contentApi.Content" +
+      "\022,\n\017content_extract\030\r \001(\0132\023.contentApi.C" +
+      "ontent\022\021\n\tgenerator\030\016 \001(\t\022\025\n\rraw_publish" +
+      "ed\030\017 \001(\t\"\332\003\n\nCrawlEntry\022\036\n\004link\030\001 \003(\0132\020." +
       "contentApi.Link\022(\n\016canonical_link\030\002 \001(\0132" +
-      "\020.contentApi.Link\022\r\n\005title\030\003 \001(\t\022\020\n\010hash" +
+      "\020.contentApi.Link\022\r\n\005title\030\003 \001(\t\022\020\n\010hash",
       "code\030\004 \001(\t\022\036\n\004lang\030\005 \003(\0132\020.contentApi.La" +
-      "ng\022\021\n\tgenerator\030\006 \001(\t\022\023\n\013description\030\007 \001" +
-      "(\t\022\027\n\017resource_status\030\010 \001(\005\022\023\n\013last_post" +
-      "ed\030\t \001(\t\022\026\n\016last_published\030\n \001(\t\022\022\n\ndate" +
-      "_found\030\013 \001(\t\022\014\n\004etag\030\014 \001(\t\022\030\n\020spam_proba" +
-      "bility\030\r \001(\002\022\014\n\004tier\030\016 \001(\021\022\020\n\010indegree\030\017" +
-      " \001(\005\022\026\n\016publisher_type\030\020 \001(\t\022\020\n\010disabled" +
-      "\030\021 \001(\010\022\034\n\024registered_by_vendor\030\022 \001(\t\"\343\002\n",
-      "\004Feed\022\036\n\004link\030\001 \003(\0132\020.contentApi.Link\022(\n" +
-      "\016canonical_link\030\002 \001(\0132\020.contentApi.Link\022" +
-      "\r\n\005title\030\003 \001(\t\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang" +
-      "\030\005 \003(\0132\020.contentApi.Lang\022\021\n\tgenerator\030\006 " +
-      "\001(\t\022\023\n\013description\030\007 \001(\t\022\027\n\017resource_sta" +
-      "tus\030\010 \001(\005\022\023\n\013last_posted\030\t \001(\t\022\026\n\016last_p" +
-      "ublished\030\n \001(\t\022\022\n\ndate_found\030\013 \001(\t\022\014\n\004et" +
-      "ag\030\014 \001(\t\022\030\n\020spam_probability\030\r \001(\002\022&\n\014ch" +
-      "annel_link\030\016 \001(\0132\020.contentApi.Link\"\251\003\n\016P" +
-      "ermalinkEntry\022\036\n\004link\030\001 \003(\0132\020.contentApi",
-      ".Link\022(\n\016canonical_link\030\002 \001(\0132\020.contentA" +
-      "pi.Link\022\r\n\005title\030\003 \001(\t\022\020\n\010hashcode\030\004 \001(\t" +
-      "\022\036\n\004lang\030\005 \003(\0132\020.contentApi.Lang\022\"\n\006auth" +
-      "or\030\006 \003(\0132\022.contentApi.Author\022\020\n\010category" +
-      "\030\007 \003(\t\022\030\n\020spam_probability\030\010 \001(\002\022\026\n\016last" +
-      "_published\030\t \001(\t\022\022\n\ndate_found\030\n \001(\t\022\022\n\n" +
-      "identifier\030\013 \001(\003\022$\n\007content\030\014 \001(\0132\023.cont" +
-      "entApi.Content\022,\n\017content_extract\030\r \001(\0132" +
-      "\023.contentApi.Content\022\021\n\tgenerator\030\016 \001(\t\022" +
-      "\025\n\rraw_published\030\017 \001(\t\"\332\003\n\nCrawlEntry\022\036\n",
-      "\004link\030\001 \003(\0132\020.contentApi.Link\022(\n\016canonic" +
-      "al_link\030\002 \001(\0132\020.contentApi.Link\022\r\n\005title" +
-      "\030\003 \001(\t\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030\005 \003(\0132\020" +
-      ".contentApi.Lang\022\"\n\006author\030\006 \003(\0132\022.conte" +
-      "ntApi.Author\022\020\n\010category\030\007 \003(\t\022\030\n\020spam_p" +
-      "robability\030\010 \001(\002\022\026\n\016last_published\030\t \001(\t" +
-      "\022\022\n\ndate_found\030\n \001(\t\022\022\n\nidentifier\030\013 \001(\003" +
-      "\022$\n\007content\030\014 \001(\0132\023.contentApi.Content\022," +
-      "\n\017content_extract\030\r \001(\0132\023.contentApi.Con" +
-      "tent\022\021\n\tgenerator\030\016 \001(\t\022\025\n\rraw_published",
-      "\030\017 \001(\t\022\027\n\017domain_hashcode\030\020 \001(\t\022\032\n\022subdo" +
-      "main_hashcode\030\021 \001(\t\"\314\002\n\tFeedEntry\022\036\n\004lin" +
-      "k\030\001 \003(\0132\020.contentApi.Link\022(\n\016canonical_l" +
-      "ink\030\002 \001(\0132\020.contentApi.Link\022\r\n\005title\030\003 \001" +
-      "(\t\022\020\n\010hashcode\030\004 \001(\t\022\036\n\004lang\030\005 \003(\0132\020.con" +
-      "tentApi.Lang\022\"\n\006author\030\006 \003(\0132\022.contentAp" +
-      "i.Author\022\020\n\010category\030\007 \003(\t\022\030\n\020spam_proba" +
-      "bility\030\010 \001(\002\022\026\n\016last_published\030\t \001(\t\022\022\n\n" +
-      "date_found\030\n \001(\t\022\022\n\nidentifier\030\013 \001(\003\022$\n\007" +
-      "content\030\014 \001(\0132\023.contentApi.Content\"m\n\014Co",
-      "mmentEntry\022\021\n\tpermalink\030\001 \001(\t\022\027\n\017permali" +
-      "nk_title\030\002 \001(\t\022\032\n\022permalink_hashcode\030\003 \001" +
-      "(\t\022\025\n\rraw_published\030\004 \001(\t\"\335\002\n\005Entry\022\"\n\006s" +
-      "ource\030\001 \001(\0132\022.contentApi.Source\022\036\n\004feed\030" +
-      "\002 \001(\0132\020.contentApi.Feed\022)\n\nfeed_entry\030\003 " +
-      "\001(\0132\025.contentApi.FeedEntry\0223\n\017permalink_" +
-      "entry\030\004 \001(\0132\032.contentApi.PermalinkEntry\022" +
-      "/\n\rcomment_entry\030\005 \001(\0132\030.contentApi.Comm" +
-      "entEntry\022+\n\013crawl_entry\030\006 \001(\0132\026.contentA" +
-      "pi.CrawlEntry\022$\n\007content\030\007 \001(\0132\023.content",
-      "Api.Content\022,\n\017content_extract\030\010 \001(\0132\023.c" +
-      "ontentApi.Content\"y\n\010Response\022\023\n\013request" +
-      "_url\030\001 \001(\t\022\034\n\024previous_request_url\030\002 \001(\t" +
-      "\022\030\n\020next_request_url\030\003 \001(\t\022 \n\005entry\030\004 \003(" +
-      "\0132\021.contentApi.Entry\"q\n\021ProtoStreamHeade" +
-      "r\022\017\n\007version\030\001 \002(\t\022\021\n\trequestId\030\002 \002(\t\022\022\n" +
-      "\nitem_count\030\003 \002(\005\022\022\n\nstart_date\030\004 \001(\t\022\020\n" +
-      "\010end_date\030\005 \001(\tB&\n\030com.spinn3r.api.proto" +
-      "bufB\nContentApi"
+      "ng\022\"\n\006author\030\006 \003(\0132\022.contentApi.Author\022\020" +
+      "\n\010category\030\007 \003(\t\022\030\n\020spam_probability\030\010 \001" +
+      "(\002\022\026\n\016last_published\030\t \001(\t\022\022\n\ndate_found" +
+      "\030\n \001(\t\022\022\n\nidentifier\030\013 \001(\003\022$\n\007content\030\014 " +
+      "\001(\0132\023.contentApi.Content\022,\n\017content_extr" +
+      "act\030\r \001(\0132\023.contentApi.Content\022\021\n\tgenera" +
+      "tor\030\016 \001(\t\022\025\n\rraw_published\030\017 \001(\t\022\027\n\017doma" +
+      "in_hashcode\030\020 \001(\t\022\032\n\022subdomain_hashcode\030" +
+      "\021 \001(\t\"\314\002\n\tFeedEntry\022\036\n\004link\030\001 \003(\0132\020.cont",
+      "entApi.Link\022(\n\016canonical_link\030\002 \001(\0132\020.co" +
+      "ntentApi.Link\022\r\n\005title\030\003 \001(\t\022\020\n\010hashcode" +
+      "\030\004 \001(\t\022\036\n\004lang\030\005 \003(\0132\020.contentApi.Lang\022\"" +
+      "\n\006author\030\006 \003(\0132\022.contentApi.Author\022\020\n\010ca" +
+      "tegory\030\007 \003(\t\022\030\n\020spam_probability\030\010 \001(\002\022\026" +
+      "\n\016last_published\030\t \001(\t\022\022\n\ndate_found\030\n \001" +
+      "(\t\022\022\n\nidentifier\030\013 \001(\003\022$\n\007content\030\014 \001(\0132" +
+      "\023.contentApi.Content\"m\n\014CommentEntry\022\021\n\t" +
+      "permalink\030\001 \001(\t\022\027\n\017permalink_title\030\002 \001(\t" +
+      "\022\032\n\022permalink_hashcode\030\003 \001(\t\022\025\n\rraw_publ",
+      "ished\030\004 \001(\t\"\335\002\n\005Entry\022\"\n\006source\030\001 \001(\0132\022." +
+      "contentApi.Source\022\036\n\004feed\030\002 \001(\0132\020.conten" +
+      "tApi.Feed\022)\n\nfeed_entry\030\003 \001(\0132\025.contentA" +
+      "pi.FeedEntry\0223\n\017permalink_entry\030\004 \001(\0132\032." +
+      "contentApi.PermalinkEntry\022/\n\rcomment_ent" +
+      "ry\030\005 \001(\0132\030.contentApi.CommentEntry\022+\n\013cr" +
+      "awl_entry\030\006 \001(\0132\026.contentApi.CrawlEntry\022" +
+      "$\n\007content\030\007 \001(\0132\023.contentApi.Content\022,\n" +
+      "\017content_extract\030\010 \001(\0132\023.contentApi.Cont" +
+      "ent\"y\n\010Response\022\023\n\013request_url\030\001 \001(\t\022\034\n\024",
+      "previous_request_url\030\002 \001(\t\022\030\n\020next_reque" +
+      "st_url\030\003 \001(\t\022 \n\005entry\030\004 \003(\0132\021.contentApi" +
+      ".Entry\"q\n\021ProtoStreamHeader\022\017\n\007version\030\001" +
+      " \002(\t\022\021\n\trequestId\030\002 \002(\t\022\022\n\nitem_count\030\003 " +
+      "\002(\005\022\022\n\nstart_date\030\004 \001(\t\022\020\n\010end_date\030\005 \001(" +
+      "\tB&\n\030com.spinn3r.api.protobufB\nContentAp" +
+      "i"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {

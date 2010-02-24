@@ -1,11 +1,13 @@
 
 package com.spinn3r.api.util;
 
-import java.security.*;
-import java.io.*;
-import java.util.zip.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
-import com.jcraft.jzlib.*;
+import com.jcraft.jzlib.ZInputStream;
+import com.jcraft.jzlib.ZOutputStream;
 
 
 /**
@@ -153,6 +155,12 @@ public class CompressedBLOB {
      * (best compression).
      */
     protected int level = DEFAULT_LEVEL;
+    
+    
+    public static byte[] compress(int external_format, String string) throws Exception
+    {
+    	return new CompressedBLOB(external_format, string).getBytes();
+    }
     
     public CompressedBLOB( String v ) {
         this( EXTERNAL_FORMAT, v );
