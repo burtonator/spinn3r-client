@@ -4,8 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
-import com.spinn3r.api.protobuf.ContentApi;
-
 /**
  * Class which allows us to decompress a data byte array given a 
  * specified encoding scheme.
@@ -20,20 +18,20 @@ public class CompressedBlob2
      * compressed or not.  NOTE.  This has to be language specific encoding to
      * use UTF-16 where appropriate.
      */
-    public static String ENCODING = "UTF-8";
+    public static final String ENCODING = "UTF-8";
     
-    public static int DECOMPRESSION_RATIO = 5;
-    public static int COMPRESSION_RATIO   = 3;
+    public static final int DECOMPRESSION_RATIO = 5;
+    public static final int COMPRESSION_RATIO   = 3;
 
-    public static int BUFFER_SIZE = 4096;
+    public static final int BUFFER_SIZE = 4096;
     
 	private byte[] data;
-	private ContentApi.Content.Encoding encoding;
+	private final String encoding;
 	
 	private String content = null;
 	
 	
-	public CompressedBlob2(byte[] data, ContentApi.Content.Encoding encoding)
+	public CompressedBlob2(byte[] data, String encoding)
 	{
 		this.data = data;
 		this.encoding = encoding;
@@ -56,12 +54,11 @@ public class CompressedBlob2
         byte[] b = data;
         
         //first base64 decode the content 
-        if ( encoding == ContentApi.Content.Encoding.BASE64_ZLIB ) {
+        if ( encoding.equals("zlib/base64") ) {
             b = Base64.decode( b );
         }
 
-        if ( encoding == ContentApi.Content.Encoding.BASE64_ZLIB ||
-        		encoding == ContentApi.Content.Encoding.ZLIB ) {
+        if ( encoding.equals("zlib/base64") || encoding.equals("zlib") ) {
             
             //now tmp should be filled with the correct data without the FORMAT
             //identifier.
