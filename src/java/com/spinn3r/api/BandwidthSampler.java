@@ -16,7 +16,6 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
 
 /**
  * Simple performance monitoring system similar to benchmark4j.

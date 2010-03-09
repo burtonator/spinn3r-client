@@ -74,7 +74,7 @@ public abstract class Config <ResultType> implements Cloneable {
     
     private String         filter              = null;
     private int            limit               = DEFAULT_LIMIT;
-    private String         lang                = null;
+    //private String         lang                = null;
     private String         version             = DEFAULT_VERSION;
     private String         vendor              = null;
     private Date           after               = new Date(); /* use epoch as default */
@@ -101,11 +101,13 @@ public abstract class Config <ResultType> implements Cloneable {
     abstract public ResultType createResultObject ( Element          current ) throws ParseException;
 
 
+    @SuppressWarnings("unchecked")
     public Config<ResultType> clone () {
 
         Config<ResultType> res;
 
         try {
+        	
             res = (Config<ResultType>)super.clone();
         }
 

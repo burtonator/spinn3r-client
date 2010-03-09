@@ -17,10 +17,9 @@
 
 package com.spinn3r.api;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import java.text.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * ISO 8601 date parsing utility.  Designed for parsing the ISO subset used in

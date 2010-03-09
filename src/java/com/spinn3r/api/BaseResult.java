@@ -16,9 +16,7 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
-import java.io.*;
-import java.net.*;
+import java.util.Date;
 
 /**
  * Represents a single item returned from the API.

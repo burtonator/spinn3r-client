@@ -16,21 +16,23 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
-import java.io.*;
-import java.net.*;
+import static com.spinn3r.api.XMLUtils.NS_FEED;
+import static com.spinn3r.api.XMLUtils.NS_LINK;
+import static com.spinn3r.api.XMLUtils.NS_POST;
+import static com.spinn3r.api.XMLUtils.NS_SOURCE;
+import static com.spinn3r.api.XMLUtils.NS_TARGET;
+import static com.spinn3r.api.XMLUtils.getElementCDATAByTagName;
+import static com.spinn3r.api.XMLUtils.parseFloat;
+import static com.spinn3r.api.XMLUtils.parseInt;
+import static com.spinn3r.api.XMLUtils.parseLong;
 
-import org.w3c.dom.*;
+import org.w3c.dom.Element;
 
-import org.w3c.dom.*;
-
-import com.spinn3r.api.protobuf.*;
-
-import static com.spinn3r.api.XMLUtils.*;
+import com.spinn3r.api.protobuf.ContentApi;
 
 /**
  */
-public class LinkItem extends BaseResult {
+public class LinkItem extends BaseItem {
     
     private int sourceTier = -1;
     

@@ -16,7 +16,6 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
 
 /**
  * Used to startup the API and specify defaults for limits, where to start

@@ -16,15 +16,15 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
-import java.io.*;
-import java.net.*;
+import static com.spinn3r.api.XMLUtils.NS_FEED;
+import static com.spinn3r.api.XMLUtils.getElementCDATAByTagName;
+import static com.spinn3r.api.XMLUtils.parseInt;
 
-import org.w3c.dom.*;
+import java.util.Date;
 
-import static com.spinn3r.api.XMLUtils.*;
+import org.w3c.dom.Element;
 
-import com.spinn3r.api.protobuf.*;
+import com.spinn3r.api.protobuf.ContentApi;
 
 /**
  * Represents a source within Spinn3r.

@@ -17,13 +17,10 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
-import java.io.*;
-import java.net.*;
-
-import javax.xml.parsers.*;
-
-import org.w3c.dom.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Base interface for interacting with clients.
@@ -36,9 +33,9 @@ public interface Client<T> {
 
     public List<T> getResults();
 
-    public void setConfig( Config config );
+    public void setConfig( Config<T> config );
 
-    public Config getConfig();
+    public Config<T> getConfig();
     
     public String getNextRequestURL();
 

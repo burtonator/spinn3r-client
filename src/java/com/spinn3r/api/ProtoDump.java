@@ -17,15 +17,11 @@
 
 package com.spinn3r.api;
 
-import com.spinn3r.api.protobuf.*;
-
-import java.util.*;
-import java.io.*;
-import java.util.regex.*;
+import java.io.File;
+import java.io.FileInputStream;
 
 import com.google.protobuf.CodedInputStream;
-
-import com.spinn3r.api.util.*;
+import com.spinn3r.api.protobuf.ContentApi;
 
 /**
  * Code to read a protobuff file off disk and print it out.

@@ -16,15 +16,7 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
-import java.io.*;
-import java.net.*;
-
-import javax.xml.parsers.*;
-
-import org.w3c.dom.*;
-
-import com.spinn3r.api.protobuf.*;
+import java.util.List;
 
 /**
  * 
@@ -32,9 +24,9 @@ import com.spinn3r.api.protobuf.*;
 public class LinkHistoryClient extends LegacyWrapperClient<LinkItem> {
 
 
-    public static void dump( List<BaseItem> results ) {
+    public static void dump( List<LinkItem> results ) {
 
-        for( BaseItem item : results ) {
+        for( LinkItem item : results ) {
             System.out.println( "link:                   " + item.getLink() );
             System.out.println( "title:                  " + item.getTitle() );
             System.out.println( "pubDate:                " + item.getPubDate() );
@@ -56,7 +48,7 @@ public class LinkHistoryClient extends LegacyWrapperClient<LinkItem> {
 
         client.setConfig( config );
 
-        List results;
+        List<LinkItem> results;
         
         client.fetch();
         results = client.getResults();

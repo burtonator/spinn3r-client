@@ -16,7 +16,6 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
 import java.net.URLEncoder;
 
 import org.w3c.dom.Element;
@@ -27,7 +26,7 @@ import com.spinn3r.api.protobuf.ContentApi;
  * Used to startup the API and specify defaults for limits, where to start
  * indexing, tiers, language, etc.
  */
-public class FeedHistoryConfig extends Config {
+public class FeedHistoryConfig extends Config<Source> {
 
     public static int MAX_LIMIT            = 100;
     public static int OPTIMAL_LIMIT        = 50;

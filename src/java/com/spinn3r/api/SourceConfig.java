@@ -16,8 +16,6 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
-
 import org.w3c.dom.Element;
 
 import com.spinn3r.api.protobuf.ContentApi;
