@@ -16,9 +16,7 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
 import java.net.URLEncoder;
-
 
 import org.w3c.dom.Element;
 

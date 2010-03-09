@@ -16,17 +16,14 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
-import java.io.*;
-import java.net.*;
+import static com.spinn3r.api.XMLUtils.getElementByTagName;
 
-import javax.xml.parsers.*;
+import java.io.FileNotFoundException;
 
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
-import com.spinn3r.api.protobuf.*;
-
-import static com.spinn3r.api.XMLUtils.*;
+import com.spinn3r.api.protobuf.ContentApi;
 
 /*
  * BUG: This class is UGLY as it really is not much like a base client
@@ -106,7 +103,7 @@ public class SourceClient extends LegacyWrapperClient<Source> {
 
         SourceClient client = new SourceClient();
 
-        Config config = new SourceConfig();
+        Config<Source> config = new SourceConfig();
         config.setVendor( "XXXX" );
                 
         client.setConfig( config );

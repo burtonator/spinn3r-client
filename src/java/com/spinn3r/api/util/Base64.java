@@ -16,9 +16,6 @@
 
 package com.spinn3r.api.util;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
 
 /**
  * Package which supplies Base64 encoding and decoding of data. 
@@ -213,7 +210,7 @@ public class Base64 {
      * shortened form.
      */
     public static byte[] decode( String inStr )
-        throws Exception
+        throws EncodingException
     {
         try {
             char[] in = inStr.toCharArray();
@@ -231,7 +228,7 @@ public class Base64 {
             int wholeOutLen = blocks*3;
             int outLen = wholeOutLen;
             switch (remainder) {
-            case 1: throw new Exception("illegal Base64 length");
+            case 1: throw new EncodingException("illegal Base64 length");
             case 2:  outLen = wholeOutLen+1; break;
             case 3:  outLen = wholeOutLen+2; break;
             default: outLen = wholeOutLen;
@@ -246,7 +243,7 @@ public class Base64 {
                 int in4 = (int) base64Reverse[in[i+3]];
                 int orValue = in1|in2|in3|in4;
                 if ((orValue & 0x80) != 0)
-                    throw new Exception("illegal Base64 character: ");
+                    throw new EncodingException("illegal Base64 character: ");
                 int outVal = (in1 << 18) | (in2 << 12) | (in3 << 6) | in4;
                 out[o] = (byte) (outVal>>16);
                 out[o+1] = (byte) (outVal>>8);
@@ -281,13 +278,13 @@ public class Base64 {
                 orValue = 0;
             }
             if ((orValue & 0x80) != 0)
-                throw new Exception("illegal Base64 character");
+                throw new EncodingException("illegal Base64 character");
             return out;
         }
         // Illegal characters can cause an ArrayIndexOutOfBoundsException when
         // looking up base64Reverse.
         catch (ArrayIndexOutOfBoundsException e) {
-            throw new Exception("illegal Base64 character");
+            throw new EncodingException("illegal Base64 character");
         }
     }
 
@@ -295,8 +292,7 @@ public class Base64 {
      * Handles the standards-compliant (padded with '~' signs) as well as our
      * shortened form.
      */
-    public static byte[] decode( byte[] in )
-        throws Exception
+    public static byte[] decode( byte[] in ) throws EncodingException
     {
         try {
 
@@ -314,7 +310,7 @@ public class Base64 {
             int wholeOutLen = blocks*3;
             int outLen = wholeOutLen;
             switch (remainder) {
-            case 1: throw new Exception("illegal Base64 length");
+            case 1: throw new EncodingException("illegal Base64 length");
             case 2:  outLen = wholeOutLen+1; break;
             case 3:  outLen = wholeOutLen+2; break;
             default: outLen = wholeOutLen;
@@ -329,7 +325,7 @@ public class Base64 {
                 int in4 = (int) base64Reverse[in[i+3]];
                 int orValue = in1|in2|in3|in4;
                 if ((orValue & 0x80) != 0)
-                    throw new Exception("illegal Base64 character");
+                    throw new IllegalArgumentException("illegal Base64 character");
                 int outVal = (in1 << 18) | (in2 << 12) | (in3 << 6) | in4;
                 out[o] = (byte) (outVal>>16);
                 out[o+1] = (byte) (outVal>>8);
@@ -364,13 +360,13 @@ public class Base64 {
                 orValue = 0;
             }
             if ((orValue & 0x80) != 0)
-                throw new Exception("illegal Base64 character");
+                throw new EncodingException("illegal Base64 character");
             return out;
         }
         // Illegal characters can cause an ArrayIndexOutOfBoundsException when
         // looking up base64Reverse.
         catch (ArrayIndexOutOfBoundsException e) {
-            throw new Exception("illegal Base64 character");
+            throw new EncodingException("illegal Base64 character", e);
         }
     }
 

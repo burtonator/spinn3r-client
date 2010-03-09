@@ -16,14 +16,9 @@
 
 package com.spinn3r.api;
 
-import java.io.IOException;
-
 import org.w3c.dom.Element;
 
 import com.spinn3r.api.protobuf.ContentApi;
-import com.spinn3r.api.util.CompressedBLOB;
-
-import static com.spinn3r.api.XMLUtils.*;
 
 /**
  * Represents a single item returned from the API.

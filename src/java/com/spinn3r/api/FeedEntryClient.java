@@ -16,15 +16,7 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
-import java.io.*;
-import java.net.*;
-
-import javax.xml.parsers.*;
-
-import org.w3c.dom.*;
-
-import com.spinn3r.api.protobuf.*;
+import java.util.List;
 
 /**
  * 
@@ -39,8 +31,6 @@ public class FeedEntryClient extends LegacyWrapperClient<FeedItem> {
         
         config.setVendor( "debug" );
         config.setVersion( "2.2.1" );
-
-        config.setLimit( 1 );
         
         if ( args[0].startsWith( "http:" ) ) {
             config.setResource( args[0] );

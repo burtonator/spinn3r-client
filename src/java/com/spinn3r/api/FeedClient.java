@@ -16,17 +16,12 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
-import java.io.*;
-import java.net.*;
+import static com.spinn3r.api.XMLUtils.getElementByTagName;
 
-import javax.xml.parsers.*;
+import java.io.FileNotFoundException;
 
-import org.w3c.dom.*;
-
-import com.spinn3r.api.protobuf.ContentApi;
-
-import static com.spinn3r.api.XMLUtils.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * <p> Reference API implementation for fetching Feed content form Spinn3r.
@@ -35,7 +30,7 @@ import static com.spinn3r.api.XMLUtils.*;
  * thread safety by using <code>synchronized</code> or
  * <code>java.util.concurrent</code> constructs.
  */
-public class FeedClient extends LegacyWrapperClient {
+public class FeedClient extends LegacyWrapperClient<PermalinkItem> {
 
 
     /**
@@ -80,7 +75,7 @@ public class FeedClient extends LegacyWrapperClient {
 
         FeedClient client = new FeedClient();
 
-        Config config = new FeedConfig();
+        Config<PermalinkItem> config = new FeedConfig();
         config.setVendor( "XXXX" );
 
         client.setConfig( config );

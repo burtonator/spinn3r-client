@@ -16,16 +16,18 @@
 
 package com.spinn3r.api;
 
+import static com.spinn3r.api.XMLUtils.NS_DC;
+import static com.spinn3r.api.XMLUtils.NS_SOURCE;
+import static com.spinn3r.api.XMLUtils.getElementCDATAByTagName;
+import static com.spinn3r.api.XMLUtils.parseFloat;
+import static com.spinn3r.api.XMLUtils.parseInt;
+
 import java.text.ParseException;
-import java.util.*;
-import java.io.*;
-import java.net.*;
+import java.util.Date;
 
-import org.w3c.dom.*;
+import org.w3c.dom.Element;
 
-import static com.spinn3r.api.XMLUtils.*;
-
-import com.spinn3r.api.protobuf.*;
+import com.spinn3r.api.protobuf.ContentApi;
 
 /**
  * Represents a source within Spinn3r.

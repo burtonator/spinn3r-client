@@ -16,13 +16,7 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
-import java.io.*;
-import java.net.*;
-
-import javax.xml.parsers.*;
-
-import org.w3c.dom.*;
+import java.net.URLEncoder;
 
 /**
  * API client that implements Spinn3r's source registration API.
@@ -50,7 +44,7 @@ public class SourceRegisterClient {
         // This is kind of a hack but mostly acceptable.  We should refactor at
         // some point though.
         SourceClient client = new SourceClient();
-        Document doc = client.doXmlFetch( resource, config );
+        client.doXmlFetch( resource, config );
 
     }
 

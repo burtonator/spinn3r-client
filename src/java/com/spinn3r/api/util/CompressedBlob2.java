@@ -2,6 +2,7 @@ package com.spinn3r.api.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -40,8 +41,9 @@ public class CompressedBlob2
 	/**
      * Given the binary data, determine the external form, correctly parse it
      * and return the value as a String.
+	 * @throws IOException 
      */
-    public String decompress() throws Exception {
+    public String decompress() throws EncodingException, IOException  {
 
         if ( content != null )
             return content;

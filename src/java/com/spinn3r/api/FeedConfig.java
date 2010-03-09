@@ -16,8 +16,6 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
-
 import org.w3c.dom.Element;
 
 import com.spinn3r.api.protobuf.ContentApi;
@@ -26,7 +24,7 @@ import com.spinn3r.api.protobuf.ContentApi;
  * Used to startup the API and specify defaults for limits, where to start
  * indexing, tiers, language, etc.
  */
-public class FeedConfig extends Config {
+public class FeedConfig extends Config<PermalinkItem> {
 
     public static int MAX_LIMIT            = 100;
     public static int OPTIMAL_LIMIT        = 100;

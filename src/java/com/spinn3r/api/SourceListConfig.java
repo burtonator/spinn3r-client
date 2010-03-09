@@ -26,7 +26,7 @@ import com.spinn3r.api.protobuf.ContentApi;
  * Used to startup the API and specify defaults for limits, where to start
  * indexing, tiers, language, etc.
  */
-public class SourceListConfig extends Config {
+public class SourceListConfig extends Config<Source> {
     
     public static int  MAX_LIMIT              = 250;
     public static int  OPTIMAL_LIMIT          = 250;

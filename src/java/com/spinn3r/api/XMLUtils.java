@@ -61,13 +61,13 @@ public class XMLUtils {
 
     }
     
-    public static List parseTags( Element current ) {
+    public static List<String> parseTags( Element current ) {
         return parseChildNodesAsList( current, "category" );
     }
 
-    public static List parseChildNodesAsList( Element current, String name ) {
+    public static List<String> parseChildNodesAsList( Element current, String name ) {
 
-        List result = new ArrayList();
+        List<String> result = new ArrayList<String>();
         
         NodeList nodes = current.getElementsByTagName( name );
         

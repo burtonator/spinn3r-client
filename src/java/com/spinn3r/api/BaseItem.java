@@ -16,16 +16,15 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
-import java.io.*;
-import java.net.*;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Represents a single item returned from the API.
  */
 public abstract class BaseItem extends BaseResult {
 
-    protected List tags                   = null;
+    protected List<String> tags                   = null;
 
     protected String title                = null;
     protected String link                 = null;
@@ -322,7 +321,7 @@ public abstract class BaseItem extends BaseResult {
      * Set the value of <code>tags</code>.
      *
      */
-    public void setTags( List tags ) { 
+    public void setTags( List<String> tags ) { 
         this.tags = tags;
     }
 
@@ -331,7 +330,7 @@ public abstract class BaseItem extends BaseResult {
      * Get the value of <code>tags</code>.
      *
      */
-    public List getTags() { 
+    public List<String> getTags() { 
         return this.tags;
     }
 

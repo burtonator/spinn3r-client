@@ -16,10 +16,9 @@
 
 package com.spinn3r.api;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import java.text.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  *
@@ -111,7 +110,7 @@ public class RFC822DateParser {
         
     }
     
-    private static SimpleDateFormat newSimpleDateFormat() {
+    public static SimpleDateFormat newSimpleDateFormat() {
 
         SimpleDateFormat df = new SimpleDateFormat( "EEE, dd MMM yyyy HH:mm:ss z" );
 

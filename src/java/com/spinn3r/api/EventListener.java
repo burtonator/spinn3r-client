@@ -16,13 +16,7 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
-import java.io.*;
-import java.net.*;
-
-import javax.xml.parsers.*;
-
-import org.w3c.dom.*;
+import java.util.List;
 
 /**
  * New and BETA event listener for detecting events in the Spinn3r API core.

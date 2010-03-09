@@ -14,7 +14,7 @@ public abstract class LegacyWrapperClient <ResultType extends BaseResult> extend
     private static int PARALLELISM        = 4;
     private static int RESULT_BUFFER_SIZE = 8;
 
-    protected Config                       config        = null;
+    protected Config<ResultType>           config        = null;
     private   BaseClientResult<ResultType> result        = null;
     private   long                         sleepDuration = 0;
 
@@ -72,7 +72,7 @@ public abstract class LegacyWrapperClient <ResultType extends BaseResult> extend
     }
 
 
-    public Document doXmlFetch ( String resource, Config config ) throws IOException,
+    public Document doXmlFetch ( String resource, Config<ResultType> config ) throws IOException,
                                                       ParseException,
                                                       InterruptedException {
         return doXmlFetch( new GZIPInputStream(getConnection( resource ).getInputStream()), config );
@@ -106,7 +106,7 @@ public abstract class LegacyWrapperClient <ResultType extends BaseResult> extend
      * Get the value of <code>config</code>.
      *
      */
-    public Config getConfig() { 
+    public Config<ResultType> getConfig() { 
         return this.config;
     }
 
@@ -115,7 +115,8 @@ public abstract class LegacyWrapperClient <ResultType extends BaseResult> extend
      * Set the value of <code>config</code>.
      *
      */
-    public void setConfig( Config config ) { 
+    @Override
+    public void setConfig( Config<ResultType> config ) { 
         this.config = config;
     }
 

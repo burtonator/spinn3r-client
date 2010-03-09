@@ -16,11 +16,9 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
+import org.w3c.dom.Element;
 
-import org.w3c.dom.*;
-
-import com.spinn3r.api.protobuf.*;
+import com.spinn3r.api.protobuf.ContentApi;
 
 /**
  * Used to startup the API and specify defaults for limits, where to start

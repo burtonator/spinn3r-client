@@ -34,7 +34,7 @@ import com.spinn3r.api.util.*;
  * @author Kevin Burton
  * 
  */
-public class Main {
+public class Main<T extends BaseResult> {
 
     /**
      * When true, do not parse the document, just save it to disk.
@@ -89,7 +89,7 @@ public class Main {
     /**
      * Results from the last call.
      */
-    private List<BaseResult> results = null;
+    private List<? extends BaseResult> results = null;
 
     /**
      * When true, filter results for each pass.
@@ -182,7 +182,7 @@ public class Main {
     /**
      * Process results, handling them as necessary.
      */
-    void process( List<BaseResult> results, BaseClient client ) throws Exception {
+    void process( List<? extends BaseResult> results, BaseClient<?> client ) throws Exception {
 
         if ( ENABLE_FAST_SAVE && save != null ) {
 
@@ -387,7 +387,7 @@ public class Main {
     /**
      * Print status of the API calls.
      */
-    void progress( BaseClient client ) {
+    void progress( BaseClient<?> client ) {
 
         if ( csv )
             return;
@@ -461,7 +461,7 @@ public class Main {
 
     }
 
-    public void exec( BaseClient client, Config  config ) throws Exception {
+    public void exec( BaseClient<T> client, Config<T>  config ) throws Exception {
 
         if ( ENABLE_NO_PARSE_ON_SAVE && save != null ) {
             config.setDisableParse( true );
@@ -510,7 +510,7 @@ public class Main {
     /**
      * Perform a fetch of the next API call.  
      */
-    private List<BaseResult> doFetch( BaseClient client ) throws Exception {
+    private List<T> doFetch( BaseClient<T> client ) throws Exception {
 
         //fetch the most recent results.  This will block if necessary.
 
@@ -518,11 +518,11 @@ public class Main {
         
         client.fetch();
         
-        Config config = client.getConfig();
+        Config<T> config = client.getConfig();
 
         fetch_after  = System.currentTimeMillis();
 
-        List<BaseResult> results = client.getResults();
+        List<T> results = client.getResults();
 
         if ( save != null ) {
 
@@ -553,9 +553,9 @@ public class Main {
 
                 String path = String.format( "%s/%s/%02d/%02d/%s.%s",
                                              config.getApi(),
-                                             c.get( c.YEAR ),
-                                             c.get( c.MONTH ) + 1,
-                                             c.get( c.DAY_OF_MONTH ),
+                                             c.get( Calendar.YEAR ),
+                                             c.get( Calendar.MONTH ) + 1,
+                                             c.get( Calendar.DAY_OF_MONTH ),
                                              ts,
                                              extension );
 
@@ -641,7 +641,6 @@ public class Main {
     private static long getOptAsTimeInMillis( String v ) {
 
         String opt = getOpt( v );
-
         if ( opt == null )
             return -1;
         
@@ -744,8 +743,8 @@ public class Main {
 
         //First. Determine which API you'd like to use.  
 
-        Config       config   = null;
-        BaseClient   client   = null;
+        Config<? extends BaseResult>       config   = null;
+        BaseClient<? extends BaseResult>   client   = null;
 
         if ( api.startsWith( "feed" ) ) {
             config = new FeedConfig();

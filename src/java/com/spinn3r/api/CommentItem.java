@@ -16,15 +16,12 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
-import java.io.*;
-import java.net.*;
+import static com.spinn3r.api.XMLUtils.NS_COMMENT;
+import static com.spinn3r.api.XMLUtils.getElementCDATAByTagName;
 
-import org.w3c.dom.*;
+import org.w3c.dom.Element;
 
 import com.spinn3r.api.protobuf.ContentApi;
-
-import static com.spinn3r.api.XMLUtils.*;
 
 /**
  * Represents a comment item returned from the API.

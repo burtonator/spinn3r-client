@@ -22,11 +22,8 @@
 
 package com.spinn3r.api;
 
-import static com.spinn3r.api.XMLUtils.getElementByTagName;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -259,10 +256,6 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         result.setRequestLimit( request_limit );
 
 
-        long before = System.currentTimeMillis();
-
-        long call_before = System.currentTimeMillis();
-
         URLConnection conn = getConnection( resource );
 
         result.setConnection( conn );
@@ -319,7 +312,6 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
             if ( GZIP_ENCODING.equals( conn.getContentEncoding() ) )
                 result.setIsCompressed( true );
 
-            String content_type = conn.getContentType();
 
             InputStream is = result.getInputStream();
 
@@ -454,7 +446,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
     	return entries;
     }
 
-    public ContentApi.Response doProtobufFetch( InputStream inputStream, Config config ) throws IOException, InterruptedException {
+    public ContentApi.Response doProtobufFetch( InputStream inputStream, Config<?> config ) throws IOException, InterruptedException {
         CodedInputStream cis = CodedInputStream.newInstance( inputStream );
         cis.setSizeLimit( PROTOBUF_SIZE_LIMIT );
         return ContentApi.Response.parseFrom( cis );
@@ -481,12 +473,8 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
             // and lightweight.
             //
             // Another advantage to DOM is that it's very portable.
-
-            long before = System.currentTimeMillis();
             
             Document doc = parser.parse( inputStream );
-
-            long after = System.currentTimeMillis();
             
             return doc;
 
@@ -555,8 +543,6 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
     protected List<ResultType> xmlParse( Document doc, Config<ResultType> config ) throws Exception {
 
         Element root = (Element)doc.getFirstChild();
-
-        Element channel = getElementByTagName( root, "channel" );
 
         List<ResultType> result = new ArrayList<ResultType>();
 
@@ -628,7 +614,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
      */
     public static Map<String,String> getopt( String[] args ) {
 
-        Map<String,String> result = new HashMap();
+        Map<String,String> result = new HashMap<String, String>();
         
         for( String arg : args ) {
 
