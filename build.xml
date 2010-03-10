@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<project name="spinn3r" xmlns:ivy="antlib:org.apache.ivy.ant" default="jar" basedir=".">
+<project name="spinn3r" default="jar" basedir=".">
 
     <property environment="env"/>
 
@@ -20,10 +20,6 @@
         </fileset>
 
     </path>
-	
-	<target name="resolve" description="--> retrieve dependencies with ivy">
-	        <ivy:retrieve />
-	</target>
 	
 	<target name="compile-protobuf">
 	      <exec executable="protoc">
