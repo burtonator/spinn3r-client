@@ -4,7 +4,7 @@ import java.net.URLConnection;
 
 
 
-public class PartailBaseClientResult<ResultType> {
+public class PartialBaseClientResult<ResultType> {
 
  
     private Config<ResultType> config = null;
@@ -13,13 +13,13 @@ public class PartailBaseClientResult<ResultType> {
     private String nextRequestURL = null;
 
     private boolean hasMoreResults        = true;
-    private boolean hasMoreResultsHeadder = false;
+    private boolean hasMoreResultsHeader = false;
 
     private int requestLimit = -1;
 
     private URLConnection connection = null;
 
-    public PartailBaseClientResult ( Config<ResultType> config_value ) {
+    public PartialBaseClientResult( Config<ResultType> config_value ) {
         config = config_value;
     }
 
@@ -101,8 +101,8 @@ public class PartailBaseClientResult<ResultType> {
      * Return true if more results are available.
      *
      */
-    public boolean getHasMoreResultsHeadder() {
-        return hasMoreResultsHeadder;
+    public boolean getHasMoreResultsHeader() {
+        return hasMoreResultsHeader;
     }
 
 
@@ -110,8 +110,8 @@ public class PartailBaseClientResult<ResultType> {
      * Set if more results are available.
      *
      */
-    void setHasMoreResultsHeadder( boolean value ) {
-        hasMoreResultsHeadder = value;
+    void setHasMoreResultsHeader( boolean value ) {
+        hasMoreResultsHeader = value;
     }
 
  
