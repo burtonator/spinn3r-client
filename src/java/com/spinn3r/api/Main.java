@@ -23,6 +23,7 @@ import java.util.regex.*;
 
 import com.spinn3r.api.Config.Format;
 import com.spinn3r.api.util.*;
+import org.apache.commons.io.IOUtils;
 
 /**
  * <a href="http://spinn3r.com">Spinn3r</a> command line debug client for
@@ -149,8 +150,6 @@ public class Main<T extends BaseResult> {
     private static PerformanceSampler sampler5   = new PerformanceSampler( 5L  * 60L * 1000L );
     private static PerformanceSampler sampler15  = new PerformanceSampler( 15L * 60L * 1000L );
     
-
-    public Main () {}
 
     /**
      * Parse the 'after' param from a request URL as a timestamp.
@@ -589,7 +588,7 @@ public class Main<T extends BaseResult> {
             //swap in the new file, don't expose it until it's fully written.
             file = new File( file.getPath() + ".tmp" ) ;
 
-            // getInputStream takes a flag indecating if we want compressed
+            // getInputStream takes a flag indicating if we want compressed
             // data or not. So if want to save compressed don't decompress
             InputStream is = client.getInputStream( !saveCompressed );
 
@@ -597,14 +596,16 @@ public class Main<T extends BaseResult> {
 
             byte[] data = new byte[ 2048 ];
 
-            int readCount = 0;
-            
-            while( ( readCount = is.read( data )) > 0 ) {
-                os.write( data, 0, readCount );
+            int readCount;
+
+            try {
+                while( ( readCount = is.read( data )) >= 0 ) {
+                    os.write( data, 0, readCount );
+                }
+            } finally {
+                IOUtils.closeQuietly(is);
+                IOUtils.closeQuietly(os);
             }
-            
-            is.close();
-            os.close();
 
             //now perform the final rename.
             File dest = new File( file.getPath().replaceAll( "\\.tmp$" , "" ) );

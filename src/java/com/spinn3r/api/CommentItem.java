@@ -122,7 +122,7 @@ mornin     *
     protected void parseItem ( Element current ) throws Exception {
         
         // <comment:permalink>http://www.techcrunch.com/2009/08/24/apple-will-approve-rhapsodys-iphone-app-but-it-will-still-be-a-dud/</comment:permalink>
-        // <comment:permalink_title>Apple Will Approve Rhapsody’s iPhone App, But It Will Still Be A Dud</comment:permalink_title>
+        // <comment:permalink_title>Apple Will Approve Rhapsody's iPhone App, But It Will Still Be A Dud</comment:permalink_title>
         // <comment:permalink_hashcode>6OQAltp-n-o</comment:permalink_hashcode>
 
         setCommentPermalink( getElementCDATAByTagName( current, "permalink", NS_COMMENT ) );
