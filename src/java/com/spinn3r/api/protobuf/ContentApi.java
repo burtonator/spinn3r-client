@@ -8535,13 +8535,6 @@ public final class ContentApi {
     public boolean hasRequestId() { return hasRequestId; }
     public java.lang.String getRequestId() { return requestId_; }
     
-    // required int32 item_count = 3;
-    public static final int ITEM_COUNT_FIELD_NUMBER = 3;
-    private boolean hasItemCount;
-    private int itemCount_ = 0;
-    public boolean hasItemCount() { return hasItemCount; }
-    public int getItemCount() { return itemCount_; }
-    
     // optional string start_date = 4;
     public static final int START_DATE_FIELD_NUMBER = 4;
     private boolean hasStartDate;
@@ -8561,7 +8554,6 @@ public final class ContentApi {
     public final boolean isInitialized() {
       if (!hasVersion) return false;
       if (!hasRequestId) return false;
-      if (!hasItemCount) return false;
       return true;
     }
     
@@ -8573,9 +8565,6 @@ public final class ContentApi {
       }
       if (hasRequestId()) {
         output.writeString(2, getRequestId());
-      }
-      if (hasItemCount()) {
-        output.writeInt32(3, getItemCount());
       }
       if (hasStartDate()) {
         output.writeString(4, getStartDate());
@@ -8599,10 +8588,6 @@ public final class ContentApi {
       if (hasRequestId()) {
         size += com.google.protobuf.CodedOutputStream
           .computeStringSize(2, getRequestId());
-      }
-      if (hasItemCount()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(3, getItemCount());
       }
       if (hasStartDate()) {
         size += com.google.protobuf.CodedOutputStream
@@ -8776,9 +8761,6 @@ public final class ContentApi {
         if (other.hasRequestId()) {
           setRequestId(other.getRequestId());
         }
-        if (other.hasItemCount()) {
-          setItemCount(other.getItemCount());
-        }
         if (other.hasStartDate()) {
           setStartDate(other.getStartDate());
         }
@@ -8816,10 +8798,6 @@ public final class ContentApi {
             }
             case 18: {
               setRequestId(input.readString());
-              break;
-            }
-            case 24: {
-              setItemCount(input.readInt32());
               break;
             }
             case 34: {
@@ -8874,24 +8852,6 @@ public final class ContentApi {
       public Builder clearRequestId() {
         result.hasRequestId = false;
         result.requestId_ = getDefaultInstance().getRequestId();
-        return this;
-      }
-      
-      // required int32 item_count = 3;
-      public boolean hasItemCount() {
-        return result.hasItemCount();
-      }
-      public int getItemCount() {
-        return result.getItemCount();
-      }
-      public Builder setItemCount(int value) {
-        result.hasItemCount = true;
-        result.itemCount_ = value;
-        return this;
-      }
-      public Builder clearItemCount() {
-        result.hasItemCount = false;
-        result.itemCount_ = 0;
         return this;
       }
       
@@ -9095,11 +9055,10 @@ public final class ContentApi {
       "ent\"y\n\010Response\022\023\n\013request_url\030\001 \001(\t\022\034\n\024",
       "previous_request_url\030\002 \001(\t\022\030\n\020next_reque" +
       "st_url\030\003 \001(\t\022 \n\005entry\030\004 \003(\0132\021.contentApi" +
-      ".Entry\"q\n\021ProtoStreamHeader\022\017\n\007version\030\001" +
-      " \002(\t\022\021\n\trequestId\030\002 \002(\t\022\022\n\nitem_count\030\003 " +
-      "\002(\005\022\022\n\nstart_date\030\004 \001(\t\022\020\n\010end_date\030\005 \001(" +
-      "\tB&\n\030com.spinn3r.api.protobufB\nContentAp" +
-      "i"
+      ".Entry\"]\n\021ProtoStreamHeader\022\017\n\007version\030\001" +
+      " \002(\t\022\021\n\trequestId\030\002 \002(\t\022\022\n\nstart_date\030\004 " +
+      "\001(\t\022\020\n\010end_date\030\005 \001(\tB&\n\030com.spinn3r.api" +
+      ".protobufB\nContentApi"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -9207,7 +9166,7 @@ public final class ContentApi {
           internal_static_contentApi_ProtoStreamHeader_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_contentApi_ProtoStreamHeader_descriptor,
-              new java.lang.String[] { "Version", "RequestId", "ItemCount", "StartDate", "EndDate", },
+              new java.lang.String[] { "Version", "RequestId", "StartDate", "EndDate", },
               com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader.class,
               com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader.Builder.class);
           return null;

@@ -74,6 +74,8 @@ public class PartialBaseClientResult<ResultType> {
             String path = next.substring( next.indexOf( "/", "http://".length() ), next.length() );
             next = String.format( "http://%s%s", config.getHost(), path );
         }
+        
+        config.setNextRequestURL(next);
 
         this.nextRequestURL = next;
     }

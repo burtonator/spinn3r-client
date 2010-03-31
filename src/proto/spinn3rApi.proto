@@ -184,7 +184,6 @@ message Response {
 message ProtoStreamHeader {
   required string version 		= 1;
   required string requestId 	= 2;
-  required int32  item_count 	= 3;
   optional string start_date 	= 4;
   optional string end_date 		= 5;
 }

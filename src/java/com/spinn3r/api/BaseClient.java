@@ -434,24 +434,21 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
     {
     	CodedInputStream cis = CodedInputStream.newInstance( inputStream );
         cis.setSizeLimit( PROTOBUF_SIZE_LIMIT );
-        ProtoStreamHeader header;
         
     	List<ContentApi.Entry> entries;
-    	int size, numEntries;
+    	int size;
 
     	
     	size = ByteBuffer.wrap(cis.readRawBytes(4)).getInt();
     	
-    	header = ProtoStreamHeader.parseFrom(cis.readRawBytes(size));
-    	numEntries = header.getItemCount();
-    	entries = new ArrayList<ContentApi.Entry>(numEntries);
+    	ProtoStreamHeader.parseFrom(cis.readRawBytes(size));
+    	entries = new ArrayList<ContentApi.Entry>();
     	
-    	for(int i = 0; i < numEntries; i++)
-    	{
-    		byte[] data = cis.readRawBytes(4);
-    		size = ByteBuffer.wrap(data).getInt();
-    		
+    	size = ByteBuffer.wrap(cis.readRawBytes(4)).getInt();
+    	while(size > 0)
+    	{    		
         	entries.add(ContentApi.Entry.parseFrom(cis.readRawBytes(size)));
+        	size = ByteBuffer.wrap(cis.readRawBytes(4)).getInt();
     	}
     	
     	return entries;
