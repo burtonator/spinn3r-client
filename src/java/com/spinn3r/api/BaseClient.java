@@ -378,7 +378,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
             conn = request.openConnection();
 
             // set the UserAgent so Spinn3r know which client lib is calling.
-            conn.setRequestProperty( USER_AGENT_HEADER, USER_AGENT );
+            conn.setRequestProperty( USER_AGENT_HEADER, USER_AGENT + "; " +  getConfig().getCommandLine());
             conn.setRequestProperty( ACCEPT_ENCODING_HEADER, GZIP_ENCODING );
             conn.setConnectTimeout(20000);                        
             conn.connect();

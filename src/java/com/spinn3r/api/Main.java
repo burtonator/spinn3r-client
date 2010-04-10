@@ -24,6 +24,7 @@ import java.util.regex.*;
 import com.spinn3r.api.Config.Format;
 import com.spinn3r.api.util.*;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * <a href="http://spinn3r.com">Spinn3r</a> command line debug client for
@@ -765,6 +766,7 @@ public class Main<T extends BaseResult> {
         }
 
         config.setApi( api );
+        config.setCommandLine(StringUtils.join(args, " "));
         
         long    after   = -1;
 
