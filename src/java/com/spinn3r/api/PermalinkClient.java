@@ -16,6 +16,8 @@
 
 package com.spinn3r.api;
 
+import java.util.Set;
+
 
 /**
  * <p> Reference API implementation for fetching Permalink content form Spinn3r.
@@ -24,6 +26,15 @@ package com.spinn3r.api;
  * thread safety by using <code>synchronized</code> or
  * <code>java.util.concurrent</code> constructs.
  */
-public class PermalinkClient extends LegacyWrapperClient<BaseItem> {
-
+public class PermalinkClient extends LegacyWrapperClient<BaseItem> 
+{
+	public PermalinkClient()
+	{
+		super();
+	}
+	
+	PermalinkClient(Set<String> restoreURLS)
+	{
+		super(restoreURLS);
+	}
 }
