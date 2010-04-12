@@ -3,8 +3,12 @@ package com.spinn3r.api;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.zip.GZIPInputStream;
 
 import org.w3c.dom.Document;
@@ -19,17 +23,25 @@ public abstract class LegacyWrapperClient <ResultType extends BaseResult> extend
     private   long                         sleepDuration = 0;
 
     private   ParallelFetchHelper<ResultType> parallelFetcher = null;
+    
+    private   final Collection<String>           restartURLS;
+    private   final Queue<String>                restartURLSQueue;
 
     public LegacyWrapperClient () {
-        result = new BaseClientResult<ResultType> ( null );
+        this(Collections.<String>emptySet());
     }
-
+    
+    LegacyWrapperClient(Collection<String> restartURLS)
+    {
+    	this.restartURLS = restartURLS;
+    	restartURLSQueue = new LinkedList<String>(restartURLS);
+    	result = new BaseClientResult<ResultType> ( null );
+    }
 
     public void fetch() throws IOException,
                                ParseException,
                                InterruptedException {
-
-
+    	
         if ( parallelFetcher == null ) {
             parallelFetcher = new ParallelFetchHelper<ResultType> ( this, config, RESULT_BUFFER_SIZE, PARALLELISM );
             parallelFetcher.start();
@@ -46,8 +58,13 @@ public abstract class LegacyWrapperClient <ResultType extends BaseResult> extend
 
         try {
             result = parallelFetcher.fetch();
-
-            config.setNextRequestURL( result.getNextRequestURL() );
+            
+            String nextURL = result.getNextRequestURL();
+            if(!restartURLS.contains(nextURL))
+            	restartURLSQueue.add(nextURL);
+            
+            // I that it's theoretically impossible for the queue to be out of items
+            config.setNextRequestURL( restartURLSQueue.poll() );
         }
 
         catch ( Exception e ) {
@@ -116,8 +133,13 @@ public abstract class LegacyWrapperClient <ResultType extends BaseResult> extend
      *
      */
     @Override
-    public void setConfig( Config<ResultType> config ) { 
+    public void setConfig( Config<ResultType> config ) {
         this.config = config;
+        
+        String firstURL = config.getFirstRequestURL();
+        if(!this.restartURLS.contains(firstURL))
+        	this.restartURLSQueue.add(firstURL);
+        this.config.setFirstRequestURL(restartURLSQueue.poll());
     }
 
     // **** Proxy Getter and setters **************************************************
