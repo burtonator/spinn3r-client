@@ -42,7 +42,7 @@ public class Factory {
         }
 
         @Provides
-        protected TransactionHistoryManager getLogManager(Provider<TrackingTransactionManager> provider) {
+        protected RotatingFileManager getLogManager(Provider<TrackingTransactionManager> provider) {
             return new RotatingFileManager(maxLogSize, provider);
         }
 
@@ -50,6 +50,11 @@ public class Factory {
         public File getTempFile() throws IOException {
             return File.createTempFile("transaction", ".log", saveDirectory);
         }
+
+		@Provides
+		protected TransactionHistoryManager getDoubleStartManager(RotatingFileManager rotatingFileManager) {
+			return new DoubleStartTransactionManager(rotatingFileManager);
+		}
 
         private final File saveDirectory;
         private final int maxLogSize;
