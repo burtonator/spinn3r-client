@@ -45,7 +45,8 @@ import org.w3c.dom.NodeList;
 import com.google.protobuf.CodedInputStream;
 import com.spinn3r.api.Config.Format;
 import com.spinn3r.api.protobuf.ContentApi;
-import com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader;
+import com.spinn3r.api.protobuf.ProtoStream.ProtoStreamHeader;
+import com.spinn3r.api.util.ProtoStreamDecoder;
 
 /**
  * Generic client support used which need to be in all APIs.
@@ -430,28 +431,20 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         
     }
     
-    public List<ContentApi.Entry> doProtoStreamFetch(InputStream inputStream, Config<?> config) throws IOException
-    {
-    	CodedInputStream cis = CodedInputStream.newInstance( inputStream );
-        cis.setSizeLimit( PROTOBUF_SIZE_LIMIT );
-        
-    	List<ContentApi.Entry> entries;
-    	int size;
+    public List<ContentApi.Entry> doProtoStreamFetch( InputStream inputStream, Config<?> config ) throws IOException {
 
+        List<ContentApi.Entry> res = new ArrayList<ContentApi.Entry> ();
+
+        ContentApi.Entry.Builder builder = ContentApi.Entry.newBuilder();
+
+        ProtoStreamDecoder<ContentApi.Entry> decoder =
+            new ProtoStreamDecoder<ContentApi.Entry> ( inputStream, builder );
+
+        for ( ContentApi.Entry entry = decoder.read() ; entry != null ; entry = decoder.read() ) {
+            res.add( entry );
+        }
     	
-    	size = ByteBuffer.wrap(cis.readRawBytes(4)).getInt();
-    	
-    	ProtoStreamHeader.parseFrom(cis.readRawBytes(size));
-    	entries = new ArrayList<ContentApi.Entry>();
-    	
-    	size = ByteBuffer.wrap(cis.readRawBytes(4)).getInt();
-    	while(size > 0)
-    	{    		
-        	entries.add(ContentApi.Entry.parseFrom(cis.readRawBytes(size)));
-        	size = ByteBuffer.wrap(cis.readRawBytes(4)).getInt();
-    	}
-    	
-    	return entries;
+    	return res;
     }
 
     public ContentApi.Response doProtobufFetch( InputStream inputStream, Config<?> config ) throws IOException, InterruptedException {
