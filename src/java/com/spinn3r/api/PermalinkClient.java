@@ -16,7 +16,7 @@
 
 package com.spinn3r.api;
 
-import java.util.Set;
+import java.util.Collection;
 
 
 /**
@@ -33,7 +33,7 @@ public class PermalinkClient extends LegacyWrapperClient<BaseItem>
 		super();
 	}
 	
-	PermalinkClient(Set<String> restoreURLS)
+	PermalinkClient(Collection<String> restoreURLS)
 	{
 		super(restoreURLS);
 	}

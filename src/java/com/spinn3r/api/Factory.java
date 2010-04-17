@@ -32,17 +32,7 @@ public class Factory {
         }
 
         @Provides
-        protected TrackingTransactionManager getTrackingLogManager(SingleFileHistoryManager log) {
-            return new TrackingTransactionManager(log);
-        }
-
-        @Provides
-        protected SingleFileHistoryManager getSingleLogManager(OutputStream os) {
-            return new SingleFileHistoryManager(os);
-        }
-
-        @Provides
-        protected RotatingFileManager getLogManager(Provider<TrackingTransactionManager> provider) {
+        protected TransactionHistoryManager getLogManager(Provider<SingleFileHistoryManager> provider) {
             return new RotatingFileManager(maxLogSize, provider);
         }
 
@@ -51,14 +41,46 @@ public class Factory {
             return File.createTempFile("transaction", ".log", saveDirectory);
         }
 
-		@Provides
-		protected TransactionHistoryManager getDoubleStartManager(RotatingFileManager rotatingFileManager) {
-			return new DoubleStartTransactionManager(rotatingFileManager);
-		}
-
         private final File saveDirectory;
         private final int maxLogSize;
 
+    }
+    
+    protected class FreshStartModule extends AbstractModule {
+        
+        @Override
+        protected void configure() {
+            bind(UniversalCounter.class).in(Singleton.class);
+        }
+        
+        @Provides
+        protected SingleFileHistoryManager getSingleLogManager(OutputStream os, UniversalCounter counter) {
+            return new SingleFileHistoryManager(os, counter);
+        }
+    }
+    
+    protected class RestartModule extends AbstractModule {
+        
+        private final long counter;
+        private final String url;
+        
+        protected RestartModule(long counter, String url) {
+            this.counter= counter;
+            this.url = url;
+        }
+        
+        @Override
+        protected void configure() {
+            bind(UniversalCounter.class).toInstance(new UniversalCounter(counter));
+        }
+        
+        @Provides
+        protected SingleFileHistoryManager getSingleLogManager(OutputStream os, UniversalCounter counter) {
+            SingleFileHistoryManager manager = new SingleFileHistoryManager(os, counter);
+            manager.log(url);
+            
+            return manager;
+        }
     }
 
     /*
@@ -70,19 +92,37 @@ public class Factory {
             bind(TransactionHistoryManager.class).to(NullLogManager.class).in(Singleton.class);
         }
     }
+    
+    private File saveDirectory;
+    private int maxLogSize;
+    
+    public void enableLogging(File saveDirectory, int maxLogSize) {
+        this.saveDirectory = saveDirectory;
+        this.maxLogSize = maxLogSize;
+    }
+    
+    
+    private long counter;
+    private String restartUrl;
+    public void enableRestart(long counter, String url) {
+        this.counter = counter;
+        this.restartUrl = url;
+    }
 
-    protected Injector getInjector(File saveDirectory, int maxLogSize) {
+    protected Injector getInjector() {
         Collection<Module> modules = new LinkedList<Module>();
 
         if (saveDirectory == null)
             modules.add(new NullLogModule());
         else
             modules.add(new LogManagerModule(saveDirectory, maxLogSize));
+        
+        if (restartUrl == null) 
+            modules.add(new FreshStartModule());
+        else
+            modules.add(new RestartModule(counter, restartUrl));
 
         return Guice.createInjector(modules);
     }
 
-    protected Injector getInjector() {
-        return getInjector(null, 0);
-    }
 }

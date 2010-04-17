@@ -9,31 +9,13 @@ package com.spinn3r.api;
  *
  */
 interface TransactionHistoryManager 
-{
+{	
 	/**
-	 * Indicate that the system has started downloading the 
-	 * given url.
+	 * Indicate that we're going to write next follwoing URL
 	 * 
 	 * @param url
 	 */
-	public void start(String url);
-	
-	/**
-	 * Indicate that the system has is finished downloading
-	 * (and saving, if necessary) the given URL
-	 * 
-	 * @param url
-	 */
-	public void end(String url);
-	
-	/**
-	 * Indicate that the system has hit an error in 
-	 * downloading the given URL.
-	 * 
-	 * @param url
-	 * @param message
-	 */
-	public void error(String url, String message);
+	public void log(String url);
 	
 	/**
 	 * Close ther log.

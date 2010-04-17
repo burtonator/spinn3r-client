@@ -14,6 +14,13 @@ import java.io.Reader;
  * 
  */
 public class LogReader {
+    
+    private boolean ignoreExceptions = true;
+    
+    public void setIgnoreExceptions(boolean ignoreExceptions) {
+        this.ignoreExceptions = ignoreExceptions;
+    }
+    
     public void read(File file, LogReaderAdapter adapter) throws Exception {
         read(new FileInputStream(file), adapter);
     }
@@ -34,8 +41,10 @@ public class LogReader {
             try {
                 read(line, adapter);
             } catch (Exception e) {
-                throw new Exception("Exception on line "
-                        + inputStream.getLineNumber(), e);
+                if(!ignoreExceptions) {
+                    throw new Exception("Exception on line "
+                            + inputStream.getLineNumber(), e);
+                }
             }
         }
     }
@@ -43,33 +52,13 @@ public class LogReader {
     private void read(String line, LogReaderAdapter adapter) throws Exception {
         String[] parts = line.split(" ");
 
-        if (parts[0].equals("start")) {
-            if (parts.length < 3)
-                throw new Exception();
+        if (parts.length < 3)
+            throw new Exception();
 
-            if (Integer.parseInt(parts[1]) != parts[2].length())
-                throw new Exception();
+        if (Integer.parseInt(parts[1]) != parts[2].length())
+            throw new Exception();
 
-            adapter.onStart(parts[2]);
-        } else if (parts[0].equals("end")) {
-            if (parts.length < 3)
-                throw new Exception();
+        adapter.onEnd(Long.parseLong(parts[0]), parts[2]);
 
-            if (Integer.parseInt(parts[1]) != parts[2].length())
-                throw new Exception();
-
-            adapter.onEnd(parts[1]);
-        } else {
-            if (parts.length < 5)
-                throw new Exception();
-
-            if (Integer.parseInt(parts[1]) != parts[2].length())
-                throw new Exception();
-
-            if (Integer.parseInt(parts[3]) != parts[4].length())
-                throw new Exception();
-
-            adapter.onError(parts[1], parts[2]);
-        }
     }
 }

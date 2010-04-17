@@ -15,41 +15,33 @@ import java.io.PrintWriter;
 class SingleFileHistoryManager implements TransactionHistoryManager {
 	
 	private final PrintWriter output;
+	private final UniversalCounter counter;
 	private int byteCount = 0;
 	
-	SingleFileHistoryManager(PrintWriter pw)
+	SingleFileHistoryManager(PrintWriter pw, UniversalCounter counter)
 	{
 		this.output = pw;
+		this.counter = counter;
 	}
 	
-	SingleFileHistoryManager(OutputStream outputStream)
+	SingleFileHistoryManager(OutputStream outputStream, UniversalCounter counter)
 	{
-		this(new PrintWriter(outputStream));
+		this(new PrintWriter(outputStream), counter);
 	}
 	
-	SingleFileHistoryManager(File file) throws FileNotFoundException
+	SingleFileHistoryManager(File file, UniversalCounter counter) throws FileNotFoundException
 	{
-		this(new FileOutputStream(file));
+		this(new FileOutputStream(file), counter);
 	}
 	
-	SingleFileHistoryManager(String filename) throws FileNotFoundException
+	SingleFileHistoryManager(String filename, UniversalCounter counter) throws FileNotFoundException
 	{
-		this(new File(filename));
+		this(new File(filename), counter);
 	}
 	
 	@Override
-	public void end(String url) {
-		write(String.format("end %d %s", url.length(), url));
-	}
-
-	@Override
-	public void error(String url, String message) {
-		write(String.format("error %d %s %d %s", url.length(), url, message.length(), message));
-	}
-
-	@Override
-	public void start(String url) {
-		write(String.format("start %d %s", url.length(), url));
+	public void log(String url) {
+		write(String.format("%d %d %s", counter.next(), url.length(), url));
 	}
 
 	@Override

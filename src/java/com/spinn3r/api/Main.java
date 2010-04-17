@@ -16,14 +16,24 @@
 
 package com.spinn3r.api;
 
-import java.util.*;
-import java.io.*;
-import java.util.regex.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
 
+import com.google.inject.internal.ImmutableList;
 import com.spinn3r.api.Config.Format;
-import com.spinn3r.api.util.*;
+import com.spinn3r.api.util.Base64;
+import com.spinn3r.api.util.MD5;
 
 /**
  * <a href="http://spinn3r.com">Spinn3r</a> command line debug client for
@@ -158,7 +168,6 @@ public class Main<T extends BaseResult> {
             15L * 60L * 1000L);
 
     private static TransactionHistoryManager logManager;
-    private static boolean first_request = true;
 
     public Main() {
     }
@@ -663,18 +672,9 @@ public class Main<T extends BaseResult> {
             file.renameTo(dest);
 
             /*
-             * Mark the next URL as started. Mark the current URL 
-             * as complete. 
-             * 
-             * There is one problem with the whole system. We don't
-             * track the first URL. It was for reasons of simple 
-             * implementation.
+             * Log the next url that we're going to do. If it flops, we can restart.
              */
-            logManager.start(client.getNextRequestURL());
-            if (!first_request) {
-                logManager.end(client.getLastRequestURL());
-            }
-            first_request = false;
+            logManager.log(client.getNextRequestURL());
 
         }
 
@@ -884,7 +884,7 @@ public class Main<T extends BaseResult> {
                 continue;
             }
 
-            if (v.startsWith("--restore")) {
+            if (v.startsWith("--recover")) {
                 restore = true;
                 continue;
             }
@@ -987,22 +987,28 @@ public class Main<T extends BaseResult> {
         }
 
         Factory factory = new Factory();
-        Set<String> restoreURL;
+        String restoreURL = null;
 
-        if (save != null) {
+        if (save != null && restore) {
             File savedir = new File(save);
             Collection<File> logFiles = getLogFiles(savedir);
-            restoreURL = getRestoreURLS(logFiles);
-
+            PermalinkLogReaderAdapter adapter = getRestoreURLS(logFiles);
+            
+            restoreURL = adapter.getLastUrl();
+            long ctr = adapter.getLastCtr();
+            
             for (File file : logFiles) {
                 file.delete();
             }
-
-            logManager = factory.getInjector(savedir, 1000000).getInstance(
-                    TransactionHistoryManager.class);
+         
+            factory.enableLogging(savedir, 1000000);
+            if(restoreURL != null)
+            {
+                factory.enableRestart(ctr, restoreURL);
+            }
+            logManager = factory.getInjector().getInstance(TransactionHistoryManager.class);
         } else {
             logManager = factory.getInjector().getInstance(TransactionHistoryManager.class);
-            restoreURL = Collections.emptySet();
         }
 
         Config<? extends BaseResult> config = null;
@@ -1022,7 +1028,7 @@ public class Main<T extends BaseResult> {
             client = new LinkClient();
         } else {
             config = new PermalinkConfig();
-            client = new PermalinkClient(restoreURL);
+            client = new PermalinkClient(restoreURL != null ? ImmutableList.of(restoreURL) : Collections.<String>emptyList());
         }
 
         config.setApi(api);
@@ -1093,17 +1099,16 @@ public class Main<T extends BaseResult> {
 
     }
 
-    private static Set<String> getRestoreURLS(Collection<? extends File> files)
+    private static PermalinkLogReaderAdapter getRestoreURLS(Collection<? extends File> files)
             throws Exception {
         PermalinkLogReaderAdapter adapter = new PermalinkLogReaderAdapter();
         LogReader logReader = new LogReader();
-
-        System.err.println(files);
+        logReader.setIgnoreExceptions(true);
 
         for (File file : files)
             logReader.read(file, adapter);
 
-        return adapter.getIncompletURLS();
+        return adapter;
     }
 
     @SuppressWarnings("unchecked")

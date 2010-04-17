@@ -13,17 +13,7 @@ public class NullLogManager implements TransactionHistoryManager {
 	}
 
 	@Override
-	public void end(String url) {
-
-	}
-
-	@Override
-	public void error(String url, String message) {
-
-	}
-
-	@Override
-	public void start(String url) {
+	public void log(String url) {
 
 	}
 
