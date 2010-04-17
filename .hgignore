@@ -5,6 +5,8 @@ syntax: glob
 compile/
 target/
 tmp/
+out/
+.idea/
 
 # switch to regexp syntax.
 syntax: regexp
