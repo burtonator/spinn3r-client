@@ -37,16 +37,16 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import sun.tools.jstat.ParserException;
-
 import com.google.protobuf.CodedInputStream;
 import com.spinn3r.api.Config.Format;
 import com.spinn3r.api.protobuf.ContentApi;
-import com.spinn3r.api.protobuf.ContentApi.ProtoStreamHeader;
+import com.spinn3r.api.protobuf.ProtoStream.ProtoStreamHeader;
+import com.spinn3r.api.util.ProtoStreamDecoder;
 
 /**
  * Generic client support used which need to be in all APIs.
@@ -154,18 +154,32 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
                                               ParseException,
                                               InterruptedException {
 
-        PartailBaseClientResult<ResultType> partial_result = partialFetch( config );
-        BaseClientResult<ResultType>        result         = compleatFetch( partial_result );
-        
-        return result;
+        PartialBaseClientResult<ResultType> partial_result = partialFetch( config );
+        try {
+            return completeFetch( partial_result );
+        } finally {
+            closeQuietly(partial_result.getConnection());
+        }
+    }
+
+    public static void closeQuietly(URLConnection conn) {
+        try {
+            if (conn != null) {
+                InputStream is = conn.getInputStream();
+                if (is != null) {
+                    is.close();
+                }
+            }
+        } catch (IOException ignore) {
+        }
     }
 
 
-    public PartailBaseClientResult<ResultType> partialFetch( Config<ResultType> config ) throws IOException,
+    public PartialBaseClientResult<ResultType> partialFetch( Config<ResultType> config ) throws IOException,
                                               ParseException,
                                               InterruptedException {
 
-        PartailBaseClientResult<ResultType> res;
+        PartialBaseClientResult<ResultType> res;
 
         int retry_ctr = 0;
         int limit     = getLimit( config );
@@ -200,9 +214,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
                 if ( e instanceof InterruptedException )
                     throw (InterruptedException)e;
 
-                IOException ioe = new IOException();
-                ioe.initCause( e );
-                throw ioe;
+                throw new IOException(e);
 
             }
             
@@ -215,12 +227,12 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
      * Fetch the API with the given FeedConfig
      * 
      * @throws IOException if there's an error with network transport.
-     * @throws ParserException if there's a problem parsing the resulting XML.
+     * @throws ParseException if there's a problem parsing the resulting XML.
      */
-    private PartailBaseClientResult<ResultType> startFetch( Config<ResultType> config, int request_limit ) throws IOException,
+    private PartialBaseClientResult<ResultType> startFetch( Config<ResultType> config, int request_limit ) throws IOException,
                                                  InterruptedException {
 
-        PartailBaseClientResult<ResultType> result = new PartailBaseClientResult<ResultType> ( config );
+        PartialBaseClientResult<ResultType> result = new PartialBaseClientResult<ResultType>( config );
 
         if ( config.getVendor() == null )
             throw new RuntimeException( "Vendor not specified" );
@@ -260,7 +272,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
 
         result.setConnection( conn );
 
-        setMoreRsults( conn, result );
+        setMoreResults( conn, result );
 
         result.setNextRequestURL( conn.getHeaderField( "X-Next-Request-URL" ) );            
 
@@ -271,16 +283,16 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
      * Fetch the API with the given FeedConfig
      * 
      * @throws IOException if there's an error with network transport.
-     * @throws ParserException if there's a problem parsing the resulting XML.
+     * @throws ParseException if there's a problem parsing the resulting XML.
      */
-    public BaseClientResult<ResultType> compleatFetch( PartailBaseClientResult<ResultType> partial_result ) throws IOException,
+    public BaseClientResult<ResultType> completeFetch( PartialBaseClientResult<ResultType> partial_result ) throws IOException,
                                                  ParseException,
                                                  InterruptedException {
 
         Config<ResultType> config             = partial_result.getConfig();
         int                request_limit      = partial_result.getRequestLimit();
         String             resource           = partial_result.getLastRequestURL();
-        boolean            has_results_header = partial_result.getHasMoreResultsHeadder();
+        boolean            has_results_header = partial_result.getHasMoreResultsHeader();
         boolean            has_more_results   = partial_result.getHasMoreResults();
         String             next_request       = partial_result.getNextRequestURL();
         
@@ -367,7 +379,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
             conn = request.openConnection();
 
             // set the UserAgent so Spinn3r know which client lib is calling.
-            conn.setRequestProperty( USER_AGENT_HEADER, USER_AGENT );
+            conn.setRequestProperty( USER_AGENT_HEADER, USER_AGENT + "; " +  getConfig().getCommandLine());
             conn.setRequestProperty( ACCEPT_ENCODING_HEADER, GZIP_ENCODING );
             conn.setConnectTimeout(20000);                        
             conn.connect();
@@ -387,15 +399,15 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         return conn;
     }
 
-    private void setMoreRsults( URLConnection conn, PartailBaseClientResult<ResultType> result ) {
+    private void setMoreResults( URLConnection conn, PartialBaseClientResult<ResultType> result ) {
 
         String more = conn.getHeaderField( X_MORE_RESULTS );
 
         if ( more == null )
-            result.setHasMoreResultsHeadder( false );
+            result.setHasMoreResultsHeader( false );
             
         else {
-            result.setHasMoreResultsHeadder( true );
+            result.setHasMoreResultsHeader( true );
 
             if ( "true".equals( more ) ) 
                 result.setHasMoreResults( true );
@@ -419,31 +431,20 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         
     }
     
-    public List<ContentApi.Entry> doProtoStreamFetch(InputStream inputStream, Config<?> config) throws IOException
-    {
-    	CodedInputStream cis = CodedInputStream.newInstance( inputStream );
-        cis.setSizeLimit( PROTOBUF_SIZE_LIMIT );
-        ProtoStreamHeader header;
-        
-    	List<ContentApi.Entry> entries;
-    	int size, numEntries;
+    public List<ContentApi.Entry> doProtoStreamFetch( InputStream inputStream, Config<?> config ) throws IOException {
 
+        List<ContentApi.Entry> res = new ArrayList<ContentApi.Entry> ();
+
+        ContentApi.Entry.Builder builder = ContentApi.Entry.newBuilder();
+
+        ProtoStreamDecoder<ContentApi.Entry> decoder =
+            new ProtoStreamDecoder<ContentApi.Entry> ( inputStream, builder );
+
+        for ( ContentApi.Entry entry = decoder.read() ; entry != null ; entry = decoder.read() ) {
+            res.add( entry );
+        }
     	
-    	size = ByteBuffer.wrap(cis.readRawBytes(4)).getInt();
-    	
-    	header = ProtoStreamHeader.parseFrom(cis.readRawBytes(size));
-    	numEntries = header.getItemCount();
-    	entries = new ArrayList<ContentApi.Entry>(numEntries);
-    	
-    	for(int i = 0; i < numEntries; i++)
-    	{
-    		byte[] data = cis.readRawBytes(4);
-    		size = ByteBuffer.wrap(data).getInt();
-    		
-        	entries.add(ContentApi.Entry.parseFrom(cis.readRawBytes(size)));
-    	}
-    	
-    	return entries;
+    	return res;
     }
 
     public ContentApi.Response doProtobufFetch( InputStream inputStream, Config<?> config ) throws IOException, InterruptedException {
@@ -511,25 +512,28 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
 
         //include length of content from the original site with contentLength
 
-        ByteArrayOutputStream bos = new ByteArrayOutputStream( 500000 ); 
-      
+        ByteArrayOutputStream bos = new ByteArrayOutputStream( 500000 );
+
         //now process the Reader...
         byte data[] = new byte[2048];
-    
+
         int readCount = 0;
 
         int total = 0;
-        
-        while( ( readCount = is.read( data )) > 0 ) {
-            bos.write( data, 0, readCount );
-            total += readCount;
+
+        try {
+            while( ( readCount = is.read( data )) >= 0 ) {
+                bos.write( data, 0, readCount );
+                total += readCount;
+            }
+        } finally {
+            IOUtils.closeQuietly(is);
+
+            result.getBs1().sample( total );
+            result.getBs5().sample( total );
+            result.getBs15().sample( total );
         }
 
-        result.getBs1().sample( total );
-        result.getBs5().sample( total );
-        result.getBs15().sample( total );
-        
-        is.close();
         bos.close();
 
         return bos.toByteArray();
@@ -669,5 +673,5 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
                             Boolean.toString( DEFAULT_HTTP_KEEPALIVE ) );
 
     }
-    
+
 }

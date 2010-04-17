@@ -50,7 +50,7 @@ public abstract class LegacyWrapperClient <ResultType extends BaseResult> extend
 
         long sleep_interval = 0;
 
-        // we don't acutally sleep hear as we allready sleeped in the parallelFetcher.
+        // we don't actually sleep hear as we already slept in the parallelFetcher.
         if ( result != null && ! result.getHasMoreResults() )
             sleep_interval = result.getConfig().getSleepInterval();
 

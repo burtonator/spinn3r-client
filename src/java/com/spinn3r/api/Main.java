@@ -32,6 +32,9 @@ import org.apache.commons.io.FileUtils;
 
 import com.google.inject.internal.ImmutableList;
 import com.spinn3r.api.Config.Format;
+import com.spinn3r.api.util.*;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import com.spinn3r.api.util.Base64;
 import com.spinn3r.api.util.MD5;
 
@@ -645,7 +648,7 @@ public class Main<T extends BaseResult> {
             // swap in the new file, don't expose it until it's fully written.
             file = new File(file.getPath() + ".tmp");
 
-            // getInputStream takes a flag indecating if we want compressed
+            // getInputStream takes a flag indicating if we want compressed
             // data or not. So if want to save compressed don't decompress
             InputStream is = client.getInputStream(!saveCompressed);
 
@@ -653,10 +656,15 @@ public class Main<T extends BaseResult> {
 
             byte[] data = new byte[2048];
 
-            int readCount = 0;
+            int readCount;
 
-            while ((readCount = is.read(data)) > 0) {
-                os.write(data, 0, readCount);
+            try {
+                while( ( readCount = is.read( data )) >= 0 ) {
+                    os.write( data, 0, readCount );
+                }
+            } finally {
+                IOUtils.closeQuietly(is);
+                IOUtils.closeQuietly(os);
             }
 
             is.close();
@@ -1031,6 +1039,8 @@ public class Main<T extends BaseResult> {
             client = new PermalinkClient(restoreURL != null ? ImmutableList.of(restoreURL) : Collections.<String>emptyList());
         }
 
+        config.setCommandLine(StringUtils.join(args, " "));
+        
         config.setApi(api);
         if (limit != -1)
             config.setLimit(limit);

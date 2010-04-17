@@ -140,8 +140,7 @@ public class ParallelFetchHelper<ResultType extends BaseResult> {
 
                 try {
 
-                    PartailBaseClientResult<WorkResultType> partial_result = client
-                            .partialFetch(config);
+                    PartialBaseClientResult<WorkResultType> partial_result = client.partialFetch( config );
 
                     if (enqueued_next == false) {
                         Config<WorkResultType> next_config = config.clone();
@@ -157,27 +156,28 @@ public class ParallelFetchHelper<ResultType extends BaseResult> {
                         WorkUnit<WorkResultType> work = new WorkUnit<WorkResultType>(
                                 client, next_config, helper, sleep);
 
-                        // BUG: one bad thing about this is that we could stall
-                        // the connection hear
-                        // if the client stopes taking out results.
-                        helper.enqueue(work);
+                        // BUG: one bad thing about this is that we could stall the connection hear
+                        //      if the client stops taking out results.
+                        helper.enqueue( work );
                     }
 
                     enqueued_next = true;
 
-                    result = client.compleatFetch(partial_result);
+                    try {
+                        result = client.completeFetch( partial_result );
+                    } finally {
+                        BaseClient.closeQuietly(partial_result.getConnection());
+                    }
 
                     break;
                 }
-
-                catch (Exception e) {
+                catch ( Exception e ) {
                     // BUG: should log hear
                     if (retry_count > MAX_RETRY_COUNT)
                         throw e;
                     else
                         continue;
                 }
-
                 finally {
                     retry_count++;
                 }

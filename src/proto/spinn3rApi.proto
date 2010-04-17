@@ -181,17 +181,10 @@ message Response {
   repeated Entry  entry                = 4;
 }
 
-message ProtoStreamHeader {
-  required string version 		= 1;
-  required string requestId 	= 2;
-  required int32  item_count 	= 3;
-  optional string start_date 	= 4;
-  optional string end_date 		= 5;
-}
 
 /**
  * 
- * lang: 
+ * Lang: 
  * 
  * The twitter/user specified language.  This might be incorrect but we like to
  * preserve all metadata.

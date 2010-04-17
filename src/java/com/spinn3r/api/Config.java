@@ -85,6 +85,7 @@ public abstract class Config <ResultType> implements Cloneable {
     private Format         format              = Format.RSS;
     private String         host                = DEFAULT_HOST;
     private boolean        disableParse        = false;
+    private String         commandLine         = "";
 
 
     /**
@@ -414,6 +415,25 @@ public abstract class Config <ResultType> implements Cloneable {
      */
     public void setApi( String api ) { 
         this.api = api;
+    }
+    
+    
+    /**
+     * Set the value of the command Line
+     * 
+     * @param commandLine
+     */
+    public void setCommandLine(String commandLine) {
+        this.commandLine = commandLine;
+    }
+    
+    /**
+     * Get the command Line of the application
+     * 
+     * @return
+     */
+    public String getCommandLine() {
+        return commandLine;
     }
 
 
