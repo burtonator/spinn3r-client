@@ -2,15 +2,14 @@ package com.spinn3r.api.util;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.ByteBuffer;
 import java.util.Collection;
 import java.util.Map;
 
-import com.spinn3r.api.protobuf.ProtoStream;
 import com.google.protobuf.AbstractMessageLite;
+import com.spinn3r.api.protobuf.ProtoStream;
 
 
-public class ProtoStreamEncoder implements Encoder<AbstractMessageLite> {
+public class ProtoStreamEncoder<T extends AbstractMessageLite> implements Encoder<T> {
     
     private static final String VERSION = "1.0";
     
@@ -51,8 +50,8 @@ public class ProtoStreamEncoder implements Encoder<AbstractMessageLite> {
 
         if ( applationHeadders != null ) {
 
-            ProtoStream.ApplacationHeader.Builder subBuilder =
-                ProtoStream.ApplacationHeader.newBuilder();
+            ProtoStream.ApplicationHeader.Builder subBuilder =
+                ProtoStream.ApplicationHeader.newBuilder();
 
             for ( String name : applationHeadders.keySet() ) {
                 subBuilder.clear();
@@ -64,7 +63,7 @@ public class ProtoStreamEncoder implements Encoder<AbstractMessageLite> {
                 if ( value != null )
                     subBuilder.setValue( value );
             
-                builder.addApplacationHeader( subBuilder.build() );
+                builder.addApplicationHeader( subBuilder.build() );
             }
         } 
 
@@ -75,7 +74,7 @@ public class ProtoStreamEncoder implements Encoder<AbstractMessageLite> {
     
 
     @Override
-    public void write ( AbstractMessageLite entry ) 
+    public void write ( T entry ) 
         throws IOException {    
 
         _entryDelimiter.writeDelimitedTo( _outputStream );
@@ -84,10 +83,10 @@ public class ProtoStreamEncoder implements Encoder<AbstractMessageLite> {
     
 
     @Override
-    public void writeAll ( Collection<AbstractMessageLite> entries )
+    public void writeAll ( Collection<? extends T> entries )
         throws IOException {
         
-        for ( AbstractMessageLite entry : entries )
+        for ( T entry : entries )
             write( entry );
     }
 

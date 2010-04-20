@@ -7,7 +7,7 @@ package protoStream;
 option java_package         = "com.spinn3r.api.protobuf";
 option java_outer_classname = "ProtoStream";
 
-message ApplacationHeader {
+message ApplicationHeader {
   required string name  = 1;
   optional string value = 2;
 }
@@ -17,7 +17,7 @@ message ProtoStreamHeader {
   required string default_entry_type = 2; // the type of entries in this stream
 
   // applacation spisific header fealds
-  repeated ApplacationHeader applacation_header = 3;
+  repeated ApplicationHeader application_header = 3;
 }
 
 message ProtoStreamDelimiter {
