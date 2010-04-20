@@ -3,10 +3,8 @@ package com.spinn3r.api.util;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.spinn3r.api.protobuf.ProtoStream;
 import com.google.protobuf.AbstractMessageLite;
 import com.google.protobuf.Message.Builder;
-
 import com.spinn3r.api.protobuf.ProtoStream.ProtoStreamDelimiter;
 import com.spinn3r.api.protobuf.ProtoStream.ProtoStreamHeader;
 
@@ -20,15 +18,23 @@ public class ProtoStreamDecoder<T extends AbstractMessageLite> implements Decode
 
     private final InputStream _input;
     private final Builder     _builder;
+    
+    private boolean initialized = false;
 
 
-    public ProtoStreamDecoder ( InputStream input, Builder builder ) 
-        throws IOException {
+    public ProtoStreamDecoder ( InputStream input, Builder builder ) {
 
         _input   = input;
         _builder = builder;
-
-        String expectedType = builder.getDescriptorForType().getFullName();
+       
+    }
+    
+    private void init() throws IOException {
+        
+        if(initialized)
+            return;
+        
+        String expectedType = _builder.getDescriptorForType().getFullName();
 
         ProtoStreamHeader.Builder headerBuilder =
             ProtoStreamHeader.newBuilder();
@@ -51,11 +57,14 @@ public class ProtoStreamDecoder<T extends AbstractMessageLite> implements Decode
            throw new ProtoStreamDecoderExcption ( msg );
        }
        
+       initialized = true;
     }
 
-
+    @SuppressWarnings("unchecked")
     public T read ( )
         throws IOException {
+        
+        init();
 
         T res = null;
 
@@ -73,6 +82,7 @@ public class ProtoStreamDecoder<T extends AbstractMessageLite> implements Decode
 
             builder.mergeDelimitedFrom( _input );
 
+            
             res = (T)builder.build();
         }
 

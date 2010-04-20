@@ -25,7 +25,7 @@ public interface Encoder<E> {
 	 * @param entries
 	 * @throws IOException
 	 */
-	public void writeAll ( Collection<E> entries ) throws IOException;
+	public void writeAll ( Collection<? extends E> entries ) throws IOException;
 	
 	/**
 	 * Signal that there are to be no more entries. For some implementations 
