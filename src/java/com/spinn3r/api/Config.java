@@ -35,7 +35,7 @@ public class Config {
      * Default number of results to fetch.
      *
      */
-    public static int      DEFAULT_LIMIT       = -1;
+    public static int      DEFAULT_LIMIT       = 1000;
 
     /**
      * When fetching the API this specifies the default version to return.
@@ -182,22 +182,13 @@ public class Config {
      * 
      * Set the value of <code>limit</code>.
      *
-     * @deprecated This method will be changing to protected in the future.
-     * We're going to remove the option for users to set the limit on the number
-     * of items per response as we have found this to cause problems in
-     * production applications.  Having Spinn3r select the optimal values has
+     * @deprecated This method no longer has any effect. 
+     * Having Spinn3r select the optimal values has
      * turned out to be better for everyone involved and yielded much higher
      * performance.
      */
     public void setLimit( int limit ) {
 
-        // NOTE: there are now LEGIT reasons to use a limit of 1 especially when
-        // using the .entry() API
-        
-        //if ( limit < 10 )
-        //    throw new IllegalArgumentException( "Minimum limit is 10." );
-        
-        this.limit = limit;
     }
 
     /**
