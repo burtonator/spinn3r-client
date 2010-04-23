@@ -28,9 +28,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +38,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -45,7 +46,6 @@ import org.w3c.dom.NodeList;
 import com.google.protobuf.CodedInputStream;
 import com.spinn3r.api.Config.Format;
 import com.spinn3r.api.protobuf.ContentApi;
-import com.spinn3r.api.protobuf.ProtoStream.ProtoStreamHeader;
 import com.spinn3r.api.util.ProtoStreamDecoder;
 
 /**
@@ -145,6 +145,11 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
      * everything is to spinn3r.com.
      */
     public static final boolean DEFAULT_HTTP_KEEPALIVE = true;
+    
+    /**
+     * Keeps track of the number of connections that this client has used.
+     */
+    private long connectionCount = 0;
 
     abstract public boolean getIsCompressed();
     
@@ -260,6 +265,9 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         //on the client but with the optimial limit performance optimization
         //this is impossible.
         resource = setParam( resource, "limit", request_limit );
+        
+        // add a connection number to the vendor code
+        resource = addConnectionNumber(resource);
 
         // store the last requested URL so we can expose this to the caller for
         // debug purposes.
@@ -277,6 +285,36 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         result.setNextRequestURL( conn.getHeaderField( "X-Next-Request-URL" ) );            
 
         return result;
+    }
+    
+    private String addConnectionNumber(String url) {
+        
+        String[] parts = url.split("\\?");
+        
+        if(parts.length < 2) {
+            return url;
+        }
+        
+        String newURL = parts[0] + "?";
+        List<String> newParams = new LinkedList<String>();
+        
+        for(String param : parts[1].split("&")) {
+            String[] paramParts = param.split("=");
+            
+            if(paramParts.length >= 2) {
+                if(paramParts[0].equals("vendor")) {
+                    newParams.add(String.format("vendor=%s[%d]", getConfig().getVendor(), 
+                            connectionCount++ % LegacyWrapperClient.PARALLELISM));
+                } else {
+                    newParams.add(param);
+                }
+            } 
+            else {
+                newParams.add(param);
+            }
+        }
+        
+        return newURL + StringUtils.join(newParams, "&");
     }
 
     /**

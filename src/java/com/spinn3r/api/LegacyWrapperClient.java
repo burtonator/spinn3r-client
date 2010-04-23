@@ -15,7 +15,7 @@ import org.w3c.dom.Document;
 
 public abstract class LegacyWrapperClient <ResultType extends BaseResult> extends BaseClient<ResultType> {
 
-    private static int PARALLELISM        = 4;
+    public static int PARALLELISM        = 4;
     private static int RESULT_BUFFER_SIZE = 8;
 
     protected Config<ResultType>           config        = null;
