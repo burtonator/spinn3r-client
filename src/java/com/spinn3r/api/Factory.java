@@ -112,15 +112,17 @@ public class Factory {
     protected Injector getInjector() {
         Collection<Module> modules = new LinkedList<Module>();
 
-        if (saveDirectory == null)
+        if (saveDirectory == null) {
             modules.add(new NullLogModule());
-        else
+        }
+        else {
             modules.add(new LogManagerModule(saveDirectory, maxLogSize));
+            if (restartUrl == null) 
+                modules.add(new FreshStartModule());
+            else
+                modules.add(new RestartModule(counter, restartUrl));
+        }
         
-        if (restartUrl == null) 
-            modules.add(new FreshStartModule());
-        else
-            modules.add(new RestartModule(counter, restartUrl));
 
         return Guice.createInjector(modules);
     }
