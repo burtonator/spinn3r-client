@@ -26,7 +26,7 @@ import java.util.Collection;
  * thread safety by using <code>synchronized</code> or
  * <code>java.util.concurrent</code> constructs.
  */
-public class PermalinkClient extends LegacyWrapperClient<BaseItem> 
+public class PermalinkClient extends LegacyWrapperClient<PermalinkItem> 
 {
 	public PermalinkClient()
 	{
