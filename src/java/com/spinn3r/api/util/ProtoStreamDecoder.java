@@ -2,6 +2,9 @@ package com.spinn3r.api.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import com.google.protobuf.AbstractMessageLite;
 import com.google.protobuf.Message.Builder;
@@ -92,6 +95,57 @@ public class ProtoStreamDecoder<T extends AbstractMessageLite> implements Decode
         }
 
         return res;
+    }
+
+    @Override
+    public int available() {
+        return 0;
+    }
+
+    @Override
+    public void close() throws IOException {
+        _input.close();
+    }
+
+    @Override
+    public void mark(int readAheadLimit) throws IOException {
+        throw new UnsupportedOperationException();
+        
+    }
+
+    @Override
+    public boolean markSupported() {
+        return false;
+    }
+
+    @Override
+    public Collection<? extends T> read(int len) throws IOException {
+        List<T> retval = new ArrayList<T>(len);
+        T obj;
+        int ctr = 0;
+        
+        while(ctr < len && (obj = read()) != null) {
+            retval.add(obj);
+            ctr++;
+        }
+        
+        return retval;
+    }
+
+    @Override
+    public void reset() throws IOException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public long skip(long n) throws IOException {
+        long i;
+        for(i = 0; i < n; i++) {
+            if(read() == null)
+                break;
+        }
+        
+        return i;
     }
 
 }

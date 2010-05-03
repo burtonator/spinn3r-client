@@ -1,7 +1,6 @@
 package com.spinn3r.api.util;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Collection;
 
 /**
@@ -15,11 +14,69 @@ public interface Decoder<E> {
 
 
 	/**
-	 * Write a object to the output stream.
+	 * The number of objects that may be read or skipped without blocking
 	 * 
-	 * @param entry
+	 * @return
+	 */
+	public int available();
+	
+	/** 
+	 * Close this decoder.
+	 * @throws IOException
+	 */
+	public void close() throws IOException;
+	
+	/**
+	 * Mark the present position in the stream. Subsequent calls to reset() will attempt 
+	 * to reposition the stream to this point
+	 * 
+	 * @param readAheadLimit Limit on the number of characters that may be read while still preserving the mark. 
+	 *     After reading this many objects, attempting to reset the stream may fail.
+	 * @throws IOException
+	 */
+	public void mark(int readAheadLimit) throws IOException;
+	
+	/**
+	 * Return true of the mark operation is supported.
+	 * 
+	 * @return
+	 */
+	public boolean markSupported();
+	
+	/**
+	 * Read an object from the input stream.
+	 *
 	 * @throws IOException
 	 */
 	public E read ( ) throws IOException;
+	
+	/**
+     * Read a number of objects from the input stream. Read up to
+     * len objects
+     * 
+     * @param len 
+     * @throws IOException
+     */
+	public Collection<? extends E> read( int len ) throws IOException;
+	
+	/**
+	 * Reset the stream position to the point of the previous mark.
+	 * 
+	 * @throws IOException
+	 */
+	public void reset() throws IOException;
+	
+	
+	/**
+	 * Skips over and discards n objects in the input stream. 
+	 * 
+	 * The stream, for a variety of reasons, may skip over fewer than
+	 * n objects. This method returns the actual number of objects skipped
+	 * 
+	 * @param n
+	 * @return
+	 * @throws IOException
+	 */
+	public long skip(long n) throws IOException;
 	
 }
