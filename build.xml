@@ -98,6 +98,14 @@
             </fileset>
 
         </jar>
+			 
+
+			<taskdef name="jarjar" classname="com.tonicsystems.jarjar.JarJarTask"
+        classpath="build/jarjar-1.0.jar"/>
+
+      <jarjar jarfile="target/${project}-${version}-deps.jar">
+           <zipfileset src="lib/"/>
+      </jarjar>
 
     </target>
 
