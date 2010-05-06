@@ -303,7 +303,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
             
             if(paramParts.length >= 2) {
                 if(paramParts[0].equals("vendor")) {
-                    newParams.add(String.format("vendor=%s[%d]", getConfig().getVendor(), 
+                    newParams.add(String.format("vendor=%s-%d", getConfig().getVendor(), 
                             connectionCount++ % LegacyWrapperClient.PARALLELISM));
                 } else {
                     newParams.add(param);
