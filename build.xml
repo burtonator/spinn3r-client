@@ -100,13 +100,18 @@
         </jar>
 			 
 
-			<taskdef name="jarjar" classname="com.tonicsystems.jarjar.JarJarTask"
+	  <taskdef name="jarjar" classname="com.tonicsystems.jarjar.JarJarTask"
         classpath="build/jarjar-1.0.jar"/>
-
-      <jarjar jarfile="target/${project}-${version}-deps.jar">
-           <zipfileset src="lib/"/>
+      <jarjar jarfile="target/${project}-deps-${version}.jar">
+      	<zipfileset src="lib/activation.jar"/>
+      	<zipfileset src="lib/aopalliance.jar"/>
+      	<zipfileset src="lib/commons-io-1.4.jar"/>
+      	<zipfileset src="lib/commons-lang-2.5.jar"/>
+      	<zipfileset src="lib/guice-2.0.jar"/>
+      	<zipfileset src="lib/java-xmlbuilder-0.3.jar"/>
+      	<zipfileset src="lib/protobuf-java-2.3.0.jar"/>
+      	<zipfileset src="lib/jzlib-1.0.7.jar"/>
       </jarjar>
-
     </target>
 
     <target name="site">
@@ -246,6 +251,7 @@
                 <include name="bin/api-perf"/>
                 <include name="lib/*.jar"/>
                 <include name="src/java/**"/>
+                <include name="build/**"/>
                 <include name="build.xml"/>
                 <include name="LICENSE"/>
             </fileset>
@@ -260,6 +266,8 @@
         <copy file="target/${project}-${version}.jar"
               todir="target/${project}-${version}" />
         
+        <copy file="target/${project}-deps-${version}.jar"
+              todir="target/${project}-${version}" />
         <tar destfile="target/${project}-${version}.tar">
 
             <tarfileset dir="target">

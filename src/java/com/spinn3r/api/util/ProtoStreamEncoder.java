@@ -18,6 +18,11 @@ public class ProtoStreamEncoder<T extends AbstractMessageLite> implements Encode
 
     private final OutputStream _outputStream;
     
+    public static <T extends AbstractMessageLite> ProtoStreamEncoder<T> newStreamEncoder(
+            OutputStream outputStream, Class<T> klass, Map<String,String> applicationHeaders) throws IOException {
+        
+        return new ProtoStreamEncoder<T>(outputStream, klass.getCanonicalName(), applicationHeaders);
+    }
 
     static {
 
@@ -37,7 +42,7 @@ public class ProtoStreamEncoder<T extends AbstractMessageLite> implements Encode
         _endDelimiter = builder.build();
     }
     
-    public ProtoStreamEncoder ( OutputStream outputStream, String entryType, Map<String,String> applationHeadders  ) 
+    private ProtoStreamEncoder ( OutputStream outputStream, String entryType, Map<String,String> applicationHeaders  ) 
         throws IOException {
 
         _outputStream = outputStream;
@@ -48,15 +53,15 @@ public class ProtoStreamEncoder<T extends AbstractMessageLite> implements Encode
         builder.setVersion( VERSION );
         builder.setDefaultEntryType( entryType );
 
-        if ( applationHeadders != null ) {
+        if ( applicationHeaders != null ) {
 
             ProtoStream.ApplicationHeader.Builder subBuilder =
                 ProtoStream.ApplicationHeader.newBuilder();
 
-            for ( String name : applationHeadders.keySet() ) {
+            for ( String name : applicationHeaders.keySet() ) {
                 subBuilder.clear();
 
-                String value = applationHeadders.get( name );
+                String value = applicationHeaders.get( name );
 
                 subBuilder.setName( name );
             
