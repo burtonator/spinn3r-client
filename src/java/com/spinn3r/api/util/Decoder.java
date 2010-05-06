@@ -18,7 +18,7 @@ public interface Decoder<E> {
 	 * 
 	 * @return
 	 */
-	public int available();
+	public int available() throws IOException;
 	
 	/** 
 	 * Close this decoder.
