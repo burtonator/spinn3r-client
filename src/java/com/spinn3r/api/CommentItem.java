@@ -21,12 +21,10 @@ import static com.spinn3r.api.XMLUtils.getElementCDATAByTagName;
 
 import org.w3c.dom.Element;
 
-import com.spinn3r.api.protobuf.ContentApi;
-
 /**
  * Represents a comment item returned from the API.
  */
-public class CommentItem extends BaseItem {
+public class CommentItem extends PermalinkItem {
     
     private String commentRawPublished = null;
     
@@ -37,12 +35,8 @@ public class CommentItem extends BaseItem {
     private String commentPermalink = null;
 
 
-    public CommentItem ( ContentApi.Entry entry ) {
-        throw new UnimplementedException ("protobuf support not implmented for this client");
-    }
-
-
-    public CommentItem ( Element current ) throws Exception {
+    public CommentItem ( Element current ) throws ParseException {
+        super(current);
         parseItem( current );
     }
 
@@ -119,11 +113,13 @@ mornin     *
         this.commentRawPublished = commentRawPublished;
     }
 
-    protected void parseItem ( Element current ) throws Exception {
+    protected void parseItem ( Element current ) throws ParseException {
         
         // <comment:permalink>http://www.techcrunch.com/2009/08/24/apple-will-approve-rhapsodys-iphone-app-but-it-will-still-be-a-dud/</comment:permalink>
         // <comment:permalink_title>Apple Will Approve Rhapsody's iPhone App, But It Will Still Be A Dud</comment:permalink_title>
         // <comment:permalink_hashcode>6OQAltp-n-o</comment:permalink_hashcode>
+        
+        super.parseItem(current);
 
         setCommentPermalink( getElementCDATAByTagName( current, "permalink", NS_COMMENT ) );
         setCommentPermalinkTitle( getElementCDATAByTagName( current, "permalink_title", NS_COMMENT ) );
