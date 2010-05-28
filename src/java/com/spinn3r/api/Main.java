@@ -601,7 +601,7 @@ public class Main<T extends BaseResult> {
             if (config.getFormat() == Format.PROTOBUF)
                 extension = "protobuf";
             else if(config.getFormat() == Format.PROTOSTREAM)
-                extension = "protostream"
+                extension = "protostream";
 
             if ("hierarchical".equals(save_method)) {
 
