@@ -29,12 +29,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 
 import com.google.inject.internal.ImmutableList;
 import com.spinn3r.api.Config.Format;
-import com.spinn3r.api.util.*;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import com.spinn3r.api.util.Base64;
 import com.spinn3r.api.util.MD5;
 
@@ -599,9 +598,10 @@ public class Main<T extends BaseResult> {
             String extension = "xml";
 
             // do not use .xml if the user is using protobuffer encoding
-            if (config.getFormat() == Format.PROTOBUF
-                    || config.getFormat() == Format.PROTOSTREAM)
+            if (config.getFormat() == Format.PROTOBUF)
                 extension = "protobuf";
+            else if(config.getFormat() == Format.PROTOSTREAM)
+                extension = "protostream"
 
             if ("hierarchical".equals(save_method)) {
 
