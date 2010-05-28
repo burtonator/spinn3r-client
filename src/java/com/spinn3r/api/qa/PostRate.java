@@ -16,10 +16,16 @@
 
 package com.spinn3r.api.qa;
 
-import com.spinn3r.api.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
-import java.util.*;
-import java.io.*;
+import com.spinn3r.api.BaseItem;
+import com.spinn3r.api.Client;
+import com.spinn3r.api.Config;
+import com.spinn3r.api.PermalinkClient;
+import com.spinn3r.api.PermalinkConfig;
+import com.spinn3r.api.PermalinkItem;
 
 /**
  * 
@@ -36,37 +42,34 @@ public class PostRate {
      */
     private Date last = null;
 
-    private long fetch_before = -1;
-    private long fetch_after = -1;
-
     /**
      * Keeps track of the client that the user wants to use from the command
      * line.
      */
-    private Client client = null;
+    private Client<? extends BaseItem> client = null;
 
     /**
      * Results from the last call.
      */
-    private List<BaseItem> results = null;
+    private List<? extends BaseItem> results = null;
 
     private static long start = -1;
 
-    private HashMap<Long,Integer> countRegistry = new HashMap();
+    private HashMap<Long,Integer> countRegistry = new HashMap<Long, Integer>();
 
     /**
      * Total number of downloaded items.
      */
     private int total = 0;
     
-    public PostRate( Client client ) {
+    public PostRate( Client<? extends BaseItem> client ) {
         this.client = client;
     }
     
     /**
      * Process results, handling them as necessary.
      */
-    void process( List<BaseItem> results ) throws Exception {
+    void process( List<? extends BaseItem> results ) throws Exception {
 
         //update the number of values for this item interval
         long interval = 60L * 1000L;
@@ -123,11 +126,7 @@ public class PostRate {
 
             //fetch the most recent results.  This will block if necessary.
 
-            long fetch_before = System.currentTimeMillis();
-
             client.fetch();
-
-            long fetch_after  = System.currentTimeMillis();
 
             //get the results found from the last fetch.
             results = client.getResults();
@@ -151,8 +150,8 @@ public class PostRate {
         
         String vendor  = "spinn3r-debug";
 
-        Config config = null;
-        Client client = null;
+        Config<PermalinkItem> config = null;
+        Client<PermalinkItem> client = null;
         
         //config = new FeedConfig();
         //client = new FeedClient();
