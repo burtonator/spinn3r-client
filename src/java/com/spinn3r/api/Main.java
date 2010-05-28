@@ -29,12 +29,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 
 import com.google.inject.internal.ImmutableList;
 import com.spinn3r.api.Config.Format;
-import com.spinn3r.api.util.*;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import com.spinn3r.api.util.Base64;
 import com.spinn3r.api.util.MD5;
 
@@ -599,9 +598,10 @@ public class Main<T extends BaseResult> {
             String extension = "xml";
 
             // do not use .xml if the user is using protobuffer encoding
-            if (config.getFormat() == Format.PROTOBUF
-                    || config.getFormat() == Format.PROTOSTREAM)
+            if (config.getFormat() == Format.PROTOBUF)
                 extension = "protobuf";
+            else if(config.getFormat() == Format.PROTOSTREAM)
+                extension = "protostream";
 
             if ("hierarchical".equals(save_method)) {
 
@@ -814,6 +814,10 @@ public class Main<T extends BaseResult> {
                 .println("    --use_protobuf=true   Enable protocol buffer support for permalink client (performance).");
         System.out.println();
 
+        System.out
+                .println("    --use_protostream=true Enable protocol buffer stream support for permalink client (performance).");
+        System.out.println();
+        
         // System.out.println(
         // "    --spam_probability=NN Set the lower bound for spam probability filtering.  Default(0.0)"
         // );
@@ -845,7 +849,7 @@ public class Main<T extends BaseResult> {
         // First. Determine which API you'd like to use.
 
         long after = -1;
-        Format format = Format.RSS;
+        Format format = Format.PROTOSTREAM;
         int limit = -1;
         String vendor = null;
         String remoteFilter = null;
