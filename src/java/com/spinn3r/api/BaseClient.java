@@ -504,7 +504,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         ContentApi.Entry.Builder builder = ContentApi.Entry.newBuilder();
 
         ProtoStreamDecoder<ContentApi.Entry> decoder =
-            new ProtoStreamDecoder<ContentApi.Entry> ( inputStream, builder );
+            ProtoStreamDecoder.newProtoStreamDecoder( inputStream, builder );
 
         for ( ContentApi.Entry entry = decoder.read() ; entry != null ; entry = decoder.read() ) {
             res.add( entry );
