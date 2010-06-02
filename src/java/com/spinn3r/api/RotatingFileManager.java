@@ -67,8 +67,8 @@ public class RotatingFileManager implements TransactionHistoryManager {
         
         if(closingLog != null) {
             closedBytesWritten += closingLog.bytesWritten();
-            currentLog.close();
-            currentLog = null;
+            closingLog.close();
+            closingLog = null;
         }
     }
 
