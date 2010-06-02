@@ -818,6 +818,10 @@ public class Main<T extends BaseResult> {
                 .println("    --use_protostream=true Enable protocol buffer stream support for permalink client (performance).");
         System.out.println();
         
+        System.out
+                .println("    --use_xml=true Enable rss support for permalink client.");
+        System.out.println();
+        
         // System.out.println(
         // "    --spam_probability=NN Set the lower bound for spam probability filtering.  Default(0.0)"
         // );
@@ -950,6 +954,12 @@ public class Main<T extends BaseResult> {
             if (v.startsWith("--use_protostream")) {
                 if (Boolean.parseBoolean(getOpt(v)))
                     format = Format.PROTOSTREAM;
+                continue;
+            }
+            
+            if (v.startsWith("--use_xml")) {
+                if (Boolean.parseBoolean(getOpt(v)))
+                    format = Format.RSS;
                 continue;
             }
 

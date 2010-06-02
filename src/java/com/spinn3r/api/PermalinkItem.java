@@ -226,7 +226,10 @@ public class PermalinkItem extends BaseItem {
 
             setWeblogTier( source.getTier() );
 
-            setPubDate( ISO8601DateParser.parse( permalink_entry.getLastPublished() ) );
+            if( permalink_entry.getLastPublished() != null)
+                setPubDate( ISO8601DateParser.parse( permalink_entry.getLastPublished() ) );
+            else
+                setPubDate( ISO8601DateParser.parse( permalink_entry.getDateFound() ) );
 
             //FIXME: this is wrog.
             String last_published = permalink_entry.getLastPublished();
