@@ -27,7 +27,7 @@ public class ParallelFetchHelper<ResultType extends BaseResult> {
 
         outQueue = new LinkedBlockingDeque<WorkWrapper<ResultType>>(
                 result_buffer_size);
-        workPool = Executors.newFixedThreadPool(parallelism);
+        workPool = Executors.newFixedThreadPool(parallelism, new ParallelThreadFactory() );
     }
 
     public void start() throws InterruptedException {
