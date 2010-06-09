@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ThreadFactory;
 
 public class ParallelFetchHelper<ResultType extends BaseResult> {
 
@@ -27,7 +28,8 @@ public class ParallelFetchHelper<ResultType extends BaseResult> {
 
         outQueue = new LinkedBlockingDeque<WorkWrapper<ResultType>>(
                 result_buffer_size);
-        workPool = Executors.newFixedThreadPool(parallelism);
+        workPool = Executors.newFixedThreadPool(parallelism, new ParallelThreadFactory() );
+        
     }
 
     public void start() throws InterruptedException {
@@ -189,4 +191,18 @@ public class ParallelFetchHelper<ResultType extends BaseResult> {
 
     }
 
+}
+
+class ParallelThreadFactory implements ThreadFactory {
+
+    private static ThreadGroup tg = new ThreadGroup( "spinn3r-parallel-client" );
+    
+    public Thread newThread(Runnable r) {
+
+        Thread t = new Thread( tg, r, "spinn3r-parallel-client-" + tg.activeCount() );
+        t.setDaemon( true );
+        return t;
+        
+    }
+    
 }
