@@ -578,8 +578,6 @@ public class Main<T extends BaseResult> {
 
         fetch_after = System.currentTimeMillis();
 
-        String url = config.getNextRequestURL();
-
         List<T> results = client.getResults();
 
         if (save != null) {
