@@ -611,9 +611,10 @@ public class Main<T extends BaseResult> {
             String extension = "xml";
 
             // do not use .xml if the user is using protobuffer encoding
-            if (config.getFormat() == Format.PROTOBUF
-                    || config.getFormat() == Format.PROTOSTREAM)
+            if (config.getFormat() == Format.PROTOBUF)
                 extension = "protobuf";
+            else if(config.getFormat() == Format.PROTOSTREAM)
+                extension = "protostream";
 
             if ("hierarchical".equals(save_method)) {
 
@@ -826,6 +827,14 @@ public class Main<T extends BaseResult> {
                 .println("    --use_protobuf=true   Enable protocol buffer support for permalink client (performance).");
         System.out.println();
 
+        System.out
+                .println("    --use_protostream=true Enable protocol buffer stream support for permalink client (performance).");
+        System.out.println();
+        
+        System.out
+                .println("    --use_xml=true Enable rss support for permalink client.");
+        System.out.println();
+        
         // System.out.println(
         // "    --spam_probability=NN Set the lower bound for spam probability filtering.  Default(0.0)"
         // );
@@ -857,7 +866,7 @@ public class Main<T extends BaseResult> {
         // First. Determine which API you'd like to use.
 
         long after = -1;
-        Format format = Format.RSS;
+        Format format = Format.PROTOSTREAM;
         int limit = -1;
         String vendor = null;
         String remoteFilter = null;
@@ -964,6 +973,12 @@ public class Main<T extends BaseResult> {
             if (v.startsWith("--use_protostream")) {
                 if (Boolean.parseBoolean(getOpt(v)))
                     format = Format.PROTOSTREAM;
+                continue;
+            }
+            
+            if (v.startsWith("--use_xml")) {
+                if (Boolean.parseBoolean(getOpt(v)))
+                    format = Format.RSS;
                 continue;
             }
 
