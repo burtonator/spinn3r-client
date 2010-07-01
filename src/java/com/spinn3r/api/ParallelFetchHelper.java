@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Logger;
 
 public class ParallelFetchHelper<ResultType extends BaseResult> {
 
@@ -107,6 +108,8 @@ public class ParallelFetchHelper<ResultType extends BaseResult> {
         private Config<WorkResultType> config;
         private ParallelFetchHelper<WorkResultType> helper;
         private long sleep;
+        
+        private static Logger logger = Logger.getAnonymousLogger();
 
         public WorkUnit(BaseClient<WorkResultType> client_value,
                 Config<WorkResultType> config_value,
@@ -134,6 +137,7 @@ public class ParallelFetchHelper<ResultType extends BaseResult> {
             while (true) {
 
                 if (!helper.canEnqueue()) {
+                    logger.fine("Waiting for full queue");
                     Thread.sleep(QUEUE_WAIT_SLEEP);
                     continue;
                 }
@@ -172,7 +176,9 @@ public class ParallelFetchHelper<ResultType extends BaseResult> {
                     break;
                 }
                 catch ( Exception e ) {
-                    // BUG: should log hear
+                    
+                    logger.warning(String.format("%s, retry count: %d", e.toString(), retry_count));
+                        
                     if (retry_count > MAX_RETRY_COUNT)
                         throw e;
                     else

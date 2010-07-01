@@ -25,16 +25,18 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 
 import com.google.inject.internal.ImmutableList;
 import com.spinn3r.api.Config.Format;
-import com.spinn3r.api.util.*;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import com.spinn3r.api.util.Base64;
 import com.spinn3r.api.util.MD5;
 
@@ -124,6 +126,16 @@ public class Main<T extends BaseResult> {
      * When to end processing the API.
      */
     private static long range = DEFAULT_RANGE;
+    
+    /**
+     * The logging level
+     */
+    private static Level logLevel = Level.SEVERE;
+    
+    /**
+     * Debug log file path
+     */
+    private static String debugLogFilePath;
 
     /**
      * Do we restore from the log of a previous run?
@@ -931,6 +943,12 @@ public class Main<T extends BaseResult> {
                 timing = "true".equals(getOpt(v));
                 continue;
             }
+            
+            if (v.startsWith("--debug")) {
+                logLevel = Level.FINE;
+                debugLogFilePath = getOpt(v);
+                continue;
+            }
 
             /*
              * if ( v.startsWith( "--spam_probability" ) ) {
@@ -993,6 +1011,17 @@ public class Main<T extends BaseResult> {
             System.exit(1);
 
         }
+        
+        /*
+         * Set the log level
+         */
+        Logger anonymousLogger = Logger.getAnonymousLogger();
+        anonymousLogger.setLevel(logLevel);
+        if(debugLogFilePath != null) {
+            anonymousLogger.addHandler(new FileHandler(debugLogFilePath));
+        }
+        anonymousLogger.info("Spinn3r client started");
+        Logger.getLogger("fun").fine("Test message");
 
         Factory factory = new Factory();
         String restoreURL = null;
