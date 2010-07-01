@@ -23,6 +23,7 @@ public class TestRotate {
         
         TransactionHistoryManager emptyManager = Mockito.mock(TransactionHistoryManager.class);
         
+        @SuppressWarnings("unchecked")
         Provider<TransactionHistoryManager> fakeProvider = Mockito.mock(Provider.class);
         Mockito.when(fakeProvider.get()).thenReturn(fullManager).thenReturn(emptyManager);
         

@@ -1,11 +1,11 @@
 package com.spinn3r.api;
 
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.LinkedBlockingDeque;
 import java.util.logging.Logger;
 
 public class ParallelFetchHelper<ResultType extends BaseResult> {
@@ -196,3 +196,4 @@ public class ParallelFetchHelper<ResultType extends BaseResult> {
     }
 
 }
+
