@@ -22,6 +22,11 @@ package com.spinn3r.api;
 public class ParseException extends Exception {
     
     /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      *
      */
     public ParseException( Exception cause ) {
