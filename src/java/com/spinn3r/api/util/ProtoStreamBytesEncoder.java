@@ -105,7 +105,8 @@ public class ProtoStreamBytesEncoder implements Encoder<byte[]> {
     @Override
     public void end() throws IOException {
         writeHeader();
-        _endDelimiter.writeTo(outputStream);
+        _endDelimiter.writeDelimitedTo(outputStream);
+        outputStream.flush();
     }
 
     @Override

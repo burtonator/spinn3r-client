@@ -591,6 +591,8 @@ public class Main<T extends BaseResult> {
 
         fetch_after = System.currentTimeMillis();
 
+        String url = config.getNextRequestURL();
+
         List<T> results = client.getResults();
 
         if (save != null) {
@@ -609,10 +611,9 @@ public class Main<T extends BaseResult> {
             String extension = "xml";
 
             // do not use .xml if the user is using protobuffer encoding
-            if (config.getFormat() == Format.PROTOBUF)
+            if (config.getFormat() == Format.PROTOBUF
+                    || config.getFormat() == Format.PROTOSTREAM)
                 extension = "protobuf";
-            else if(config.getFormat() == Format.PROTOSTREAM)
-                extension = "protostream";
 
             if ("hierarchical".equals(save_method)) {
 
@@ -825,14 +826,6 @@ public class Main<T extends BaseResult> {
                 .println("    --use_protobuf=true   Enable protocol buffer support for permalink client (performance).");
         System.out.println();
 
-        System.out
-                .println("    --use_protostream=true Enable protocol buffer stream support for permalink client (performance).");
-        System.out.println();
-        
-        System.out
-                .println("    --use_xml=true Enable rss support for permalink client.");
-        System.out.println();
-        
         // System.out.println(
         // "    --spam_probability=NN Set the lower bound for spam probability filtering.  Default(0.0)"
         // );
@@ -864,7 +857,7 @@ public class Main<T extends BaseResult> {
         // First. Determine which API you'd like to use.
 
         long after = -1;
-        Format format = Format.PROTOSTREAM;
+        Format format = Format.RSS;
         int limit = -1;
         String vendor = null;
         String remoteFilter = null;
@@ -973,12 +966,6 @@ public class Main<T extends BaseResult> {
                     format = Format.PROTOSTREAM;
                 continue;
             }
-            
-            if (v.startsWith("--use_xml")) {
-                if (Boolean.parseBoolean(getOpt(v)))
-                    format = Format.RSS;
-                continue;
-            }
 
             if (v.startsWith("--dump_fields=")) {
                 dumpFields = Boolean.parseBoolean(getOpt(v));
@@ -1033,8 +1020,6 @@ public class Main<T extends BaseResult> {
         if(debugLogFilePath != null) {
             anonymousLogger.addHandler(new FileHandler(debugLogFilePath));
         }
-        anonymousLogger.info("Spinn3r client started");
-        Logger.getLogger("fun").fine("Test message");
 
         Factory factory = new Factory();
         String restoreURL = null;
