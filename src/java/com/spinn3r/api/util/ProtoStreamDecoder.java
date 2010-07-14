@@ -25,6 +25,14 @@ public class ProtoStreamDecoder<T extends AbstractMessageLite> implements Decode
     
     private boolean initialized = false;
     
+    public static <K extends AbstractMessageLite> ProtoStreamDecoder<K> newDecoder(InputStream input, Provider<? extends Builder> provider) {
+        return newProtoStreamDecoder(input, provider);
+    }
+    
+    public static <K extends AbstractMessageLite> ProtoStreamDecoder<K> newDecoder(InputStream input, final Builder builder) {
+        return newProtoStreamDecoder(input, builder);
+    }
+    
     public static <K extends AbstractMessageLite> ProtoStreamDecoder<K> newProtoStreamDecoder(InputStream input, Provider<? extends Builder> provider) {
         return new ProtoStreamDecoder<K>(input, provider);
     }
@@ -69,7 +77,7 @@ public class ProtoStreamDecoder<T extends AbstractMessageLite> implements Decode
 
        String type = header.getDefaultEntryType();
        
-       if ( ! type.equals( expectedType ) ) {
+       if ( ! type.equals( expectedType ) && ! type.equals(_builderFactory.get().getDefaultInstanceForType().getClass().getCanonicalName())) {
            String msg = String.format("Type mismatch expected '%s' got '%s'\n", expectedType, type );
            throw new ProtoStreamDecoderException ( msg );
        }
