@@ -113,11 +113,6 @@ public class Main<T extends BaseResult> {
     private static int show_results = DEFAULT_SHOW_RESULTS;
 
     /**
-     * When true, filter results for each pass.
-     */
-    private static boolean show_progress = true;
-
-    /**
      * When we have a value. Only print results that match a certain pattern.
      */
     private static String filter = null;
@@ -591,8 +586,6 @@ public class Main<T extends BaseResult> {
 
         fetch_after = System.currentTimeMillis();
 
-        String url = config.getNextRequestURL();
-
         List<T> results = client.getResults();
 
         if (save != null) {
@@ -858,7 +851,6 @@ public class Main<T extends BaseResult> {
 
         long after = -1;
         Format format = Format.RSS;
-        int limit = -1;
         String vendor = null;
         String remoteFilter = null;
         Long sleep_duration = null;
@@ -906,11 +898,6 @@ public class Main<T extends BaseResult> {
 
             if (v.startsWith("--recover")) {
                 restore = true;
-                continue;
-            }
-
-            if (v.startsWith("--limit")) {
-                limit = Integer.parseInt(getOpt(v));
                 continue;
             }
 
@@ -1069,8 +1056,6 @@ public class Main<T extends BaseResult> {
         config.setCommandLine(StringUtils.join(args, " "));
         
         config.setApi(api);
-        if (limit != -1)
-            config.setLimit(limit);
         config.setFormat(format);
         config.setVendor(vendor);
         config.setHost(host);
