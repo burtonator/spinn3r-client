@@ -63,13 +63,13 @@ public class EntryDecoderFactory {
         return ProtoStreamDecoder.newProtoStreamDecoder(inputStream, BUILDER_PROVIDER);
     }
         
-    public Decoder<ContentApi.Entry> get(File ... files) {
+    public Decoder<ContentApi.Entry> get(File[] files) {
         Decoder<File> fileDecoder = new IterableDecoder<File>(files);
         
         return get(TranslateAndDecode.newDecoder(fileDecoder, FILE_TO_INPUTSTREAM));
     }
     
-    public Decoder<ContentApi.Entry> get(InputStream ... inputStreams) {
+    public Decoder<ContentApi.Entry> get(InputStream[] inputStreams) {
   
         return get(new IterableDecoder<InputStream>(inputStreams));
     }
