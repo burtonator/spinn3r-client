@@ -52,6 +52,7 @@ public class ChainDecoder<E> implements Decoder<E> {
         
         E item = currentDecoder.read();
         if(item == null) {
+            currentDecoder.close();
             currentDecoder = decoderDecoder.read();
             if(currentDecoder == null)
                 item = null;
