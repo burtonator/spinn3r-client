@@ -111,6 +111,7 @@
       	<zipfileset src="lib/java-xmlbuilder-0.3.jar"/>
       	<zipfileset src="lib/protobuf-java-2.3.0.jar"/>
       	<zipfileset src="lib/jzlib-1.0.7.jar"/>
+      	<zipfileset src="lib/guava-r05.jar"/>
       </jarjar>
     </target>
 
