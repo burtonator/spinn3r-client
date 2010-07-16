@@ -22,10 +22,13 @@
 
 package com.spinn3r.api;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -33,6 +36,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.GZIPInputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -277,6 +281,30 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
 
 
         URLConnection conn = getConnection( resource );
+        
+        /*
+         * If this is an http connection and there is an error code,
+         * return throw an error message containing the response 
+         * message.
+         */
+        if(conn instanceof HttpURLConnection) {
+            HttpURLConnection httpConn = (HttpURLConnection)conn;
+            int responseCode = httpConn.getResponseCode();
+            
+            if(responseCode >= 400) {
+                String message = "";
+                InputStream errorStream = httpConn.getErrorStream();
+                if(errorStream == null)
+                    throw new IOException(String.format("Response code %d received", responseCode));
+                
+                BufferedReader reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(errorStream)));
+                String line;
+                while((line = reader.readLine()) != null)
+                    message += line;
+                
+                throw new IOException(message);
+            }
+        }
 
         result.setConnection( conn );
 
@@ -476,7 +504,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         ContentApi.Entry.Builder builder = ContentApi.Entry.newBuilder();
 
         ProtoStreamDecoder<ContentApi.Entry> decoder =
-            new ProtoStreamDecoder<ContentApi.Entry> ( inputStream, builder );
+            ProtoStreamDecoder.newProtoStreamDecoder( inputStream, builder );
 
         for ( ContentApi.Entry entry = decoder.read() ; entry != null ; entry = decoder.read() ) {
             res.add( entry );

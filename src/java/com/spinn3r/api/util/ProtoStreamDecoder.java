@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.google.inject.Provider;
 import com.google.protobuf.AbstractMessageLite;
 import com.google.protobuf.Message.Builder;
 import com.spinn3r.api.protobuf.ProtoStream.ProtoStreamDelimiter;
@@ -20,16 +21,29 @@ public class ProtoStreamDecoder<T extends AbstractMessageLite> implements Decode
 
 
     private final InputStream _input;
-    private final Builder     _builder;
+    private final Provider<? extends Builder> _builderFactory;
     
     private boolean initialized = false;
+    
+    public static <K extends AbstractMessageLite> ProtoStreamDecoder<K> newProtoStreamDecoder(InputStream input, Provider<? extends Builder> provider) {
+        return new ProtoStreamDecoder<K>(input, provider);
+    }
+
+    public static <K extends AbstractMessageLite> ProtoStreamDecoder<K> newProtoStreamDecoder(InputStream input, final Builder builder) {
+        return newProtoStreamDecoder(input, new Provider<Builder>() {
+            public Builder get() {
+                return builder.clone().clear();
+            }
+        });
+    }
 
 
-    public ProtoStreamDecoder ( InputStream input, Builder builder ) {
+    protected ProtoStreamDecoder ( InputStream input, Provider<? extends Builder> builderFactory ) {
 
         _input   = input;
-        _builder = builder;
+        _builderFactory = builderFactory;
        
+        
     }
     
     private void init() throws IOException {
@@ -37,7 +51,7 @@ public class ProtoStreamDecoder<T extends AbstractMessageLite> implements Decode
         if(initialized)
             return;
         
-        String expectedType = _builder.getDescriptorForType().getFullName();
+        String expectedType = _builderFactory.get().getDescriptorForType().getFullName();
 
         ProtoStreamHeader.Builder headerBuilder =
             ProtoStreamHeader.newBuilder();
@@ -50,14 +64,14 @@ public class ProtoStreamDecoder<T extends AbstractMessageLite> implements Decode
 
        if ( ! version.equals( SUPPORTED_VERSION ) ) {
            String msg = String.format("Version mismatch expected '%s' got '%s'\n", SUPPORTED_VERSION, version );
-           throw new ProtoStreamDecoderExcption ( msg );
+           throw new ProtoStreamDecoderException ( msg );
        }
 
        String type = header.getDefaultEntryType();
        
        if ( ! type.equals( expectedType ) ) {
            String msg = String.format("Type mismatch expected '%s' got '%s'\n", expectedType, type );
-           throw new ProtoStreamDecoderExcption ( msg );
+           throw new ProtoStreamDecoderException ( msg );
        }
        
        initialized = true;
@@ -81,7 +95,7 @@ public class ProtoStreamDecoder<T extends AbstractMessageLite> implements Decode
             res = null;
 
         else if ( delimiter.getDelimiterType() == ProtoStreamDelimiter.DelimiterType.ENTRY ) {
-            Builder builder = _builder.clone().clear();
+            Builder builder = _builderFactory.get();
 
             builder.mergeDelimitedFrom( _input );
 
@@ -91,7 +105,7 @@ public class ProtoStreamDecoder<T extends AbstractMessageLite> implements Decode
 
         else {
             String msg = String.format("Expected delimiter type %s\n", delimiter.getDelimiterType() );
-            throw new ProtoStreamDecoderExcption ( msg );
+            throw new ProtoStreamDecoderException ( msg );
         }
 
         return res;

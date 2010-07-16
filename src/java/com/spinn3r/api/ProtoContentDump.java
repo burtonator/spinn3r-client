@@ -45,7 +45,6 @@ public class ProtoContentDump {
 
         ContentApi.Response response = ContentApi.Response.parseFrom( cis );
 
-
         for ( ContentApi.Entry entry : response.getEntryList() ) {
 
             ContentApi.Content content_object = entry.getPermalinkEntry().getContent();
@@ -55,8 +54,6 @@ public class ProtoContentDump {
 
             System.out.printf( "Link:%s\nContent:\n%s\n", href, content );
         }
-
-
 
     }
     
