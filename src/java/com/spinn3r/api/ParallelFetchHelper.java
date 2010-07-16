@@ -136,7 +136,7 @@ public class ParallelFetchHelper<ResultType extends BaseResult> {
 
             while (true) {
 
-                if (!helper.canEnqueue()) {
+                if (!enqueued_next && !helper.canEnqueue()) {
                     logger.fine("Waiting for full queue");
                     Thread.sleep(QUEUE_WAIT_SLEEP);
                     continue;
