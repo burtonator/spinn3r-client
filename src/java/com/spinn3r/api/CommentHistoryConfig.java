@@ -16,6 +16,7 @@
 
 package com.spinn3r.api;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import org.w3c.dom.Element;
@@ -198,24 +199,28 @@ public class CommentHistoryConfig extends Config<Source> {
         addParam( params, "vendor",  getVendor() );
         addParam( params, "version", getVersion() );
 
-        if ( getSource() != null )
-            addParam( params, "source",  URLEncoder.encode( getSource() ) );
+        try {
+            if ( getSource() != null )
+                addParam( params, "source",  URLEncoder.encode( getSource(), "UTF-8" ) );
 
-        if ( getPermalink() != null )
-            addParam( params, "permalink",  URLEncoder.encode( getPermalink() ) );
+            if ( getPermalink() != null )
+                addParam( params, "permalink",  URLEncoder.encode( getPermalink(), "UTF-8" ) );
 
-        if ( getFeed() != null )
-            addParam( params, "feed",  URLEncoder.encode( getFeed() ) );
+            if ( getFeed() != null )
+                addParam( params, "feed",  URLEncoder.encode( getFeed(), "UTF-8" ) );
 
-        //hashcodes
-        if ( getSourceHashcode() != null )
-            addParam( params, "source_hashcode",  URLEncoder.encode( getSourceHashcode() ) );
+            //hashcodes
+            if ( getSourceHashcode() != null )
+                addParam( params, "source_hashcode",  URLEncoder.encode( getSourceHashcode(), "UTF-8" ) );
 
-        if ( getPermalinkHashcode() != null )
-            addParam( params, "permalink_hashcode",  URLEncoder.encode( getPermalinkHashcode() ) );
+            if ( getPermalinkHashcode() != null )
+                addParam( params, "permalink_hashcode",  URLEncoder.encode( getPermalinkHashcode(), "UTF-8" ) );
 
-        if ( getFeedHashcode() != null )
-            addParam( params, "feed_hashcode",  URLEncoder.encode( getFeedHashcode() ) );
+            if ( getFeedHashcode() != null )
+                addParam( params, "feed_hashcode",  URLEncoder.encode( getFeedHashcode(), "UTF-8" ) );
+        } catch(UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
 
         String result = getRouter() + params.toString();
 
