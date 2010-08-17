@@ -850,7 +850,7 @@ public class Main<T extends BaseResult> {
         // First. Determine which API you'd like to use.
 
         long after = -1;
-        Format format = Format.RSS;
+        Format format = Format.PROTOSTREAM;
         String vendor = null;
         String remoteFilter = null;
         Long sleep_duration = null;
