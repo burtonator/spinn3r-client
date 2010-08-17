@@ -58,7 +58,7 @@ public class FeedConfig extends Config<PermalinkItem> {
 
     @Override
     public String getRouter() {
-        return String.format( "http://%s/%s/%s.getDelta?", getHost(), getFormat().toString(), BaseClient.FEED_HANDLER );
+        return String.format( "http://%s/%s/%s.getDelta?", getHost(), getFormat().getURLEntry(), BaseClient.FEED_HANDLER );
     }
 
 }
