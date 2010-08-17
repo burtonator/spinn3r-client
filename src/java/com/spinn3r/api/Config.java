@@ -87,7 +87,7 @@ public abstract class Config <ResultType> implements Cloneable {
     private String         nextRequestURL      = null;
     private boolean        skipDescription     = false;
     private String         api                 = null;
-    private Format         format              = Format.RSS;
+    private Format         format              = Format.PROTOSTREAM;
     private String         host                = DEFAULT_HOST;
     private boolean        disableParse        = false;
     private String         commandLine         = "";
