@@ -26,7 +26,7 @@ import java.security.*;
  */
 public class MD5 {
 
-    private static ThreadLocal local = new ThreadLocalMessageDigest( "MD5" );
+    private static ThreadLocal<MessageDigest> local = new ThreadLocalMessageDigest( "MD5" );
 
     public static byte[] encode( final String content ) {
 
@@ -60,7 +60,7 @@ public class MD5 {
         
 }
 
-class ThreadLocalMessageDigest extends ThreadLocal {
+class ThreadLocalMessageDigest extends ThreadLocal<MessageDigest> {
 
     private String name = null;
     
@@ -68,7 +68,7 @@ class ThreadLocalMessageDigest extends ThreadLocal {
         this.name = name;
     }
 
-    protected Object initialValue() {
+    protected MessageDigest initialValue() {
 
         try {
             

@@ -16,6 +16,7 @@
 
 package com.spinn3r.api;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import org.w3c.dom.Element;
@@ -140,8 +141,13 @@ public class FeedEntryConfig extends Config<FeedItem> {
         addParam( params, "vendor",  getVendor() );
         addParam( params, "version", getVersion() );
 
-        if ( getResource() != null )
-            addParam( params, "resource", URLEncoder.encode( getResource() ) );
+        if ( getResource() != null ) {
+            try {
+                addParam( params, "resource", URLEncoder.encode( getResource(), "UTF-8" ) );
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
         if ( getId() != null )
             addParam( params, "id", getId() );

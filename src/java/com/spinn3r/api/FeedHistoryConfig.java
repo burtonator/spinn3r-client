@@ -16,6 +16,7 @@
 
 package com.spinn3r.api;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import org.w3c.dom.Element;
@@ -154,11 +155,15 @@ public class FeedHistoryConfig extends Config<Source> {
         addParam( params, "limit",   request_limit );
         addParam( params, "vendor",  getVendor() );
         addParam( params, "version", getVersion() );
-
-        if(getSource() != null)
-        	addParam( params, "source",           URLEncoder.encode( getSource() ) , true );
-        if(getFeed() != null)
-        	addParam( params, "feed",             URLEncoder.encode( getFeed() ) , true );
+        
+        try {
+            if(getSource() != null)
+                addParam( params, "source",           URLEncoder.encode( getSource(), "UTF-8" ) , true );
+            if(getFeed() != null)
+                addParam( params, "feed",             URLEncoder.encode( getFeed(), "UTF-8" ) , true );
+        } catch(UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
         //addParam( params, "feed_hashcode",    getFeedHashcode() , true );
         //addParam( params, "source_hashcode",  getSourceHashcode() , true );
 
