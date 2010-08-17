@@ -16,6 +16,7 @@
 
 package com.spinn3r.api;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.Date;
@@ -54,7 +55,7 @@ public abstract class Config <ResultType> implements Cloneable {
     /**
      * When fetching the API this specifies the default version to return.
      */
-    public static String   DEFAULT_VERSION     = "3.3.06";
+    public static String   DEFAULT_VERSION     = "3.4.00";
 
 
     public static enum Format {
@@ -455,7 +456,11 @@ public abstract class Config <ResultType> implements Cloneable {
         String filter = getFilter();
 
         if ( filter != null ) {
-            addParam( params, "filter", URLEncoder.encode( filter ) );
+            try {
+                addParam( params, "filter", URLEncoder.encode( filter, "UTF-8" ) );
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException();
+            }
         }
 
         /*
@@ -557,8 +562,13 @@ public abstract class Config <ResultType> implements Cloneable {
         if ( optional && value == null )
             return;             
 
-        if ( value != null && urlencode )
-            value = URLEncoder.encode( value.toString() );
+        if ( value != null && urlencode ) {
+            try {
+                value = URLEncoder.encode( value.toString(), "UTF-8" );
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
+        }
         
         if ( buff.length() > 0 )
             buff.append( "&" );

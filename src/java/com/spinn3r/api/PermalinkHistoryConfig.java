@@ -16,6 +16,7 @@
 
 package com.spinn3r.api;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import org.w3c.dom.Element;
@@ -101,7 +102,11 @@ public class PermalinkHistoryConfig extends Config<Source> {
         addParam( params, "vendor",  getVendor() );
         addParam( params, "version", getVersion() );
         
-        addParam( params, "source",  URLEncoder.encode( getSource() ) );
+        try {
+            addParam( params, "source",  URLEncoder.encode( getSource(), "UTF-8" ) );
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
 
         String result = getRouter() + params.toString();
 
