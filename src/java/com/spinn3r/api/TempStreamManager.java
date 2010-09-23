@@ -27,7 +27,7 @@ class TempStreamManager implements Provider<OutputStream>
 		this.tempFileProvider = tempFileProvider;
 	}
 	
-	protected class TempOutputStream extends OutputStream
+	protected static class TempOutputStream extends OutputStream
 	{
 		private final File file;
 		private final OutputStream outputStream;
@@ -47,7 +47,8 @@ class TempStreamManager implements Provider<OutputStream>
 		@Override
 		public void close() throws IOException {
 			outputStream.close();
-			file.delete();
+			if(!file.delete())
+				throw new IOException("Unable to delete " + file.toString());
 		}
 	}
 

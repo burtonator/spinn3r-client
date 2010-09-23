@@ -29,8 +29,6 @@ public class CompressedBlob2
 	private byte[] data;
 	private final String encoding;
 	
-	private String content = null;
-	
 	
 	public CompressedBlob2(byte[] data, String encoding)
 	{
@@ -45,8 +43,6 @@ public class CompressedBlob2
      */
     public String decompress() throws EncodingException, IOException  {
 
-        if ( content != null )
-            return content;
 
         // we don't have ANYTHING to decompress so don't do any work becuase we
         // would just throw an exception.

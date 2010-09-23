@@ -18,6 +18,7 @@ package com.spinn3r.api;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Collection;
@@ -593,7 +594,8 @@ public class Main<T extends BaseResult> {
             // save the results to disk if necessary.
 
             File root = new File(save);
-            root.mkdirs();
+            if(!root.mkdirs())
+            	throw new IOException("Unable to create directory " + root.toString());
 
             long now = System.currentTimeMillis();
 
@@ -624,7 +626,8 @@ public class Main<T extends BaseResult> {
 
                 file = new File(root, path);
 
-                new File(file.getParent()).mkdirs();
+                if(!new File(file.getParent()).mkdirs())
+                	throw new IOException("Failed to create directory " + file.getParent());
 
             } else {
 
@@ -679,10 +682,12 @@ public class Main<T extends BaseResult> {
             File dest = new File(file.getPath().replaceAll("\\.tmp$", ""));
 
             if (dest.exists()) {
-                dest.delete();
+                if(!dest.delete())
+                	throw new IOException("Failed to delete " + dest.toString() );
             }
 
-            file.renameTo(dest);
+            if(!file.renameTo(dest))
+            	throw new IOException("Failed to name file");
 
             /*
              * Log the next url that we're going to do. If it flops, we can restart.
@@ -1026,7 +1031,8 @@ public class Main<T extends BaseResult> {
             long ctr = adapter.getLastCtr();
             
             for (File file : logFiles) {
-                file.delete();
+                if(!file.delete())
+                	throw new IOException("Failed to delete " + file.toString());
             }
          
             factory.enableLogging(savedir, 1000000);

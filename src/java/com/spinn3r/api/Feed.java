@@ -33,8 +33,6 @@ public class Feed extends BaseItem {
 
     int resourceStatus = -1;
     
-    String link = null;
-    
     String channelDescription = null;
     
     String channelTitle = null;
@@ -50,8 +48,6 @@ public class Feed extends BaseItem {
     Date dateFound = null;
     
     String resource = null;
-    
-    String guid = null;
 
     public Feed() {}
 

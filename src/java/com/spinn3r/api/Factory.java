@@ -19,7 +19,7 @@ public class Factory {
     /*
      * This module provides a rotating log manager when 
      */
-    protected class LogManagerModule extends AbstractModule {
+    protected static class LogManagerModule extends AbstractModule {
 
         public LogManagerModule(File saveDirectory, int maxLogSize) {
             super();
@@ -46,7 +46,7 @@ public class Factory {
 
     }
     
-    protected class FreshStartModule extends AbstractModule {
+    protected static class FreshStartModule extends AbstractModule {
         
         @Override
         protected void configure() {
@@ -59,7 +59,7 @@ public class Factory {
         }
     }
     
-    protected class RestartModule extends AbstractModule {
+    protected static class RestartModule extends AbstractModule {
         
         private final long counter;
         private final String url;
@@ -86,7 +86,7 @@ public class Factory {
     /*
      * This module provides a Null Log Manager.
      */
-    protected class NullLogModule extends AbstractModule {
+    protected static class NullLogModule extends AbstractModule {
         @Override
         protected void configure() {
             bind(TransactionHistoryManager.class).to(NullLogManager.class).in(Singleton.class);
