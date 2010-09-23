@@ -28,11 +28,14 @@ import static com.spinn3r.api.XMLUtils.getElementByTagName;
 import static com.spinn3r.api.XMLUtils.getElementCDATAByTagName;
 import static com.spinn3r.api.XMLUtils.parseTags;
 
+import java.io.IOException;
+
 import org.w3c.dom.Element;
 
 import com.spinn3r.api.protobuf.ContentApi;
 import com.spinn3r.api.util.CompressedBLOB;
 import com.spinn3r.api.util.CompressedBlob2;
+import com.spinn3r.api.util.EncodingException;
 
 /**
  * Represents a single item returned from the API.
@@ -323,8 +326,11 @@ public class PermalinkItem extends BaseItem {
                 setFeedHashcode ( feed.getHashcode() );
         }
 
-        catch ( Exception e ) {
+        catch ( EncodingException e ) {
             throw new ParseException ( e );
+        }
+        catch( IOException e) {
+        	throw new ParseException ( e );
         }
     }
 

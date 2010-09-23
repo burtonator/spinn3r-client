@@ -44,7 +44,6 @@ public abstract class BaseItem extends BaseResult {
     protected int weblogTier              = -1;
     protected int weblogIndegree          = -1;
 
-    protected Date pubDate                = null;
     protected Date published              = null;
     
     protected String authorName           = null;

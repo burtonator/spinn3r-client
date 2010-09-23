@@ -344,6 +344,8 @@ public abstract class Config <ResultType> implements Cloneable {
     public int getLimit() { 
         return this.limit;
     }
+    
+    private final Random random = new Random();
 
     public long getSleepInterval() {
 
@@ -351,7 +353,7 @@ public abstract class Config <ResultType> implements Cloneable {
         
         if ( result == -1 ) {
             //use a random number generator to compute the
-            float f = new Random().nextFloat();
+            float f = random.nextFloat();
             
             result = (long)(f * 30L);
 

@@ -67,7 +67,8 @@ public class DiskReader {
 
         if ( proto_file != null ) {
             res = ContentApi.Response.parseFrom( new FileInputStream ( proto_file.getAbsoluteFile() ) );
-            proto_file.delete();
+            if(!proto_file.delete())
+            	throw new IOException("Unable to delete " + proto_file.delete());
         }
 
         return res;
