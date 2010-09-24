@@ -46,19 +46,19 @@ public class ChainDecoder<E> implements Decoder<E> {
     public E read() throws IOException {
         if(currentDecoder == null) {
             currentDecoder = decoderDecoder.read();
-            if(currentDecoder == null)
-                return null;
         }
         
-        E item = currentDecoder.read();
-        if(item == null) {
-            currentDecoder.close();
-            currentDecoder = decoderDecoder.read();
-            if(currentDecoder == null)
-                item = null;
-            else
-                item = currentDecoder.read();
-        }
+        E item;
+        
+        do {
+        	if(currentDecoder == null)
+        		return null;
+        	
+        	item = currentDecoder.read();
+        	if(item == null) {
+        		currentDecoder = decoderDecoder.read();
+        	}
+        } while(item != null);
         
         return item;
     }
