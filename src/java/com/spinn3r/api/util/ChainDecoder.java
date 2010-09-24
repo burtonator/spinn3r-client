@@ -50,17 +50,16 @@ public class ChainDecoder<E> implements Decoder<E> {
         
         E item;
         
-        do {
-        	if(currentDecoder == null)
-        		return null;
-        	
+        while(currentDecoder != null) {
         	item = currentDecoder.read();
-        	if(item == null) {
+        	
+        	if(item != null)
+        		return item;
+        	else
         		currentDecoder = decoderDecoder.read();
-        	}
-        } while(item != null);
+        }
         
-        return item;
+        return null;
     }
 
     @Override
