@@ -54,7 +54,7 @@ public abstract class Config <ResultType> implements Cloneable {
     /**
      * When fetching the API this specifies the default version to return.
      */
-    public static String   DEFAULT_VERSION     = "3.2.07";
+    public static String   DEFAULT_VERSION     = "3.2.08";
 
 
     public static enum Format {

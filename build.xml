@@ -8,7 +8,7 @@
 
     <property name="project"      value="spinn3r-client"/>
     <property name="javadocdir"   value="javadoc"/>
-    <property name="version"      value="3.2.07"/>
+    <property name="version"      value="3.2.08"/>
     <property name="vendor"       value="Tailrank Inc."/>
 
     <path id="project.classpath">
@@ -136,7 +136,7 @@
                nowarn="on"
                source="1.5"
                target="1.5"
-               srcdir="src/test"
+               srcdir="test/java"
                destdir="compile"
                fork="true"
                memoryMaximumSize="512M"
@@ -162,15 +162,16 @@
                filtertrace="true"
                haltonfailure="true"
                showoutput="true"
-               haltonerror="true">
+               haltonerror="true"
+               maxmemory="256m">
 
             <classpath>
                 <path refid="project.classpath"/>
             </classpath>
-
+					  <formatter type="plain" usefile="false" />
             <batchtest todir="target/test-reports"> 
 
-                <fileset dir="src/test">
+                <fileset dir="test/java">
                     <include name="**/Test*.java"/>
                 </fileset>
 
@@ -201,7 +202,7 @@
 
             <batchtest todir="target/test-reports"> 
 
-                <fileset dir="src/test">
+                <fileset dir="test/java">
                     <include name="**/TestOffsetStorageParser.java"/>
                 </fileset>
 
