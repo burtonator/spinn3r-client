@@ -49,6 +49,7 @@ public class SourceRegisterClient {
         // This is kind of a hack but mostly acceptable.  We should refactor at
         // some point though.
         SourceClient client = new SourceClient();
+        client.setConfig( config );
         client.doXmlFetch( resource, config );
 
     }
