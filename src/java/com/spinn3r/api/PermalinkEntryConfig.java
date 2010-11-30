@@ -139,7 +139,7 @@ public class PermalinkEntryConfig extends Config<PermalinkItem> {
         addParam( params, "limit",   request_limit );
         addParam( params, "vendor",  getVendor() );
         addParam( params, "version", getVersion() );
-        addParam( params, "after", toISO8601(getAfter()));
+        addParam( params, "after", getAfter());
 
         if ( getResource() != null )
             addParam( params, "resource", URLEncoder.encode( getResource() ) );
