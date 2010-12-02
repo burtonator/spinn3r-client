@@ -38,8 +38,9 @@ import org.apache.commons.lang.StringUtils;
 
 import com.google.inject.internal.ImmutableList;
 import com.spinn3r.api.Config.Format;
-import com.spinn3r.api.util.Base64;
-import com.spinn3r.api.util.MD5;
+import com.spinn3r.io.utils.Base64;
+import com.spinn3r.util.ISO8601DateParser;
+import com.spinn3r.util.MD5;
 
 /**
  * <a href="http://spinn3r.com">Spinn3r</a> command line debug client for

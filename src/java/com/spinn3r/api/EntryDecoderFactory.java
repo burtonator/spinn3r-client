@@ -9,12 +9,12 @@ import java.io.InputStream;
 import com.google.common.base.Function;
 import com.google.inject.Provider;
 import com.spinn3r.api.protobuf.ContentApi;
-import com.spinn3r.api.util.ChainDecoder;
-import com.spinn3r.api.util.Decoder;
-import com.spinn3r.api.util.IterableDecoder;
-import com.spinn3r.api.util.ProtoStreamDecoder;
-import com.spinn3r.api.util.ThrowingFunction;
-import com.spinn3r.api.util.TranslateAndDecode;
+import com.spinn3r.io.ChainDecoder;
+import com.spinn3r.io.Decoder;
+import com.spinn3r.io.IterableDecoder;
+import com.spinn3r.io.TranslateAndDecode;
+import com.spinn3r.io.protostream.ProtoStreamDecoder;
+import com.spinn3r.util.ThrowingFunction;
 
 public class EntryDecoderFactory {
     
@@ -41,8 +41,8 @@ public class EntryDecoderFactory {
         }
     };
     
-    private static final ThrowingFunction<File, InputStream> FILE_TO_INPUTSTREAM = 
-        new ThrowingFunction<File, InputStream>() {
+    private static final ThrowingFunction<File, InputStream, IOException> FILE_TO_INPUTSTREAM = 
+        new ThrowingFunction<File, InputStream, IOException>() {
         
         @Override
         public InputStream apply(File f) throws IOException {

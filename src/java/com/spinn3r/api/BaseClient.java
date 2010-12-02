@@ -50,7 +50,7 @@ import org.w3c.dom.NodeList;
 import com.google.protobuf.CodedInputStream;
 import com.spinn3r.api.Config.Format;
 import com.spinn3r.api.protobuf.ContentApi;
-import com.spinn3r.api.util.ProtoStreamDecoder;
+import com.spinn3r.io.protostream.ProtoStreamDecoder;
 
 /**
  * Generic client support used which need to be in all APIs.
@@ -504,7 +504,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         ContentApi.Entry.Builder builder = ContentApi.Entry.newBuilder();
 
         ProtoStreamDecoder<ContentApi.Entry> decoder =
-            ProtoStreamDecoder.newProtoStreamDecoder( inputStream, builder );
+            ProtoStreamDecoder.newDecoder( inputStream, builder );
 
         for ( ContentApi.Entry entry = decoder.read() ; entry != null ; entry = decoder.read() ) {
             res.add( entry );

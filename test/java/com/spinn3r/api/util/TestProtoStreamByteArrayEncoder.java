@@ -10,6 +10,8 @@ import org.junit.Test;
 import com.google.inject.Provider;
 import com.spinn3r.api.protobuf.ContentApi.Link;
 import com.spinn3r.api.protobuf.ContentApi.Source;
+import com.spinn3r.io.protostream.ProtoStreamBytesEncoder;
+import com.spinn3r.io.protostream.ProtoStreamDecoder;
 
 public class TestProtoStreamByteArrayEncoder {
     

@@ -26,8 +26,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import com.spinn3r.api.protobuf.ContentApi;
-import com.spinn3r.api.util.CompressedBLOB;
-import com.spinn3r.api.util.CompressedBlob2;
+import com.spinn3r.io.utils.CompressedBLOB;
+import com.spinn3r.io.utils.CompressedBlob2;
 
 
 

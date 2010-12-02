@@ -33,9 +33,10 @@ import java.io.IOException;
 import org.w3c.dom.Element;
 
 import com.spinn3r.api.protobuf.ContentApi;
-import com.spinn3r.api.util.CompressedBLOB;
-import com.spinn3r.api.util.CompressedBlob2;
-import com.spinn3r.api.util.EncodingException;
+import com.spinn3r.io.utils.CompressedBLOB;
+import com.spinn3r.io.utils.CompressedBlob2;
+import com.spinn3r.io.utils.EncodingException;
+import com.spinn3r.util.ISO8601DateParser;
 
 /**
  * Represents a single item returned from the API.

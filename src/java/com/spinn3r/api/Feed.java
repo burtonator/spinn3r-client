@@ -25,6 +25,7 @@ import java.util.Date;
 import org.w3c.dom.Element;
 
 import com.spinn3r.api.protobuf.ContentApi;
+import com.spinn3r.util.ISO8601DateParser;
 
 /**
  * Represents a source within Spinn3r.

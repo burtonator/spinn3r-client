@@ -9,7 +9,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import com.jamesmurty.utils.XMLBuilder;
-import com.spinn3r.api.ISO8601DateParser;
 import com.spinn3r.api.RFC822DateParser;
 import com.spinn3r.api.protobuf.ContentApi.Author;
 import com.spinn3r.api.protobuf.ContentApi.Content;
@@ -21,9 +20,10 @@ import com.spinn3r.api.protobuf.ContentApi.Link;
 import com.spinn3r.api.protobuf.ContentApi.PermalinkEntry;
 import com.spinn3r.api.protobuf.ContentApi.Response;
 import com.spinn3r.api.protobuf.ContentApi.Source;
-import com.spinn3r.api.util.CompressedBLOB;
-import com.spinn3r.api.util.CompressedBlob2;
-import com.spinn3r.api.util.EncodingException;
+import com.spinn3r.io.utils.CompressedBLOB;
+import com.spinn3r.io.utils.CompressedBlob2;
+import com.spinn3r.io.utils.EncodingException;
+import com.spinn3r.util.ISO8601DateParser;
 
 class ProtobufToXMLHelper 
 {
