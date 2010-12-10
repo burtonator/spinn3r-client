@@ -12,12 +12,6 @@ import java.util.Map;
 import com.google.inject.internal.ImmutableMap;
 import com.google.protobuf.CodedOutputStream;
 import com.spinn3r.api.protobuf.ProtoStream;
-import com.spinn3r.api.protobuf.ProtoStream.ApplicationHeader;
-import com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum;
-import com.spinn3r.api.protobuf.ProtoStream.ProtoStreamDelimiter;
-import com.spinn3r.api.protobuf.ProtoStream.ProtoStreamHeader;
-import com.spinn3r.api.protobuf.ProtoStream.ProtoStreamDelimiter.Builder;
-import com.spinn3r.api.protobuf.ProtoStream.ProtoStreamDelimiter.DelimiterType;
 
 class ProtoStreamBytesEncoder2 implements Encoder<byte[]> {
     
@@ -26,7 +20,7 @@ class ProtoStreamBytesEncoder2 implements Encoder<byte[]> {
     private final Map<String, String> applicationHeaders;
     
     private static final String VERSION = "2.0";
-    private static final String CHECKSUM_ALGORITHM = "MD5";
+    static final String CHECKSUM_ALGORITHM = "MD5";
     private static final ProtoStream.ProtoStreamDelimiter _entryDelimiter;
     private static final ProtoStream.ProtoStreamDelimiter _endDelimiter;
     private static final ProtoStream.ProtoStreamDelimiter _checksumDelimiter;

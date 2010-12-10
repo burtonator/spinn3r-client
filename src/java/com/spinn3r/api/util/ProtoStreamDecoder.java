@@ -14,7 +14,6 @@ import com.google.inject.Provider;
 import com.google.inject.internal.ImmutableSet;
 import com.google.protobuf.AbstractMessageLite;
 import com.google.protobuf.CodedInputStream;
-import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Message.Builder;
 import com.spinn3r.api.protobuf.ProtoStream;
 import com.spinn3r.api.protobuf.ProtoStream.ApplicationHeader;
