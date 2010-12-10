@@ -8,7 +8,8 @@ public class ProtoStreamDecoderException extends RuntimeException {
      */
     private static final long serialVersionUID = 1L;
 
-    public ProtoStreamDecoderException() {
+
+	public ProtoStreamDecoderException() {
 	}
 
 	public ProtoStreamDecoderException(String message) {
