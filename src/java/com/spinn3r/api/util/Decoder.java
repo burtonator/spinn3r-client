@@ -2,7 +2,6 @@ package com.spinn3r.api.util;
 
 import java.io.IOException;
 import java.util.Collection;
-
 /**
  * Interface for writing objects to an output stream. 
  * (Or wherever else you want to send them)
@@ -78,5 +77,20 @@ public interface Decoder<E> {
 	 * @throws IOException
 	 */
 	public long skip(long n) throws IOException;
+	
+	/**
+	 * Return true if calls to <code>read()</code> will
+	 * never return another value.
+	 * 
+	 * This function may return true if and only if there are no more 
+	 * items to be read. However, it may also return false if 
+	 * the decoder is uncertain if there are any more items to be
+	 * read. Therefore, one may receive false even though 
+	 * there are no more items (at least until the decoder can determine
+	 * that there are no more items).
+	 * 
+	 * @return
+	 */
+	public boolean atEnd();
 	
 }
