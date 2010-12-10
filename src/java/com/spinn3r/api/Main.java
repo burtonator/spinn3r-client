@@ -39,6 +39,8 @@ import com.google.inject.internal.ImmutableList;
 import com.spinn3r.api.Config.Format;
 import com.spinn3r.api.util.Base64;
 import com.spinn3r.api.util.MD5;
+import com.spinn3r.api.util.ProtoStreamCheckSum;
+import com.spinn3r.api.util.TeeInputStream;
 
 /**
  * <a href="http://spinn3r.com">Spinn3r</a> command line debug client for
@@ -665,18 +667,26 @@ public class Main<T extends BaseResult> {
             InputStream is = client.getInputStream(!saveCompressed);
 
             FileOutputStream os = new FileOutputStream(file);
+            
 
-            byte[] data = new byte[2048];
+            if(client.getConfig().getFormat() == Format.PROTOSTREAM) {
+            	InputStream tee = new TeeInputStream(is, os);
+            	ProtoStreamCheckSum checker = new ProtoStreamCheckSum("MD5");
+            	checker.read(tee);
+            }
+            else {
+            	byte[] data = new byte[2048];
 
-            int readCount;
+            	int readCount;
 
-            try {
-                while( ( readCount = is.read( data )) >= 0 ) {
-                    os.write( data, 0, readCount );
-                }
-            } finally {
-                IOUtils.closeQuietly(is);
-                IOUtils.closeQuietly(os);
+            	try {
+            		while( ( readCount = is.read( data )) >= 0 ) {
+            			os.write( data, 0, readCount );
+            		}
+            	} finally {
+            		IOUtils.closeQuietly(is);
+            		IOUtils.closeQuietly(os);
+            	}
             }
 
             is.close();
