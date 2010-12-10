@@ -30,7 +30,6 @@ public class ProtoStreamDecoder<T extends AbstractMessageLite> implements Decode
 
 	private final InputStream _originalStream;
 	private final DigestInputStream _digestStream;
-	private final CodedInputStream _input;
 	private final Provider<? extends Builder> _builderFactory;
 
 	private ProtoStreamHeader header = null;
@@ -80,7 +79,6 @@ public class ProtoStreamDecoder<T extends AbstractMessageLite> implements Decode
 		} catch (NoSuchAlgorithmException e) {
 			throw new RuntimeException(e);
 		}
-		_input   = CodedInputStream.newInstance(_digestStream);
 		_builderFactory = builderFactory;
 
 
@@ -106,7 +104,7 @@ public class ProtoStreamDecoder<T extends AbstractMessageLite> implements Decode
 		String expectedType = _builderFactory.get().getDescriptorForType().getFullName();
 
 		
-		header = ProtoStreamHeader.parseFrom(_input);
+		header = ProtoStreamHeader.parseDelimitedFrom(_digestStream);
 
 		String version = header.getVersion();
 
@@ -133,7 +131,7 @@ public class ProtoStreamDecoder<T extends AbstractMessageLite> implements Decode
 
 		T res = null;
 
-		ProtoStreamDelimiter delimiter = ProtoStreamDelimiter.parseFrom(_input);
+		ProtoStreamDelimiter delimiter = ProtoStreamDelimiter.parseDelimitedFrom(_digestStream);
 		
 		if ( delimiter.getDelimiterType() == ProtoStreamDelimiter.DelimiterType.END )
 			res = null;
@@ -141,7 +139,7 @@ public class ProtoStreamDecoder<T extends AbstractMessageLite> implements Decode
 		else if ( delimiter.getDelimiterType() == ProtoStreamDelimiter.DelimiterType.ENTRY ) {
 			Builder builder = _builderFactory.get();
 
-			builder.mergeFrom( _input );
+			builder.mergeDelimitedFrom( _digestStream );
 
 
 			res = (T)builder.build();
@@ -153,7 +151,7 @@ public class ProtoStreamDecoder<T extends AbstractMessageLite> implements Decode
 			digest.reset();
 			
 			ProtoStream.ProtoStreamChecksum checksumMsg = 
-				ProtoStream.ProtoStreamChecksum.parseFrom(_input);
+				ProtoStream.ProtoStreamChecksum.parseDelimitedFrom(_digestStream);
 			
 			if(!checksumMsg.getAlgorithm().equals(CHECKSUM_ALGORITHM)) {
 				throw new IOException(checksumMsg.getAlgorithm() + " not supported checksum algorithm");
@@ -165,7 +163,11 @@ public class ProtoStreamDecoder<T extends AbstractMessageLite> implements Decode
 		}
 
 		else {
-			_input.skipMessage();
+			CodedInputStream codedStream = CodedInputStream.newInstance(_digestStream);
+			int size = codedStream.readRawVarint32();
+			while(size > 0) {
+				size -= _digestStream.skip(size);
+			}
 		}
 
 		if(res == null) {
