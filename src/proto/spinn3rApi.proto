@@ -48,7 +48,7 @@ message Author {
   optional string name  = 1;
   /** Author's email */
   optional string email = 2;
-  /** Author's website */
+  /** Author's websites */
   repeated Link   link  = 3;
 }
 
@@ -57,9 +57,9 @@ message Author {
  * tied to an author.
  */
 message Source {
-  /** Link to source */
+  /** Links to source */
   repeated Link   link                  = 1;
-  /** The link that Spinn3r considers the "official" link for this source */
+  /** The link that Spinn3r uses as the unique identifier for this source */
   optional Link   canonical_link        = 2;
   /** Title of the source */
   optional string title                 = 3;
@@ -104,7 +104,7 @@ message Source {
 message Feed {
   /** The links to this feed */
   repeated Link   link             = 1;
-  /** The link that Spinn3r considers the "official" link to this feed */
+  /** The link that Spinn3r uses to uniquely identify this feed */
   optional Link   canonical_link   = 2;
   /** Title of the feed */
   optional string title            = 3;
@@ -148,7 +148,7 @@ message Feed {
 message PermalinkEntry {
   /** The URLS of this Permalink Entry */
   repeated Link    link             = 1;
-  /** The link that Spinn3r considers the "official" URL */
+  /** The link that Spinn3r uses to uniquely identify this Peramlink */
   optional Link    canonical_link   = 2;
   /** The link's title */
   optional string  title            = 3;
@@ -216,9 +216,9 @@ message CrawlEntry {
  * This message represents an RSS feed item
  */
 message FeedEntry {
-  /** The URL to which the entry in the feed points */
+  /** The URLs to which the entry in the feed points */
   repeated Link    link             = 1;
-  /** The link which Spinn3r considers "official" */
+  /** The link which Spinn3r uses to uniquely identify this feed entry*/
   optional Link    canonical_link   = 2;
   /** The  tile of the entry */
   optional string  title            = 3;
@@ -275,11 +275,14 @@ message Entry {
   optional Feed           feed            = 2;
   /** The feed item representing this piece of content. 
    *  This field will not exist if we did not discover this 
-   *  piece of content through a RSS feed. */
+   *  piece of content through a RSS feed.
+   */
   optional FeedEntry      feed_entry      = 3;
-  /** The permalink representation of this content */
+  /** The permalink representation of this content. 
+      Only used when using the permalink api */
   optional PermalinkEntry permalink_entry = 4;
-  /** Entry for the Comment API */
+  /** Entry for thoe Comment API. 
+      This entry is only used when using the comment API */
   optional CommentEntry   comment_entry   = 5;
   /** Deprecated */
   optional CrawlEntry     crawl_entry     = 6;
