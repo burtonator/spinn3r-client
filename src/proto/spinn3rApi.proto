@@ -63,7 +63,7 @@ message Source {
   optional Link   canonical_link        = 2;
   /** Title of the source */
   optional string title                 = 3;
-  /** Source hashcode */
+  /** Source hashcode - for internal use */
   optional string hashcode              = 4;
   /** Source language */
   repeated Lang   lang                  = 5;
@@ -90,7 +90,9 @@ message Source {
   optional sint32 tier                  = 14;
   /** Deprecated */
   optional int32  indegree              = 15;
-  /** Publisher category */
+  /** Publisher category 
+  options: WEBLOG, MAINSTREAM_NEWS, CLASSIFIED, FORUM, REVIEW, SOCIAL_MEDIA
+  */
   optional string publisher_type        = 16;
   /** Is this publisher disabled? */
   optional bool   disabled              = 17;
@@ -146,7 +148,7 @@ message Feed {
  * a time.
  */
 message PermalinkEntry {
-  /** The URLS of this Permalink Entry */
+  /** The URLs that point to this permalink entry */
   repeated Link    link             = 1;
   /** The link that Spinn3r uses to uniquely identify this Peramlink */
   optional Link    canonical_link   = 2;
@@ -170,7 +172,7 @@ message PermalinkEntry {
   optional string  last_published   = 9;
   /** Date on which Spinn3r found this entry */
   optional string  date_found       = 10;
-  /** An opaque identifier */
+  /** An opaque identifier for internal use */
   optional int64   identifier       = 11;
   /** The content of the entry */
   optional Content content          = 12; 
@@ -239,7 +241,7 @@ message FeedEntry {
   optional string  last_published   = 9;
   /** The date on which Spinn3r first crawled this entry */
   optional string  date_found       = 10;
-  /** An opaque identifier */
+  /** An opaque identifier for internal use */
   optional int64   identifier       = 11;
   /** The content of the entry in the feed */
   optional Content content          = 12;  
@@ -297,7 +299,7 @@ message Entry {
  * A response message is a collection of content. 
  */
 message Response {
-  /** The URL for this result set */
+  /** The URL for this result set, allows for re-request of the result set*/
   optional string request_url          = 1;
   /** The URL for the previous result set */
   optional string previous_request_url = 2;
