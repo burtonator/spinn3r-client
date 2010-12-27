@@ -546,8 +546,15 @@ public class Main<T extends BaseResult> {
 
                 progress(client);
 
-                if (last == null)
-                    continue;
+                if (last == null) {
+					long nextURLafter = parseOutAfter(client.getNextRequestURL());
+					if(nextURLafter == -1)
+						continue;
+					else if(nextURLafter > before)
+						break;
+					else
+						continue;
+                }
 
                 if (range > 0
                         && last.getTime() > client.getConfig().getAfter()
@@ -1189,5 +1196,17 @@ public class Main<T extends BaseResult> {
     private static Collection<File> getLogFiles(File saveDirectory) {
         return FileUtils.listFiles(saveDirectory, new String[] { "log" }, true);
     }
+
+	private static Pattern afterPattern = Pattern.compile("after=(\\d+)");
+	private static long parseOutAfter(String url) {
+		long retval = -1;
+		Matcher m = afterPattern.matcher(url);
+		if(m.find()) {
+			String afterTxt = m.group(1);
+			retval = Long.parseLong(afterTxt);
+		}
+
+		return retval;
+	}
 
 }
