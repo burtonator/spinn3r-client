@@ -39,7 +39,7 @@ public class ProtoStreamDecoder<T extends AbstractMessageLite> implements Decode
 
     protected ProtoStreamDecoder ( InputStream input, Provider<? extends Builder> builderFactory ) {
         _input   = input;
-        _builder = builder;
+        _builderFactory = builderFactory;
        
     }
     
