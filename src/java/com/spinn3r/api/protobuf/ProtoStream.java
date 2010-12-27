@@ -790,7 +790,6 @@ public final class ProtoStream {
       ENTRY(0, 1),
       END(1, 2),
       INDEX(2, 3),
-      CHECKSUM(3, 4),
       ;
       
       
@@ -801,7 +800,6 @@ public final class ProtoStream {
           case 1: return ENTRY;
           case 2: return END;
           case 3: return INDEX;
-          case 4: return CHECKSUM;
           default: return null;
         }
       }
@@ -832,7 +830,7 @@ public final class ProtoStream {
       }
       
       private static final DelimiterType[] VALUES = {
-        ENTRY, END, INDEX, CHECKSUM, 
+        ENTRY, END, INDEX, 
       };
       public static DelimiterType valueOf(
           com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
@@ -1123,337 +1121,6 @@ public final class ProtoStream {
     // @@protoc_insertion_point(class_scope:protoStream.ProtoStreamDelimiter)
   }
   
-  public static final class ProtoStreamChecksum extends
-      com.google.protobuf.GeneratedMessage {
-    // Use ProtoStreamChecksum.newBuilder() to construct.
-    private ProtoStreamChecksum() {
-      initFields();
-    }
-    private ProtoStreamChecksum(boolean noInit) {}
-    
-    private static final ProtoStreamChecksum defaultInstance;
-    public static ProtoStreamChecksum getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public ProtoStreamChecksum getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return com.spinn3r.api.protobuf.ProtoStream.internal_static_protoStream_ProtoStreamChecksum_descriptor;
-    }
-    
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.spinn3r.api.protobuf.ProtoStream.internal_static_protoStream_ProtoStreamChecksum_fieldAccessorTable;
-    }
-    
-    // required string algorithm = 1;
-    public static final int ALGORITHM_FIELD_NUMBER = 1;
-    private boolean hasAlgorithm;
-    private java.lang.String algorithm_ = "";
-    public boolean hasAlgorithm() { return hasAlgorithm; }
-    public java.lang.String getAlgorithm() { return algorithm_; }
-    
-    // required string digest = 2;
-    public static final int DIGEST_FIELD_NUMBER = 2;
-    private boolean hasDigest;
-    private java.lang.String digest_ = "";
-    public boolean hasDigest() { return hasDigest; }
-    public java.lang.String getDigest() { return digest_; }
-    
-    private void initFields() {
-    }
-    public final boolean isInitialized() {
-      if (!hasAlgorithm) return false;
-      if (!hasDigest) return false;
-      return true;
-    }
-    
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      getSerializedSize();
-      if (hasAlgorithm()) {
-        output.writeString(1, getAlgorithm());
-      }
-      if (hasDigest()) {
-        output.writeString(2, getDigest());
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasAlgorithm()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getAlgorithm());
-      }
-      if (hasDigest()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getDigest());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
-    public static com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
-    }
-    public static com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
-    }
-    public static com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum prototype) {
-      return newBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() { return newBuilder(this); }
-    
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum result;
-      
-      // Construct using com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum();
-        return builder;
-      }
-      
-      protected com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum internalGetResult() {
-        return result;
-      }
-      
-      public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
-        result = new com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum();
-        return this;
-      }
-      
-      public Builder clone() {
-        return create().mergeFrom(result);
-      }
-      
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum.getDescriptor();
-      }
-      
-      public com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum getDefaultInstanceForType() {
-        return com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum.getDefaultInstance();
-      }
-      
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
-      public com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum build() {
-        if (result != null && !isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return buildPartial();
-      }
-      
-      private com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return buildPartial();
-      }
-      
-      public com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
-        }
-        com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum returnMe = result;
-        result = null;
-        return returnMe;
-      }
-      
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum) {
-          return mergeFrom((com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum other) {
-        if (other == com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum.getDefaultInstance()) return this;
-        if (other.hasAlgorithm()) {
-          setAlgorithm(other.getAlgorithm());
-        }
-        if (other.hasDigest()) {
-          setDigest(other.getDigest());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              setAlgorithm(input.readString());
-              break;
-            }
-            case 18: {
-              setDigest(input.readString());
-              break;
-            }
-          }
-        }
-      }
-      
-      
-      // required string algorithm = 1;
-      public boolean hasAlgorithm() {
-        return result.hasAlgorithm();
-      }
-      public java.lang.String getAlgorithm() {
-        return result.getAlgorithm();
-      }
-      public Builder setAlgorithm(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasAlgorithm = true;
-        result.algorithm_ = value;
-        return this;
-      }
-      public Builder clearAlgorithm() {
-        result.hasAlgorithm = false;
-        result.algorithm_ = getDefaultInstance().getAlgorithm();
-        return this;
-      }
-      
-      // required string digest = 2;
-      public boolean hasDigest() {
-        return result.hasDigest();
-      }
-      public java.lang.String getDigest() {
-        return result.getDigest();
-      }
-      public Builder setDigest(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasDigest = true;
-        result.digest_ = value;
-        return this;
-      }
-      public Builder clearDigest() {
-        result.hasDigest = false;
-        result.digest_ = getDefaultInstance().getDigest();
-        return this;
-      }
-      
-      // @@protoc_insertion_point(builder_scope:protoStream.ProtoStreamChecksum)
-    }
-    
-    static {
-      defaultInstance = new ProtoStreamChecksum(true);
-      com.spinn3r.api.protobuf.ProtoStream.internalForceInit();
-      defaultInstance.initFields();
-    }
-    
-    // @@protoc_insertion_point(class_scope:protoStream.ProtoStreamChecksum)
-  }
-  
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_protoStream_ApplicationHeader_descriptor;
   private static
@@ -1469,11 +1136,6 @@ public final class ProtoStream {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_protoStream_ProtoStreamDelimiter_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_protoStream_ProtoStreamChecksum_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_protoStream_ProtoStreamChecksum_fieldAccessorTable;
   
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -1488,13 +1150,11 @@ public final class ProtoStream {
       "(\t\"|\n\021ProtoStreamHeader\022\017\n\007version\030\001 \002(\t" +
       "\022\032\n\022default_entry_type\030\002 \002(\t\022:\n\022applicat" +
       "ion_header\030\003 \003(\0132\036.protoStream.Applicati" +
-      "onHeader\"\242\001\n\024ProtoStreamDelimiter\022L\n\016del" +
+      "onHeader\"\224\001\n\024ProtoStreamDelimiter\022L\n\016del" +
       "imiter_type\030\001 \001(\0162/.protoStream.ProtoStr" +
-      "eamDelimiter.DelimiterType:\003END\"<\n\rDelim" +
-      "iterType\022\t\n\005ENTRY\020\001\022\007\n\003END\020\002\022\t\n\005INDEX\020\003\022" +
-      "\014\n\010CHECKSUM\020\004\"8\n\023ProtoStreamChecksum\022\021\n\t",
-      "algorithm\030\001 \002(\t\022\016\n\006digest\030\002 \002(\tB\'\n\030com.s" +
-      "pinn3r.api.protobufB\013ProtoStream"
+      "eamDelimiter.DelimiterType:\003END\".\n\rDelim" +
+      "iterType\022\t\n\005ENTRY\020\001\022\007\n\003END\020\002\022\t\n\005INDEX\020\003B" +
+      "\'\n\030com.spinn3r.api.protobufB\013ProtoStream"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1525,14 +1185,6 @@ public final class ProtoStream {
               new java.lang.String[] { "DelimiterType", },
               com.spinn3r.api.protobuf.ProtoStream.ProtoStreamDelimiter.class,
               com.spinn3r.api.protobuf.ProtoStream.ProtoStreamDelimiter.Builder.class);
-          internal_static_protoStream_ProtoStreamChecksum_descriptor =
-            getDescriptor().getMessageTypes().get(3);
-          internal_static_protoStream_ProtoStreamChecksum_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_protoStream_ProtoStreamChecksum_descriptor,
-              new java.lang.String[] { "Algorithm", "Digest", },
-              com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum.class,
-              com.spinn3r.api.protobuf.ProtoStream.ProtoStreamChecksum.Builder.class);
           return null;
         }
       };

@@ -38,7 +38,7 @@ public class ProtoStreamContentListing {
         ContentApi.Entry.Builder builder = ContentApi.Entry.newBuilder();
 
         ProtoStreamDecoder<ContentApi.Entry> decoder =
-            ProtoStreamDecoder.newDecoder( inputStream, builder );
+            ProtoStreamDecoder.newProtoStreamDecoder( inputStream, builder );
 
         for ( ContentApi.Entry entry = decoder.read() ; entry != null ; entry = decoder.read() ) {
             String hashcode              = entry.getSource().getHashcode();
