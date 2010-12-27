@@ -2,235 +2,164 @@ package com.spinn3r.api.util;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.DigestInputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import com.google.inject.Provider;
-import com.google.inject.internal.ImmutableSet;
 import com.google.protobuf.AbstractMessageLite;
-import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.Message.Builder;
-import com.spinn3r.api.protobuf.ProtoStream;
-import com.spinn3r.api.protobuf.ProtoStream.ApplicationHeader;
 import com.spinn3r.api.protobuf.ProtoStream.ProtoStreamDelimiter;
 import com.spinn3r.api.protobuf.ProtoStream.ProtoStreamHeader;
-import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 public class ProtoStreamDecoder<T extends AbstractMessageLite> implements Decoder<T> {
 
-	private static final Set<String> SUPPORTED_VERSION = ImmutableSet.<String>builder()
-		.add("1.0").add("2.0")
-		.build();
-	private static final String CHECKSUM_ALGORITHM = "MD5";
+    private static final String SUPPORTED_VERSION = "1.0";
 
-	private final InputStream _originalStream;
-	private final DigestInputStream _digestStream;
-	private final Provider<? extends Builder> _builderFactory;
-
-	private ProtoStreamHeader header = null;
-
-	private boolean initialized = false;
-	private boolean done = false;
-
-	public static <K extends AbstractMessageLite> ProtoStreamDecoder<K> 
-		newDecoder(InputStream input, Provider<? extends Builder> provider) {
-
-		return new ProtoStreamDecoder<K>(input, provider);
-	}
-
-	public static <K extends AbstractMessageLite> ProtoStreamDecoder<K> 
-	newDecoder(InputStream input, final Builder builder) {
-
-		return newProtoStreamDecoder(input, new Provider<Builder>() {
-			public Builder get() {
-				return builder.clone().clear();
-			}
-		});
-
-	}
-
-	public static <K extends AbstractMessageLite> ProtoStreamDecoder<K> 
-	newProtoStreamDecoder(InputStream input, Provider<? extends Builder> provider) {
-
-		return new ProtoStreamDecoder<K>(input, provider);
-	}
-
-	public static <K extends AbstractMessageLite> ProtoStreamDecoder<K> 
-	newProtoStreamDecoder(InputStream input, final Builder builder) {
-
-		return newProtoStreamDecoder(input, new Provider<Builder>() {
-			public Builder get() {
-				return builder.clone().clear();
-			}
-		});
-
-	}
+    private final ProtoStreamDelimiter.Builder _delimiterBuilder =
+        ProtoStreamDelimiter.newBuilder();
 
 
-	protected ProtoStreamDecoder ( InputStream input, Provider<? extends Builder> builderFactory ) {
-		_originalStream = input;
-		try {
-			_digestStream = new DigestInputStream(input, MessageDigest.getInstance(CHECKSUM_ALGORITHM));
-		} catch (NoSuchAlgorithmException e) {
-			throw new RuntimeException(e);
-		}
-		_builderFactory = builderFactory;
+    private final InputStream _input;
+    private final Provider<? extends Builder> _builderFactory;
+    
+    private boolean initialized = false;
+    
+    public static <K extends AbstractMessageLite> ProtoStreamDecoder<K> newProtoStreamDecoder(InputStream input, Provider<? extends Builder> provider) {
+        return new ProtoStreamDecoder<K>(input, provider);
+    }
+
+    public static <K extends AbstractMessageLite> ProtoStreamDecoder<K> newProtoStreamDecoder(InputStream input, final Builder builder) {
+        return newProtoStreamDecoder(input, new Provider<Builder>() {
+            public Builder get() {
+                return builder.clone().clear();
+            }
+        });
+    }
 
 
-	}
+    protected ProtoStreamDecoder ( InputStream input, Provider<? extends Builder> builderFactory ) {
 
-	public String getApplicationHeader(String key) throws IOException {
-		init();
+        _input   = input;
+        _builderFactory = builderFactory;
+       
+        
+    }
+    
+    private void init() throws IOException {
+        
+        if(initialized)
+            return;
+        
+        String expectedType = _builderFactory.get().getDescriptorForType().getFullName();
 
-		for(ApplicationHeader applicationHeader : header.getApplicationHeaderList()) {
-			if(applicationHeader.getName().equals(key)) {
-				return applicationHeader.getValue();
-			}
-		}
+        ProtoStreamHeader.Builder headerBuilder =
+            ProtoStreamHeader.newBuilder();
 
-		return null;
-	}
+       headerBuilder.mergeDelimitedFrom( _input );
 
-	private void init() throws IOException {
+       ProtoStreamHeader header = headerBuilder.build();
 
-		if(initialized)
-			return;
+       String version = header.getVersion();
 
-		String expectedType = _builderFactory.get().getDescriptorForType().getFullName();
+       if ( ! version.equals( SUPPORTED_VERSION ) ) {
+           String msg = String.format("Version mismatch expected '%s' got '%s'\n", SUPPORTED_VERSION, version );
+           throw new ProtoStreamDecoderException ( msg );
+       }
 
-		
-		header = ProtoStreamHeader.parseDelimitedFrom(_digestStream);
+       String type = header.getDefaultEntryType();
+       
+       if ( ! type.equals( expectedType ) ) {
+           String msg = String.format("Type mismatch expected '%s' got '%s'\n", expectedType, type );
+           throw new ProtoStreamDecoderException ( msg );
+       }
+       
+       initialized = true;
+    }
 
-		String version = header.getVersion();
+    @SuppressWarnings("unchecked")
+    public T read ( )
+        throws IOException {
+        
+        init();
 
-		if ( ! SUPPORTED_VERSION.contains(version) ) {
-			String msg = String.format("Version mismatch expected '%s' got '%s'\n", SUPPORTED_VERSION, version );
-			throw new ProtoStreamDecoderException ( msg );
-		}
+        T res = null;
 
-		String type = header.getDefaultEntryType();
+        ProtoStreamDelimiter.Builder delimiterBuilder = _delimiterBuilder.clone();
 
-		if ( ! type.equals( expectedType ) ) {
-			String msg = String.format("Type mismatch expected '%s' got '%s'\n", expectedType, type );
-			throw new ProtoStreamDecoderException ( msg );
-		}
+        delimiterBuilder.mergeDelimitedFrom( _input );
+        
+        ProtoStreamDelimiter delimiter = delimiterBuilder.build();
 
-		initialized = true;
-	}
+        if ( delimiter.getDelimiterType() == ProtoStreamDelimiter.DelimiterType.END )
+            res = null;
 
-	@SuppressWarnings("unchecked")
-	public T read ( )
-	throws IOException {
+        else if ( delimiter.getDelimiterType() == ProtoStreamDelimiter.DelimiterType.ENTRY ) {
+            Builder builder = _builderFactory.get();
 
-		init();
+            builder.mergeDelimitedFrom( _input );
 
-		T res = null;
+            
+            res = (T)builder.build();
+        }
 
-		ProtoStreamDelimiter delimiter = ProtoStreamDelimiter.parseDelimitedFrom(_digestStream);
-		
-		if ( delimiter.getDelimiterType() == ProtoStreamDelimiter.DelimiterType.END )
-			res = null;
+        else {
+            String msg = String.format("Expected delimiter type %s\n", delimiter.getDelimiterType() );
+            throw new ProtoStreamDecoderException ( msg );
+        }
 
-		else if ( delimiter.getDelimiterType() == ProtoStreamDelimiter.DelimiterType.ENTRY ) {
-			Builder builder = _builderFactory.get();
+        return res;
+    }
 
-			builder.mergeDelimitedFrom( _digestStream );
+    @Override
+    public int available() {
+        return 0;
+    }
 
+    @Override
+    public void close() throws IOException {
+        _input.close();
+    }
 
-			res = (T)builder.build();
-		}
-		
-		else if (delimiter.getDelimiterType() == ProtoStreamDelimiter.DelimiterType.CHECKSUM) {
-			MessageDigest digest = _digestStream.getMessageDigest();
-			String encodedDigset = Base64.encode(digest.digest());
-			digest.reset();
-			
-			ProtoStream.ProtoStreamChecksum checksumMsg = 
-				ProtoStream.ProtoStreamChecksum.parseDelimitedFrom(_digestStream);
-			
-			if(!checksumMsg.getAlgorithm().equals(CHECKSUM_ALGORITHM)) {
-				throw new IOException(checksumMsg.getAlgorithm() + " not supported checksum algorithm");
-			}
-			
-			if(!checksumMsg.getDigest().equals(encodedDigset)) {
-				throw new IOException("Checksum failed");
-			}
-		}
+    @Override
+    public void mark(int readAheadLimit) throws IOException {
+        throw new UnsupportedOperationException();
+        
+    }
 
-		else {
-			CodedInputStream codedStream = CodedInputStream.newInstance(_digestStream);
-			int size = codedStream.readRawVarint32();
-			while(size > 0) {
-				size -= _digestStream.skip(size);
-			}
-		}
+    @Override
+    public boolean markSupported() {
+        return false;
+    }
 
-		if(res == null) {
-			done = true;
-		}
-		
-		return res;
-	}
+    @Override
+    public Collection<? extends T> read(int len) throws IOException {
+        List<T> retval = new ArrayList<T>(len);
+        T obj;
+        int ctr = 0;
+        
+        while(ctr < len && (obj = read()) != null) {
+            retval.add(obj);
+            ctr++;
+        }
+        
+        return retval;
+    }
 
-	@Override
-	public int available() {
-		return 0;
-	}
+    @Override
+    public void reset() throws IOException {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	public void close() throws IOException {
-		_originalStream.close();
-	}
-
-	@Override
-	public void mark(int readAheadLimit) throws IOException {
-		throw new UnsupportedOperationException();
-
-	}
-
-	@Override
-	public boolean markSupported() {
-		return false;
-	}
-
-	@Override
-	public Collection<? extends T> read(int len) throws IOException {
-		List<T> retval = new ArrayList<T>(len);
-		T obj;
-		int ctr = 0;
-
-		while(ctr < len && (obj = read()) != null) {
-			retval.add(obj);
-			ctr++;
-		}
-
-		return retval;
-	}
-
-	@Override
-	public void reset() throws IOException {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public long skip(long n) throws IOException {
-		long i;
-		for(i = 0; i < n; i++) {
-			if(read() == null)
-				break;
-		}
-
-		return i;
-	}
-
-	@Override
-	public boolean atEnd() {
-		return done;
-	}
+    @Override
+    public long skip(long n) throws IOException {
+        long i;
+        for(i = 0; i < n; i++) {
+            if(read() == null)
+                break;
+        }
+        
+        return i;
+    }
 
 }
