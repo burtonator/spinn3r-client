@@ -26,8 +26,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import com.spinn3r.api.protobuf.ContentApi;
-import com.spinn3r.api.util.CompressedBLOB;
-import com.spinn3r.api.util.CompressedBlob2;
+import com.spinn3r.io.utils.CompressedBLOB;
+import com.spinn3r.io.utils.CompressedBlob2;
 
 
 
@@ -67,7 +67,8 @@ public class DiskReader {
 
         if ( proto_file != null ) {
             res = ContentApi.Response.parseFrom( new FileInputStream ( proto_file.getAbsoluteFile() ) );
-            proto_file.delete();
+            if(!proto_file.delete())
+            	throw new IOException("Unable to delete " + proto_file.delete());
         }
 
         return res;

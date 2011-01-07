@@ -19,6 +19,8 @@ package com.spinn3r.api;
 import java.util.Date;
 import java.util.List;
 
+import com.spinn3r.util.ISO8601DateParser;
+
 /**
  * Represents a single item returned from the API.
  */
@@ -44,7 +46,6 @@ public abstract class BaseItem extends BaseResult {
     protected int weblogTier              = -1;
     protected int weblogIndegree          = -1;
 
-    protected Date pubDate                = null;
     protected Date published              = null;
     
     protected String authorName           = null;

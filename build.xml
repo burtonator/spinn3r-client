@@ -8,7 +8,7 @@
 
     <property name="project"      value="spinn3r-client"/>
     <property name="javadocdir"   value="javadoc"/>
-    <property name="version"      value="3.3.10"/>
+    <property name="version"      value="3.4.00"/>
     <property name="vendor"       value="Tailrank Inc."/>
 
     <path id="project.classpath">
@@ -21,19 +21,6 @@
 
     </path>
 	
-	<target name="compile-protobuf">
-	      <exec executable="protoc">
-	        <arg value="-I=src/proto/"/>
-	        <arg value="--java_out=src/java/"/>
-	        <arg value="src/proto/spinn3rApi.proto"/>
-	      </exec>
-	      <exec executable="protoc">
-	        <arg value="-I=src/proto/"/>
-	        <arg value="--java_out=src/java/"/>
-	        <arg value="src/proto/protostream.proto"/>
-	      </exec>
-	</target>
-
     <target name="compile">
 
         <mkdir dir="compile"/>
@@ -58,6 +45,13 @@
         <delete dir="compile"/>
         <delete dir="target"/>
     </target>
+	
+	<target name="libjar" depends="compile">
+		<mkdir dir="target"/>
+		<jar destfile="target/${project}-${version}-aslib.jar"
+			basedir="compile"/>
+			
+	</target>
 
     <target name="jar" depends="compile">
 
@@ -104,6 +98,8 @@
       	<zipfileset src="lib/java-xmlbuilder-0.3.jar"/>
       	<zipfileset src="lib/protobuf-java-2.3.0.jar"/>
       	<zipfileset src="lib/jzlib-1.0.7.jar"/>
+      	<zipfileset src="lib/guava-r07.jar"/>
+      	<zipfileset src="lib/spinn3r-common-lib-1.1.jar"/>
       </jarjar>
     </target>
 
