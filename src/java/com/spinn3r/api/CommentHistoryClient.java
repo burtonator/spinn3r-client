@@ -26,7 +26,7 @@ public class CommentHistoryClient extends LegacyWrapperClient<Source> {
 
 
 
-    public static void dump( List<BaseItem> results ) {
+    public static void dump( List<? extends BaseItem> results ) {
 
         for( BaseItem item : results ) {
             System.out.println( "----" );
@@ -62,7 +62,7 @@ public class CommentHistoryClient extends LegacyWrapperClient<Source> {
 
         client.setConfig( config );
 
-        List results;
+        List<Source> results;
 
         while( client.hasMoreResults() ) {
 

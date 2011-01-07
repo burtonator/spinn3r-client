@@ -30,7 +30,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import com.spinn3r.api.protobuf.ContentApi.Response;
-import com.spinn3r.api.util.EncodingException;
+import com.spinn3r.io.utils.EncodingException;
 
 @RunWith(Parameterized.class)
 public class TestProtobufToXML

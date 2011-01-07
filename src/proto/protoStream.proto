@@ -26,7 +26,15 @@ message ProtoStreamDelimiter {
     ENTRY = 1;
     END   = 2;
     INDEX = 3;
+    CHECKSUM = 4;
+    
   }
 
   optional DelimiterType delimiter_type = 1 [default = END];
+}
+
+message ProtoStreamChecksum {
+  
+  required string algorithm  = 1;
+  required string digest     = 2;
 }

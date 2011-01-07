@@ -18,6 +18,7 @@ package com.spinn3r.api;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Collection;
@@ -37,8 +38,9 @@ import org.apache.commons.lang.StringUtils;
 
 import com.google.inject.internal.ImmutableList;
 import com.spinn3r.api.Config.Format;
-import com.spinn3r.api.util.Base64;
-import com.spinn3r.api.util.MD5;
+import com.spinn3r.io.utils.Base64;
+import com.spinn3r.util.ISO8601DateParser;
+import com.spinn3r.util.MD5;
 
 /**
  * <a href="http://spinn3r.com">Spinn3r</a> command line debug client for
@@ -111,11 +113,6 @@ public class Main<T extends BaseResult> {
      * When true, filter results for each pass.
      */
     private static int show_results = DEFAULT_SHOW_RESULTS;
-
-    /**
-     * When true, filter results for each pass.
-     */
-    private static boolean show_progress = true;
 
     /**
      * When we have a value. Only print results that match a certain pattern.
@@ -588,8 +585,6 @@ public class Main<T extends BaseResult> {
 
         fetch_after = System.currentTimeMillis();
 
-        String url = config.getNextRequestURL();
-
         List<T> results = client.getResults();
 
         if (save != null) {
@@ -597,7 +592,8 @@ public class Main<T extends BaseResult> {
             // save the results to disk if necessary.
 
             File root = new File(save);
-            root.mkdirs();
+            if(!root.mkdirs())
+            	throw new IOException("Unable to create directory " + root.toString());
 
             long now = System.currentTimeMillis();
 
@@ -605,13 +601,12 @@ public class Main<T extends BaseResult> {
 
             // TODO: use .gz if the XML is compressed from the server directly.
 
-            String extension = "xml";
+            String extension = "`";
 
             // do not use .xml if the user is using protobuffer encoding
-            if (config.getFormat() == Format.PROTOBUF)
+            if (config.getFormat() == Format.PROTOBUF
+                    || config.getFormat() == Format.PROTOSTREAM)
                 extension = "protobuf";
-            else if(config.getFormat() == Format.PROTOSTREAM)
-                extension = "protostream";
 
             if ("hierarchical".equals(save_method)) {
 
@@ -629,7 +624,8 @@ public class Main<T extends BaseResult> {
 
                 file = new File(root, path);
 
-                new File(file.getParent()).mkdirs();
+                if(!new File(file.getParent()).mkdirs())
+                	throw new IOException("Failed to create directory " + file.getParent());
 
             } else {
 
@@ -684,10 +680,12 @@ public class Main<T extends BaseResult> {
             File dest = new File(file.getPath().replaceAll("\\.tmp$", ""));
 
             if (dest.exists()) {
-                dest.delete();
+                if(!dest.delete())
+                	throw new IOException("Failed to delete " + dest.toString() );
             }
 
-            file.renameTo(dest);
+            if(!file.renameTo(dest))
+            	throw new IOException("Failed to name file");
 
             /*
              * Log the next url that we're going to do. If it flops, we can restart.
@@ -824,14 +822,6 @@ public class Main<T extends BaseResult> {
                 .println("    --use_protobuf=true   Enable protocol buffer support for permalink client (performance).");
         System.out.println();
 
-        System.out
-                .println("    --use_protostream=true Enable protocol buffer stream support for permalink client (performance).");
-        System.out.println();
-        
-        System.out
-                .println("    --use_xml=true Enable rss support for permalink client.");
-        System.out.println();
-        
         // System.out.println(
         // "    --spam_probability=NN Set the lower bound for spam probability filtering.  Default(0.0)"
         // );
@@ -864,7 +854,6 @@ public class Main<T extends BaseResult> {
 
         long after = -1;
         Format format = Format.PROTOSTREAM;
-        int limit = -1;
         String vendor = null;
         String remoteFilter = null;
         Long sleep_duration = null;
@@ -932,11 +921,6 @@ public class Main<T extends BaseResult> {
 
             if (v.startsWith("--recover")) {
                 restore = true;
-                continue;
-            }
-
-            if (v.startsWith("--limit")) {
-                limit = Integer.parseInt(getOpt(v));
                 continue;
             }
 
@@ -1052,8 +1036,6 @@ public class Main<T extends BaseResult> {
         if(debugLogFilePath != null) {
             anonymousLogger.addHandler(new FileHandler(debugLogFilePath));
         }
-        anonymousLogger.info("Spinn3r client started");
-        Logger.getLogger("fun").fine("Test message");
 
         Factory factory = new Factory();
         String restoreURL = null;
@@ -1067,7 +1049,8 @@ public class Main<T extends BaseResult> {
             long ctr = adapter.getLastCtr();
             
             for (File file : logFiles) {
-                file.delete();
+                if(!file.delete())
+                	throw new IOException("Failed to delete " + file.toString());
             }
          
             factory.enableLogging(savedir, 1000000);
@@ -1103,8 +1086,6 @@ public class Main<T extends BaseResult> {
         config.setCommandLine(StringUtils.join(args, " "));
         
         config.setApi(api);
-        if (limit != -1)
-            config.setLimit(limit);
         config.setFormat(format);
         config.setVendor(vendor);
         config.setHost(host);

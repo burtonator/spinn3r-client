@@ -30,6 +30,12 @@ import com.spinn3r.api.util.ProtoStreamDecoder;
 
 import com.ice.tar.TarInputStream;
 import com.ice.tar.TarEntry;
+<<<<<<< local
+import com.ice.tar.TarInputStream;
+import com.spinn3r.api.protobuf.ContentApi;
+import com.spinn3r.io.protostream.ProtoStreamDecoder;
+=======
+>>>>>>> other
 
 /**
  * Code to read a protobuff file off disk and print it out.
