@@ -7,8 +7,7 @@
     <property file="build.properties"/>
 
     <property name="project"      value="spinn3r-client"/>
-    <property name="javadocdir"   value="javadoc"/>
-    <property name="version"      value="3.3.09"/>
+    <property name="version"      value="3.3.11"/>
     <property name="vendor"       value="Tailrank Inc."/>
 
     <path id="project.classpath">
@@ -204,39 +203,8 @@
         </junit>
     </target>
 
-  <target name="javadoc" description="Generate javadoc" depends="compile">
 
-    <mkdir dir="${javadocdir}">
-    </mkdir>
-    <tstamp>
-      <format pattern="2000-yyyy" property="year">
-      </format>
-    </tstamp>
-    <property name="copyright" value="Copyright &amp;copy; Tailrank Inc. All Rights Reserved.">
-    </property>
-    <property name="title" value="Spinn3r Client Reference API">
-    </property>
-    
-    <tstamp>
-      <format property="now" pattern="MM-dd-yyyy hh:mm:ss 'PST'" locale="PST"/>
-    </tstamp>
-
-    <javadoc bottom="Copyright &amp;copy; Tailrank Inc. All Rights Reserved." 
-             windowtitle="Spinn3r Client API Version ${version}" 
-             use="true" 
-             private="false" 
-             destdir="${javadocdir}" 
-             author="true" 
-             doctitle="Spinn3r Reference Client API ${version} (${now})" 
-             version="true" 
-             sourcepath="src/java" 
-             packagenames="com.spinn3r.*">
-
-    </javadoc>
-
-  </target>
-
-    <target name="dist" depends="jar,javadoc">
+    <target name="dist" depends="jar">
 
         <mkdir dir="target/${project}-${version}" />
 
@@ -253,7 +221,6 @@
 
         <copy todir="target/${project}-${version}">
             <fileset dir="compile">
-                <include name="javadoc/**"/>
             </fileset>
         </copy>
 
