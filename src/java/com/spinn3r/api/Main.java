@@ -419,16 +419,8 @@ public class Main<T extends BaseResult> {
 
                 }
 
-            } else if (result instanceof LinkItem) {
-
-                LinkItem link = (LinkItem) result;
-
-                System.out.println("----");
-                System.out.printf("link XML:      %s\n", link.getLinkXml());
-                System.out.printf("link title:    %s\n", link.getLinkTitle());
-
             }
-
+            
         }
 
     }
@@ -1036,15 +1028,9 @@ public class Main<T extends BaseResult> {
         if (api.startsWith("feed")) {
             config = new FeedConfig();
             client = new FeedClient();
-        } else if (api.startsWith("crawl")) {
-            config = new CrawlConfig();
-            client = new CrawlClient();
         } else if (api.startsWith("comment")) {
             config = new CommentConfig();
             client = new CommentClient();
-        } else if (api.startsWith("link")) {
-            config = new LinkConfig();
-            client = new LinkClient();
         } else {
             config = new PermalinkConfig();
             client = new PermalinkClient(restoreURL != null ? ImmutableList.of(restoreURL) : Collections.<String>emptyList());
