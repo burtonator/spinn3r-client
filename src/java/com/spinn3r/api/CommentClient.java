@@ -28,6 +28,10 @@ public class CommentClient extends LegacyWrapperClient<CommentItem> {
     public static int OPTIMAL_LIMIT        = 50;
     public static int CONSERVATIVE_LIMIT   = 10;
 
+    CommentClient() {
+        super();
+    }
+    
     protected int getMaxLimit() {
         return MAX_LIMIT;
     }
