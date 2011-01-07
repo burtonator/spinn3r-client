@@ -790,10 +790,6 @@ public class Main<T extends BaseResult> {
         System.out.println("                          Default: none");
         System.out.println();
         System.out
-                .println("    --save_method=        If 'hierarchical' we use a year/month/day hierarchy to save content.");
-        System.out.println("                          Default: flat");
-        System.out.println();
-        System.out
                 .println("    --host=hostname       Custom hostname for making calls against. Dev use only.");
         System.out
                 .println("                          Default: api.spinn3r.com");
