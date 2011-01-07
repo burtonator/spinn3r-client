@@ -911,11 +911,6 @@ public class Main<T extends BaseResult> {
                 continue;
             }
 
-            if (v.startsWith("--limit")) {
-                limit = Integer.parseInt(getOpt(v));
-                continue;
-            }
-
             if (v.startsWith("--sleep_duration")) {
                 sleep_duration = Long.parseLong(getOpt(v));
                 continue;
