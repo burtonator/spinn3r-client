@@ -46,6 +46,7 @@ public abstract class BaseItem extends BaseResult {
 
     protected Date pubDate                = null;
     protected Date published              = null;
+	protected Date dateFound              = null;
     
     protected String authorName           = null;
     protected String authorEmail          = null;
@@ -309,12 +310,28 @@ public abstract class BaseItem extends BaseResult {
 
     /**
      * 
+     * Get the value of <code>pubDate</code>.
+     *
+     */
+	public Date getDateFound() { 
+        return this.dateFound;
+    }
+
+    /**
+     * 
      * Set the value of <code>pubDate</code>.
      *
      */
     public void setPubDate( Date pubDate ) { 
         this.pubDate = pubDate;
     }
+
+	/**
+     * Set Date found field.
+     */
+	public void setDateFound( Date dateFound ) {
+		this.dateFound = dateFound;
+	}
 
     /**
      * 

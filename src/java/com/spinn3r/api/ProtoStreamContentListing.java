@@ -17,19 +17,14 @@
 
 package com.spinn3r.api;
 
-import com.spinn3r.api.protobuf.ContentApi;
-
 import java.io.File;
-import java.io.InputStream;
 import java.io.FileInputStream;
+import java.io.InputStream;
 
-import com.google.protobuf.CodedInputStream;
-
-import com.spinn3r.api.util.Decompress;
-import com.spinn3r.api.util.ProtoStreamDecoder;
-
-import com.ice.tar.TarInputStream;
 import com.ice.tar.TarEntry;
+import com.ice.tar.TarInputStream;
+import com.spinn3r.api.protobuf.ContentApi;
+import com.spinn3r.api.util.ProtoStreamDecoder;
 
 /**
  * Code to read a protobuff file off disk and print it out.

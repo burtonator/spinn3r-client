@@ -538,13 +538,16 @@ public class Main<T extends BaseResult> {
 
                 progress(client);
 
+                if (last == null)
+                    continue;
+
                 if (range > 0
                         && last.getTime() > client.getConfig().getAfter()
                                 .getTime()
                                 + range)
                     break;
 
-                if (before > 0 && Config.millisecondsToTimestamp(last.getTime()) >= before) {
+                if (before > 0 && last.getTime() >= before) {
                     break;
                 }
 
