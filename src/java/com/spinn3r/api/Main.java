@@ -782,17 +782,8 @@ public class Main<T extends BaseResult> {
         System.out.println("                          Default: 10");
         System.out.println();
         System.out
-                .println("    --filter=http://      URL filter.  Only print URLs that match the regex.");
-        System.out.println("                          Default: none");
-        System.out.println();
-        System.out
                 .println("    --range=NNNN          Unix time duration (in millis) to terminate the API.");
         System.out.println("                          Default: none");
-        System.out.println();
-        System.out
-                .println("    --limit=xx            Number of items to return per iteration.");
-        System.out
-                .println("                          Default: 10 for permalink, 100 for feed");
         System.out.println();
         System.out
                 .println("    --save=DIRECTORY      Save result XML to disk in the specified directory.");
