@@ -1,0 +1,44 @@
+<body>
+
+    <h2>Java Spinn3r API Reference</h2>
+
+    <p>
+        This is the reference library for
+        the <a href="http://spinn3r.com/documentation.php">Spinn3r client
+        API</a>.
+    </p>
+    
+    <p>
+        It provides implementations for both the <code>feed.getDelta</code>
+        and <code>feed.getPermalink</code> methods.
+    </p>
+
+    <p>
+        This code was designed to be extremely portable to other langauges which
+        should facilitate bindings in Java, Python, Lisp, Perl, Ruby, etc.
+    </p>
+
+    <h2>Full API Support</h2>
+
+    <p>
+        This implementation also correctly handles all features of the API
+        including all fields at the time it was shipped, throttling when no more
+        results were found, pagination, gzip encoding, etc.
+    </p>
+
+    <h2>Dependencies</h2>
+
+    <p>
+        The reference API was designed to function without any external
+        dependencies.  It uses the internal java.net.URL for HTTP transport and
+        JAXP and DOM for parsing the XML results.
+    </p>
+
+    <h2>Portability</h2>
+
+    <p>
+        Right now this library requires JDK 1.5.  It should be easy to back port
+        it to JDK 1.4 which we might do if we see a client request.
+    </p>
+
+</body>

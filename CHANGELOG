@@ -1,0 +1,7 @@
+
+# The latest version of this CHANGELOG is available here:
+#
+# http://code.google.com/p/spinn3r-client/source/browse/trunk/CHANGELOG
+
+3.2.08
+- Fix bug: SourceRegister Config not being set by client.
