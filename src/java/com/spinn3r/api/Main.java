@@ -743,14 +743,14 @@ public class Main<T extends BaseResult> {
         System.out.println("Optional params:");
         System.out.println();
         System.out
-                .println("    --api=API             Specify the name of the API (feed, permalink, comment, link).");
-        System.out.println("                          Default: feed");
+                .println("    --api=API             Specify the name of the API (permalink, comment, link).");
+        System.out.println("                          Default: permalink");
         System.out.println();
         System.out
-                .println("    --recover             Enable the client to recover from a previous state. Also use this" +
-                		"                           this flag to have the client save it's state so it may" +
-                		"                           recover in the future. Must be used with the permalink api" +
-                		"                           and the --save option.");
+                .println("    --recover             Enable the client to recover from a previous state. Also use this \n" +
+                         "                          this flag to have the client save it's state so it may \n" +
+                         "                          recover in the future. Must be used with the permalink api \n" +
+                         "                          and the --save option.");
         System.out.println();
         System.out
                 .println("    --after=NNN           Time in millis for when we should start indexing.");
@@ -814,22 +814,7 @@ public class Main<T extends BaseResult> {
         System.out.println("                          Default: false");
         System.out.println();
         System.out
-                .println("    --enable3             Enable Spinn3r 3.0 extensions.");
-        System.out.println();
-        System.out
                 .println("    --memory              Print current memory settings and exit.  Useful or debugging..");
-        System.out.println();
-
-        System.out
-                .println("    --use_protobuf=true   Enable protocol buffer support for permalink client (performance).");
-        System.out.println();
-
-        System.out
-                .println("    --use_protostream=true Enable protocol buffer stream support for permalink client (performance).");
-        System.out.println();
-        
-        System.out
-                .println("    --use_xml=true Enable rss support for permalink client.");
         System.out.println();
         
         // System.out.println(
@@ -981,23 +966,6 @@ public class Main<T extends BaseResult> {
              * config.setSpamProbability( Double.parseDouble( getOpt( v ) ) );
              * continue; }
              */
-
-            if (v.startsWith("--use_protobuf")) {
-                format = Format.PROTOBUF;
-                continue;
-            }
-
-            if (v.startsWith("--use_protostream")) {
-                if (Boolean.parseBoolean(getOpt(v)))
-                    format = Format.PROTOSTREAM;
-                continue;
-            }
-            
-            if (v.startsWith("--use_xml")) {
-                if (Boolean.parseBoolean(getOpt(v)))
-                    format = Format.RSS;
-                continue;
-            }
 
             if (v.startsWith("--dump_fields=")) {
                 dumpFields = Boolean.parseBoolean(getOpt(v));
