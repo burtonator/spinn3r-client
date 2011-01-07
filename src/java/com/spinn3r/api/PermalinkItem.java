@@ -81,6 +81,9 @@ public class PermalinkItem extends BaseItem {
             if ( str_tier != null )
                 setWeblogTier( Integer.parseInt( str_tier ) );
 
+			String str_dateFound = getElementCDATAByTagName( current, "date_found", NS_POST);
+			if( str_dateFound != null)
+				setDateFound( ISO8601DateParser.parse( str_dateFound ) );
             String pubDate = getElementCDATAByTagName( current, "pubDate" );
             setPubDate( RFC822DateParser.parse( pubDate ) );
 
@@ -231,6 +234,11 @@ public class PermalinkItem extends BaseItem {
             else
                 setPubDate( ISO8601DateParser.parse( permalink_entry.getDateFound() ) );
 
+
+			String date_found = permalink_entry.getDateFound();
+			if( ! empty( date_found)) {
+				setDateFound(ISO8601DateParser.parse( date_found));
+			}
             //FIXME: this is wrog.
             String last_published = permalink_entry.getLastPublished();
             if ( ! empty( last_published ) )

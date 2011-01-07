@@ -13,10 +13,10 @@ message ApplicationHeader {
 }
 
 message ProtoStreamHeader {
-  required string version            = 1; // version of the protstream format
+  required string version            = 1; // version of the protostream format
   required string default_entry_type = 2; // the type of entries in this stream
 
-  // applacation spisific header fealds
+  // application specific header fields
   repeated ApplicationHeader application_header = 3;
 }
 
