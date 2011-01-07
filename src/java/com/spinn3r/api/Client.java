@@ -28,9 +28,9 @@ import java.util.List;
 public interface Client<T> {
 
     public void fetch() throws IOException,
-                               ParseException,
-                               InterruptedException;
-
+        ParseException,
+        InterruptedException;
+    
     public List<T> getResults();
 
     public void setConfig( Config<T> config );

@@ -28,7 +28,7 @@ import java.util.Collection;
  */
 public class PermalinkClient extends LegacyWrapperClient<PermalinkItem> 
 {
-	public PermalinkClient()
+	PermalinkClient()
 	{
 		super();
 	}
