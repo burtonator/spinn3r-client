@@ -22,6 +22,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import org.w3c.dom.Element;
 
@@ -77,12 +78,33 @@ public abstract class Config <ResultType> implements Cloneable {
     	}
     }
     
+    private static final long PADDING = 1000000000;
+    
+    public static final long millisecondsToTimestamp(long millis) {
+    	return TimeUnit.SECONDS.convert(millis, TimeUnit.MILLISECONDS) * PADDING;
+    }
+    
+    public static final long dateToTimestamp(Date date) {
+    	return millisecondsToTimestamp(date.getTime());
+    }
+    
+    public static final long timestampToMilliseconds(long timestamp) {
+    	long seconds = timestamp / PADDING;
+    	long millis = TimeUnit.MILLISECONDS.convert(seconds, TimeUnit.SECONDS);
+    	
+    	return millis;
+    }
+    
+    public static final Date timestampToDate(long timestamp) {
+    	return new Date(timestampToMilliseconds(timestamp));
+    }
+    
     private String         filter              = null;
     private int            limit               = DEFAULT_LIMIT;
     //private String         lang                = null;
     private String         version             = DEFAULT_VERSION;
     private String         vendor              = null;
-    private Date           after               = new Date(); /* use epoch as default */
+    private long           after               = dateToTimestamp(new Date()); /* use epoch as default */
     private String         firstRequestURL     = null;
     private String         nextRequestURL      = null;
     private boolean        skipDescription     = false;
@@ -276,7 +298,11 @@ public abstract class Config <ResultType> implements Cloneable {
      *
      */
     public Date getAfter() { 
-        return this.after;
+    	return timestampToDate(after);
+    }
+    
+    public long getAfterTimestamp() {
+    	return this.after;
     }
 
     /**
@@ -285,7 +311,11 @@ public abstract class Config <ResultType> implements Cloneable {
      *
      */
     public void setAfter( Date after ) { 
-        this.after = after;
+        this.after = dateToTimestamp(after);
+    }
+    
+    public void setAfterTimestamp( long timestamp ) {
+    	this.after = timestamp;
     }
     
     /**
@@ -471,7 +501,7 @@ public abstract class Config <ResultType> implements Cloneable {
         */
             
         //AFTER param needs to be added which should be ISO8601
-        addParam( params, "after",   toISO8601( getAfter() ) );
+        addParam( params, "after",   getAfterTimestamp() );
 
         //add optional params
         //OBSOLETE/REMOVED

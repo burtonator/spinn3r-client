@@ -91,7 +91,7 @@ public class Main<T extends BaseResult> {
     /**
      * How far behind should be start by default?
      */
-    public static long INTERVAL = 20L * 60L * 1000L;
+    public static long INTERVAL = Config.millisecondsToTimestamp(20L * 60L * 1000L);
 
     /**
      * The date of the last item we found.
@@ -543,16 +543,13 @@ public class Main<T extends BaseResult> {
 
                 progress(client);
 
-                if (last == null)
-                    continue;
-
                 if (range > 0
                         && last.getTime() > client.getConfig().getAfter()
                                 .getTime()
                                 + range)
                     break;
 
-                if (before > 0 && last.getTime() >= before) {
+                if (before > 0 && Config.millisecondsToTimestamp(last.getTime()) >= before) {
                     break;
                 }
 
@@ -725,9 +722,9 @@ public class Main<T extends BaseResult> {
             return -1;
 
         try {
-            return Long.parseLong(opt);
+            return Config.millisecondsToTimestamp(Long.parseLong(opt));
         } catch (Throwable t) {
-            return ISO8601DateParser.parse(opt).getTime();
+            return Config.millisecondsToTimestamp(ISO8601DateParser.parse(opt).getTime());
         }
 
     }
@@ -886,10 +883,30 @@ public class Main<T extends BaseResult> {
                 show_results = Integer.parseInt(getOpt(v));
                 continue;
             }
+            
+            /*
+             * The code for the --afterTimestamp must come
+             * before the code for --after because --afterTimestamp
+             * also matches startsWith("after");
+             */
+            if (v.startsWith("--afterTimestamp")) {
+            	after =  Long.parseLong(getOpt(v));
+            	continue;
+            }
 
             if (v.startsWith("--after")) {
                 after = getOptAsTimeInMillis(v);
                 continue;
+            }
+            
+            /*
+             * The code for the --beforeTimestamp must come
+             * before the code for --before because --beforeTimestamp
+             * also matches startsWith("before");
+             */
+            if (v.startsWith("--beforeTimestamp")) {
+            	before = Long.parseLong(getOpt(v));
+            	continue;
             }
 
             if (v.startsWith("--before")) {
@@ -1111,11 +1128,11 @@ public class Main<T extends BaseResult> {
 
         if (after > -1)
             System.out.printf("After: %s (%s)\n", ISO8601DateParser
-                    .toString(new Date(after)), after);
+                    .toString(Config.timestampToDate(after)), after);
 
         if (before > -1)
             System.out.printf("Before: %s (%s)\n", ISO8601DateParser
-                    .toString(new Date(before)), before);
+                    .toString(Config.timestampToDate(before)), before);
 
         System.out.println("Saving results to disk: " + save);
 
@@ -1124,11 +1141,11 @@ public class Main<T extends BaseResult> {
         // getLastRequestURL returned from fetch() below
 
         if (after == -1) {
-            after = System.currentTimeMillis();
+            after = Config.millisecondsToTimestamp(System.currentTimeMillis());
             after = after - INTERVAL;
         }
 
-        config.setAfter(new Date(after));
+        config.setAfterTimestamp(after);
 
         new Main().exec(client, config);
 
