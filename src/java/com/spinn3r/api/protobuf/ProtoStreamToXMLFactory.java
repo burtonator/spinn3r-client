@@ -11,13 +11,13 @@ import java.util.zip.GZIPOutputStream;
 
 import org.apache.commons.io.FilenameUtils;
 
-public class ProtobufToXMLAppFactory
-{
-	private static final FilenameFilter PROTOBUF_NAME_FILTER = new FilenameFilter() {
+public class ProtoStreamToXMLFactory {
+	
+	private static final FilenameFilter PROTOSTREAM_NAME_FILTER = new FilenameFilter() {
 
 		@Override
 		public boolean accept(File dir, String name) {
-			return FilenameUtils.getExtension(name).equals("protobuf");
+			return FilenameUtils.getExtension(name).equals("protostream");
 		}
 		
 	};
@@ -25,12 +25,12 @@ public class ProtobufToXMLAppFactory
 	
 	static ConversionApp getInstance(String protobufFilename, String xmlFilename) throws IOException
 	{
-		return new ProtobufToXMLAppImpl(new FileInputStream(protobufFilename), new GZIPOutputStream(new FileOutputStream(xmlFilename)));
+		return new ProtoStreamToXMLImpl(new FileInputStream(protobufFilename), new GZIPOutputStream(new FileOutputStream(xmlFilename)));
 	}
 	
 	static ConversionApp getInstance(File protobufFile, File xmlFile) throws FileNotFoundException, IOException
 	{
-		return new ProtobufToXMLAppImpl(new FileInputStream(protobufFile), new GZIPOutputStream(new FileOutputStream(xmlFile)));
+		return new ProtoStreamToXMLImpl(new FileInputStream(protobufFile), new GZIPOutputStream(new FileOutputStream(xmlFile)));
 	}
 	
 	static ConversionApp getInstance(File protobufFileOrDir) throws FileNotFoundException, IOException
@@ -43,7 +43,7 @@ public class ProtobufToXMLAppFactory
 	
 	private static ConversionApp getDirectoryInstance(File directory) throws FileNotFoundException, IOException
 	{
-		String[] filesNames = directory.list(ProtobufToXMLAppFactory.PROTOBUF_NAME_FILTER);
+		String[] filesNames = directory.list(ProtoStreamToXMLFactory.PROTOSTREAM_NAME_FILTER);
 		ConversionApp[] appArray = new ConversionApp[filesNames.length];
 		
 		for(int i = 0; i < filesNames.length; i++)
@@ -57,13 +57,11 @@ public class ProtobufToXMLAppFactory
 	{
 		String xmlFilename = FilenameUtils.getBaseName(file.getAbsolutePath()) + ".xml.gz";
 		OutputStream os = new GZIPOutputStream(new FileOutputStream(new File(file.getParentFile(), xmlFilename)));
-		return new ProtobufToXMLAppImpl(new FileInputStream(file), os);
+		return new ProtoStreamToXMLImpl(new FileInputStream(file), os);
 	}
 	
 	static ConversionApp getInstance(String fileOrDir) throws FileNotFoundException, IOException
 	{	
 		return getInstance(new File(fileOrDir));
 	}
-	
-	
 }

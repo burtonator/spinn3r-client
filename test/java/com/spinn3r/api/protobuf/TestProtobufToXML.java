@@ -54,9 +54,10 @@ public class TestProtobufToXML
 	@Test
 	public void test() throws ParserConfigurationException, FactoryConfigurationError, SAXException, IOException, ParseException, EncodingException, TransformerException
 	{
-		ProtobufToXML converter = new ProtobufToXML(true);
+		ProtobufToXMLHelper converter = new ProtobufToXMLHelper(true);
 	
-		String protobufXML = converter.convert(protobuf);
+		converter.convert(protobuf);
+		String protobufXML = converter.asString();
 		Document protobufDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(protobufXML)));
 		
 		removeIgnoredTags(protobufDoc);

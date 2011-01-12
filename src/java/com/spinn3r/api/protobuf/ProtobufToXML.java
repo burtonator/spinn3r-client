@@ -7,7 +7,6 @@ import javax.xml.parsers.FactoryConfigurationError;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
-import com.spinn3r.api.protobuf.ContentApi.Response;
 import com.spinn3r.api.util.EncodingException;
 
 /**
@@ -30,33 +29,6 @@ import com.spinn3r.api.util.EncodingException;
  */
 public class ProtobufToXML 
 {
-	private final boolean ignoreEncodingErrors;
-	
-	public ProtobufToXML(boolean ignoreEncodingErrors)
-	{
-		this.ignoreEncodingErrors = ignoreEncodingErrors;
-	}
-	
-	/**
-	 * Convert a Protobuf response into a RSS feed
-	 * 
-	 * @param response
-	 * @return
-	 * @throws ParserConfigurationException
-	 * @throws FactoryConfigurationError
-	 * @throws ParseException
-	 * @throws EncodingException
-	 * @throws IOException
-	 * @throws TransformerException
-	 */
-	public String convert(Response response) throws ParserConfigurationException, FactoryConfigurationError, ParseException, EncodingException, IOException, TransformerException
-	{
-		ProtobufToXMLHelper helper = new ProtobufToXMLHelper(ignoreEncodingErrors);
-		
-		helper.convert(response);
-		
-		return helper.asString();
-	}
 	
 	public static void main(String[] args) throws IOException, ParserConfigurationException, FactoryConfigurationError, ParseException, EncodingException, TransformerException
 	{
