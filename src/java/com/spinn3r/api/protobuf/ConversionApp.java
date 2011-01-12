@@ -9,7 +9,7 @@ import javax.xml.transform.TransformerException;
 
 import com.spinn3r.api.util.EncodingException;
 
-interface ProtobufToXMLApp 
+interface ConversionApp 
 {
 	public void go() throws IOException, ParserConfigurationException, FactoryConfigurationError, ParseException, EncodingException, TransformerException;
 }

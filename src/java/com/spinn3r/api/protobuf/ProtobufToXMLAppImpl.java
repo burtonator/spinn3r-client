@@ -13,7 +13,7 @@ import javax.xml.transform.TransformerException;
 import com.spinn3r.api.protobuf.ContentApi.Response;
 import com.spinn3r.api.util.EncodingException;
 
-class ProtobufToXMLAppImpl implements ProtobufToXMLApp {
+class ProtobufToXMLAppImpl implements ConversionApp {
 
 	private final InputStream protobufFile;
 	private final OutputStream xmlfile;
@@ -30,8 +30,10 @@ class ProtobufToXMLAppImpl implements ProtobufToXMLApp {
 		Response response = Response.parseFrom(protobufFile);
 		PrintWriter outputWriter = new PrintWriter(xmlfile);
 		
-		ProtobufToXML protobufToXML = new ProtobufToXML(false);
-		outputWriter.print(protobufToXML.convert(response));
+		
+		ProtobufToXMLHelper helper = new ProtobufToXMLHelper(false);
+		helper.convert(response);
+		outputWriter.print(helper.asString());
 	}
 	
 }

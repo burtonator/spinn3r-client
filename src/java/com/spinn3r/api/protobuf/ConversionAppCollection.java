@@ -9,10 +9,10 @@ import javax.xml.transform.TransformerException;
 
 import com.spinn3r.api.util.EncodingException;
 
-class ProtobufToXMLAppCollection implements ProtobufToXMLApp {
+class ConversionAppCollection implements ConversionApp {
 
-	private final ProtobufToXMLApp[] apps;
-	ProtobufToXMLAppCollection(ProtobufToXMLApp ... apps)
+	private final ConversionApp[] apps;
+	ConversionAppCollection(ConversionApp ... apps)
 	{
 		this.apps = apps;
 	}
