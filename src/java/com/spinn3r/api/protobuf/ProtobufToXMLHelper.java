@@ -24,6 +24,7 @@ import com.spinn3r.api.protobuf.ContentApi.Source;
 import com.spinn3r.api.util.CompressedBLOB;
 import com.spinn3r.api.util.CompressedBlob2;
 import com.spinn3r.api.util.EncodingException;
+import com.spinn3r.api.util.ProtoStreamDecoder;
 
 class ProtobufToXMLHelper 
 {
@@ -89,6 +90,15 @@ class ProtobufToXMLHelper
 		
 		for(Entry entry : response.getEntryList())
 			convert(entry);
+	}
+	
+	public void convert(ProtoStreamDecoder<ContentApi.Entry> decoder) throws ParseException, EncodingException, IOException {
+		init();
+		
+		ContentApi.Entry entry;
+		while((entry = decoder.read()) != null) {
+			convert(entry);
+		}
 	}
 	
 	private void convert(Entry entry) throws ParseException, EncodingException, IOException
