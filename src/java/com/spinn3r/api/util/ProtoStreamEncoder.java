@@ -24,6 +24,11 @@ public class ProtoStreamEncoder<T extends AbstractMessageLite> implements Encode
         return new ProtoStreamEncoder<T>(outputStream, klass.getCanonicalName(), applicationHeaders);
     }
 
+    public static <T extends AbstractMessageLite> ProtoStreamEncoder<T> newStreamEncoder(
+            OutputStream outputStream, String entry, Map<String,String> applicationHeaders) throws IOException {
+        
+        return new ProtoStreamEncoder<T>(outputStream, entry, applicationHeaders);
+    }
     static {
 
         ProtoStream.ProtoStreamDelimiter.Builder builder =
