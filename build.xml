@@ -7,7 +7,6 @@
     <property file="build.properties"/>
 
     <property name="project"      value="spinn3r-client"/>
-    <property name="javadocdir"   value="javadoc"/>
     <property name="version"      value="3.4.01"/>
     <property name="vendor"       value="Tailrank Inc."/>
 

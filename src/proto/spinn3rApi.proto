@@ -253,6 +253,14 @@ message CommentEntry {
     optional string permalink_title     = 2;
     optional string permalink_hashcode  = 3;
     optional string raw_published       = 4;
+    repeated Link link                  = 5;
+    optional string date_found          = 6;
+    optional Content content            = 7;
+    optional string title               = 8;
+    repeated Author author              = 9;
+    optional string date_published      = 10;
+    repeated string tag                 = 11;
+    optional string lang                = 12;
 }
 
 /**

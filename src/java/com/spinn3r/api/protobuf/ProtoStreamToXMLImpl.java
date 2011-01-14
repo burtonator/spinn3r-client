@@ -38,7 +38,6 @@ public class ProtoStreamToXMLImpl implements ConversionApp {
 		
 		outputWriter.print(helper.asString());
 		outputWriter.close();
-		
 	}
 
 }
