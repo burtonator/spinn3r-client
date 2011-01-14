@@ -6904,9 +6904,84 @@ public final class ContentApi {
     public boolean hasRawPublished() { return hasRawPublished; }
     public java.lang.String getRawPublished() { return rawPublished_; }
     
+    // repeated .contentApi.Link link = 5;
+    public static final int LINK_FIELD_NUMBER = 5;
+    private java.util.List<com.spinn3r.api.protobuf.ContentApi.Link> link_ =
+      java.util.Collections.emptyList();
+    public java.util.List<com.spinn3r.api.protobuf.ContentApi.Link> getLinkList() {
+      return link_;
+    }
+    public int getLinkCount() { return link_.size(); }
+    public com.spinn3r.api.protobuf.ContentApi.Link getLink(int index) {
+      return link_.get(index);
+    }
+    
+    // optional string date_found = 6;
+    public static final int DATE_FOUND_FIELD_NUMBER = 6;
+    private boolean hasDateFound;
+    private java.lang.String dateFound_ = "";
+    public boolean hasDateFound() { return hasDateFound; }
+    public java.lang.String getDateFound() { return dateFound_; }
+    
+    // optional .contentApi.Content content = 7;
+    public static final int CONTENT_FIELD_NUMBER = 7;
+    private boolean hasContent;
+    private com.spinn3r.api.protobuf.ContentApi.Content content_;
+    public boolean hasContent() { return hasContent; }
+    public com.spinn3r.api.protobuf.ContentApi.Content getContent() { return content_; }
+    
+    // optional string title = 8;
+    public static final int TITLE_FIELD_NUMBER = 8;
+    private boolean hasTitle;
+    private java.lang.String title_ = "";
+    public boolean hasTitle() { return hasTitle; }
+    public java.lang.String getTitle() { return title_; }
+    
+    // repeated .contentApi.Author author = 9;
+    public static final int AUTHOR_FIELD_NUMBER = 9;
+    private java.util.List<com.spinn3r.api.protobuf.ContentApi.Author> author_ =
+      java.util.Collections.emptyList();
+    public java.util.List<com.spinn3r.api.protobuf.ContentApi.Author> getAuthorList() {
+      return author_;
+    }
+    public int getAuthorCount() { return author_.size(); }
+    public com.spinn3r.api.protobuf.ContentApi.Author getAuthor(int index) {
+      return author_.get(index);
+    }
+    
+    // optional string date_published = 10;
+    public static final int DATE_PUBLISHED_FIELD_NUMBER = 10;
+    private boolean hasDatePublished;
+    private java.lang.String datePublished_ = "";
+    public boolean hasDatePublished() { return hasDatePublished; }
+    public java.lang.String getDatePublished() { return datePublished_; }
+    
+    // repeated string tag = 11;
+    public static final int TAG_FIELD_NUMBER = 11;
+    private java.util.List<java.lang.String> tag_ =
+      java.util.Collections.emptyList();
+    public java.util.List<java.lang.String> getTagList() {
+      return tag_;
+    }
+    public int getTagCount() { return tag_.size(); }
+    public java.lang.String getTag(int index) {
+      return tag_.get(index);
+    }
+    
+    // optional string lang = 12;
+    public static final int LANG_FIELD_NUMBER = 12;
+    private boolean hasLang;
+    private java.lang.String lang_ = "";
+    public boolean hasLang() { return hasLang; }
+    public java.lang.String getLang() { return lang_; }
+    
     private void initFields() {
+      content_ = com.spinn3r.api.protobuf.ContentApi.Content.getDefaultInstance();
     }
     public final boolean isInitialized() {
+      if (hasContent()) {
+        if (!getContent().isInitialized()) return false;
+      }
       return true;
     }
     
@@ -6924,6 +6999,30 @@ public final class ContentApi {
       }
       if (hasRawPublished()) {
         output.writeString(4, getRawPublished());
+      }
+      for (com.spinn3r.api.protobuf.ContentApi.Link element : getLinkList()) {
+        output.writeMessage(5, element);
+      }
+      if (hasDateFound()) {
+        output.writeString(6, getDateFound());
+      }
+      if (hasContent()) {
+        output.writeMessage(7, getContent());
+      }
+      if (hasTitle()) {
+        output.writeString(8, getTitle());
+      }
+      for (com.spinn3r.api.protobuf.ContentApi.Author element : getAuthorList()) {
+        output.writeMessage(9, element);
+      }
+      if (hasDatePublished()) {
+        output.writeString(10, getDatePublished());
+      }
+      for (java.lang.String element : getTagList()) {
+        output.writeString(11, element);
+      }
+      if (hasLang()) {
+        output.writeString(12, getLang());
       }
       getUnknownFields().writeTo(output);
     }
@@ -6949,6 +7048,43 @@ public final class ContentApi {
       if (hasRawPublished()) {
         size += com.google.protobuf.CodedOutputStream
           .computeStringSize(4, getRawPublished());
+      }
+      for (com.spinn3r.api.protobuf.ContentApi.Link element : getLinkList()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(5, element);
+      }
+      if (hasDateFound()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(6, getDateFound());
+      }
+      if (hasContent()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(7, getContent());
+      }
+      if (hasTitle()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(8, getTitle());
+      }
+      for (com.spinn3r.api.protobuf.ContentApi.Author element : getAuthorList()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(9, element);
+      }
+      if (hasDatePublished()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(10, getDatePublished());
+      }
+      {
+        int dataSize = 0;
+        for (java.lang.String element : getTagList()) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeStringSizeNoTag(element);
+        }
+        size += dataSize;
+        size += 1 * getTagList().size();
+      }
+      if (hasLang()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(12, getLang());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -7092,6 +7228,18 @@ public final class ContentApi {
           throw new IllegalStateException(
             "build() has already been called on this Builder.");
         }
+        if (result.link_ != java.util.Collections.EMPTY_LIST) {
+          result.link_ =
+            java.util.Collections.unmodifiableList(result.link_);
+        }
+        if (result.author_ != java.util.Collections.EMPTY_LIST) {
+          result.author_ =
+            java.util.Collections.unmodifiableList(result.author_);
+        }
+        if (result.tag_ != java.util.Collections.EMPTY_LIST) {
+          result.tag_ =
+            java.util.Collections.unmodifiableList(result.tag_);
+        }
         com.spinn3r.api.protobuf.ContentApi.CommentEntry returnMe = result;
         result = null;
         return returnMe;
@@ -7119,6 +7267,39 @@ public final class ContentApi {
         }
         if (other.hasRawPublished()) {
           setRawPublished(other.getRawPublished());
+        }
+        if (!other.link_.isEmpty()) {
+          if (result.link_.isEmpty()) {
+            result.link_ = new java.util.ArrayList<com.spinn3r.api.protobuf.ContentApi.Link>();
+          }
+          result.link_.addAll(other.link_);
+        }
+        if (other.hasDateFound()) {
+          setDateFound(other.getDateFound());
+        }
+        if (other.hasContent()) {
+          mergeContent(other.getContent());
+        }
+        if (other.hasTitle()) {
+          setTitle(other.getTitle());
+        }
+        if (!other.author_.isEmpty()) {
+          if (result.author_.isEmpty()) {
+            result.author_ = new java.util.ArrayList<com.spinn3r.api.protobuf.ContentApi.Author>();
+          }
+          result.author_.addAll(other.author_);
+        }
+        if (other.hasDatePublished()) {
+          setDatePublished(other.getDatePublished());
+        }
+        if (!other.tag_.isEmpty()) {
+          if (result.tag_.isEmpty()) {
+            result.tag_ = new java.util.ArrayList<java.lang.String>();
+          }
+          result.tag_.addAll(other.tag_);
+        }
+        if (other.hasLang()) {
+          setLang(other.getLang());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -7159,6 +7340,47 @@ public final class ContentApi {
             }
             case 34: {
               setRawPublished(input.readString());
+              break;
+            }
+            case 42: {
+              com.spinn3r.api.protobuf.ContentApi.Link.Builder subBuilder = com.spinn3r.api.protobuf.ContentApi.Link.newBuilder();
+              input.readMessage(subBuilder, extensionRegistry);
+              addLink(subBuilder.buildPartial());
+              break;
+            }
+            case 50: {
+              setDateFound(input.readString());
+              break;
+            }
+            case 58: {
+              com.spinn3r.api.protobuf.ContentApi.Content.Builder subBuilder = com.spinn3r.api.protobuf.ContentApi.Content.newBuilder();
+              if (hasContent()) {
+                subBuilder.mergeFrom(getContent());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setContent(subBuilder.buildPartial());
+              break;
+            }
+            case 66: {
+              setTitle(input.readString());
+              break;
+            }
+            case 74: {
+              com.spinn3r.api.protobuf.ContentApi.Author.Builder subBuilder = com.spinn3r.api.protobuf.ContentApi.Author.newBuilder();
+              input.readMessage(subBuilder, extensionRegistry);
+              addAuthor(subBuilder.buildPartial());
+              break;
+            }
+            case 82: {
+              setDatePublished(input.readString());
+              break;
+            }
+            case 90: {
+              addTag(input.readString());
+              break;
+            }
+            case 98: {
+              setLang(input.readString());
               break;
             }
           }
@@ -7247,6 +7469,269 @@ public final class ContentApi {
       public Builder clearRawPublished() {
         result.hasRawPublished = false;
         result.rawPublished_ = getDefaultInstance().getRawPublished();
+        return this;
+      }
+      
+      // repeated .contentApi.Link link = 5;
+      public java.util.List<com.spinn3r.api.protobuf.ContentApi.Link> getLinkList() {
+        return java.util.Collections.unmodifiableList(result.link_);
+      }
+      public int getLinkCount() {
+        return result.getLinkCount();
+      }
+      public com.spinn3r.api.protobuf.ContentApi.Link getLink(int index) {
+        return result.getLink(index);
+      }
+      public Builder setLink(int index, com.spinn3r.api.protobuf.ContentApi.Link value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.link_.set(index, value);
+        return this;
+      }
+      public Builder setLink(int index, com.spinn3r.api.protobuf.ContentApi.Link.Builder builderForValue) {
+        result.link_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addLink(com.spinn3r.api.protobuf.ContentApi.Link value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        if (result.link_.isEmpty()) {
+          result.link_ = new java.util.ArrayList<com.spinn3r.api.protobuf.ContentApi.Link>();
+        }
+        result.link_.add(value);
+        return this;
+      }
+      public Builder addLink(com.spinn3r.api.protobuf.ContentApi.Link.Builder builderForValue) {
+        if (result.link_.isEmpty()) {
+          result.link_ = new java.util.ArrayList<com.spinn3r.api.protobuf.ContentApi.Link>();
+        }
+        result.link_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllLink(
+          java.lang.Iterable<? extends com.spinn3r.api.protobuf.ContentApi.Link> values) {
+        if (result.link_.isEmpty()) {
+          result.link_ = new java.util.ArrayList<com.spinn3r.api.protobuf.ContentApi.Link>();
+        }
+        super.addAll(values, result.link_);
+        return this;
+      }
+      public Builder clearLink() {
+        result.link_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // optional string date_found = 6;
+      public boolean hasDateFound() {
+        return result.hasDateFound();
+      }
+      public java.lang.String getDateFound() {
+        return result.getDateFound();
+      }
+      public Builder setDateFound(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasDateFound = true;
+        result.dateFound_ = value;
+        return this;
+      }
+      public Builder clearDateFound() {
+        result.hasDateFound = false;
+        result.dateFound_ = getDefaultInstance().getDateFound();
+        return this;
+      }
+      
+      // optional .contentApi.Content content = 7;
+      public boolean hasContent() {
+        return result.hasContent();
+      }
+      public com.spinn3r.api.protobuf.ContentApi.Content getContent() {
+        return result.getContent();
+      }
+      public Builder setContent(com.spinn3r.api.protobuf.ContentApi.Content value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasContent = true;
+        result.content_ = value;
+        return this;
+      }
+      public Builder setContent(com.spinn3r.api.protobuf.ContentApi.Content.Builder builderForValue) {
+        result.hasContent = true;
+        result.content_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeContent(com.spinn3r.api.protobuf.ContentApi.Content value) {
+        if (result.hasContent() &&
+            result.content_ != com.spinn3r.api.protobuf.ContentApi.Content.getDefaultInstance()) {
+          result.content_ =
+            com.spinn3r.api.protobuf.ContentApi.Content.newBuilder(result.content_).mergeFrom(value).buildPartial();
+        } else {
+          result.content_ = value;
+        }
+        result.hasContent = true;
+        return this;
+      }
+      public Builder clearContent() {
+        result.hasContent = false;
+        result.content_ = com.spinn3r.api.protobuf.ContentApi.Content.getDefaultInstance();
+        return this;
+      }
+      
+      // optional string title = 8;
+      public boolean hasTitle() {
+        return result.hasTitle();
+      }
+      public java.lang.String getTitle() {
+        return result.getTitle();
+      }
+      public Builder setTitle(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasTitle = true;
+        result.title_ = value;
+        return this;
+      }
+      public Builder clearTitle() {
+        result.hasTitle = false;
+        result.title_ = getDefaultInstance().getTitle();
+        return this;
+      }
+      
+      // repeated .contentApi.Author author = 9;
+      public java.util.List<com.spinn3r.api.protobuf.ContentApi.Author> getAuthorList() {
+        return java.util.Collections.unmodifiableList(result.author_);
+      }
+      public int getAuthorCount() {
+        return result.getAuthorCount();
+      }
+      public com.spinn3r.api.protobuf.ContentApi.Author getAuthor(int index) {
+        return result.getAuthor(index);
+      }
+      public Builder setAuthor(int index, com.spinn3r.api.protobuf.ContentApi.Author value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.author_.set(index, value);
+        return this;
+      }
+      public Builder setAuthor(int index, com.spinn3r.api.protobuf.ContentApi.Author.Builder builderForValue) {
+        result.author_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addAuthor(com.spinn3r.api.protobuf.ContentApi.Author value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        if (result.author_.isEmpty()) {
+          result.author_ = new java.util.ArrayList<com.spinn3r.api.protobuf.ContentApi.Author>();
+        }
+        result.author_.add(value);
+        return this;
+      }
+      public Builder addAuthor(com.spinn3r.api.protobuf.ContentApi.Author.Builder builderForValue) {
+        if (result.author_.isEmpty()) {
+          result.author_ = new java.util.ArrayList<com.spinn3r.api.protobuf.ContentApi.Author>();
+        }
+        result.author_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllAuthor(
+          java.lang.Iterable<? extends com.spinn3r.api.protobuf.ContentApi.Author> values) {
+        if (result.author_.isEmpty()) {
+          result.author_ = new java.util.ArrayList<com.spinn3r.api.protobuf.ContentApi.Author>();
+        }
+        super.addAll(values, result.author_);
+        return this;
+      }
+      public Builder clearAuthor() {
+        result.author_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // optional string date_published = 10;
+      public boolean hasDatePublished() {
+        return result.hasDatePublished();
+      }
+      public java.lang.String getDatePublished() {
+        return result.getDatePublished();
+      }
+      public Builder setDatePublished(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasDatePublished = true;
+        result.datePublished_ = value;
+        return this;
+      }
+      public Builder clearDatePublished() {
+        result.hasDatePublished = false;
+        result.datePublished_ = getDefaultInstance().getDatePublished();
+        return this;
+      }
+      
+      // repeated string tag = 11;
+      public java.util.List<java.lang.String> getTagList() {
+        return java.util.Collections.unmodifiableList(result.tag_);
+      }
+      public int getTagCount() {
+        return result.getTagCount();
+      }
+      public java.lang.String getTag(int index) {
+        return result.getTag(index);
+      }
+      public Builder setTag(int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.tag_.set(index, value);
+        return this;
+      }
+      public Builder addTag(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  if (result.tag_.isEmpty()) {
+          result.tag_ = new java.util.ArrayList<java.lang.String>();
+        }
+        result.tag_.add(value);
+        return this;
+      }
+      public Builder addAllTag(
+          java.lang.Iterable<? extends java.lang.String> values) {
+        if (result.tag_.isEmpty()) {
+          result.tag_ = new java.util.ArrayList<java.lang.String>();
+        }
+        super.addAll(values, result.tag_);
+        return this;
+      }
+      public Builder clearTag() {
+        result.tag_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // optional string lang = 12;
+      public boolean hasLang() {
+        return result.hasLang();
+      }
+      public java.lang.String getLang() {
+        return result.getLang();
+      }
+      public Builder setLang(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasLang = true;
+        result.lang_ = value;
+        return this;
+      }
+      public Builder clearLang() {
+        result.hasLang = false;
+        result.lang_ = getDefaultInstance().getLang();
         return this;
       }
       
@@ -7361,6 +7846,9 @@ public final class ContentApi {
       }
       if (hasPermalinkEntry()) {
         if (!getPermalinkEntry().isInitialized()) return false;
+      }
+      if (hasCommentEntry()) {
+        if (!getCommentEntry().isInitialized()) return false;
       }
       if (hasCrawlEntry()) {
         if (!getCrawlEntry().isInitialized()) return false;
@@ -8620,23 +9108,27 @@ public final class ContentApi {
       "tegory\030\007 \003(\t\022\030\n\020spam_probability\030\010 \001(\002\022\026" +
       "\n\016last_published\030\t \001(\t\022\022\n\ndate_found\030\n \001" +
       "(\t\022\022\n\nidentifier\030\013 \001(\003\022$\n\007content\030\014 \001(\0132" +
-      "\023.contentApi.Content\"m\n\014CommentEntry\022\021\n\t" +
-      "permalink\030\001 \001(\t\022\027\n\017permalink_title\030\002 \001(\t" +
-      "\022\032\n\022permalink_hashcode\030\003 \001(\t\022\025\n\rraw_publ",
-      "ished\030\004 \001(\t\"\335\002\n\005Entry\022\"\n\006source\030\001 \001(\0132\022." +
-      "contentApi.Source\022\036\n\004feed\030\002 \001(\0132\020.conten" +
-      "tApi.Feed\022)\n\nfeed_entry\030\003 \001(\0132\025.contentA" +
-      "pi.FeedEntry\0223\n\017permalink_entry\030\004 \001(\0132\032." +
-      "contentApi.PermalinkEntry\022/\n\rcomment_ent" +
-      "ry\030\005 \001(\0132\030.contentApi.CommentEntry\022+\n\013cr" +
-      "awl_entry\030\006 \001(\0132\026.contentApi.CrawlEntry\022" +
-      "$\n\007content\030\007 \001(\0132\023.contentApi.Content\022,\n" +
-      "\017content_extract\030\010 \001(\0132\023.contentApi.Cont" +
-      "ent\"y\n\010Response\022\023\n\013request_url\030\001 \001(\t\022\034\n\024",
-      "previous_request_url\030\002 \001(\t\022\030\n\020next_reque" +
-      "st_url\030\003 \001(\t\022 \n\005entry\030\004 \003(\0132\021.contentApi" +
-      ".EntryB&\n\030com.spinn3r.api.protobufB\nCont" +
-      "entApi"
+      "\023.contentApi.Content\"\255\002\n\014CommentEntry\022\021\n" +
+      "\tpermalink\030\001 \001(\t\022\027\n\017permalink_title\030\002 \001(" +
+      "\t\022\032\n\022permalink_hashcode\030\003 \001(\t\022\025\n\rraw_pub",
+      "lished\030\004 \001(\t\022\036\n\004link\030\005 \003(\0132\020.contentApi." +
+      "Link\022\022\n\ndate_found\030\006 \001(\t\022$\n\007content\030\007 \001(" +
+      "\0132\023.contentApi.Content\022\r\n\005title\030\010 \001(\t\022\"\n" +
+      "\006author\030\t \003(\0132\022.contentApi.Author\022\026\n\016dat" +
+      "e_published\030\n \001(\t\022\013\n\003tag\030\013 \003(\t\022\014\n\004lang\030\014" +
+      " \001(\t\"\335\002\n\005Entry\022\"\n\006source\030\001 \001(\0132\022.content" +
+      "Api.Source\022\036\n\004feed\030\002 \001(\0132\020.contentApi.Fe" +
+      "ed\022)\n\nfeed_entry\030\003 \001(\0132\025.contentApi.Feed" +
+      "Entry\0223\n\017permalink_entry\030\004 \001(\0132\032.content" +
+      "Api.PermalinkEntry\022/\n\rcomment_entry\030\005 \001(",
+      "\0132\030.contentApi.CommentEntry\022+\n\013crawl_ent" +
+      "ry\030\006 \001(\0132\026.contentApi.CrawlEntry\022$\n\007cont" +
+      "ent\030\007 \001(\0132\023.contentApi.Content\022,\n\017conten" +
+      "t_extract\030\010 \001(\0132\023.contentApi.Content\"y\n\010" +
+      "Response\022\023\n\013request_url\030\001 \001(\t\022\034\n\024previou" +
+      "s_request_url\030\002 \001(\t\022\030\n\020next_request_url\030" +
+      "\003 \001(\t\022 \n\005entry\030\004 \003(\0132\021.contentApi.EntryB" +
+      "&\n\030com.spinn3r.api.protobufB\nContentApi"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -8720,7 +9212,7 @@ public final class ContentApi {
           internal_static_contentApi_CommentEntry_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_contentApi_CommentEntry_descriptor,
-              new java.lang.String[] { "Permalink", "PermalinkTitle", "PermalinkHashcode", "RawPublished", },
+              new java.lang.String[] { "Permalink", "PermalinkTitle", "PermalinkHashcode", "RawPublished", "Link", "DateFound", "Content", "Title", "Author", "DatePublished", "Tag", "Lang", },
               com.spinn3r.api.protobuf.ContentApi.CommentEntry.class,
               com.spinn3r.api.protobuf.ContentApi.CommentEntry.Builder.class);
           internal_static_contentApi_Entry_descriptor =
