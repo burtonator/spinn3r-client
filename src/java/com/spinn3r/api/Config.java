@@ -16,6 +16,7 @@
 
 package com.spinn3r.api;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.Date;
@@ -55,7 +56,8 @@ public abstract class Config <ResultType> implements Cloneable {
     /**
      * When fetching the API this specifies the default version to return.
      */
-    public static String   DEFAULT_VERSION     = "3.4.01";
+    public static String   DEFAULT_VERSION     = "3.5.00";
+
 
     public static enum Format {
     	RSS("rss"), PROTOBUF("protobuf"), PROTOSTREAM("protostream");
@@ -107,7 +109,7 @@ public abstract class Config <ResultType> implements Cloneable {
     private String         nextRequestURL      = null;
     private boolean        skipDescription     = false;
     private String         api                 = null;
-    private Format         format              = Format.RSS;
+    private Format         format              = Format.PROTOSTREAM;
     private String         host                = DEFAULT_HOST;
     private boolean        disableParse        = false;
     private String         commandLine         = "";
@@ -372,6 +374,8 @@ public abstract class Config <ResultType> implements Cloneable {
     public int getLimit() { 
         return this.limit;
     }
+    
+    private final Random random = new Random();
 
     public long getSleepInterval() {
 
@@ -379,7 +383,7 @@ public abstract class Config <ResultType> implements Cloneable {
         
         if ( result == -1 ) {
             //use a random number generator to compute the
-            float f = new Random().nextFloat();
+            float f = random.nextFloat();
             
             result = (long)(f * 30L);
 
@@ -484,7 +488,11 @@ public abstract class Config <ResultType> implements Cloneable {
         String filter = getFilter();
 
         if ( filter != null ) {
-            addParam( params, "filter", URLEncoder.encode( filter ) );
+            try {
+                addParam( params, "filter", URLEncoder.encode( filter, "UTF-8" ) );
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException();
+            }
         }
 
         /*
@@ -586,8 +594,13 @@ public abstract class Config <ResultType> implements Cloneable {
         if ( optional && value == null )
             return;             
 
-        if ( value != null && urlencode )
-            value = URLEncoder.encode( value.toString() );
+        if ( value != null && urlencode ) {
+            try {
+                value = URLEncoder.encode( value.toString(), "UTF-8" );
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
+        }
         
         if ( buff.length() > 0 )
             buff.append( "&" );

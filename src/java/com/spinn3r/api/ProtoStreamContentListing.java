@@ -24,7 +24,7 @@ import java.io.InputStream;
 import com.ice.tar.TarEntry;
 import com.ice.tar.TarInputStream;
 import com.spinn3r.api.protobuf.ContentApi;
-import com.spinn3r.api.util.ProtoStreamDecoder;
+import com.spinn3r.io.protostream.ProtoStreamDecoder;
 
 /**
  * Code to read a protobuff file off disk and print it out.

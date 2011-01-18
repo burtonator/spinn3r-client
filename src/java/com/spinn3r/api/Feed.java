@@ -25,6 +25,7 @@ import java.util.Date;
 import org.w3c.dom.Element;
 
 import com.spinn3r.api.protobuf.ContentApi;
+import com.spinn3r.util.ISO8601DateParser;
 
 /**
  * Represents a source within Spinn3r.
@@ -32,8 +33,6 @@ import com.spinn3r.api.protobuf.ContentApi;
 public class Feed extends BaseItem {
 
     int resourceStatus = -1;
-    
-    String link = null;
     
     String channelDescription = null;
     
@@ -50,8 +49,6 @@ public class Feed extends BaseItem {
     Date dateFound = null;
     
     String resource = null;
-    
-    String guid = null;
 
     public Feed() {}
 

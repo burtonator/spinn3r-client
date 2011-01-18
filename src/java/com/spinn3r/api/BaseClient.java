@@ -50,7 +50,7 @@ import org.w3c.dom.NodeList;
 import com.google.protobuf.CodedInputStream;
 import com.spinn3r.api.Config.Format;
 import com.spinn3r.api.protobuf.ContentApi;
-import com.spinn3r.api.util.ProtoStreamDecoder;
+import com.spinn3r.io.protostream.ProtoStreamDecoder;
 
 /**
  * Generic client support used which need to be in all APIs.
@@ -292,7 +292,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
             int responseCode = httpConn.getResponseCode();
             
             if(responseCode >= 400) {
-                String message = "";
+                StringBuilder message = new StringBuilder("");
                 InputStream errorStream = httpConn.getErrorStream();
                 if(errorStream == null)
                     throw new IOException(String.format("Response code %d received", responseCode));
@@ -300,9 +300,9 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
                 BufferedReader reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(errorStream)));
                 String line;
                 while((line = reader.readLine()) != null)
-                    message += line;
+                    message.append(line);
                 
-                throw new IOException(message);
+                throw new IOException(message.toString());
             }
         }
 
@@ -504,7 +504,7 @@ public abstract class BaseClient<ResultType extends BaseResult> implements Clien
         ContentApi.Entry.Builder builder = ContentApi.Entry.newBuilder();
 
         ProtoStreamDecoder<ContentApi.Entry> decoder =
-            ProtoStreamDecoder.newProtoStreamDecoder( inputStream, builder );
+            ProtoStreamDecoder.newDecoder( inputStream, builder );
 
         for ( ContentApi.Entry entry = decoder.read() ; entry != null ; entry = decoder.read() ) {
             res.add( entry );
