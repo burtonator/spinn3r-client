@@ -7,7 +7,7 @@ import javax.xml.parsers.FactoryConfigurationError;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
-import com.spinn3r.api.util.EncodingException;
+import com.spinn3r.io.utils.EncodingException;
 
 interface ConversionApp 
 {

@@ -73,9 +73,9 @@ message Source {
   optional string description           = 7;
   /** Internal */
   optional int32  resource_status       = 8;
-  /** The last time spinn3r discovered a new post for this source*/
+  /** The last time spinn3r found an entry from this source */
   optional string last_posted           = 9;
-  /** The last time this source published a new post */
+  /** The last time this source published an item */
   optional string last_published        = 10;
   /** Date that Spinn3r first crawled this source */
   optional string date_found            = 11;
@@ -88,7 +88,7 @@ message Source {
   optional float  spam_probability      = 13;
   /** Deprecated */
   optional sint32 tier                  = 14;
-  /** Number of other sources that link to this source */
+  /** Numbert of links that spinn3r has found to this source */
   optional int32  indegree              = 15;
   /** Publisher category */
   optional string publisher_type        = 16;
@@ -118,9 +118,9 @@ message Feed {
   optional string description      = 7;
   /** Internal */
   optional int32  resource_status  = 8;
-  /** Last time Spinn3r discovered a new entry in this feed*/
+  /** Last time that spinn3r found a new entry on this feed */
   optional string last_posted      = 9;
-  /** Last time this feed published a new item */
+  /** Lastest published date for an entry on this feed */
   optional string last_published   = 10;
   /** The date spinn3r first crawled the feed */
   optional string date_found       = 11;
@@ -148,7 +148,7 @@ message Feed {
 message PermalinkEntry {
   /** The URLS of this Permalink Entry */
   repeated Link    link             = 1;
-  /** The link that Spinn3r uses to identify this permalink entry*/
+  /** The link that Spinn3r uses to identify this entry */
   optional Link    canonical_link   = 2;
   /** The link's title */
   optional string  title            = 3;
@@ -179,7 +179,7 @@ message PermalinkEntry {
   optional Content content_extract  = 13;
   /** The Content Management System used to manage this permalink entry */
   optional string  generator        = 14;
-  /** Internal */
+  /** Date for facebook entries */
   optional string  raw_published    = 15;
 
 }
@@ -218,7 +218,7 @@ message CrawlEntry {
 message FeedEntry {
   /** The URL to which the entry in the feed points */
   repeated Link    link             = 1;
-  /** The link which Spinn3r uses to identify this FeedEntry */
+  /** The link which Spinn3r considers "official" */
   optional Link    canonical_link   = 2;
   /** The  tile of the entry */
   optional string  title            = 3;
@@ -246,21 +246,13 @@ message FeedEntry {
 }
 
 /**
- * Entries for the comment api
+ * Values used with the comment API
  */
 message CommentEntry {
     optional string permalink           = 1;
     optional string permalink_title     = 2;
     optional string permalink_hashcode  = 3;
     optional string raw_published       = 4;
-    repeated Link link                  = 5;
-    optional string date_found          = 6;
-    optional Content content            = 7;
-    optional string title               = 8;
-    repeated Author author              = 9;
-    optional string date_published      = 10;
-    repeated string tag                 = 11;
-    optional string lang                = 12;
 }
 
 /**
@@ -280,14 +272,14 @@ message Entry {
   optional FeedEntry      feed_entry      = 3;
   /** The permalink representation of this content */
   optional PermalinkEntry permalink_entry = 4;
-  /** This entry is only active when using the comment API */
+  /** This entry is used with the comment API */
   optional CommentEntry   comment_entry   = 5;
   /** Deprecated */
   optional CrawlEntry     crawl_entry     = 6;
   
-  /** Deprecated */
+  /** Currently unused */
   optional Content		  content 		  = 7;
-  /** Deprecated */
+  /** Currently unused */
   optional Content		  content_extract = 8;
 }
 

@@ -16,6 +16,7 @@
 
 package com.spinn3r.api;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 /**
@@ -32,7 +33,11 @@ public class SourceRegisterClient {
 
         StringBuffer params = new StringBuffer();
 
-        Config.addParam( params, "link",             URLEncoder.encode( link ) );
+        try {
+            Config.addParam( params, "link",             URLEncoder.encode( link, "UTF-8" ) );
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
         Config.addParam( params, "vendor",           config.getVendor() );
         Config.addParam( params, "version",          config.getVersion() );
         Config.addParam( params, "force",            config.getForce() );
