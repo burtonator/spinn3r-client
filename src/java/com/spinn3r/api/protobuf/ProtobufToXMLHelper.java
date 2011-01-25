@@ -168,20 +168,7 @@ class ProtobufToXMLHelper
 			builder = builder.element("post:hashcode").text(permalink.getHashcode()).up();
 		}
 		
-		if(permalink.hasContent())
-		{
-			try {
-				String content = extractContent(permalink.getContent());
-				
-				if(content != null && content.length() != 0)
-					builder = builder.element("post:body").text(content).up();
-				
-			} catch (EncodingException e) {
-				if(!this.ignoreFormattingErrors)
-					throw e;
-			}
-			
-		}
+		
 		
 		if(permalink.hasContentExtract())
 		{
@@ -273,7 +260,7 @@ class ProtobufToXMLHelper
 		builder = builder.element("weblog:iranking").text("0").up();
 	}
 	
-	private void convert(FeedEntry feedEntry) {
+	private void convert(FeedEntry feedEntry) throws IOException, EncodingException {
 		for(String category : feedEntry.getCategoryList())
 			builder = builder.element("category").text(category).up();
 		
@@ -306,6 +293,21 @@ class ProtobufToXMLHelper
 			}
 			
 			builder = builder.up();
+		}
+		
+		if(feedEntry.hasContent())
+		{
+			try {
+				String content = extractContent(feedEntry.getContent());
+				
+				if(content != null && content.length() != 0)
+					builder = builder.element("post:body").text(content).up();
+				
+			} catch (EncodingException e) {
+				if(!this.ignoreFormattingErrors)
+					throw e;
+			}
+			
 		}
 	}
 	

@@ -36,7 +36,7 @@ public class CommentConfig extends Config<CommentItem> {
     @Override
     public String getRouter() {
         
-        String router = String.format( "http://%s/rss/%s.getDelta?", getHost(), BaseClient.COMMENT_HANDLER );
+        String router = String.format( "http://%s/%s/%s.getDelta?", getHost(), getFormat().getURLEntry(), BaseClient.COMMENT_HANDLER );
 
         return router;
 
