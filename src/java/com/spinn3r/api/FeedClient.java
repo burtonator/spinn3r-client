@@ -33,6 +33,10 @@ import org.w3c.dom.Element;
 public class FeedClient extends LegacyWrapperClient<PermalinkItem> {
 
 
+    FeedClient() {
+        super();
+    }
+    
     /**
      * Check on the status of a weblog within Spinn3r.
      *

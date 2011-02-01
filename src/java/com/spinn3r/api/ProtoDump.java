@@ -23,6 +23,10 @@ import java.io.FileInputStream;
 import com.google.protobuf.CodedInputStream;
 import com.spinn3r.api.protobuf.ContentApi;
 
+import com.spinn3r.api.EntryDecoderFactory;
+import com.spinn3r.api.util.Decoder;
+import com.spinn3r.api.protobuf.ContentApi;
+
 /**
  * Code to read a protobuff file off disk and print it out.
  * @author Kevin Burton
@@ -35,13 +39,17 @@ public class ProtoDump {
         String path = args[0];
 
         File file = new File( path );
-        FileInputStream fis = new FileInputStream( file );
 
-        CodedInputStream cis = CodedInputStream.newInstance( fis );
-        cis.setSizeLimit( 256 * 1024 * 1024 );
-        ContentApi.Response res = ContentApi.Response.parseFrom( cis );
+        EntryDecoderFactory factory = EntryDecoderFactory.newFactory();
+        Decoder<ContentApi.Entry> decoder = factory.get( path );
 
-        System.out.printf( "%s\n", res.toString() );
+        ContentApi.Entry obj;
+        
+        while((obj = decoder.read()) != null) {
+            /* Do something with object */
+
+            System.out.printf( "%s\n", obj.toString() );
+        }
 
     }
     
