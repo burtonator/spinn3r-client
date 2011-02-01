@@ -39,8 +39,8 @@ public abstract class LegacyWrapperClient <ResultType extends BaseResult> extend
     }
 
     public void fetch() throws IOException,
-                               ParseException,
-                               InterruptedException {
+        ParseException,
+        InterruptedException {
     	
         if ( parallelFetcher == null ) {
             parallelFetcher = new ParallelFetchHelper<ResultType> ( this, config, RESULT_BUFFER_SIZE, PARALLELISM );

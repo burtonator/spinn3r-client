@@ -419,16 +419,8 @@ public class Main<T extends BaseResult> {
 
                 }
 
-            } else if (result instanceof LinkItem) {
-
-                LinkItem link = (LinkItem) result;
-
-                System.out.println("----");
-                System.out.printf("link XML:      %s\n", link.getLinkXml());
-                System.out.printf("link title:    %s\n", link.getLinkTitle());
-
             }
-
+            
         }
 
     }
@@ -746,14 +738,14 @@ public class Main<T extends BaseResult> {
         System.out.println("Optional params:");
         System.out.println();
         System.out
-                .println("    --api=API             Specify the name of the API (feed, permalink, comment, link).");
-        System.out.println("                          Default: feed");
+                .println("    --api=API             Specify the name of the API (permalink, comment, link).");
+        System.out.println("                          Default: permalink");
         System.out.println();
         System.out
-                .println("    --recover             Enable the client to recover from a previous state. Also use this" +
-                		"                           this flag to have the client save it's state so it may" +
-                		"                           recover in the future. Must be used with the permalink api" +
-                		"                           and the --save option.");
+                .println("    --recover             Enable the client to recover from a previous state. Also use this \n" +
+                         "                          this flag to have the client save it's state so it may \n" +
+                         "                          recover in the future. Must be used with the permalink api \n" +
+                         "                          and the --save option.");
         System.out.println();
         System.out
                 .println("    --after=NNN           Time in millis for when we should start indexing.");
@@ -785,25 +777,12 @@ public class Main<T extends BaseResult> {
         System.out.println("                          Default: 10");
         System.out.println();
         System.out
-                .println("    --filter=http://      URL filter.  Only print URLs that match the regex.");
-        System.out.println("                          Default: none");
-        System.out.println();
-        System.out
                 .println("    --range=NNNN          Unix time duration (in millis) to terminate the API.");
         System.out.println("                          Default: none");
         System.out.println();
         System.out
-                .println("    --limit=xx            Number of items to return per iteration.");
-        System.out
-                .println("                          Default: 10 for permalink, 100 for feed");
-        System.out.println();
-        System.out
                 .println("    --save=DIRECTORY      Save result XML to disk in the specified directory.");
         System.out.println("                          Default: none");
-        System.out.println();
-        System.out
-                .println("    --save_method=        If 'hierarchical' we use a year/month/day hierarchy to save content.");
-        System.out.println("                          Default: flat");
         System.out.println();
         System.out
                 .println("    --host=hostname       Custom hostname for making calls against. Dev use only.");
@@ -817,22 +796,7 @@ public class Main<T extends BaseResult> {
         System.out.println("                          Default: false");
         System.out.println();
         System.out
-                .println("    --enable3             Enable Spinn3r 3.0 extensions.");
-        System.out.println();
-        System.out
                 .println("    --memory              Print current memory settings and exit.  Useful or debugging..");
-        System.out.println();
-
-        System.out
-                .println("    --use_protobuf=true   Enable protocol buffer support for permalink client (performance).");
-        System.out.println();
-
-        System.out
-                .println("    --use_protostream=true Enable protocol buffer stream support for permalink client (performance).");
-        System.out.println();
-        
-        System.out
-                .println("    --use_xml=true Enable rss support for permalink client.");
         System.out.println();
         
         // System.out.println(
@@ -938,11 +902,6 @@ public class Main<T extends BaseResult> {
                 continue;
             }
 
-            if (v.startsWith("--limit")) {
-                limit = Integer.parseInt(getOpt(v));
-                continue;
-            }
-
             if (v.startsWith("--sleep_duration")) {
                 sleep_duration = Long.parseLong(getOpt(v));
                 continue;
@@ -984,23 +943,6 @@ public class Main<T extends BaseResult> {
              * config.setSpamProbability( Double.parseDouble( getOpt( v ) ) );
              * continue; }
              */
-
-            if (v.startsWith("--use_protobuf")) {
-                format = Format.PROTOBUF;
-                continue;
-            }
-
-            if (v.startsWith("--use_protostream")) {
-                if (Boolean.parseBoolean(getOpt(v)))
-                    format = Format.PROTOSTREAM;
-                continue;
-            }
-            
-            if (v.startsWith("--use_xml")) {
-                if (Boolean.parseBoolean(getOpt(v)))
-                    format = Format.RSS;
-                continue;
-            }
 
             if (v.startsWith("--dump_fields=")) {
                 dumpFields = Boolean.parseBoolean(getOpt(v));
@@ -1089,15 +1031,9 @@ public class Main<T extends BaseResult> {
         if (api.startsWith("feed")) {
             config = new FeedConfig();
             client = new FeedClient();
-        } else if (api.startsWith("crawl")) {
-            config = new CrawlConfig();
-            client = new CrawlClient();
         } else if (api.startsWith("comment")) {
             config = new CommentConfig();
             client = new CommentClient();
-        } else if (api.startsWith("link")) {
-            config = new LinkConfig();
-            client = new LinkClient();
         } else {
             config = new PermalinkConfig();
             client = new PermalinkClient(restoreURL != null ? ImmutableList.of(restoreURL) : Collections.<String>emptyList());
