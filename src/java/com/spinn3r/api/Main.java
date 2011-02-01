@@ -259,7 +259,7 @@ public class Main<T extends BaseResult> {
             // System.out.printf( "last: %s\n", last.getTime() );
             // System.out.printf( "before: %s\n", before );
 
-            if (before > 0 && last.getTime() >= before) {
+            if (before > 0 && Config.millisecondsToTimestamp(last.getTime()) >= before) {
                 break;
             }
 
