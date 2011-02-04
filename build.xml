@@ -7,7 +7,7 @@
     <property file="build.properties"/>
 
     <property name="project"      value="spinn3r-client"/>
-    <property name="version"      value="3.4.03"/>
+    <property name="version"      value="3.4.04"/>
     <property name="vendor"       value="Tailrank Inc."/>
 
     <path id="project.classpath">

@@ -547,7 +547,7 @@ public class Main<T extends BaseResult> {
                                 + range)
                     break;
 
-                if (before > 0 && last.getTime() >= before) {
+                if (before > 0 && Config.millisecondsToTimestamp(last.getTime()) >= before) {
                     break;
                 }
 
