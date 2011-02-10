@@ -7,7 +7,7 @@
     <property file="build.properties"/>
 
     <property name="project"      value="spinn3r-client"/>
-    <property name="version"      value="3.4.02"/>
+    <property name="version"      value="3.4.03"/>
     <property name="vendor"       value="Tailrank Inc."/>
 
     <path id="project.classpath">
@@ -86,26 +86,28 @@
         </manifest>
 
 
-	  <taskdef name="jarjar" classname="com.tonicsystems.jarjar.JarJarTask"
-        classpath="build/jarjar-1.0.jar"/>
+	  <taskdef name="jarjar" 
+               classname="com.tonicsystems.jarjar.JarJarTask"
+               classpath="build/jarjar-1.0.jar"/>
       <jarjar jarfile="target/${project}-${version}.jar">
-            <fileset dir="compile">
-
-                <include name="META-INF/**"/>
-                <include name="com/**"/>
-            
-            </fileset>
-      	<zipfileset src="lib/activation.jar"/>
-      	<zipfileset src="lib/aopalliance.jar"/>
-      	<zipfileset src="lib/commons-io-1.4.jar"/>
-      	<zipfileset src="lib/commons-lang-2.5.jar"/>
+        <fileset dir="compile">
+          
+          <include name="META-INF/**"/>
+          <include name="com/**"/>
+          
+        </fileset>
+        <zipfileset src="lib/activation.jar"/>
+        <zipfileset src="lib/aopalliance.jar"/>
+        <zipfileset src="lib/commons-io-1.4.jar"/>
+        <zipfileset src="lib/commons-lang-2.5.jar"/>
       	<zipfileset src="lib/guice-2.0.jar"/>
-      	<zipfileset src="lib/java-xmlbuilder-0.3.jar"/>
-      	<zipfileset src="lib/protobuf-java-2.3.0.jar"/>
-      	<zipfileset src="lib/jzlib-1.0.7.jar"/>
+        <zipfileset src="lib/java-xmlbuilder-0.3.jar"/>
+        <zipfileset src="lib/protobuf-java-2.3.0.jar"/>
+        <zipfileset src="lib/jzlib-1.0.7.jar"/>
       </jarjar>
-    </target>
 
+    </target>
+    
     <target name="site">
 
       <mkdir dir="site"/>
@@ -210,19 +212,20 @@
 
         <copy todir="target/${project}-${version}">
             <fileset dir=".">
-                <include name="bin/api-perf"/>
                 <include name="lib/*.jar"/>
+                <!--
                 <include name="src/java/**"/>
-                <include name="build/**"/>
-                <include name="build.xml"/>
+                -->
                 <include name="LICENSE"/>
             </fileset>
         </copy>
 
+        <!--
         <copy todir="target/${project}-${version}">
             <fileset dir="compile">
             </fileset>
         </copy>
+        -->
 
         <copy file="target/${project}-${version}.jar"
               todir="target/${project}-${version}" />
