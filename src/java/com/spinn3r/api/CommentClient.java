@@ -16,33 +16,15 @@
 
 package com.spinn3r.api;
 
-
 /**
  * <p> This class is <b>NOT</b> threadsafe.  Implementations need to ensure
  * thread safety by using <code>synchronized</code> or
  * <code>java.util.concurrent</code> constructs.
  */
 public class CommentClient extends LegacyWrapperClient<CommentItem> {
-    
-    public static int MAX_LIMIT            = 100;
-    public static int OPTIMAL_LIMIT        = 50;
-    public static int CONSERVATIVE_LIMIT   = 10;
 
     CommentClient() {
         super();
     }
-    
-    protected int getMaxLimit() {
-        return MAX_LIMIT;
-    }
-
-     protected int getOptimalLimit() {
-        return OPTIMAL_LIMIT;
-    }
-
-    protected int getConservativeLimit() {
-        return CONSERVATIVE_LIMIT;
-    }
-
 
 }
