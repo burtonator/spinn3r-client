@@ -16,7 +16,13 @@
 
 package com.spinn3r.api;
 
+import com.spinn3r.api.util.Getopt;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * API client that implements Spinn3r's source registration API.
@@ -52,34 +58,72 @@ public class SourceRegisterClient {
     public void setConfig( SourceRegisterConfig config ) {
         this.config = config;
     }
-    
+
+    public static void syntax() {
+
+        System.out.printf( "  --vendor=VENDOR   Specify a vendor code (required)." );
+        System.out.printf( "  --file=FILE       File of URLs to read and bulk register." );
+        System.out.printf( "URL...              URLs to register." );
+    }
+
     public static void main( String[] args ) throws Exception {
+
+        Getopt getopt = new Getopt( args );
 
         SourceRegisterClient client = new SourceRegisterClient();
         SourceRegisterConfig config = new SourceRegisterConfig();
 
-        if ( args.length < 2 )
-            System.out.printf( "usage: SourceRegisterClient vendor-id URL1 [ URL2 URL3 ... ]\n" );
+        String vendor = getopt.getString( "vendor" );
 
-        else {
-            config.setVendor( args[0] );
-
-            client.setConfig( config );
-
-            for ( int i = 1 ; i < args.length ; i++ ) {
-                String resource = args[i];
-
-                System.out.printf( "register for %s\n", resource );
-                try {
-                    client.register( resource );
-                }
-
-                catch ( java.io.IOException e ) {
-                    System.out.printf( "faild to register %s\n%s\n", resource, e );
-                }
-            }
+        if ( vendor == null ) {
+            syntax();
+            throw new RuntimeException( "No vendor specified." );
         }
-            
+
+        if ( getopt.getString( "publisher_type" ) != null ) {
+            config.setPublisherType( getopt.getString( "publisher_type" ) );
+        }
+
+        config.setVendor( vendor );
+
+        client.setConfig( config );
+
+        String file = getopt.getString( "file" );
+
+        List<String> sources = null;
+
+        if ( file != null ) {
+
+            System.out.printf( "Registering sources from file: %s\n", file );
+
+            File f = new File( file );
+            FileInputStream fis = new FileInputStream( f );
+            byte[] data = new byte[ (int)f.length() ];
+            fis.read( data );
+            fis.close();
+
+            sources = new ArrayList<String>();
+
+            for (String line : new String( data ).split( "\n" ) ) {
+                sources.add( line );
+            }
+
+        } else {
+            sources = getopt.getValues();
+        }
+
+        for (String source : sources) {
+
+            System.out.printf( "register for %s\n", source );
+
+            try {
+                client.register( source );
+            } catch ( java.io.IOException e ) {
+                System.out.printf( "Failed to register %s\n%s\n", source, e );
+            }
+
+        }
+
     }
     
 }

@@ -60,6 +60,10 @@ public class Source extends BaseItem {
 
     private Feed feed = new Feed();
 
+    private Date lastUpdated = null;
+
+    private Date nextUpdate = null;
+
     public Source() { }
 
     public Source ( ContentApi.Entry entry ) {
@@ -86,7 +90,7 @@ public class Source extends BaseItem {
         dateFound                 = ISO8601DateParser.parse( source.getDateFound() );
         spamProbability           = source.getSpamProbability();
         // TODO: Is this the correct field?
-        pubDate = published       = ISO8601DateParser.parse( source.getLastPublished());
+        pubDate = published       = ISO8601DateParser.parse( source.getLastPublished() );
         
     }
 
@@ -115,6 +119,10 @@ public class Source extends BaseItem {
                                                 -0.0f );
 
         publisherType             = getElementCDATAByTagName( e, "publisher_type",                            NS_SOURCE );
+
+        lastUpdated               = ISO8601DateParser.parse( getElementCDATAByTagName( e, "last_updated",     NS_SOURCE ) );
+        nextUpdate                = ISO8601DateParser.parse( getElementCDATAByTagName( e, "next_update",      NS_SOURCE ) );
+
         try {
 			pubDate = published 	  = RFC822DateParser.parse(getElementCDATAByTagName(e, "pubDate"));
 		} catch (ParseException e1) {
@@ -344,6 +352,22 @@ public class Source extends BaseItem {
      */
     public Feed getFeed() {
         return feed;
+    }
+
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public Date getNextUpdate() {
+        return nextUpdate;
+    }
+
+    public void setNextUpdate(Date nextUpdate) {
+        this.nextUpdate = nextUpdate;
     }
 
     /**
