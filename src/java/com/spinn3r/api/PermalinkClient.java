@@ -28,11 +28,12 @@ import java.util.Collection;
  */
 public class PermalinkClient extends LegacyWrapperClient<PermalinkItem> 
 {
-	PermalinkClient()
+	public PermalinkClient()
 	{
 		super();
 	}
-	
+
+    @Deprecated
 	PermalinkClient(Collection<String> restoreURLS)
 	{
 		super(restoreURLS);
