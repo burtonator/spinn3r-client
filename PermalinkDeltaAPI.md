@@ -1,0 +1,1 @@
+See [GetDeltaAPI](GetDeltaAPI.md) for more information.
